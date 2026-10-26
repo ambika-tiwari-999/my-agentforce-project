@@ -6,9 +6,6 @@
     <columns>Name__c</columns>
     <columns>Zip_Code__c</columns>
     <columns>Phone_Number__c</columns>
-    <columns>Operating_Hours__c</columns>
-    <columns>Menu_Details__c</columns>
-    <columns>Parking_Policy__c</columns>
     <filterScope>Everything</filterScope>
     <label>All Records</label>
 </ListView>
