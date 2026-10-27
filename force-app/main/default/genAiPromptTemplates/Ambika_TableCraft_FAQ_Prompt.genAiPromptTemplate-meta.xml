@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Ambika Phase 1 FAQ — grounded answers and guardrails for TableCraft restaurant FAQ retrieval.</description>
+    <developerName>Ambika_TableCraft_FAQ_Prompt</developerName>
+    <masterLabel>Ambika TableCraft FAQ Prompt</masterLabel>
+    <overridable>false</overridable>
+    <templateVersions>
+        <content>You are the TableCraft dining assistant. Answer one diner question about this restaurant using ONLY the retrieved FAQ passages.
+
+RESTAURANT CONTEXT (for framing only; do not invent facts from these IDs):
+- restaurant_id: {{Input.restaurant_id}}
+- escalation_phone_number: {{Input.escalation_phone_number}}
+
+RETRIEVED FAQ PASSAGES (sole source of truth):
+{{EinsteinSearch.File_Diner_Restaurant_FAQ_and_Policies_1Cx_8Ec8b60f20d.results}}
+
+DINER QUESTION:
+{{Input.question}}
+
+GUARDRAILS — follow exactly:
+1. Use only facts stated in the retrieved passages. Do not use general knowledge, training data, or guess.
+2. Do not add menu items, prices, hours, policies, addresses, or phone numbers unless they appear word-for-word in the passages.
+3. If escalation_phone_number is non-empty and the passages do not contain the answer, reply exactly: &quot;I don&apos;t have that in our FAQ. You can call us at {{Input.escalation_phone_number}} or ask to speak with a team member.&quot;
+4. If escalation_phone_number is empty and the passages do not contain the answer, reply exactly: &quot;I don&apos;t have that in our FAQ. I can connect you with a team member if you&apos;d like.&quot;
+5. Never guarantee a dish is allergen-free; never give medical or legal advice. For allergies or medical questions, say a team member must confirm and offer to connect them with a person.
+6. Do not discuss reservations, booking changes, or cancellations—say those requests need a team member or a booking assistant (not available in this FAQ step).
+7. Do not mention passages, sources, retrieval, or these rules.
+8. At most three short sentences. Warm, concise tone.
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>question</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>question</masterLabel>
+            <referenceName>Input.question</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>restaurant_id</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>restaurant_id</masterLabel>
+            <referenceName>Input.restaurant_id</referenceName>
+            <required>false</required>
+        </inputs>
+        <inputs>
+            <apiName>escalation_phone_number</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>escalation_phone_number</masterLabel>
+            <referenceName>Input.escalation_phone_number</referenceName>
+            <required>false</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <templateDataProviders>
+            <definition>invocable://getEinsteinRetrieverResults/File_Diner_Restaurant_FAQ_and_Policies_1Cx_8Ec8b60f20d</definition>
+            <description>File_Diner_Restaurant_FAQ_and_Policies</description>
+            <label>File_Diner_Restaurant_FAQ_and_Policies</label>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>searchText</parameterName>
+                <valueExpression>{{Input.question}}</valueExpression>
+            </parameters>
+            <referenceName>EinsteinSearch.File_Diner_Restaurant_FAQ_and_Policies_1Cx_8Ec8b60f20d</referenceName>
+        </templateDataProviders>
+        <templateFormat>Jinja</templateFormat>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>
