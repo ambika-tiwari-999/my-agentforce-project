@@ -44,9 +44,9 @@ User message
 
 ## Step 1 — `agent_router`
 
-- **What runs:** Router classifies the user message and **transitions only** (`go_to_faq_context_setup`, `go_to_faq_subagent`, escalation, off-topic, ambiguous). No `@utils.setVariables` on the router (required when using `DefaultEinsteinHyperClassifier`).
+- **What runs:** Router classifies the user message and **transitions only** (`go_to_faq_context_setup`, `go_to_faq_subagent`). No `@utils.setVariables` on the router (required when using `DefaultEinsteinHyperClassifier`). FAQ-only bundle — no escalation / off-topic / ambiguous subagents.
 - **Agentforce design decision:** **Routing** lives in Agent Script; FAQ is an in-bundle **subagent**, not a separate published agent (contrast: Guest Concierge `connected_subagent`).
-- **Guardrails around:** FAQ with missing vars → **`faq_context_setup`**; FAQ with both vars set → **`faq_subagent`**; send escalation / off-topic / ambiguous requests to template subagents.
+- **Guardrails around:** FAQ with missing vars → **`faq_context_setup`**; FAQ with both vars set → **`faq_subagent`**; non-FAQ utterances handled in router copy (ask for FAQ or missing context).
 - **Executed in:** Agent Script (router + `DefaultEinsteinHyperClassifier`).
 - **Code location:** [Ambika_Monday_Demo_Agent.agent](../force-app/main/default/aiAuthoringBundles/Ambika_Monday_Demo_Agent/Ambika_Monday_Demo_Agent.agent) — `start_agent agent_router`, `go_to_faq_context_setup`, `go_to_faq_subagent` (`available when` both inputs non-empty).
 

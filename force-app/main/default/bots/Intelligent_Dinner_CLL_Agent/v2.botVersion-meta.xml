@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BotVersion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>v2</fullName>
+    <articleAnswersGPTEnabled>false</articleAnswersGPTEnabled>
+    <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>Hi, I&apos;m the TableCraft dining assistant. I&apos;m an AI assistant and can connect you to a person at any time. Which restaurant can I help you with today?</message>
+                <messageIdentifier>b001c194-4ac9-4e3b-baf7-7148fee49b40</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>5cd06aac-96f6-4103-a3b7-6372262ebe05</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <stepIdentifier>0b649f11-0491-4902-b106-ce4e3ed7ff67</stepIdentifier>
+            <type>Wait</type>
+        </botSteps>
+        <developerName>Welcome</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Welcome</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <botDialogs>
+        <botSteps>
+            <botMessages>
+                <message>Sorry, something went wrong on my side. Please try again, or ask me to connect you with a person.</message>
+                <messageIdentifier>26606376-8b6f-4af5-84f7-bccbc054d79c</messageIdentifier>
+            </botMessages>
+            <stepIdentifier>7335551c-7428-4e34-8e45-174ad39070c3</stepIdentifier>
+            <type>Message</type>
+        </botSteps>
+        <botSteps>
+            <stepIdentifier>eaf46fcb-6676-40a5-baf7-83405175fdb7</stepIdentifier>
+            <type>Wait</type>
+        </botSteps>
+        <developerName>Rich_Content_Error_Handling</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Error Handler</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <botDialogs>
+        <botSteps>
+            <conversationSystemMessage>
+                <type>Transfer</type>
+            </conversationSystemMessage>
+            <stepIdentifier>40be6616-0842-4508-ba64-6d30af7e8c5c</stepIdentifier>
+            <type>SystemMessage</type>
+        </botSteps>
+        <developerName>Transfer_To_Agent</developerName>
+        <isPlaceholderDialog>false</isPlaceholderDialog>
+        <label>Transfer To Agent</label>
+        <showInFooterMenu>false</showInFooterMenu>
+    </botDialogs>
+    <citationsEnabled>false</citationsEnabled>
+    <conversationDefinitionPlanners>
+        <genAiPlannerName>Intelligent_Dinner_CLL_Agent_v2</genAiPlannerName>
+    </conversationDefinitionPlanners>
+    <conversationSystemDialogs>
+        <dialog>Rich_Content_Error_Handling</dialog>
+        <type>ErrorHandling</type>
+    </conversationSystemDialogs>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Runtime condition evaluation for else-if chain link 2</description>
+        <developerName>AgentScriptInternal_condition_2</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Runtime Condition 2</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Restaurant Selected</description>
+        <developerName>restaurant_selected</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Restaurant Selected</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>ID of the reservation verified for this diner</description>
+        <developerName>reservation_id</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Reservation Id</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Dining Has Source</description>
+        <developerName>dining_has_source</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Dining Has Source</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Membership number of the signed-in diner, provided by the app session</description>
+        <developerName>membership_id</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Membership Id</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The next topic to be visited</description>
+        <developerName>AgentScriptInternal_next_topic</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Next Topic</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Phone number the diner gave for a callback</description>
+        <developerName>escalation_phone</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Escalation Phone</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Subagent that owns the ongoing conversation: booking, dining_info, or empty for the front desk</description>
+        <developerName>active_area</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Active Area</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>First name of the signed-in diner</description>
+        <developerName>diner_first_name</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Diner First Name</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Number</dataType>
+        <description>Failed Attempts</description>
+        <developerName>failed_attempts</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Failed Attempts</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Code of the restaurant the diner is asking about, for example REST-ATX-01</description>
+        <developerName>restaurant_id</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Restaurant Id</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Name of the restaurant the diner is asking about</description>
+        <developerName>restaurant_name</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Restaurant Name</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Case Created</description>
+        <developerName>case_created</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Case Created</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Reservation Verified</description>
+        <developerName>reservation_verified</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Reservation Verified</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Passages Restaurant Id</description>
+        <developerName>passages_restaurant_id</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Passages Restaurant Id</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Dining Passages</description>
+        <developerName>dining_passages</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Dining Passages</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>What the diner wants to do, for example change a reservation, cancel a reservation, new reservation, restaurant hours</description>
+        <developerName>intent</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Intent</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Case Number</description>
+        <developerName>case_number</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Case Number</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The agent instructions</description>
+        <developerName>AgentScriptInternal_agent_instructions</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Agent Instructions</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Runtime condition evaluation for if statements</description>
+        <developerName>AgentScriptInternal_condition_1</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Runtime Condition 1</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <defaultStdObjForContactIdFltrEnabled>false</defaultStdObjForContactIdFltrEnabled>
+    <entryDialog>Welcome</entryDialog>
+    <intentDisambiguationEnabled>false</intentDisambiguationEnabled>
+    <intentV3Enabled>false</intentV3Enabled>
+    <isScriptCompatibleAgent>true</isScriptCompatibleAgent>
+    <knowledgeActionEnabled>false</knowledgeActionEnabled>
+    <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
+    <smallTalkEnabled>false</smallTalkEnabled>
+    <staticPromptsEnabled>false</staticPromptsEnabled>
+    <stopRecPrompts>false</stopRecPrompts>
+    <stopWelcomePrompts>false</stopWelcomePrompts>
+    <surfacesEnabled>false</surfacesEnabled>
+    <toneType>Casual</toneType>
+</BotVersion>

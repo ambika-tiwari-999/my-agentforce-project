@@ -1,0 +1,42 @@
+{
+  "required" : [ ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "var_ContactId" : {
+      "title" : "var_ContactId",
+      "description" : "The diner's unique numeric Contact ID (e.g., 10008155).",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_NewDateTime" : {
+      "title" : "var_NewDateTime",
+      "description" : "The requested new reservation date and time.",
+      "lightning:type" : "lightning__dateTimeStringType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_NewPartySize" : {
+      "title" : "var_NewPartySize",
+      "description" : "The requested total number of dining guests.",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_ReservationIdentifier" : {
+      "title" : "var_ReservationIdentifier",
+      "description" : "The reservation confirmation code (e.g., 'RES-001'). If not provided, targets the nearest upcoming active booking.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "var_RestaurantId" : {
+      "title" : "var_RestaurantId",
+      "description" : "The unique restaurant identifier code (e.g., REST-ATX-01).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

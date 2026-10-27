@@ -14,6 +14,8 @@ cd /Users/ambika.tiwari/Documents/salesforce_onboarding_notes/my-agentforce-proj
 
 ---
 
+
+
 ## Before you start
 
 ```bash
@@ -59,13 +61,11 @@ ls force-app/main/default/objects/Reservation__c
 
 **Check — org matches (optional):**
 
-```bash
-sf data query --target-org agentforce-org \
+1. sf data query --target-org agentforce-org \
   -q "SELECT COUNT() FROM Restaurant__c"
 
 sf data query --target-org agentforce-org \
   -q "SELECT COUNT() FROM Reservation__c"
-```
 
 Expect **5** restaurants and **30** reservations (as of last inventory).
 
@@ -102,11 +102,73 @@ If the objects were deleted in the org, retrieve may remove or fail — that is 
 
 
 
-## 3. Agentforce agent (authoring bundle + published pieces)
+## 3. Agentforce agents (TableCraft demo set)
 
-Refresh agent metadata if you changed the agent in **Agentforce Builder** or need org and git aligned.
+**Project API version:** `sfdx-project.json` should use **68.0** (org API) so `AiAgentDefinition` / `AiAgentDefinitionVersion` retrieve works.
 
-**Authoring bundle (**`.agent` **file):**
+Refresh **authoring bundles** (`.agent` — use published bot developer name, not the `_1` suffix shown in Setup lists):
+
+```bash
+sf project retrieve start \
+  --metadata AiAuthoringBundle:Ambika_Monday_Demo_Agent \
+  --metadata AiAuthoringBundle:Joe_Test_FAQ_Agent \
+  --metadata AiAuthoringBundle:TableCraft_Bookings_Test \
+  --metadata AiAuthoringBundle:Intelligent_Dinner_CLL_Agent \
+  --metadata AiAuthoringBundle:Intelligent_Diner_Support_Agent \
+  --metadata AiAuthoringBundle:Guest_Concierge_Agent \
+  --metadata AiAuthoringBundle:Intelligent_Dinner_Test_Agent \
+  --target-org agentforce-org
+```
+
+**Published bots + planner versions:**
+
+```bash
+sf project retrieve start \
+  --metadata Bot:Ambika_Monday_Demo_Agent \
+  --metadata Bot:Joe_Test_FAQ_Agent \
+  --metadata Bot:TableCraft_Bookings_Test \
+  --metadata Bot:Intelligent_Dinner_CLL_Agent \
+  --metadata Bot:Intelligent_Diner_Support_Agent \
+  --target-org agentforce-org
+```
+
+**Agent definitions, graphs, and local action schemas** (after API 68 in project):
+
+```bash
+sf project retrieve start \
+  --metadata AiAgentDefinition:Joe_Test_FAQ_Agent \
+  --metadata AiAgentDefinition:TableCraft_Bookings_Test \
+  --metadata AiAgentDefinitionVersion:Joe_Test_FAQ_Agent#1 \
+  --metadata AiAgentDefinitionVersion:TableCraft_Bookings_Test#3 \
+  --target-org agentforce-org
+```
+
+**FAQ / Data 360 prompt (Joe’s retriever-backed template):**
+
+```bash
+sf project retrieve start \
+  --metadata GenAiPromptTemplate:Joe_FAQ_Prompt \
+  --target-org agentforce-org
+```
+
+**Supporting automation (bookings / CLL agent):**
+
+```bash
+sf project retrieve start \
+  --metadata Flow:Search_Restaurants \
+  --metadata ApexClass:CLL_DinerService \
+  --metadata ApexClass:CLL_DiningKnowledgeRetriever \
+  --metadata ApexClass:CLL_FindRestaurant \
+  --metadata ApexClass:CLL_GetDinerContext \
+  --metadata ApexClass:CLL_GetReservation \
+  --metadata ApexClass:CLL_CreateReservation \
+  --metadata ApexClass:CLL_ModifyReservation \
+  --metadata ApexClass:CLL_CancelReservation \
+  --metadata ApexClass:CLL_EscalateToHuman \
+  --target-org agentforce-org
+```
+
+**Single agent (Ambika bundle only):**
 
 ```bash
 sf project retrieve start \
@@ -190,17 +252,29 @@ Adjust SELECT if your org’s Ambika fields differ. If query fails, object may b
 
 
 
-## 5. FAQ content for Data 360 (local file, not org retrieve)
+## 5. Data 360 (lake objects + RAG IDs)
 
-FAQ corpus for RAG is maintained as CSV until ingested in Data Cloud:
+**In org today (2026-10-27):** file-ingest data libraries **`ADL_Diner_Restauran`** (FAQ PDF) and **`ADL_TestMenu`** (menu PDF), with chunk/index lake rows. Queryable via SOQL on `ADL_Diner_Restauran__dlm` and `ADL_TestMenu__dlm`.
+
+**Not in Metadata API:** DLO/DMO definitions for those ADL names do not retrieve via `MktDataTranObject` / `DataSourceObject` in this org. Track IDs locally in `data/data360_assets.json` (RAG feature config, Einstein retriever reference on `Joe_FAQ_Prompt`).
+
+**Inventory check:**
+
+```bash
+sf data query --target-org agentforce-org \
+  -q "SELECT Name FROM DataLakeObjectInstance WHERE Name LIKE 'ADL_%' ORDER BY Name"
+```
+
+**CSV FAQ corpus (optional parallel to PDF library):**
 
 - `data/ambika_restaurant_faq.csv` — see [data/README.md](../../data/README.md)
 
-Regenerate from `Restaurant__c` long-text fields when source data changes (script or manual). **DMO / retriever** are created in **Data Cloud UI** — document IDs in [org-data-inventory.md](../org-data-inventory.md); there is no single standard retrieve for “all Data 360” in every org.
+Regenerate from `Restaurant__c` long-text fields when source data changes. PDFs themselves stay in Data Cloud file storage unless you download them manually from the Data Cloud UI.
 
 **Check:**
 
-- [ ] `data/ambika_restaurant_faq.csv` exists and has rows for each `Restaurant_ID__c` you care about
+- [ ] `data/data360_assets.json` lists current ADL names and `rag_feature_config_id` values from `.agent` / prompt templates
+- [ ] `data/ambika_restaurant_faq.csv` exists if you still use CSV ingest
 
 ---
 

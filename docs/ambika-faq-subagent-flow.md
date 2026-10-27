@@ -45,7 +45,7 @@ Only **restaurant FAQ-style questions** once **`restaurant_id`** is set (Phase 1
 | 3. **Answer** | If the action returns text, reply briefly in a warm tone. Optional citations if enabled on the agent. |
 | 4. **Refuse** | If nothing relevant is retrieved, say you do not have that in the FAQ and offer to connect to a person (do not invent menu items or policies). |
 | 5. **Stay in FAQ** | User can ask another FAQ question in the same thread; subagent keeps using retrieval only. |
-| 6. **Not FAQ** | Router sends escalation / off-topic / ambiguous elsewhere—not handled inside `faq_subagent`. |
+| 6. **Not FAQ** | Router stays FAQ-only (no separate subagents); ask user for a restaurant FAQ or missing context. |
 
 ---
 
@@ -54,11 +54,10 @@ Only **restaurant FAQ-style questions** once **`restaurant_id`** is set (Phase 1
 ```mermaid
 flowchart TD
   Start([User message in chat]) --> Router[agent_router]
-  Router -->|FAQ / restaurant question| FAQ[faq_subagent]
-  Router -->|human / angry / transfer| Esc[escalation]
-  Router -->|general knowledge / unrelated| Off[off_topic]
-  Router -->|too vague| Amb[ambiguous_question]
-  FAQ --> Action[Answer via Joe_FAQ_Prompt + file retriever]
+  Router -->|vars missing| Setup[faq_context_setup]
+  Setup -->|set_faq_context| FAQ[faq_subagent]
+  Router -->|vars set + FAQ question| FAQ
+  FAQ --> Action[Answer_TableCraft_FAQ + Ambika prompt]
   Action -->|has answer| Reply[Reply from retrieval only]
   Action -->|empty / no hit| Refuse[Standard no-FAQ message]
   Reply --> FAQ
@@ -69,11 +68,12 @@ flowchart TD
 
 ## Router rule (minimal, until orchestrator exists)
 
-- **→ `faq_subagent`:** User is asking for **information** about the restaurant (policies, hours, menu, parking, amenities, “do you have…?”).
-- **→ `escalation`:** User asks for a **person**, or issue needs human (complaint, allergy confirmation beyond FAQ text, etc.).
-- **→ `off_topic` / `ambiguous_question`:** Template guardrails (unchanged).
+- **→ `faq_context_setup`:** FAQ intent but **`restaurant_id`** or **`escalation_phone_number`** missing.
+- **→ `faq_subagent`:** Both vars set and user asks restaurant **information** (policies, hours, menu, parking, amenities, “do you have…?”).
 
-Router sends missing-context FAQ turns to **`faq_context_setup`**; that subagent runs **`set_faq_context`** before **`faq_subagent`**. Subagent bounces to **`faq_context_setup`** if inputs are cleared.
+No **`escalation`**, **`off_topic`**, or **`ambiguous_question`** subagents in this bundle (removed for FAQ-only demo). Human handoff copy comes from **`escalation_phone_number`** in the FAQ prompt when FAQ has no answer.
+
+Subagent bounces to **`faq_context_setup`** if inputs are cleared.
 
 ---
 
@@ -92,8 +92,8 @@ Router sends missing-context FAQ turns to **`faq_context_setup`**; that subagent
 
 1. “What are your hours on Sunday?” → answer from FAQ if present.  
 2. “Do you have gluten-free options?” → FAQ or safe handoff per prompt rules.  
-3. “What’s the weather in Austin?” → router → off_topic.  
-4. “I need a human.” → router → escalation.  
+3. “What’s the weather in Austin?” → router declines / steers to restaurant FAQ (no off-topic subagent).  
+4. “I need a human.” → FAQ prompt handoff copy when applicable, or router asks for FAQ context (no escalation subagent).  
 5. “Tell me about your truffle pasta” → FAQ if in doc, else refuse without inventing.
 
 ---

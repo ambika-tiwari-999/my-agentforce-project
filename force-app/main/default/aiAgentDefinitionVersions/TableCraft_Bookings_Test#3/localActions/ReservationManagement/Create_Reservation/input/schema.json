@@ -1,0 +1,35 @@
+{
+  "required" : [ "var_ContactId", "var_PartySize", "var_ReservationTime", "var_RestaurantId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "var_ContactId" : {
+      "title" : "var_ContactId",
+      "description" : "The diner's numeric Contact ID / External Diner ID (e.g., 99999999).",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_PartySize" : {
+      "title" : "var_PartySize",
+      "description" : "The number of dining guests in the party.",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_ReservationTime" : {
+      "title" : "var_ReservationTime",
+      "description" : "The reservation date and time.",
+      "lightning:type" : "lightning__dateTimeStringType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_RestaurantId" : {
+      "title" : "var_RestaurantId",
+      "description" : "The custom restaurant code from the Restaurant_ID__c field (e.g., REST-ATX-01, REST-NYC-01). DO NOT pass the 18-character Salesforce record ID starting with a03. Always pass the human-readable Restaurant_ID__c code.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

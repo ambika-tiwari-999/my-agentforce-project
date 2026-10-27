@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AiAgentDefinitionVersion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <articleAnswersGPTEnabled>false</articleAnswersGPTEnabled>
+    <billingMode>ActionBased</billingMode>
+    <citationsEnabled>false</citationsEnabled>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The agent instructions</description>
+        <developerName>AgentScriptInternal_agent_instructions</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Agent Instructions</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The next topic to be visited</description>
+        <developerName>AgentScriptInternal_next_topic</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Next Topic</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>This variable may also be referred to as VerifiedCustomerId</description>
+        <developerName>VerifiedCustomerId</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Verified Customer Id</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <copilotPrimaryLanguage>en_US</copilotPrimaryLanguage>
+    <genAiPlannerName>Joe_Test_FAQ_Agent_v1</genAiPlannerName>
+    <isScriptCompatibleAgent>true</isScriptCompatibleAgent>
+    <knowledgeActionEnabled>false</knowledgeActionEnabled>
+    <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
+    <planner>
+        <fullName>Joe_Test_FAQ_Agent_v1</fullName>
+        <agentGraphRef>20Zg7000006ruyH</agentGraphRef>
+        <agentScript>20Zg7000006o6d3</agentScript>
+        <description>New agent description</description>
+        <localTopicLinks>
+            <genAiPluginName>agent_router</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>ambiguous_question</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>escalation</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>faq_handler</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>off_topic</genAiPluginName>
+        </localTopicLinks>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Welcome the user and determine the appropriate subagent based on user input</description>
+            <genAiPluginInstructions>
+                <description>You are an FAQ Agent. Your only job is to answer questions by searching the internal FAQ document uploaded as a data library.
+Do not answer questions from general knowledge or memory. Only provide answers retrieved from the FAQ data library.
+If a question is not covered in the FAQ, politely inform the user that you don&apos;t have an answer for that topic in your FAQ.
+Do not discuss topics unrelated to the FAQ content.
+
+{{state.AgentScriptInternal_agent_instructions}}</description>
+                <developerName>instruction0_179g70000020ksw</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179g70000020ksw</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>agent_router</localDeveloperName>
+            <masterLabel>Agent Router</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Redirect conversation to relevant topics when user request is too ambiguous</description>
+            <genAiPluginInstructions>
+                <description>You are an FAQ Agent. Your only job is to answer questions by searching the internal FAQ document uploaded as a data library.
+Do not answer questions from general knowledge or memory. Only provide answers retrieved from the FAQ data library.
+If a question is not covered in the FAQ, politely inform the user that you don&apos;t have an answer for that topic in your FAQ.
+Do not discuss topics unrelated to the FAQ content.</description>
+                <developerName>instruction0_179g70000020ksy</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179g70000020ksy</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>ambiguous_question</localDeveloperName>
+            <masterLabel>Ambiguous Question</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Handles requests from users who want to transfer or escalate their conversation to a live human agent.</description>
+            <genAiPluginInstructions>
+                <description>You are an FAQ Agent. Your only job is to answer questions by searching the internal FAQ document uploaded as a data library.
+Do not answer questions from general knowledge or memory. Only provide answers retrieved from the FAQ data library.
+If a question is not covered in the FAQ, politely inform the user that you don&apos;t have an answer for that topic in your FAQ.
+Do not discuss topics unrelated to the FAQ content.</description>
+                <developerName>instruction0_179g70000020ksv</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179g70000020ksv</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>escalation</localDeveloperName>
+            <masterLabel>Escalation</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Answers user questions by searching the internal FAQ document uploaded as a data library. Declines questions not covered in the FAQ.</description>
+            <genAiPluginInstructions>
+                <description>You are an FAQ Agent. Your only job is to answer questions by searching the internal FAQ document uploaded as a data library.
+Do not answer questions from general knowledge or memory. Only provide answers retrieved from the FAQ data library.
+If a question is not covered in the FAQ, politely inform the user that you don&apos;t have an answer for that topic in your FAQ.
+Do not discuss topics unrelated to the FAQ content.</description>
+                <developerName>instruction0_179g70000020ksx</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179g70000020ksx</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localActionLinks>
+                <functionName>Answer_FAQ_for_Table_Craft</functionName>
+            </localActionLinks>
+            <localActions>
+                <description>Answer questions about our policies</description>
+                <invocationTarget>Joe_FAQ_Prompt</invocationTarget>
+                <invocationTargetType>generatePromptResponse</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+                <localDeveloperName>Answer_FAQ_for_Table_Craft</localDeveloperName>
+                <masterLabel>Answer FAQ for Table Craft</masterLabel>
+            </localActions>
+            <localDeveloperName>faq_handler</localDeveloperName>
+            <masterLabel>FAQ Handler</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Redirect conversation to relevant topics when user request goes off-topic</description>
+            <genAiPluginInstructions>
+                <description>You are an FAQ Agent. Your only job is to answer questions by searching the internal FAQ document uploaded as a data library.
+Do not answer questions from general knowledge or memory. Only provide answers retrieved from the FAQ data library.
+If a question is not covered in the FAQ, politely inform the user that you don&apos;t have an answer for that topic in your FAQ.
+Do not discuss topics unrelated to the FAQ content.</description>
+                <developerName>instruction0_179g70000020ksz</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179g70000020ksz</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>off_topic</localDeveloperName>
+            <masterLabel>Off Topic</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <masterLabel>Joe Test FAQ Agent</masterLabel>
+        <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+    </planner>
+    <smallTalkEnabled>false</smallTalkEnabled>
+    <staticPromptsEnabled>false</staticPromptsEnabled>
+    <status>Active</status>
+    <stopRecPrompts>false</stopRecPrompts>
+    <surfacesEnabled>false</surfacesEnabled>
+    <toneType>Casual</toneType>
+    <version>1</version>
+    <welcomeMessage>Hi! I&apos;m here to help you with frequently asked questions. What would you like to know?</welcomeMessage>
+</AiAgentDefinitionVersion>

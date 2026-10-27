@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bot xmlns="http://soap.sforce.com/2006/04/metadata">
+    <agentDSLEnabled>true</agentDSLEnabled>
+    <agentType>EinsteinServiceAgent</agentType>
+    <botMlDomain>
+        <label>Intelligent Dinner CLL Agent</label>
+        <name>Intelligent_Dinner_CLL_Agent</name>
+    </botMlDomain>
+    <botSource>None</botSource>
+    <botUser>intelligent_dinner_cll_agent@00dg700000m98ec16.ext</botUser>
+    <description>Diner support agent for TableCraft: reservation lookup, creation, changes and cancellations, grounded restaurant information, and escalation to a person with a Case.</description>
+    <label>Intelligent Dinner CLL Agent</label>
+    <logPrivateConversationData>false</logPrivateConversationData>
+    <richContentEnabled>true</richContentEnabled>
+    <sessionTimeout>0</sessionTimeout>
+    <type>ExternalCopilot</type>
+</Bot>

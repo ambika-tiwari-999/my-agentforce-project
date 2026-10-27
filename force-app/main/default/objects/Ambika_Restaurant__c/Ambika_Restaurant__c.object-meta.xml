@@ -141,11 +141,12 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>Custom_Compact_Layout</compactLayoutAssignment>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <enableActivities>true</enableActivities>
+    <description>Ambika demo restaurant master (structured fields only).</description>
+    <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableFeeds>true</enableFeeds>
+    <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
@@ -155,17 +156,11 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Ambika Restaurant</label>
     <nameField>
-        <label>Ambika Restaurant</label>
-        <trackFeedHistory>false</trackFeedHistory>
+        <label>Record Name</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>Ambika Restaurants</pluralLabel>
-    <searchLayouts>
-        <searchResultsAdditionalFields>Restaurant_ID__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Name__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Zip_Code__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Phone_Number__c</searchResultsAdditionalFields>
-    </searchLayouts>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
