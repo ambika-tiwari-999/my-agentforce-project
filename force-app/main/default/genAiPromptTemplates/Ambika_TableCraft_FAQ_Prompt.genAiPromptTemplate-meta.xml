@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>qgl7aZWow5Yh/toyhB8mwe9mFuEACIGjnvWfUp6Bjug=_2</activeVersionIdentifier>
     <description>Ambika Phase 1 FAQ — grounded answers and guardrails for TableCraft restaurant FAQ retrieval.</description>
     <developerName>Ambika_TableCraft_FAQ_Prompt</developerName>
     <masterLabel>Ambika TableCraft FAQ Prompt</masterLabel>
@@ -65,6 +66,7 @@ GUARDRAILS — follow exactly:
             <referenceName>EinsteinSearch.File_Diner_Restaurant_FAQ_and_Policies_1Cx_8Ec8b60f20d</referenceName>
         </templateDataProviders>
         <templateFormat>Jinja</templateFormat>
+        <versionIdentifier>qgl7aZWow5Yh/toyhB8mwe9mFuEACIGjnvWfUp6Bjug=_2</versionIdentifier>
     </templateVersions>
     <type>einstein_gpt__flex</type>
     <visibility>Global</visibility>

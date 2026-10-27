@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AiAgentDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
     <agentDSLEnabled>true</agentDSLEnabled>
-    <agentDescription>New agent description</agentDescription>
+    <agentDescription>Phase 1 demo — FAQ subagent on shared TableCraft FAQ library; router stub until orchestrator is defined.</agentDescription>
     <agentType>EinsteinServiceAgent</agentType>
     <botUser>ambika_monday_demo_agent@00dg700000m98ec572901936.ext</botUser>
     <contextVariables>

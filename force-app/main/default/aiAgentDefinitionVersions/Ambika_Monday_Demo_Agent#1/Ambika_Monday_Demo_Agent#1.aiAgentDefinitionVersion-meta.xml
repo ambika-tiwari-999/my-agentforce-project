@@ -35,6 +35,7 @@
     <planner>
         <fullName>Ambika_Monday_Demo_Agent_v1</fullName>
         <agentGraphRef>20Zg7000006lton</agentGraphRef>
+        <agentScript>20Zg7000006iuav</agentScript>
         <description>New agent description</description>
         <localTopicLinks>
             <genAiPluginName>agent_router</genAiPluginName>

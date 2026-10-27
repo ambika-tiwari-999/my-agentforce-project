@@ -104,12 +104,15 @@ subagent faq_subagent:
             inputs:
                 "Input:question": string
                     label: "question"
+                    description: "Diner FAQ question from the conversation"
                     is_required: True
                 "Input:restaurant_id": string
                     label: "restaurant_id"
+                    description: "Restaurant business key for prompt context"
                     is_required: False
                 "Input:escalation_phone_number": string
                     label: "escalation_phone_number"
+                    description: "Escalation or callback phone for no-FAQ copy"
                     is_required: False
                 outputLanguage: string
                     label: "Output language"

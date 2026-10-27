@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AiAgentDefinitionVersion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <articleAnswersGPTEnabled>false</articleAnswersGPTEnabled>
+    <billingMode>ActionBased</billingMode>
+    <citationsEnabled>false</citationsEnabled>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The agent instructions</description>
+        <developerName>AgentScriptInternal_agent_instructions</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Agent Instructions</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Runtime condition evaluation for if statements</description>
+        <developerName>AgentScriptInternal_condition_1</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Runtime Condition 1</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Boolean</dataType>
+        <description>Runtime condition evaluation for else-if chain link 2</description>
+        <developerName>AgentScriptInternal_condition_2</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Runtime Condition 2</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The next topic to be visited</description>
+        <developerName>AgentScriptInternal_next_topic</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Next Topic</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Required before FAQ — public or handoff line for this restaurant; set before faq_subagent runs.</description>
+        <developerName>escalation_phone_number</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Escalation Phone Number</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>Required before FAQ — business key e.g. REST-ATX-01; set by router or future orchestrator.</description>
+        <developerName>restaurant_id</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Restaurant Id</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <copilotPrimaryLanguage>en_US</copilotPrimaryLanguage>
+    <genAiPlannerName>Ambika_Monday_Demo_Agent_v2</genAiPlannerName>
+    <isScriptCompatibleAgent>true</isScriptCompatibleAgent>
+    <knowledgeActionEnabled>false</knowledgeActionEnabled>
+    <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
+    <planner>
+        <fullName>Ambika_Monday_Demo_Agent_v2</fullName>
+        <agentGraphRef>20Zg7000006t1Uf</agentGraphRef>
+        <description>Phase 1 demo — FAQ subagent on shared TableCraft FAQ library; router stub until orchestrator is defined.</description>
+        <localTopicLinks>
+            <genAiPluginName>agent_router</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>ambiguous_question</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>escalation</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>faq_context_setup</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>faq_subagent</genAiPluginName>
+        </localTopicLinks>
+        <localTopicLinks>
+            <genAiPluginName>off_topic</genAiPluginName>
+        </localTopicLinks>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Welcome the user and determine the appropriate subagent based on user input</description>
+            <genAiPluginInstructions>
+                <description>You help diners with TableCraft restaurant questions using approved FAQ retrieval only.
+Do not answer restaurant policy or menu questions from general knowledge.
+
+{{state.AgentScriptInternal_agent_instructions}}</description>
+                <developerName>instruction0_179g70000020zlZ</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179g70000020zlZ</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>agent_router</localDeveloperName>
+            <masterLabel>Agent Router</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Redirect conversation to relevant topics when user request is too ambiguous</description>
+            <genAiPluginInstructions>
+                <description>You help diners with TableCraft restaurant questions using approved FAQ retrieval only.
+Do not answer restaurant policy or menu questions from general knowledge.</description>
+                <developerName>instruction0_179g70000020zla</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179g70000020zla</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>ambiguous_question</localDeveloperName>
+            <masterLabel>Ambiguous Question</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Handles requests from users who want to transfer or escalate their conversation to a live human agent.</description>
+            <genAiPluginInstructions>
+                <description>You help diners with TableCraft restaurant questions using approved FAQ retrieval only.
+Do not answer restaurant policy or menu questions from general knowledge.</description>
+                <developerName>instruction0_179g70000020zlX</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179g70000020zlX</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>escalation</localDeveloperName>
+            <masterLabel>Escalation</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Collect restaurant_id and escalation_phone_number before grounded FAQ retrieval.</description>
+            <genAiPluginInstructions>
+                <description>You help diners with TableCraft restaurant questions using approved FAQ retrieval only.
+Do not answer restaurant policy or menu questions from general knowledge.</description>
+                <developerName>instruction0_179g70000020zlW</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179g70000020zlW</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>faq_context_setup</localDeveloperName>
+            <masterLabel>FAQ Context Setup</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Answers TableCraft FAQ questions using the org file library and retriever only; refuses when FAQ has no support.</description>
+            <genAiPluginInstructions>
+                <description>You help diners with TableCraft restaurant questions using approved FAQ retrieval only.
+Do not answer restaurant policy or menu questions from general knowledge.</description>
+                <developerName>instruction0_179g70000020zlV</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179g70000020zlV</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localActionLinks>
+                <functionName>Answer_TableCraft_FAQ</functionName>
+            </localActionLinks>
+            <localActions>
+                <description>Grounded FAQ answer via Ambika_TableCraft_FAQ_Prompt and File_Diner_Restaurant FAQ retriever.</description>
+                <invocationTarget>Ambika_TableCraft_FAQ_Prompt</invocationTarget>
+                <invocationTargetType>generatePromptResponse</invocationTargetType>
+                <isConfirmationRequired>false</isConfirmationRequired>
+                <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+                <localDeveloperName>Answer_TableCraft_FAQ</localDeveloperName>
+                <masterLabel>Answer TableCraft FAQ</masterLabel>
+            </localActions>
+            <localDeveloperName>faq_subagent</localDeveloperName>
+            <masterLabel>FAQ Subagent</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <localTopics>
+            <canEscalate>false</canEscalate>
+            <description>Redirect conversation to relevant topics when user request goes off-topic</description>
+            <genAiPluginInstructions>
+                <description>You help diners with TableCraft restaurant questions using approved FAQ retrieval only.
+Do not answer restaurant policy or menu questions from general knowledge.</description>
+                <developerName>instruction0_179g70000020zlY</developerName>
+                <language>en_US</language>
+                <masterLabel>instruction0_179g70000020zlY</masterLabel>
+                <sortOrder>1</sortOrder>
+            </genAiPluginInstructions>
+            <language>en_US</language>
+            <localDeveloperName>off_topic</localDeveloperName>
+            <masterLabel>Off Topic</masterLabel>
+            <pluginType>Topic</pluginType>
+        </localTopics>
+        <masterLabel>Ambika Monday Demo Agent</masterLabel>
+        <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+    </planner>
+    <smallTalkEnabled>false</smallTalkEnabled>
+    <staticPromptsEnabled>false</staticPromptsEnabled>
+    <status>Inactive</status>
+    <stopRecPrompts>false</stopRecPrompts>
+    <surfacesEnabled>false</surfacesEnabled>
+    <toneType>Casual</toneType>
+    <version>2</version>
+    <welcomeMessage>Hi, I&apos;m Ambika&apos;s Monday demo agent. Ask me about hours, parking, menu, or policies for our demo restaurant—or say if you&apos;d like a team member.</welcomeMessage>
+</AiAgentDefinitionVersion>
