@@ -13,7 +13,7 @@ FAQ is not a separate API with a JSON body. **Required inputs = agent variables*
 
 | Variable | Required | Set by | Used for |
 |----------|----------|--------|----------|
-| **`restaurant_id`** | Yes | Router / future orchestrator (`set_faq_context`) | Scope, copy, future retriever filter |
+| **`restaurant_id`** | Yes | **`faq_context_setup`** (`set_faq_context`) / future orchestrator | Scope, copy, future retriever filter |
 | **`escalation_phone_number`** | Yes | Same | Handoff / “call us” copy; escalation context |
 | **User question** | Yes (each turn) | Transcript (latest user message) | Mapped at action call to `Answer_TableCraft_FAQ` → `Input:question` |
 
@@ -21,9 +21,10 @@ Orchestrator **`user_intent`** (routing only) is not on this agent yet—add whe
 
 **Enforcement in `Ambika_Monday_Demo_Agent.agent`:**
 
-1. **`go_to_faq_subagent`** — `available when` `restaurant_id` and `escalation_phone_number` are non-empty.  
-2. **`faq_subagent.before_reasoning`** — if either input is empty → `transition to @subagent.agent_router`.  
-3. **`set_faq_context`** on router — `@utils.setVariables` for both fields (until orchestrator sets them upstream).
+1. **`go_to_faq_subagent`** (router) — `available when` `restaurant_id` and `escalation_phone_number` are non-empty.  
+2. **`go_to_faq_context_setup`** (router) — when FAQ is needed but vars are missing.  
+3. **`set_faq_context`** on **`faq_context_setup`** — `@utils.setVariables` (not on hyperclassifier router).  
+4. **`faq_subagent.before_reasoning`** — if either input is empty → `transition to @subagent.faq_context_setup`.
 
 Defaults are **empty** (strict). For messaging preview, set variables in the test harness or complete one turn that calls `set_faq_context` (e.g. restaurant `REST-ATX-01` + phone from CRM/FAQ).
 
@@ -72,7 +73,7 @@ flowchart TD
 - **→ `escalation`:** User asks for a **person**, or issue needs human (complaint, allergy confirmation beyond FAQ text, etc.).
 - **→ `off_topic` / `ambiguous_question`:** Template guardrails (unchanged).
 
-Router must **`set_faq_context`** (or orchestrator equivalent) before FAQ routing; subagent bounces to router if inputs are missing.
+Router sends missing-context FAQ turns to **`faq_context_setup`**; that subagent runs **`set_faq_context`** before **`faq_subagent`**. Subagent bounces to **`faq_context_setup`** if inputs are cleared.
 
 ---
 

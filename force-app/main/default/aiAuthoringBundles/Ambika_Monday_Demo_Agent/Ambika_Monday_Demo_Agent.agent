@@ -39,15 +39,11 @@ start_agent agent_router:
     reasoning:
         instructions: ->
             | Select the best tool to call based on conversation history and user's intent.
-              FAQ subagent requires restaurant_id and escalation_phone_number to be set first (orchestrator will own this later; until then use set_faq_context).
-              If the user asks a restaurant FAQ question but either input is missing, ask for the restaurant (or confirm REST-ATX-01 for demo) and the escalation/callback phone number, then call set_faq_context before go_to_faq_subagent.
-              Route questions about restaurant hours, parking, menu, policies, amenities, or location/contact (when answerable from FAQ) to the FAQ subagent only after inputs are set.
+              Restaurant FAQ (hours, parking, menu, policies, amenities, location/contact from FAQ): if restaurant_id or escalation_phone_number is missing, use go_to_faq_context_setup; if both are set, use go_to_faq_subagent.
               Route explicit requests for a human agent to escalation.
         actions:
-            set_faq_context: @utils.setVariables
-                description: "Set required FAQ inputs: restaurant_id (e.g. REST-ATX-01) and escalation_phone_number before routing to FAQ."
-                with restaurant_id = ...
-                with escalation_phone_number = ...
+            go_to_faq_context_setup: @utils.transition to @subagent.faq_context_setup
+                description: "User asks restaurant FAQ but restaurant_id or escalation_phone_number is not set yet."
             go_to_faq_subagent: @utils.transition to @subagent.faq_subagent
                 description: "Route when FAQ inputs are set and the user asks for restaurant information from the FAQ library."
                 available when @variables.restaurant_id != ""
@@ -56,14 +52,34 @@ start_agent agent_router:
             go_to_off_topic: @utils.transition to @subagent.off_topic
             go_to_ambiguous_question: @utils.transition to @subagent.ambiguous_question
 
+subagent faq_context_setup:
+    label: "FAQ Context Setup"
+    description: "Collect restaurant_id and escalation_phone_number before grounded FAQ retrieval."
+    reasoning:
+        instructions: ->
+            | Collect required FAQ inputs: restaurant_id (e.g. REST-ATX-01 for demo) and escalation_phone_number (public or callback line).
+              When the user provides values, call set_faq_context. When both variables are non-empty, use go_to_faq_subagent.
+              If the user is not setting up FAQ context, use return_to_router.
+        actions:
+            set_faq_context: @utils.setVariables
+                description: "Set restaurant_id and escalation_phone_number from the conversation."
+                with restaurant_id = ...
+                with escalation_phone_number = ...
+            go_to_faq_subagent: @utils.transition to @subagent.faq_subagent
+                description: "Continue to FAQ when both inputs are set."
+                available when @variables.restaurant_id != ""
+                available when @variables.escalation_phone_number != ""
+            return_to_router: @utils.transition to @subagent.agent_router
+                description: "Return to router when the user is not providing FAQ context."
+
 subagent faq_subagent:
     label: "FAQ Subagent"
     description: "Answers TableCraft FAQ questions using the org file library and retriever only; refuses when FAQ has no support."
     before_reasoning:
         if @variables.restaurant_id == "":
-            transition to @subagent.agent_router
+            transition to @subagent.faq_context_setup
         else if @variables.escalation_phone_number == "":
-            transition to @subagent.agent_router
+            transition to @subagent.faq_context_setup
     reasoning:
         instructions: ->
             | Required inputs: restaurant_id={!@variables.restaurant_id}, escalation_phone_number={!@variables.escalation_phone_number}.

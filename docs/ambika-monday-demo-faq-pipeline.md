@@ -11,7 +11,8 @@
 ```text
 User message
   → [0] Inputs (variables + transcript)
-  → [1] agent_router (first visit / context)
+  → [1] agent_router (transitions only — hyperclassifier)
+  → [1b] faq_context_setup (when vars missing — set_faq_context)
   → [2] faq_subagent entry guards
   → [3] faq_subagent reasoning instructions (planner)
   → [4] Einstein Trust Layer (generative call — planner/action path)
@@ -35,7 +36,7 @@ User message
 - FAQ question (transcript — not an agent variable)
 - **What runs:** Agent variables are set (or awaiting set); user question arrives in the conversation transcript.
 - **Agentforce design decision:** Domain context is **agent variables**, not Messaging session links; the FAQ question is **not** stored in a dedicated variable—it is read from the transcript when the action runs.
-- **Guardrails around:** Required **restaurant** (`restaurant_id`) and **escalation phone** (`escalation_phone_number`) before FAQ; empty defaults until `set_faq_context`.
+- **Guardrails around:** Required **restaurant** (`restaurant_id`) and **escalation phone** (`escalation_phone_number`) before FAQ; empty defaults until **`set_faq_context`** in **`faq_context_setup`**.
 - **Executed in:** Agent Script (`variables` block).
 - **Code location:** [Ambika_Monday_Demo_Agent.agent](../force-app/main/default/aiAuthoringBundles/Ambika_Monday_Demo_Agent/Ambika_Monday_Demo_Agent.agent) — `variables:` (`restaurant_id`, `escalation_phone_number`).
 
@@ -43,11 +44,21 @@ User message
 
 ## Step 1 — `agent_router`
 
-- **What runs:** Router classifies the user message and may call `set_faq_context` or transition to `faq_subagent`.
+- **What runs:** Router classifies the user message and **transitions only** (`go_to_faq_context_setup`, `go_to_faq_subagent`, escalation, off-topic, ambiguous). No `@utils.setVariables` on the router (required when using `DefaultEinsteinHyperClassifier`).
 - **Agentforce design decision:** **Routing** lives in Agent Script; FAQ is an in-bundle **subagent**, not a separate published agent (contrast: Guest Concierge `connected_subagent`).
-- **Guardrails around:** Route to FAQ only after both inputs are set; send escalation / off-topic / ambiguous requests to template subagents.
+- **Guardrails around:** FAQ with missing vars → **`faq_context_setup`**; FAQ with both vars set → **`faq_subagent`**; send escalation / off-topic / ambiguous requests to template subagents.
 - **Executed in:** Agent Script (router + `DefaultEinsteinHyperClassifier`).
-- **Code location:** [Ambika_Monday_Demo_Agent.agent](../force-app/main/default/aiAuthoringBundles/Ambika_Monday_Demo_Agent/Ambika_Monday_Demo_Agent.agent) — `start_agent agent_router`, `set_faq_context`, `go_to_faq_subagent` (`available when` both inputs non-empty).
+- **Code location:** [Ambika_Monday_Demo_Agent.agent](../force-app/main/default/aiAuthoringBundles/Ambika_Monday_Demo_Agent/Ambika_Monday_Demo_Agent.agent) — `start_agent agent_router`, `go_to_faq_context_setup`, `go_to_faq_subagent` (`available when` both inputs non-empty).
+
+---
+
+## Step 1b — `faq_context_setup`
+
+- **What runs:** Subagent planner collects **`restaurant_id`** and **`escalation_phone_number`**, calls **`set_faq_context`** (`@utils.setVariables`), then transitions to **`faq_subagent`** when both are non-empty (or **`return_to_router`**).
+- **Agentforce design decision:** Variable writes belong on a **regular subagent**, not the hyperclassifier router—required for **`sf agent publish authoring-bundle`** to compile.
+- **Guardrails around:** Do not run grounded FAQ until both agent variables are set.
+- **Executed in:** Agent Script (`subagent faq_context_setup` planner + `set_faq_context`).
+- **Code location:** [Ambika_Monday_Demo_Agent.agent](../force-app/main/default/aiAuthoringBundles/Ambika_Monday_Demo_Agent/Ambika_Monday_Demo_Agent.agent) — `subagent faq_context_setup`.
 
 ---
 
@@ -55,7 +66,7 @@ User message
 
 - **What runs:** Deterministic check before the FAQ subagent planner runs.
 - **Agentforce design decision:** **Hard prerequisites** belong in Agent Script, not in Prompt Builder—fail closed before any retrieval or LLM call.
-- **Guardrails around:** Block FAQ if `restaurant_id` or `escalation_phone_number` is empty; transition back to `agent_router`.
+- **Guardrails around:** Block FAQ if `restaurant_id` or `escalation_phone_number` is empty; transition to **`faq_context_setup`**.
 - **Executed in:** Agent Script (`before_reasoning`, no LLM).
 - **Code location:** [Ambika_Monday_Demo_Agent.agent](../force-app/main/default/aiAuthoringBundles/Ambika_Monday_Demo_Agent/Ambika_Monday_Demo_Agent.agent) — `subagent faq_subagent` → `before_reasoning`.
 
@@ -165,9 +176,9 @@ User message
 
 - **What runs:** Next user message is handled in `faq_subagent` again (typical FAQ follow-up), **or** script transitions to router.
 - **Agentforce design decision:** FAQ is **sticky** in the subagent until context changes or an explicit transition fires—not every turn re-enters the router.
-- **Guardrails around:** `return_to_router` when restaurant/phone context changes; `before_reasoning` bounce if inputs cleared; router handles new intents on transition.
+- **Guardrails around:** `return_to_router` when restaurant/phone context changes; `before_reasoning` bounce to **`faq_context_setup`** if inputs cleared; router handles new intents on transition.
 - **Executed in:** Agent Script.
-- **Code location:** [Ambika_Monday_Demo_Agent.agent](../force-app/main/default/aiAuthoringBundles/Ambika_Monday_Demo_Agent/Ambika_Monday_Demo_Agent.agent) — `return_to_router`; step 2 `before_reasoning`; step 1 router for re-entry.
+- **Code location:** [Ambika_Monday_Demo_Agent.agent](../force-app/main/default/aiAuthoringBundles/Ambika_Monday_Demo_Agent/Ambika_Monday_Demo_Agent.agent) — `return_to_router`; step 2 `before_reasoning`; steps 1 / 1b for re-entry and context collection.
 
 ---
 
