@@ -118,6 +118,7 @@ Agent FAQ subagent: retriever filtered by `restaurant_id`. CRM action optional f
 
 ## Related docs
 
+- [ambika-monday-demo-faq-pipeline.md](./ambika-monday-demo-faq-pipeline.md) — FAQ input→output checklist (Trust Layer, RAG, files)  
 - [ambika-faq-subagent-flow.md](./ambika-faq-subagent-flow.md) — Phase 1 minimal FAQ flow (implemented in `Ambika_Monday_Demo_Agent`)  
 - [org-data-inventory.md](./org-data-inventory.md) — current org state  
 - [restaurant-phone-agent-spec.md](./restaurant-phone-agent-spec.md) — agent phases

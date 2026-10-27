@@ -99,6 +99,6 @@ Router must **`set_faq_context`** (or orchestrator equivalent) before FAQ routin
 
 ## Related
 
+- [ambika-monday-demo-faq-pipeline.md](./ambika-monday-demo-faq-pipeline.md) — numbered pipeline, design decisions, and where each piece lives in git/org  
 - [ambika_schema.md](./ambika_schema.md) — CRM vs Data 360 split  
-- [restaurant-phone-agent-spec.md](./restaurant-phone-agent-spec.md) — full multi-phase design (orchestrator later)  
 - [data/data360_assets.json](../data/data360_assets.json) — RAG IDs

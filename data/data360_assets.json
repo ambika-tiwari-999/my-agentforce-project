@@ -1,0 +1,35 @@
+{
+  "org": "agentforce-org",
+  "lastSynced": "2026-10-27",
+  "dataLakeObjects": [
+    {
+      "name": "ADL_Diner_Restauran",
+      "queryApiName": "ADL_Diner_Restauran__dlm",
+      "filePath": "1JDg7000005k8HRGAY/Diner & Restaurant FAQ and Policies.pdf",
+      "contentType": "application/pdf",
+      "relatedChunkIndex": ["ADL_Diner_Restauran chunk", "ADL_Diner_Restauran index"]
+    },
+    {
+      "name": "ADL_TestMenu",
+      "queryApiName": "ADL_TestMenu__dlm",
+      "filePath": "1JDg7000005jSlFGAU/menu1.pdf",
+      "contentType": "application/pdf",
+      "relatedChunkIndex": ["ADL_TestMenu chunk", "ADL_TestMenu index"]
+    }
+  ],
+  "ragFeatureConfigs": [
+    {
+      "id": "ARFPC_1JDg7000005k8HRGAY",
+      "usedBy": "Joe_Test_FAQ_Agent.agent",
+      "dataLibrary": "ADL_Diner_Restauran"
+    }
+  ],
+  "einsteinSearchRetrievers": [
+    {
+      "referenceName": "EinsteinSearch.File_Diner_Restaurant_FAQ_and_Policies_1Cx_8Ec8b60f20d",
+      "label": "File_Diner_Restaurant_FAQ_and_Policies",
+      "usedBy": "genAiPromptTemplates/Joe_FAQ_Prompt.genAiPromptTemplate-meta.xml"
+    }
+  ],
+  "retrieveNotes": "DLO/DMO lakehouse definitions are not exposed via Metadata API in this org (MktDataTranObject/DataSourceObject retrieve fails). Lake rows are queryable via SOQL on *__dlm. Source PDFs live in Data Cloud file ingest, not in git."
+}

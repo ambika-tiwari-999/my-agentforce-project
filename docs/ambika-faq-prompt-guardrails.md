@@ -40,4 +40,5 @@ Publish/activate the prompt version in **Prompt Builder** if the org requires it
 
 ## Related
 
+- [ambika-monday-demo-faq-pipeline.md](./ambika-monday-demo-faq-pipeline.md) — full input→output checklist with Trust Layer, RAG, and file locations  
 - [ambika-faq-subagent-flow.md](./ambika-faq-subagent-flow.md)
