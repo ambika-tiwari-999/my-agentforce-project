@@ -73,36 +73,7 @@ Expect **5** restaurants and **30** reservations (as of last inventory).
 
 
 
-## 2. Ambika CRM objects (sync org → repo)
-
-If `Ambika_Restaurant__c` / `Ambika_Reservation__c` exist in the org, retrieve so local metadata matches the org (or skip if you are rebuilding Ambika from clones in step 1).
-
-```bash
-sf project retrieve start \
-  --metadata CustomObject:Ambika_Restaurant__c \
-  --metadata CustomObject:Ambika_Reservation__c \
-  --target-org agentforce-org
-```
-
-**Check:**
-
-```bash
-ls force-app/main/default/objects/Ambika_Restaurant__c/fields
-ls force-app/main/default/objects/Ambika_Reservation__c/fields
-```
-
-```bash
-sf data query --target-org agentforce-org -q "SELECT COUNT() FROM Ambika_Restaurant__c"
-sf data query --target-org agentforce-org -q "SELECT COUNT() FROM Ambika_Reservation__c"
-```
-
-If the objects were deleted in the org, retrieve may remove or fail — that is expected; rely on step 1 + clone workflow in [ambika_schema.md](../ambika_schema.md).
-
----
-
-
-
-## 3. Agentforce agents (TableCraft demo set)
+## 2. Agentforce agents (TableCraft demo set)
 
 **Project API version:** `sfdx-project.json` should use **68.0** (org API) so `AiAgentDefinition` / `AiAgentDefinitionVersion` retrieve works.
 
@@ -205,7 +176,7 @@ Expect **one** row.
 
 
 
-## 4. Export CRM **records** to `data/` (not retrieve)
+## 3. Export CRM **records** to `data/` (not retrieve)
 
 Create the folder if needed: `mkdir -p data`
 
@@ -234,25 +205,11 @@ wc -l data/reservation__c_records.csv     # expect 31 lines (header + 30 rows)
 
 Open CSVs and confirm `REST-ATX-01` and sample reservation IDs appear.
 
-**Ambika tables (if populated in org):**
-
-```bash
-sf data query --target-org agentforce-org \
-  -q "SELECT Restaurant_ID__c, Name__c, Zip_Code__c, Phone__c FROM Ambika_Restaurant__c" \
-  --result-format csv > data/ambika_restaurant__c_records.csv
-
-sf data query --target-org agentforce-org \
-  -q "SELECT Reservation_ID__c, Restaurant_ID__c, Party_Size__c, Reservation_Time__c, Status__c FROM Ambika_Reservation__c" \
-  --result-format csv > data/ambika_reservation__c_records.csv
-```
-
-Adjust SELECT if your org’s Ambika fields differ. If query fails, object may be missing or fields not provisioned — note in [org-data-inventory.md](../org-data-inventory.md).
-
 ---
 
 
 
-## 5. Data 360 (lake objects + RAG IDs)
+## 4. Data 360 (lake objects + RAG IDs)
 
 **In org today (2026-10-27):** file-ingest data libraries **`ADL_Diner_Restauran`** (FAQ PDF) and **`ADL_TestMenu`** (menu PDF), with chunk/index lake rows. Queryable via SOQL on `ADL_Diner_Restauran__dlm` and `ADL_TestMenu__dlm`.
 
@@ -280,7 +237,7 @@ Regenerate from `Restaurant__c` long-text fields when source data changes. PDFs 
 
 
 
-## 6. Optional (pull when you add them)
+## 5. Optional (pull when you add them)
 
 Only retrieve if these exist in **Setup** and you use them in the demo.
 
@@ -289,7 +246,7 @@ Only retrieve if these exist in **Setup** and you use them in the demo.
 | ------------------------------ | -------------------------------------------------------------------------------------------- |
 | Flow used by agent             | `sf project retrieve start --metadata Flow:Your_Flow_Api_Name --target-org agentforce-org`   |
 | Apex for lookups               | `sf project retrieve start --metadata ApexClass:YourClass --target-org agentforce-org`       |
-| GenAI functions wired to agent | Retrieve via `Agent:Ambika_Monday_Demo_Agent` (step 3) or list in Setup → Agentforce Actions |
+| GenAI functions wired to agent | Retrieve via `Agent:Ambika_Monday_Demo_Agent` (step 2) or list in Setup → Agentforce Actions |
 
 
 **Check:** matching files under `force-app/main/default/flows/`, `classes/`, etc.
@@ -305,7 +262,6 @@ Only retrieve if these exist in **Setup** and you use them in the demo.
 | ------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | Original table **schema** | `force-app/.../objects/Restaurant__c`, `Reservation__c`                                                     |
 | Original table **rows**   | `data/restaurant__c_records.csv`, `data/reservation__c_records.csv`                                         |
-| Ambika **schema**         | `force-app/.../objects/Ambika_`*                                                                            |
 | Agent **script**          | `force-app/.../aiAuthoringBundles/.../*.agent`                                                              |
 | FAQ for Data 360 ingest   | `data/ambika_restaurant_faq.csv` + Data Cloud config in docs                                                |
 | Full org clone            | **Not** — selective pull is normal; see [restaurant-phone-agent-spec.md](../restaurant-phone-agent-spec.md) |

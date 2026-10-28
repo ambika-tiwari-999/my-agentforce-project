@@ -2,7 +2,7 @@
 
 In **Prompt Builder**, a **Jinja prompt** is a template whose body is rendered with the **Jinja** templating language. Static instructions and guardrails stay fixed; **inputs**, **retriever results**, and other merge fields are substituted at runtime into one final string that is sent to the LLM.
 
-Ambika’s FAQ template uses Jinja. Placement in the agent flow: [ambika-monday-demo-faq-pipeline.md](./ambika-monday-demo-faq-pipeline.md) (Step 8 — Prompt template body + LLM).
+Ambika’s FAQ template uses Jinja. Placement in the agent flow: [ambika-monday-demo-faq-pipeline.md](../ambika-monday-demo-faq-pipeline.md) (Step 8 — Prompt template body + LLM).
 
 ---
 
@@ -29,7 +29,7 @@ Prompt Builder exposes a **Jinja-oriented subset** (not every Python-Jinja featu
 
 Fuller Jinja supports `{% if %}`, loops, and filters; use those only where Prompt Builder documents support for them. Ambika Phase 1 keeps the body mostly plain prose plus `{{ … }}` merges.
 
-**Metadata:** `templateFormat` is `Jinja` on [Ambika_TableCraft_FAQ_Prompt.genAiPromptTemplate-meta.xml](../force-app/main/default/genAiPromptTemplates/Ambika_TableCraft_FAQ_Prompt.genAiPromptTemplate-meta.xml).
+**Metadata:** `templateFormat` is `Jinja` on [Ambika_TableCraft_FAQ_Prompt.genAiPromptTemplate-meta.xml](../../force-app/main/default/genAiPromptTemplates/Ambika_TableCraft_FAQ_Prompt.genAiPromptTemplate-meta.xml).
 
 ---
 
@@ -54,6 +54,6 @@ Fuller Jinja supports `{% if %}`, loops, and filters; use those only where Promp
 
 ## Related
 
-- [ambika-monday-demo-faq-pipeline.md](./ambika-monday-demo-faq-pipeline.md) — full FAQ pipeline
+- [ambika-monday-demo-faq-pipeline.md](../ambika-monday-demo-faq-pipeline.md) — full FAQ pipeline
 - [ambika-einstein-retriever.md](./ambika-einstein-retriever.md) — where `{{EinsteinSearch....results}}` comes from
 - [ambika-faq-prompt-guardrails.md](./ambika-faq-prompt-guardrails.md) — rules inside the Jinja body

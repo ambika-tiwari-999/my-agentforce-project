@@ -80,7 +80,7 @@ model: "model://sfdc_ai__DefaultEinsteinHyperClassifier"
 
 **Fix:** publish from git (step 3 above), hard refresh Builder, Preview the **newest Committed** version (e.g. v8+). Avoid Preview on **v7** unless you revert the router model in that version.
 
-**After routing works:** set `restaurant_id` and `escalation_phone_number` (or complete `faq_context_setup`) before expecting grounded FAQ answers.
+**After routing works:** provide `restaurant_id` via harness **0.3** (`faq_context_setup`) or paste in Preview; **step 1** CRM validate runs on FAQ entry. Phone comes from `Restaurant__c`—not from the user. See [pipeline](../ambika-monday-demo-faq-pipeline.md) (step 0 vs steps 1–10).
 
 ---
 

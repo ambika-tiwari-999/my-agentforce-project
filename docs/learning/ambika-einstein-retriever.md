@@ -2,7 +2,7 @@
 
 An **Einstein retriever** is a **named search configuration** in Salesforce. In Prompt Builder it appears as an **Einstein Search** data provider on a prompt template. It runs **before** the LLM generates text: it takes a query string, searches an indexed knowledge corpus, and returns **text chunks** that the prompt injects as grounded context.
 
-This doc explains the concept for the **Ambika Monday Demo** FAQ path. Step-by-step placement in the agent flow is in [ambika-monday-demo-faq-pipeline.md](./ambika-monday-demo-faq-pipeline.md) (Step 7 — RAG retrieval).
+This doc explains the concept for the **Ambika Monday Demo** FAQ path. Step-by-step placement in the agent flow is in [ambika-monday-demo-faq-pipeline.md](../ambika-monday-demo-faq-pipeline.md) (Step 7 — RAG retrieval).
 
 ---
 
@@ -37,11 +37,11 @@ The LLM answers: *Given only those pieces, what do I say?*
 
 - **Developer name:** `File_Diner_Restaurant_FAQ_and_Policies_1Cx_8Ec8b60f20d`
 - **Invocable:** `invocable://getEinsteinRetrieverResults/File_Diner_Restaurant_FAQ_and_Policies_1Cx_8Ec8b60f20d`
-- **File:** [Ambika_TableCraft_FAQ_Prompt.genAiPromptTemplate-meta.xml](../force-app/main/default/genAiPromptTemplates/Ambika_TableCraft_FAQ_Prompt.genAiPromptTemplate-meta.xml)
+- **File:** [Ambika_TableCraft_FAQ_Prompt.genAiPromptTemplate-meta.xml](../../force-app/main/default/genAiPromptTemplates/Ambika_TableCraft_FAQ_Prompt.genAiPromptTemplate-meta.xml)
 
 The XML does **not** list `ADL_Diner_Restauran` by name. That link is defined in the **org** when the retriever is created (Einstein Search / retriever setup → data library / source).
 
-**Org inventory (reference):** [data360_assets.json](../data/data360_assets.json) — library **`ADL_Diner_Restauran`**, FAQ PDF path, chunk/index lake object `ADL_Diner_Restauran__dlm`, and the same retriever reference name Joe’s template uses.
+**Org inventory (reference):** [data360_assets.json](../../data/data360_assets.json) — library **`ADL_Diner_Restauran`**, FAQ PDF path, chunk/index lake object `ADL_Diner_Restauran__dlm`, and the same retriever reference name Joe’s template uses.
 
 **Important for Phase 1:** `searchText` is the **question only**. `restaurant_id` is passed into the prompt for framing and escalation copy, **not** into the retriever until a filter or scoped corpus is added.
 
@@ -65,6 +65,5 @@ The XML does **not** list `ADL_Diner_Restauran` by name. That link is defined in
 
 ## Related
 
-- [ambika-monday-demo-faq-pipeline.md](./ambika-monday-demo-faq-pipeline.md) — full FAQ pipeline
+- [ambika-monday-demo-faq-pipeline.md](../ambika-monday-demo-faq-pipeline.md) — full FAQ pipeline
 - [ambika-faq-prompt-guardrails.md](./ambika-faq-prompt-guardrails.md) — prompt-layer rules after retrieval
-- [ambika-faq-subagent-flow.md](./ambika-faq-subagent-flow.md) — router → subagent → action

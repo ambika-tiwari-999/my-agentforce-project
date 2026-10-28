@@ -23,7 +23,7 @@ Joe’s `Joe_FAQ_Prompt` remains in the org for other agents; Ambika’s bundle 
 |-------|---------------------|
 | `Input.question` | User utterance (transcript) |
 | `Input.restaurant_id` | `@variables.restaurant_id` |
-| `Input.escalation_phone_number` | `@variables.escalation_phone_number` |
+| `Input.escalation_phone_number` | `@variables.escalation_phone_number` (set from CRM **`Phone_Number__c`** in pipeline **step 1**, not user input) |
 
 Retriever still uses **`searchText = question`** only; `restaurant_id` is context + copy until retriever filter is added.
 
@@ -40,5 +40,4 @@ Publish/activate the prompt version in **Prompt Builder** if the org requires it
 
 ## Related
 
-- [ambika-monday-demo-faq-pipeline.md](./ambika-monday-demo-faq-pipeline.md) — full input→output checklist with Trust Layer, RAG, and file locations  
-- [ambika-faq-subagent-flow.md](./ambika-faq-subagent-flow.md)
+- [ambika-monday-demo-faq-pipeline.md](../ambika-monday-demo-faq-pipeline.md) — full input→output checklist with Trust Layer, RAG, and file locations
