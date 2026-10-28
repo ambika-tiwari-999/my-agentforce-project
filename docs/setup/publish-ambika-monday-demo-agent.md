@@ -64,6 +64,26 @@ Same as terminal block above: deploy prompt if it changed → validate (optional
 
 ---
 
+## Preview: “Sorry, it looks like something has gone wrong.”
+
+That text is the agent **`system.messages.error`** line — Preview hit a runtime failure (CLI shows **`ACTION_FAILED`**), not a generic Salesforce outage.
+
+**Likely cause (confirmed on committed v7):** **Agent Router** was **`DefaultEinsteinLlm`** instead of **`DefaultEinsteinHyperClassifier`**. This bundle’s router is **transition-only** (`go_to_faq_context_setup`, `go_to_faq_subagent`). That pattern expects the **hyperclassifier**; the first Preview turn then fails and surfaces the error message.
+
+**Source of truth:** `force-app/.../aiAuthoringBundles/Ambika_Monday_Demo_Agent/Ambika_Monday_Demo_Agent.agent` — router must stay:
+
+```text
+model: "model://sfdc_ai__DefaultEinsteinHyperClassifier"
+```
+
+**Do not** switch Agent Router to Einstein LLM in Builder. Variable writes stay on **`faq_context_setup`** (`set_faq_context`), not on the router.
+
+**Fix:** publish from git (step 3 above), hard refresh Builder, Preview the **newest Committed** version (e.g. v8+). Avoid Preview on **v7** unless you revert the router model in that version.
+
+**After routing works:** set `restaurant_id` and `escalation_phone_number` (or complete `faq_context_setup`) before expecting grounded FAQ answers.
+
+---
+
 ## More detail
 
 - [ambika-monday-demo-faq-pipeline.md](../ambika-monday-demo-faq-pipeline.md)

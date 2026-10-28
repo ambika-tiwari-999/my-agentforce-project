@@ -19,6 +19,8 @@ FAQ is not a separate API with a JSON body. **Required inputs = agent variables*
 
 Orchestrator **`user_intent`** (routing only) is not on this agent yet—add when the team router lands.
 
+**Router model (required):** **`agent_router`** uses **`DefaultEinsteinHyperClassifier`** only — transition routing, not generative chat on the start topic. If Builder changes it to **Default LLM**, Preview often fails immediately with *“Sorry, it looks like something has gone wrong.”* (see [publish-ambika-monday-demo-agent.md](./setup/publish-ambika-monday-demo-agent.md)).
+
 **Enforcement in `Ambika_Monday_Demo_Agent.agent`:**
 
 1. **`go_to_faq_subagent`** (router) — `available when` `restaurant_id` and `escalation_phone_number` are non-empty.  
