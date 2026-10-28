@@ -33,6 +33,7 @@ knowledge:
     citations_url: ""
     citations_enabled: True
 
+# version 10
 start_agent agent_router:
     label: "Agent Router"
     description: "Transition-only router — keep model DefaultEinsteinHyperClassifier (not Default LLM). Builder Preview failed on v7 when this was changed to LLM."
