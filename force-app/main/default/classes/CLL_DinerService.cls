@@ -187,4 +187,57 @@ public with sharing class CLL_DinerService {
             return null;
         }
     }
+
+    @InvocableMethod(
+        label='CLL Validate Restaurant By Code'
+        description='Confirms Restaurant_ID__c exists on Restaurant__c; used by Ambika Monday Demo Agent FAQ context setup.'
+    )
+    public static List<ValidateRestaurantResult> validateRestaurantByCode(List<ValidateRestaurantRequest> requests) {
+        List<ValidateRestaurantResult> results = new List<ValidateRestaurantResult>();
+        for (ValidateRestaurantRequest req : requests) {
+            results.add(buildValidateRestaurantResult(req.restaurantId));
+        }
+        return results;
+    }
+
+    private static ValidateRestaurantResult buildValidateRestaurantResult(String restaurantId) {
+        ValidateRestaurantResult r = new ValidateRestaurantResult();
+        r.found = false;
+        r.restaurantName = '';
+        r.phone = '';
+        String code = String.isBlank(restaurantId) ? '' : restaurantId.trim();
+        if (code == '') {
+            r.message = 'Provide a restaurant ID (for example REST-ATX-01).';
+            return r;
+        }
+        Restaurant__c restaurant = findRestaurantByCode(code);
+        if (restaurant == null) {
+            r.message = 'No restaurant found for ID "' + code + '". Check the ID and try again.';
+            return r;
+        }
+        r.found = true;
+        r.restaurantName = displayName(restaurant);
+        r.phone = restaurant.Phone_Number__c == null ? '' : String.valueOf(restaurant.Phone_Number__c);
+        r.message = 'Found ' + r.restaurantName + ' (' + code + ').';
+        return r;
+    }
+
+    public class ValidateRestaurantRequest {
+        @InvocableVariable(label='Restaurant ID' description='Restaurant business key, for example REST-ATX-01' required=true)
+        public String restaurantId;
+    }
+
+    public class ValidateRestaurantResult {
+        @InvocableVariable(label='Found' description='True when the restaurant ID exists in CRM')
+        public Boolean found;
+
+        @InvocableVariable(label='Restaurant Name' description='Display name from Restaurant__c')
+        public String restaurantName;
+
+        @InvocableVariable(label='Phone' description='Restaurant Phone_Number__c from CRM')
+        public String phone;
+
+        @InvocableVariable(label='Message' description='Summary for the agent planner')
+        public String message;
+    }
 }

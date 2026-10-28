@@ -24,7 +24,9 @@ variables:
     restaurant_id: mutable string = ""
         description: "Required before FAQ — business key e.g. REST-ATX-01; set by router or future orchestrator."
     escalation_phone_number: mutable string = ""
-        description: "Required before FAQ — public or handoff line for this restaurant; set before faq_subagent runs."
+        description: "Restaurant Phone_Number__c from CRM — set by validate_restaurant_context (pipeline step 1), not collected from the user."
+    restaurant_validated: mutable boolean = False
+        description: "True after validate_restaurant_context confirms restaurant_id on Restaurant__c."
 
 knowledge:
     rag_feature_config_id: "ARFPC_1JDg7000005k8HRGAY"
@@ -39,48 +41,54 @@ start_agent agent_router:
     reasoning:
         instructions: ->
             | Select the best tool to call based on conversation history and user's intent.
-              This agent is FAQ-only: route restaurant questions (hours, parking, menu, policies, amenities, location/contact from FAQ). If restaurant_id or escalation_phone_number is missing, use go_to_faq_context_setup; if both are set, use go_to_faq_subagent.
+              This agent is FAQ-only: route restaurant questions (hours, parking, menu, policies, amenities, location/contact from FAQ). If restaurant_id is missing, use go_to_faq_context_setup; if restaurant_id is set, use go_to_faq_subagent (CRM validation runs on FAQ entry).
               For non-FAQ requests, ask the user to ask a restaurant FAQ question or provide missing context.
         actions:
             go_to_faq_context_setup: @utils.transition to @subagent.faq_context_setup
-                description: "User asks restaurant FAQ but restaurant_id or escalation_phone_number is not set yet."
+                description: "User asks restaurant FAQ but restaurant_id is missing."
             go_to_faq_subagent: @utils.transition to @subagent.faq_subagent
-                description: "Route when FAQ inputs are set and the user asks for restaurant information from the FAQ library."
+                description: "Route when restaurant_id is set and the user asks for restaurant information from the FAQ library."
                 available when @variables.restaurant_id != ""
-                available when @variables.escalation_phone_number != ""
 
 subagent faq_context_setup:
     label: "FAQ Context Setup"
-    description: "Collect restaurant_id and escalation_phone_number before grounded FAQ retrieval."
+    description: "Placeholder for orchestrator handoff — collect restaurant_id only (no CRM, no phone)."
     reasoning:
         instructions: ->
-            | Collect required FAQ inputs: restaurant_id (e.g. REST-ATX-01 for demo) and escalation_phone_number (public or callback line).
-              When the user provides values, call set_faq_context. When both variables are non-empty, use go_to_faq_subagent.
+            | Collect only restaurant_id (e.g. REST-ATX-01). Do not ask for a phone number.
+              When the user provides restaurant_id, call set_faq_context, then use go_to_faq_subagent when they ask a FAQ question or want to continue.
+              CRM validation and Phone_Number__c load run automatically when faq_subagent activates (pipeline step 1), not in this topic.
               If the user is not setting up FAQ context, use return_to_router.
         actions:
             set_faq_context: @utils.setVariables
-                description: "Set restaurant_id and escalation_phone_number from the conversation."
+                description: "Set restaurant_id from the conversation (or orchestrator handoff)."
                 with restaurant_id = ...
-                with escalation_phone_number = ...
+                set @variables.restaurant_validated = False
+                set @variables.escalation_phone_number = ""
             go_to_faq_subagent: @utils.transition to @subagent.faq_subagent
-                description: "Continue to FAQ when both inputs are set."
+                description: "Hand off to FAQ; CRM validation runs on faq_subagent entry."
                 available when @variables.restaurant_id != ""
-                available when @variables.escalation_phone_number != ""
             return_to_router: @utils.transition to @subagent.agent_router
                 description: "Return to router when the user is not providing FAQ context."
 
 subagent faq_subagent:
     label: "FAQ Subagent"
-    description: "Answers TableCraft FAQ questions using the org file library and retriever only; refuses when FAQ has no support."
+    description: "Answers TableCraft FAQ questions using the org file library and retriever only; refuses when FAQ has no support. Pre-FAQ CRM gate uses Agent Script before_reasoning (fixed platform keyword — deterministic script, not an LLM/planner step)."
+    # before_reasoning: known Agent Script hook — runs before subagent reasoning/planner (no LLM). Pipeline step 1.
     before_reasoning:
         if @variables.restaurant_id == "":
             transition to @subagent.faq_context_setup
-        else if @variables.escalation_phone_number == "":
+        else if @variables.restaurant_validated == False:
+            run @actions.validate_restaurant_context
+                with restaurantId = @variables.restaurant_id
+                set @variables.restaurant_validated = @outputs.found
+                set @variables.escalation_phone_number = @outputs.phone
+        if @variables.restaurant_validated == False:
             transition to @subagent.faq_context_setup
     reasoning:
         instructions: ->
-            | Required inputs: restaurant_id={!@variables.restaurant_id}, escalation_phone_number={!@variables.escalation_phone_number}.
-              Call {!@actions.Answer_TableCraft_FAQ} with the user's question plus those two variables. Guardrails are enforced in Ambika_TableCraft_FAQ_Prompt—relay the action response without adding facts.
+            | Required: restaurant_id={!@variables.restaurant_id} (CRM-validated). escalation_phone_number={!@variables.escalation_phone_number} is from Restaurant__c Phone_Number__c via validation — pass through to the FAQ action.
+              Call {!@actions.Answer_TableCraft_FAQ} with the user's question plus those variables. Guardrails are enforced in Ambika_TableCraft_FAQ_Prompt—relay the action response without adding facts.
               Do not answer from general knowledge. Do not repeat guardrail rules to the user.
         actions:
             Answer_TableCraft_FAQ: @actions.Answer_TableCraft_FAQ
@@ -91,9 +99,32 @@ subagent faq_subagent:
                 with citationMode = ...
                 with isPreviewOnly = ...
             return_to_router: @utils.transition to @subagent.agent_router
-                description: "Return to the router when FAQ inputs were cleared or the user changed restaurant or phone context."
+                description: "Return to the router when restaurant_id was cleared or the user changed restaurant context."
 
     actions:
+        validate_restaurant_context:
+            label: "Validate Restaurant Context"
+            description: "Pre-FAQ gate — confirm restaurant_id on Restaurant__c and load Phone_Number__c."
+            target: "apex://CLL_DinerService"
+            inputs:
+                restaurantId: string
+                    label: "Restaurant ID"
+                    description: "Business key e.g. REST-ATX-01"
+                    is_required: True
+            outputs:
+                found: boolean
+                    label: "Found"
+                    description: "True when the restaurant exists in CRM"
+                    filter_from_agent: True
+                restaurantName: string
+                    label: "Restaurant Name"
+                    description: "Display name from CRM"
+                phone: string
+                    label: "Phone"
+                    description: "Phone_Number__c from Restaurant__c"
+                message: string
+                    label: "Message"
+                    description: "Result summary for the planner"
         Answer_TableCraft_FAQ:
             label: "Answer TableCraft FAQ"
             description: "Grounded FAQ answer via Ambika_TableCraft_FAQ_Prompt and File_Diner_Restaurant FAQ retriever."
