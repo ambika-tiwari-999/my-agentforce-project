@@ -2,6 +2,22 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>68.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Build_Restaurant_Summary</name>
+        <label>Build Restaurant Summary</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>var_RestaurantSummary</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>tt_RestaurantLine</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Restaurants</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>City_Specified</name>
         <label>City Specified?</label>
@@ -27,9 +43,28 @@
             <label>City Provided</label>
         </rules>
     </decisions>
+    <ends>
+        <name>END_ELEMENT_1</name>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+    </ends>
     <environments>Default</environments>
     <interviewLabel>Search Restaurants {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Search Restaurants</label>
+    <loops>
+        <name>Loop_Restaurants</name>
+        <label>Loop Restaurants</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>col_Restaurants</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Build_Restaurant_Summary</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>END_ELEMENT_1</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -55,6 +90,9 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_Restaurants</targetReference>
+        </connector>
         <object>Restaurant__c</object>
         <outputReference>col_Restaurants</outputReference>
         <queriedFields>Name</queriedFields>
@@ -70,6 +108,9 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_Restaurants</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>City__c</field>
@@ -96,6 +137,11 @@
         </connector>
     </start>
     <status>Active</status>
+    <textTemplates>
+        <name>tt_RestaurantLine</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>• {!Loop_Restaurants.Name} (ID: {!Loop_Restaurants.Restaurant_ID__c}) | Cuisine: {!Loop_Restaurants.Cuisine__c} | Highlights: {!Loop_Restaurants.Menu_Details__c}</text>
+    </textTemplates>
     <variables>
         <name>col_Restaurants</name>
         <dataType>SObject</dataType>
@@ -117,5 +163,12 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>var_RestaurantSummary</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
     </variables>
 </Flow>

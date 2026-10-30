@@ -34,8 +34,8 @@
     <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
     <planner>
         <fullName>Ambika_Monday_Demo_Agent_v1</fullName>
-        <agentGraphRef>20Zg7000006lton</agentGraphRef>
-        <agentScript>20Zg7000006iuav</agentScript>
+        <agentGraphRef>20Zg7000006sy8b</agentGraphRef>
+        <agentScript>20Zg7000006sy8c</agentScript>
         <description>New agent description</description>
         <localTopicLinks>
             <genAiPluginName>agent_router</genAiPluginName>
@@ -59,7 +59,7 @@
                 <developerName>instruction0_179g7000001ztzv</developerName>
                 <language>en_US</language>
                 <masterLabel>instruction0_179g7000001ztzv</masterLabel>
-                <sortOrder>1</sortOrder>
+                <sortOrder>0</sortOrder>
             </genAiPluginInstructions>
             <language>en_US</language>
             <localDeveloperName>agent_router</localDeveloperName>
@@ -74,7 +74,7 @@
                 <developerName>instruction0_179g7000001ztzu</developerName>
                 <language>en_US</language>
                 <masterLabel>instruction0_179g7000001ztzu</masterLabel>
-                <sortOrder>1</sortOrder>
+                <sortOrder>0</sortOrder>
             </genAiPluginInstructions>
             <language>en_US</language>
             <localDeveloperName>ambiguous_question</localDeveloperName>
@@ -89,7 +89,7 @@
                 <developerName>instruction0_179g7000001ztzw</developerName>
                 <language>en_US</language>
                 <masterLabel>instruction0_179g7000001ztzw</masterLabel>
-                <sortOrder>1</sortOrder>
+                <sortOrder>0</sortOrder>
             </genAiPluginInstructions>
             <language>en_US</language>
             <localDeveloperName>escalation</localDeveloperName>
@@ -104,7 +104,7 @@
                 <developerName>instruction0_179g7000001ztzt</developerName>
                 <language>en_US</language>
                 <masterLabel>instruction0_179g7000001ztzt</masterLabel>
-                <sortOrder>1</sortOrder>
+                <sortOrder>0</sortOrder>
             </genAiPluginInstructions>
             <language>en_US</language>
             <localDeveloperName>off_topic</localDeveloperName>

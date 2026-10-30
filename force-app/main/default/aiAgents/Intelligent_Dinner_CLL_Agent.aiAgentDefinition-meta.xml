@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <AiAgentDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
     <agentDSLEnabled>true</agentDSLEnabled>
-    <agentDescription>Diner support agent for TableCraft: reservation lookup, creation, changes and cancellations, grounded restaurant information, and escalation to a person with a Case.</agentDescription>
+    <agentDescription>Diner support agent for TableCraft: reservation lookup, creation, changes and cancellations, grounded restaurant information, and live transfer to a person through Omni-Channel.</agentDescription>
     <agentType>EinsteinServiceAgent</agentType>
     <botUser>intelligent_dinner_cll_agent@00dg700000m98ec16.ext</botUser>
     <logPrivateConversationData>false</logPrivateConversationData>

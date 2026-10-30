@@ -1,0 +1,38 @@
+{
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "var_PartySize" : {
+      "title" : "var_PartySize",
+      "description" : "The number of guests on the reservation.",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "var_ReservationDetailsMessage" : {
+      "title" : "var_ReservationDetailsMessage",
+      "description" : "A summary of the reservation details returned by the flow.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "var_ReservationStatus" : {
+      "title" : "var_ReservationStatus",
+      "description" : "The current status of the reservation (e.g., Active, Cancelled).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    },
+    "var_ReservationTime" : {
+      "title" : "var_ReservationTime",
+      "description" : "The date and time of the reservation.",
+      "lightning:type" : "lightning__dateTimeStringType",
+      "lightning:isPII" : false,
+      "copilotAction:isDisplayable" : true,
+      "copilotAction:isUsedByPlanner" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

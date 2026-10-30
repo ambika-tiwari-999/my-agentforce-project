@@ -699,7 +699,7 @@
     </planner>
     <smallTalkEnabled>false</smallTalkEnabled>
     <staticPromptsEnabled>false</staticPromptsEnabled>
-    <status>Active</status>
+    <status>Inactive</status>
     <stopRecPrompts>false</stopRecPrompts>
     <surfacesEnabled>false</surfacesEnabled>
     <toneType>Casual</toneType>

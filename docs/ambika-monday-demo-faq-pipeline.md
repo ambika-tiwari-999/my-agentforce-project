@@ -363,6 +363,8 @@ After `REST-ATX-01` + successful **step 1**:
 ## Related
 
 - [learning/](./learning/README.md) — concept docs (Einstein retriever, Jinja prompt, FAQ guardrails)
+- [ambika-data360-faq-rag.md](./ambika-data360-faq-rag.md) — Data 360 library, retriever, and which file powers FAQ tests
+- [ambika-monday-demo-future-work.md](./ambika-monday-demo-future-work.md) — Preview pitfalls (context-setup trap after step 1 bounce) and backlog
 - [ambika_schema.md](./ambika_schema.md)
 - [publish-ambika-monday-demo-agent.md](./setup/publish-ambika-monday-demo-agent.md)
 - [org-data-inventory.md](./org-data-inventory.md)

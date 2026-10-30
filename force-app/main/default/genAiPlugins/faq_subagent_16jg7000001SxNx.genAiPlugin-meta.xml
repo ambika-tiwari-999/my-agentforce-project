@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata">
+    <canEscalate>false</canEscalate>
+    <description>Answers TableCraft FAQ questions using the org file library and retriever only; refuses when FAQ has no support.</description>
+    <developerName>faq_subagent_16jg7000001SxNx</developerName>
+    <genAiPluginInstructions>
+        <description>You help diners with TableCraft restaurant questions using approved FAQ retrieval only.
+Do not answer restaurant policy or menu questions from general knowledge.</description>
+        <developerName>instruction0_179g700000222J8</developerName>
+        <language>en_US</language>
+        <masterLabel>instruction0_179g700000222J8</masterLabel>
+        <sortOrder>1</sortOrder>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <localActionLinks>
+        <functionName>Answer_TableCraft_FAQ_179g700000222J8</functionName>
+    </localActionLinks>
+    <localActions>
+        <fullName>Answer_TableCraft_FAQ_179g700000222J8</fullName>
+        <description>Grounded FAQ answer via Ambika_TableCraft_FAQ_Prompt and File_Diner_Restaurant FAQ retriever.</description>
+        <developerName>Answer_TableCraft_FAQ_179g700000222J8</developerName>
+        <invocationTarget>Ambika_TableCraft_FAQ_Prompt</invocationTarget>
+        <invocationTargetType>generatePromptResponse</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+        <localDeveloperName>Answer_TableCraft_FAQ</localDeveloperName>
+        <masterLabel>Answer TableCraft FAQ</masterLabel>
+    </localActions>
+    <localDeveloperName>faq_subagent</localDeveloperName>
+    <masterLabel>FAQ Subagent</masterLabel>
+    <pluginType>Topic</pluginType>
+</GenAiPlugin>

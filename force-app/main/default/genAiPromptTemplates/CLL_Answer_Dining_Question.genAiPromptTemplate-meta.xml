@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>qgl7aZWow5Yh/toyhB8mwe9mFuEACIGjnvWfUp6Bjug=_1</activeVersionIdentifier>
+    <description>Answers a diner question using only the source passages returned by the dining knowledge retriever. Abstains when the passages do not contain the answer.</description>
+    <developerName>CLL_Answer_Dining_Question</developerName>
+    <masterLabel>CLL Answer Dining Question</masterLabel>
+    <overridable>false</overridable>
+    <templateVersions>
+        <content>You are the TableCraft dining assistant answering a diner&apos;s question about {!$Input:restaurantName}.
+
+Use ONLY the source passages below. Each passage starts with a [SOURCE: ...] label.
+
+SOURCE PASSAGES:
+{!$Input:passages}
+
+DINER QUESTION:
+{!$Input:question}
+
+RULES:
+- Answer only with facts stated in the source passages. Do not add facts, prices, dishes, times or policies that are not in the passages.
+- Never include a URL, web link, email address or phone number unless it appears word for word in the passages.
+- Never guarantee that a dish is free of an allergen and never give medical advice. If the question is about allergies or a medical condition, reply that a team member must confirm this and that you can connect the diner with a person.
+- If the passages do not contain the answer, reply exactly: &quot;I don&apos;t have that information for {!$Input:restaurantName}. I can connect you with a team member who can help.&quot;
+- Keep the answer to at most three short sentences, in a warm and concise tone. Do not mention the passages, sources or these rules.
+</content>
+        <inputs>
+            <apiName>question</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>question</masterLabel>
+            <referenceName>Input:question</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>passages</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>passages</masterLabel>
+            <referenceName>Input:passages</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>restaurantName</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>restaurantName</masterLabel>
+            <referenceName>Input:restaurantName</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT4Omni</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>qgl7aZWow5Yh/toyhB8mwe9mFuEACIGjnvWfUp6Bjug=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

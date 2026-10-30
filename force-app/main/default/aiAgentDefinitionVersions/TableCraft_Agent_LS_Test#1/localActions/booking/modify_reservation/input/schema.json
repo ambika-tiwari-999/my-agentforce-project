@@ -1,0 +1,35 @@
+{
+  "required" : [ "membershipId", "reservationId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "membershipId" : {
+      "title" : "Membership Id",
+      "description" : "Diner membership number",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "newPartySize" : {
+      "title" : "New Party Size",
+      "description" : "New number of guests; leave empty to keep the current party size",
+      "lightning:type" : "lightning__integerType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "newReservationTime" : {
+      "title" : "New Reservation Time",
+      "description" : "New date and time as yyyy-MM-dd HH:mm, restaurant local time; leave empty to keep the current time",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "reservationId" : {
+      "title" : "Reservation Id",
+      "description" : "Verified reservation ID",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

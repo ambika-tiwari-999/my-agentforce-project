@@ -1,0 +1,49 @@
+{
+  "required" : [ ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "var_ContactId" : {
+      "title" : "var_ContactId",
+      "description" : "The diner's unique numeric Contact ID (e.g., 10008155).",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_NewDateTime" : {
+      "title" : "var_NewDateTime",
+      "description" : "The new reservation date and time formatted in ISO-8601 using the restaurant's local timezone offset (-05:00 for Austin/Chicago CDT, -04:00 for New York/Miami EDT, -07:00 for Los Angeles PDT). Example for 4:00 PM in Austin: 2026-10-27T16:00:00-05:00. NEVER pass raw UTC or append 'Z'.",
+      "lightning:type" : "lightning__dateTimeStringType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_NewPartySize" : {
+      "title" : "var_NewPartySize",
+      "description" : "The requested total number of dining guests.",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_NewSpecialRequests" : {
+      "title" : "var_NewSpecialRequests",
+      "description" : "Updated dietary restrictions, food allergies, seating preferences, or special celebrations (anniversary, birthday, business meal).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_ReservationIdentifier" : {
+      "title" : "var_ReservationIdentifier",
+      "description" : "The reservation confirmation code (e.g., 'RES-001'). If not provided, targets the nearest upcoming active booking.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    },
+    "var_RestaurantId" : {
+      "title" : "var_RestaurantId",
+      "description" : "The unique restaurant identifier code (e.g., REST-ATX-01).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata">
+    <canEscalate>false</canEscalate>
+    <description>Handles requests to view, check, reschedule, change the party size of, cancel, or modify an existing restaurant table reservation, as well as create new bookings.</description>
+    <developerName>ReservationManagement_16jg7000001RDwf</developerName>
+    <genAiPluginInstructions>
+        <description>You are an AI Agent.</description>
+        <developerName>instruction0_179g700000203L2</developerName>
+        <language>en_US</language>
+        <masterLabel>instruction0_179g700000203L2</masterLabel>
+        <sortOrder>1</sortOrder>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <localActionLinks>
+        <functionName>Get_Reservation_Details_179g700000203L2</functionName>
+    </localActionLinks>
+    <localActionLinks>
+        <functionName>GetReservationTimeSlots_179g700000203L2</functionName>
+    </localActionLinks>
+    <localActionLinks>
+        <functionName>AnswerQuestionsWithKnowledge_179g700000203L2</functionName>
+    </localActionLinks>
+    <localActionLinks>
+        <functionName>Modify_Reservation_179g700000203L2</functionName>
+    </localActionLinks>
+    <localActionLinks>
+        <functionName>Cancel_Reservation_179g700000203L2</functionName>
+    </localActionLinks>
+    <localActionLinks>
+        <functionName>Find_Contact_By_Email_179g700000203L2</functionName>
+    </localActionLinks>
+    <localActionLinks>
+        <functionName>Create_Reservation_179g700000203L2</functionName>
+    </localActionLinks>
+    <localActionLinks>
+        <functionName>Search_Restaurants_179g700000203L2</functionName>
+    </localActionLinks>
+    <localActions>
+        <fullName>Get_Reservation_Details_179g700000203L2</fullName>
+        <description>Retrieves the details of an existing reservation, including party size, date/time, and status. Use this when a diner asks to check or view their booking.</description>
+        <developerName>Get_Reservation_Details_179g700000203L2</developerName>
+        <invocationTarget>Get_Reservation_Details</invocationTarget>
+        <invocationTargetType>flow</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>Get_Reservation_Details</localDeveloperName>
+        <masterLabel>Get_Reservation_Details</masterLabel>
+    </localActions>
+    <localActions>
+        <fullName>Modify_Reservation_179g700000203L2</fullName>
+        <description>Updates an existing active restaurant reservation. Use this to modify party size or reschedule dining time.</description>
+        <developerName>Modify_Reservation_179g700000203L2</developerName>
+        <invocationTarget>Modify_Reservation</invocationTarget>
+        <invocationTargetType>flow</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+        <localDeveloperName>Modify_Reservation</localDeveloperName>
+        <masterLabel>Modify_Reservation</masterLabel>
+    </localActions>
+    <localActions>
+        <fullName>Create_Reservation_179g700000203L2</fullName>
+        <description>Creates a dining table reservation in Salesforce and returns the confirmed reservation confirmation code (e.g., RES-031).</description>
+        <developerName>Create_Reservation_179g700000203L2</developerName>
+        <invocationTarget>Create_Reservation</invocationTarget>
+        <invocationTargetType>flow</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>Create_Reservation</localDeveloperName>
+        <masterLabel>Create Reservation</masterLabel>
+        <progressIndicatorMessage>Securing your table reservation...</progressIndicatorMessage>
+    </localActions>
+    <localActions>
+        <fullName>GetReservationTimeSlots_179g700000203L2</fullName>
+        <description>Returns a list of available time slots for the date specified by the customer.</description>
+        <developerName>GetReservationTimeSlots_179g700000203L2</developerName>
+        <invocationTarget>SvcCopilotTmpl__GetAvailableTimeSlots</invocationTarget>
+        <invocationTargetType>flow</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>GetReservationTimeSlots</localDeveloperName>
+        <masterLabel>Get Reservation Time Slots</masterLabel>
+        <source>SvcCopilotTmpl__GetReservationTimeSlots</source>
+    </localActions>
+    <localActions>
+        <fullName>AnswerQuestionsWithKnowledge_179g700000203L2</fullName>
+        <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: &apos;What is your return policy?&apos; &apos;How do I fix an issue?&apos; or &apos;What features does a product have?&apos;</description>
+        <developerName>AnswerQuestionsWithKnowledge_179g700000203L2</developerName>
+        <invocationTarget>streamKnowledgeSearch</invocationTarget>
+        <invocationTargetType>standardInvocableAction</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+        <masterLabel>Answer Questions with Knowledge</masterLabel>
+        <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+        <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+    </localActions>
+    <localActions>
+        <fullName>Search_Restaurants_179g700000203L2</fullName>
+        <description>Searches the dining database for restaurants matching a specified city and returns venue details, cuisines, menu highlights, and restaurant IDs (e.g., REST-ATX-01).</description>
+        <developerName>Search_Restaurants_179g700000203L2</developerName>
+        <invocationTarget>Search_Restaurants</invocationTarget>
+        <invocationTargetType>flow</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>Search_Restaurants</localDeveloperName>
+        <masterLabel>Search Restaurants</masterLabel>
+        <progressIndicatorMessage>Searching our restaurant collection...</progressIndicatorMessage>
+    </localActions>
+    <localActions>
+        <fullName>Find_Contact_By_Email_179g700000203L2</fullName>
+        <description>Finds a diner&apos;s numeric Contact ID using their email address</description>
+        <developerName>Find_Contact_By_Email_179g700000203L2</developerName>
+        <invocationTarget>Find_Contact_By_Email</invocationTarget>
+        <invocationTargetType>flow</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>Find_Contact_By_Email</localDeveloperName>
+        <masterLabel>Find Contact By Email</masterLabel>
+    </localActions>
+    <localActions>
+        <fullName>Cancel_Reservation_179g700000203L2</fullName>
+        <description>Cancels an existing active restaurant reservation for the diner. Use this when a guest asks to cancel their booking.</description>
+        <developerName>Cancel_Reservation_179g700000203L2</developerName>
+        <invocationTarget>Cancel_Reservation</invocationTarget>
+        <invocationTargetType>flow</invocationTargetType>
+        <isConfirmationRequired>true</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>Cancel_Reservation</localDeveloperName>
+        <masterLabel>Cancel_Reservation</masterLabel>
+    </localActions>
+    <localDeveloperName>ReservationManagement</localDeveloperName>
+    <masterLabel>Reservation Management</masterLabel>
+    <pluginType>Topic</pluginType>
+</GenAiPlugin>

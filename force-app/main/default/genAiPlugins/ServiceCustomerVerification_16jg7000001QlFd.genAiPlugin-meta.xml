@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata">
+    <canEscalate>false</canEscalate>
+    <description>Verifies the customer&apos;s identity before granting access to sensitive data. Verification is required for inquiries related to orders and order status, deliveries, reservations, password resets, account management (e.g. contact information updates), or cases. Sensitive data includes confidential, private, or security-protected information, such as business-critical data or personally identifiable information (PII).</description>
+    <developerName>ServiceCustomerVerification_16jg7000001QlFd</developerName>
+    <genAiPluginInstructions>
+        <description>You are an AI Agent.</description>
+        <developerName>instruction0_179g7000001zW48</developerName>
+        <language>en_US</language>
+        <masterLabel>instruction0_179g7000001zW48</masterLabel>
+        <sortOrder>1</sortOrder>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <localActionLinks>
+        <functionName>SendEmailVerificationCode_179g7000001zW48</functionName>
+    </localActionLinks>
+    <localActionLinks>
+        <functionName>VerifyCustomer_179g7000001zW48</functionName>
+    </localActionLinks>
+    <localActions>
+        <fullName>VerifyCustomer_179g7000001zW48</fullName>
+        <description>Verifies whether the verification code entered by the user matches the code sent to the user&apos;s email address.</description>
+        <developerName>VerifyCustomer_179g7000001zW48</developerName>
+        <invocationTarget>SvcCopilotTmpl__VerifyCode</invocationTarget>
+        <invocationTargetType>flow</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>VerifyCustomer</localDeveloperName>
+        <masterLabel>Verify Customer</masterLabel>
+        <source>SvcCopilotTmpl__VerifyCustomer</source>
+    </localActions>
+    <localActions>
+        <fullName>SendEmailVerificationCode_179g7000001zW48</fullName>
+        <description>Sends a generated verification code to the user’s email address.</description>
+        <developerName>SendEmailVerificationCode_179g7000001zW48</developerName>
+        <invocationTarget>SvcCopilotTmpl__SendVerificationCode</invocationTarget>
+        <invocationTargetType>flow</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>SendEmailVerificationCode</localDeveloperName>
+        <masterLabel>Send Email with Verification Code</masterLabel>
+        <source>SvcCopilotTmpl__SendEmailVerificationCode</source>
+    </localActions>
+    <localDeveloperName>ServiceCustomerVerification</localDeveloperName>
+    <masterLabel>Service Customer Verification</masterLabel>
+    <pluginType>Topic</pluginType>
+</GenAiPlugin>

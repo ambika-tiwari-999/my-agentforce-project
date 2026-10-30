@@ -116,7 +116,7 @@ subagent faq_subagent:
                 found: boolean
                     label: "Found"
                     description: "True when the restaurant exists in CRM"
-                    filter_from_agent: True
+                    filter_from_agent: False
                 restaurantName: string
                     label: "Restaurant Name"
                     description: "Display name from CRM"

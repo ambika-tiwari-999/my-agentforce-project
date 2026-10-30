@@ -1,0 +1,21 @@
+{
+  "required" : [ "restaurantId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "question" : {
+      "title" : "Question",
+      "description" : "Diner question",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "restaurantId" : {
+      "title" : "Restaurant Id",
+      "description" : "Restaurant code",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

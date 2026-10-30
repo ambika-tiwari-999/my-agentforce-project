@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata">
+    <canEscalate>false</canEscalate>
+    <description>Handles requests from users who want to transfer or escalate their conversation to a live human agent.</description>
+    <developerName>escalation_16jg7000001RqOX</developerName>
+    <genAiPluginInstructions>
+        <description>You are an FAQ Agent. Your only job is to answer questions by searching the internal FAQ document uploaded as a data library.
+Do not answer questions from general knowledge or memory. Only provide answers retrieved from the FAQ data library.
+If a question is not covered in the FAQ, politely inform the user that you don&apos;t have an answer for that topic in your FAQ.
+Do not discuss topics unrelated to the FAQ content.</description>
+        <developerName>instruction0_179g70000020ksv</developerName>
+        <language>en_US</language>
+        <masterLabel>instruction0_179g70000020ksv</masterLabel>
+        <sortOrder>1</sortOrder>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <localDeveloperName>escalation</localDeveloperName>
+    <masterLabel>Escalation</masterLabel>
+    <pluginType>Topic</pluginType>
+</GenAiPlugin>

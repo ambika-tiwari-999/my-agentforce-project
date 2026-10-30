@@ -1,0 +1,174 @@
+system:
+    instructions: |
+        You help diners with TableCraft restaurant questions using approved FAQ retrieval only.
+        Do not answer restaurant policy or menu questions from general knowledge.
+    messages:
+        welcome: |
+            Hi, I'm Ambika's Monday demo agent. Ask me about hours, parking, menu, or policies for our demo restaurant—or say if you'd like a team member.
+        error: "Sorry, it looks like something has gone wrong."
+
+config:
+    developer_name: "Ambika_Monday_Demo_Agent"
+    agent_label: "Ambika Monday Demo Agent"
+    description: "Phase 1 demo — FAQ subagent on shared TableCraft FAQ library; router stub until orchestrator is defined."
+
+access:
+    default_agent_user: "ambika_monday_demo_agent@00dg700000m98ec572901936.ext"
+
+language:
+    default_locale: "en_US"
+    additional_locales: ""
+    all_additional_locales: False
+
+variables:
+    restaurant_id: mutable string = ""
+        description: "Required before FAQ — business key e.g. REST-ATX-01; set by router or future orchestrator."
+    escalation_phone_number: mutable string = ""
+        description: "Restaurant Phone_Number__c from CRM — set by validate_restaurant_context (pipeline step 1), not collected from the user."
+    restaurant_validated: mutable boolean = False
+        description: "True after validate_restaurant_context confirms restaurant_id on Restaurant__c."
+
+knowledge:
+    rag_feature_config_id: "ARFPC_1JDg7000005k8HRGAY"
+    citations_url: ""
+    citations_enabled: True
+
+# version 10
+start_agent agent_router:
+    label: "Agent Router"
+    description: "Transition-only router — keep model DefaultEinsteinHyperClassifier (not Default LLM). Builder Preview failed on v7 when this was changed to LLM."
+    model_config:
+        model: "model://sfdc_ai__DefaultEinsteinHyperClassifier"
+    reasoning:
+        instructions: ->
+            | Select the best tool to call based on conversation history and user's intent.
+              This agent is FAQ-only: route restaurant questions (hours, parking, menu, policies, amenities, location/contact from FAQ). If restaurant_id is missing, use go_to_faq_context_setup; if restaurant_id is set, use go_to_faq_subagent (CRM validation runs on FAQ entry).
+              For non-FAQ requests, ask the user to ask a restaurant FAQ question or provide missing context.
+        actions:
+            go_to_faq_context_setup: @utils.transition to @subagent.faq_context_setup
+                description: "User asks restaurant FAQ but restaurant_id is missing."
+            go_to_faq_subagent: @utils.transition to @subagent.faq_subagent
+                description: "Route when restaurant_id is set and the user asks for restaurant information from the FAQ library."
+                available when @variables.restaurant_id != ""
+
+subagent faq_context_setup:
+    label: "FAQ Context Setup"
+    description: "Placeholder for orchestrator handoff — collect restaurant_id only (no CRM, no phone)."
+    reasoning:
+        instructions: ->
+            | Collect only restaurant_id (e.g. REST-ATX-01). Do not ask for a phone number.
+              When the user provides restaurant_id, call set_faq_context, then use go_to_faq_subagent when they ask a FAQ question or want to continue.
+              CRM validation and Phone_Number__c load run automatically when faq_subagent activates (pipeline step 1), not in this topic.
+              If the user is not setting up FAQ context, use return_to_router.
+        actions:
+            set_faq_context: @utils.setVariables
+                description: "Set restaurant_id from the conversation (or orchestrator handoff)."
+                with restaurant_id = ...
+                set @variables.restaurant_validated = False
+                set @variables.escalation_phone_number = ""
+            go_to_faq_subagent: @utils.transition to @subagent.faq_subagent
+                description: "Hand off to FAQ; CRM validation runs on faq_subagent entry."
+                available when @variables.restaurant_id != ""
+            return_to_router: @utils.transition to @subagent.agent_router
+                description: "Return to router when the user is not providing FAQ context."
+
+subagent faq_subagent:
+    label: "FAQ Subagent"
+    description: "Answers TableCraft FAQ questions using the org file library and retriever only; refuses when FAQ has no support. Pre-FAQ CRM gate uses Agent Script before_reasoning (fixed platform keyword — deterministic script, not an LLM/planner step)."
+    # before_reasoning: known Agent Script hook — runs before subagent reasoning/planner (no LLM). Pipeline step 1.
+    before_reasoning:
+        if @variables.restaurant_id == "":
+            transition to @subagent.faq_context_setup
+        else if @variables.restaurant_validated == False:
+            run @actions.validate_restaurant_context
+                with restaurantId = @variables.restaurant_id
+                set @variables.restaurant_validated = @outputs.found
+                set @variables.escalation_phone_number = @outputs.phone
+        if @variables.restaurant_validated == False:
+            transition to @subagent.faq_context_setup
+    reasoning:
+        instructions: ->
+            | Required: restaurant_id={!@variables.restaurant_id} (CRM-validated). escalation_phone_number={!@variables.escalation_phone_number} is from Restaurant__c Phone_Number__c via validation — pass through to the FAQ action.
+              Call {!@actions.Answer_TableCraft_FAQ} with the user's question plus those variables. Guardrails are enforced in Ambika_TableCraft_FAQ_Prompt—relay the action response without adding facts.
+              Do not answer from general knowledge. Do not repeat guardrail rules to the user.
+        actions:
+            Answer_TableCraft_FAQ: @actions.Answer_TableCraft_FAQ
+                with "Input:question" = ...
+                with "Input:restaurant_id" = @variables.restaurant_id
+                with "Input:escalation_phone_number" = @variables.escalation_phone_number
+                with outputLanguage = ...
+                with citationMode = ...
+                with isPreviewOnly = ...
+            return_to_router: @utils.transition to @subagent.agent_router
+                description: "Return to the router when restaurant_id was cleared or the user changed restaurant context."
+
+    actions:
+        validate_restaurant_context:
+            label: "Validate Restaurant Context"
+            description: "Pre-FAQ gate — confirm restaurant_id on Restaurant__c and load Phone_Number__c."
+            target: "apex://CLL_DinerService"
+            inputs:
+                restaurantId: string
+                    label: "Restaurant ID"
+                    description: "Business key e.g. REST-ATX-01"
+                    is_required: True
+            outputs:
+                found: boolean
+                    label: "Found"
+                    description: "True when the restaurant exists in CRM"
+                    filter_from_agent: False
+                restaurantName: string
+                    label: "Restaurant Name"
+                    description: "Display name from CRM"
+                phone: string
+                    label: "Phone"
+                    description: "Phone_Number__c from Restaurant__c"
+                message: string
+                    label: "Message"
+                    description: "Result summary for the planner"
+        Answer_TableCraft_FAQ:
+            label: "Answer TableCraft FAQ"
+            description: "Grounded FAQ answer via Ambika_TableCraft_FAQ_Prompt and File_Diner_Restaurant FAQ retriever."
+            target: "generatePromptResponse://Ambika_TableCraft_FAQ_Prompt"
+            inputs:
+                "Input:question": string
+                    label: "question"
+                    description: "Diner FAQ question from the conversation"
+                    is_required: True
+                "Input:restaurant_id": string
+                    label: "restaurant_id"
+                    description: "Restaurant business key for prompt context"
+                    is_required: False
+                "Input:escalation_phone_number": string
+                    label: "escalation_phone_number"
+                    description: "Escalation or callback phone for no-FAQ copy"
+                    is_required: False
+                outputLanguage: string
+                    label: "Output language"
+                    description: "Optional. Specify the response language using the appropriate two-character language code or five-character locale code (for example, en_US, en_GB, es, es_MX)."
+                    is_required: False
+                citationMode: string
+                    label: "Citation Mode"
+                    description: "Select Citation Mode"
+                    is_required: False
+                isPreviewOnly: boolean
+                    label: "Preview Only"
+                    description: "Resolves the prompt template without generating an LLM response."
+                    is_required: False
+            outputs:
+                promptResponse: string
+                    label: "Prompt Response"
+                    description: "The prompt response generated by the action based on the specified prompt and input."
+                    is_displayable: False
+                    filter_from_agent: False
+                generationId: string
+                    label: "Prompt Generation ID"
+                    description: "The unique identifier for the prompt generation associated with this action invocation."
+                    is_displayable: False
+                    filter_from_agent: False
+                citations: object
+                    label: "Citations"
+                    description: "The prompt citation response generated by the action based on the specified prompt and input."
+                    complex_data_type_name: "@apexClassType/AiCopilot__GenAiCitationOutput"
+                    is_displayable: False
+                    filter_from_agent: False

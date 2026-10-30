@@ -1,0 +1,49 @@
+{
+  "required" : [ "membershipId", "reason", "conversationSummary" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "callbackPhone" : {
+      "title" : "Callback Phone",
+      "description" : "Callback phone number given by the diner",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "conversationSummary" : {
+      "title" : "Conversation Summary",
+      "description" : "Short summary of the conversation and what was already tried",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "intent" : {
+      "title" : "Intent",
+      "description" : "What the diner was trying to do",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "membershipId" : {
+      "title" : "Membership Id",
+      "description" : "Diner membership number",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "reason" : {
+      "title" : "Reason",
+      "description" : "Why the conversation is escalated, for example asked for a human, allergy, refund request",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "restaurantId" : {
+      "title" : "Restaurant Id",
+      "description" : "Restaurant code, if identified",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

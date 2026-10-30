@@ -383,6 +383,17 @@ For topics unrelated to dining, reply: &quot;I can only help with TableCraft res
             <pluginType>Topic</pluginType>
         </localTopics>
         <masterLabel>Intelligent Dinner CLL Agent</masterLabel>
+        <plannerActions>
+            <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+            <invocationTarget>streamKnowledgeSearch</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+            <masterLabel>Answer Questions with Knowledge</masterLabel>
+            <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+            <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+        </plannerActions>
         <plannerSurfaces>
             <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
             <callRecordingAllowed>false</callRecordingAllowed>
@@ -393,7 +404,7 @@ For topics unrelated to dining, reply: &quot;I can only help with TableCraft res
     </planner>
     <smallTalkEnabled>false</smallTalkEnabled>
     <staticPromptsEnabled>false</staticPromptsEnabled>
-    <status>Active</status>
+    <status>Inactive</status>
     <stopRecPrompts>false</stopRecPrompts>
     <surfacesEnabled>false</surfacesEnabled>
     <toneType>Casual</toneType>

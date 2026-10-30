@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata">
+    <canEscalate>false</canEscalate>
+    <description>Collect restaurant_id and escalation_phone_number before grounded FAQ retrieval.</description>
+    <developerName>faq_context_setup_16jg7000001SxNx</developerName>
+    <genAiPluginInstructions>
+        <description>You help diners with TableCraft restaurant questions using approved FAQ retrieval only.
+Do not answer restaurant policy or menu questions from general knowledge.</description>
+        <developerName>instruction0_179g700000222J7</developerName>
+        <language>en_US</language>
+        <masterLabel>instruction0_179g700000222J7</masterLabel>
+        <sortOrder>1</sortOrder>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <localDeveloperName>faq_context_setup</localDeveloperName>
+    <masterLabel>FAQ Context Setup</masterLabel>
+    <pluginType>Topic</pluginType>
+</GenAiPlugin>

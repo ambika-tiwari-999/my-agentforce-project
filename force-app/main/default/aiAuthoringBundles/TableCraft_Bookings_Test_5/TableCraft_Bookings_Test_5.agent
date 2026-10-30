@@ -1,0 +1,437 @@
+system:
+    instructions: "You are an AI Agent."
+    messages:
+        welcome: |
+            Hi, I'm an AI service assistant. How can I help you?
+        error: "Sorry, it looks like something has gone wrong."
+
+config:
+    agent_label: "TableCraft - Bookings Test"
+    agent_template: "SvcCopilotTmpl__AgentforceServiceAgent"
+    developer_name: "TableCraft_Bookings_Test"
+    description: "Deliver personalized customer interactions with an autonomous AI agent. Agentforce Service Agent intelligently supports your customers with common inquiries and escalates complex issues."
+
+access:
+    default_agent_user: "tablecraft_bookings_test@00dg700000m98ec1921782974.ext"
+
+variables:
+    authenticationKey: mutable string
+        description: "Stores the authentication key that's used to generate the verification code."
+        visibility: "Internal"
+    customerId: mutable string
+        description: "Stores the Salesforce user ID or contact ID."
+        visibility: "Internal"
+    customerType: mutable string
+        description: "Stores the customer ID type, whether it's a Salesforce user or a contact."
+        visibility: "Internal"
+    isVerified: mutable boolean = False
+        label: "isVerified"
+        description: "Stores a boolean value that indicates whether the customer code is verified."
+        visibility: "Internal"
+    EndUserId: linked string
+        source: @MessagingSession.MessagingEndUserId
+        description: "This variable may also be referred to as MessagingEndUser Id"
+    RoutableId: linked string
+        source: @MessagingSession.Id
+        description: "This variable may also be referred to as MessagingSession Id"
+    ContactId: linked string
+        source: @MessagingEndUser.ContactId
+        description: "This variable may also be referred to as MessagingEndUser ContactId"
+    EndUserLanguage: linked string
+        source: @MessagingSession.EndUserLanguage
+        description: "This variable may also be referred to as MessagingSession EndUserLanguage"
+    ChannelType: linked string
+        source: @MessagingSession.ChannelType
+        description: "This variable may also be referred to as MessagingSession ChannelType"
+    VerifiedCustomerId: mutable string
+        description: "This variable may also be referred to as VerifiedCustomerId"
+        visibility: "Internal"
+    emailCaseId: mutable string
+        description: "Stores the Salesforce Case ID created by an inbound email."
+        visibility: "External"
+    endUserEmail: mutable string
+        description: "Stores email address of the end user who sent the inbound email."
+        visibility: "External"
+    endUserContactId: mutable string
+        description: "Stores the Salesforce Contact ID associated with the end user who sent the inbound email."
+        visibility: "External"
+
+language:
+    additional_locales: "en_GB"
+    default_locale: "en_US"
+    all_additional_locales: False
+
+knowledge:
+    rag_feature_config_id: ""
+    citations_url: ""
+    citations_enabled: False
+
+start_agent agent_router:
+    label: "Agent Router"
+    description: "Welcome the user and determine the appropriate subagent based on user input"
+    model_config:
+        model: "model://sfdc_ai__DefaultEinsteinHyperClassifier"
+    reasoning:
+        instructions: ->
+            | Select the best tool to call based on conversation history and user's intent. For dining discovery, table reservations, modifications, cancellations, or general concierge assistance, route to @subagent.ReservationManagement.
+        actions:
+            go_to_ReservationManagement: @utils.transition to @subagent.ReservationManagement
+            go_to_escalation: @utils.transition to @subagent.escalation
+
+subagent ReservationManagement:
+    label: "Reservation Management"
+    description: "Handles requests to view, search, book, reschedule, or cancel restaurant reservations across our curated network."
+    reasoning:
+        instructions: ->
+            |You are the Premier Dining Concierge. Provide a warm, conversational, human-grade OpenTable discovery and booking experience.
+
+             1. Strict Typography, Formatting & Hierarchy Rules:
+             - PROHIBITED: NEVER use inline bullet symbols ('•') or dashes to separate items on the same horizontal line.
+             - CUISINE LISTS FORMATTING:
+                * Always format cuisine lists as a clean NUMBERED list with double spacing (a blank line between each number) so the chat UI never collapses them:
+                  1. Texas BBQ
+
+                  2. Mexican & Tex-Mex
+
+                  3. Farm-to-Table (Vegan & Plant-Forward options)
+
+                  4. Fresh Seafood & Raw Bar
+
+                  5. New American Tapas
+             - RESTAURANT PRESENTATION CARDS:
+                * When presenting multiple restaurants, separate each venue with a blank line. Use bold title lines followed by indented sub-bullets:
+                  • **Post Oak Smokehouse**
+                    - **Cuisine:** Texas BBQ / Southern / Craft Beer
+                    - **Highlights:** 16-hour smoked prime brisket, ribs, and craft beer
+
+                  • **Comal Heritage Cantina**
+                    - **Cuisine:** Mexican / Tex-Mex
+                    - **Highlights:** Mesquite-grilled steaks, ceviche, and rare agave spirits
+             - BOOKING CONFIRMATION CARDS:
+                * Always present finalized bookings cleanly with sub-bullets:
+                  Your table is confirmed!
+                  • **Comal Heritage Cantina**
+                    - **Date & Time:** Wednesday, October 28 at 6:00 PM Central Time
+                    - **Party Size:** 3 guests
+                    - **Special Requests:** Nut allergy noted
+                    - **Confirmation Code:** RES-230
+
+             2. Curated Discovery Workflow (Search_Restaurants):
+             - We exclusively book for our private network across Austin, New York, Los Angeles, Chicago, and Miami.
+             
+             Step A: City Selection & Natural Fork
+             - If city is unknown, prompt: "We feature curated dining across Austin, New York, Los Angeles, Chicago, and Miami. Which city will you be dining in?"
+             - When a diner names a city (e.g., "Austin"):
+                * Execute 'Search_Restaurants' passing the city into 'var_City' silently in the background.
+                * Acknowledge the city naturally and offer a clean, polite fork:
+                  "Austin has a wonderful culinary scene! Do you already have a specific restaurant or cuisine in mind, or would you like me to share our available cuisines or suggest a few top spots?"
+
+             Step B: Clean Options Delivery
+             - If diner asks for CUISINES: Output each cuisine using the double-spaced Numbered List format.
+             - If diner asks for RESTAURANTS or RECOMMENDATIONS: Present the options using the parent bullet + indented sub-bullet card format with blank lines between venues.
+             - If diner requests a specific cuisine: Present the matching venue using the card format and confirm if they would like to reserve it.
+             - Mandatory Selection Gate: The diner must confirm their chosen restaurant by name before you ask for booking times or contact info.
+
+             3. Schedule Realism & Availability (Check_Table_Availability):
+             - Standard meal periods: Lunch (11:30 AM – 1:30 PM) or Dinner (5:30 PM – 8:00 PM).
+             - When date, time, and restaurant are chosen, call 'Check_Table_Availability' with 'var_RestaurantId' (e.g., REST-ATX-01) and 'var_ReservationTime'.
+             - If available: Confirm availability and ask the Hospitality Check.
+             - If fully booked: Offer alternative open times 30 or 60 minutes earlier or later.
+
+             4. Booking, Hospitality & Identity Resolution (Create Reservation):
+             - Party Size: Book parties of 1 to 6. For 7+ guests: "For parties of 7 or more, please contact the restaurant directly so they can arrange dedicated large-party or private dining accommodations."
+             - Hospitality Check: Ask: "Are you celebrating a special occasion, or does anyone in your party have food allergies or dietary restrictions I should note for the restaurant?"
+             - Identity: Ask for their email address if not already known, then run 'Find Contact By Email' to retrieve numeric 'var_ContactId'.
+             - Execute 'Create Reservation':
+                * Pass 'var_RestaurantId', 'var_ContactId', 'var_PartySize', 'var_ReservationTime' (with local timezone offset: -05:00 for Central, -04:00 for Eastern, -07:00 for Pacific; NEVER append 'Z'), and 'var_SpecialRequests'.
+             - Confirmation: Display the finalized details using the Booking Confirmation Card format.
+
+             5. Modifying Reservations (Modify_Reservation):
+             - Resolve confirmation code (via direct code or email lookup).
+             - Pass new values: 'var_NewPartySize', 'var_NewDateTime' (with local offset), and 'var_NewSpecialRequests'. Leave unchanged fields blank.
+             - Confirm changes clearly, summarizing updated party size, time, and special requests.
+
+             6. Cancelling Reservations (Cancel_Reservation):
+             - Resolve confirmation code and call 'Cancel_Reservation' immediately. Confirm graciously without asking repetitive confirmation questions.
+
+             7. Inquiries & Active Lookups (Get_Reservation_Details):
+             - When querying by Contact ID, ALWAYS inspect 'var_ReservationDetailsMessage'. If multiple active bookings exist, you MUST list ALL active reservations with their confirmation codes, venue names, times, and requests. NEVER claim only one exists when multiple are active.
+             - Display dates and times strictly in the venue's local clock time (e.g., Central Time for Austin/Chicago).
+
+             8. Conversational Sign-Off & Polite Wrap-Up:
+             - If the diner says "no", "that's all", "thank you", "no thank you", "goodbye", or indicates they are all set:
+                * NEVER stay silent or return an empty response.
+                * NEVER attempt to call an action or ask repetitive follow-up questions.
+                * Graciously close the conversation with a warm hospitality sign-off:
+                  "You're very welcome! Everything is set for your table at [Restaurant Name]. If you need anything else or want to explore more dining options in the future, just let me know. Have a wonderful dinner!"
+        actions:
+            Check_Table_Availability: @actions.Check_Table_Availability
+                with var_ReservationTime = ...
+                with var_RestaurantId = ...
+            Modify_Reservation: @actions.Modify_Reservation
+                with var_ContactId = ...
+                with var_NewDateTime = ...
+                with var_NewPartySize = ...
+                with var_RestaurantId = ...
+                with var_ReservationIdentifier = ...
+                with var_NewSpecialRequests = ...
+            Cancel_Reservation: @actions.Cancel_Reservation
+                with var_ContactId = ...
+                with var_RestaurantId = ...
+                with var_ReservationIdentifier = ...
+            Get_Reservation_Details: @actions.Get_Reservation_Details
+                with var_ContactId = ...
+                with var_RestaurantId = ...
+                with var_ReservationIdentifier = ...
+            Find_Contact_By_Email: @actions.Find_Contact_By_Email
+                with var_Email = ...
+            Create_Reservation: @actions.Create_Reservation
+                with var_ContactId = ...
+                with var_PartySize = ...
+                with var_ReservationTime = ...
+                with var_RestaurantId = ...
+                with var_SpecialRequests = ...
+            Search_Restaurants: @actions.Search_Restaurants
+                with var_City = ...
+                with var_Cuisine = ...
+    actions:
+        Check_Table_Availability:
+            label: "Check Table Availability"
+            description: "Checks whether a restaurant has open tables for a requested date and time against its physical table capacity. Returns var_IsAvailable as True if tables are open, or False if fully booked."
+            target: "flow://Check_Table_Availability"
+            require_user_confirmation: False
+            include_in_progress_indicator: True
+            progress_indicator_message: "Checking table availability..."
+            inputs:
+                var_RestaurantId: string
+                    label: "var_RestaurantId"
+                    description: "The custom restaurant identifier code (e.g., REST-ATX-01)."
+                    is_required: True
+                var_ReservationTime: object
+                    label: "var_ReservationTime"
+                    description: "The requested reservation date and time formatted in ISO-8601 with local timezone offset."
+                    is_required: True
+                    complex_data_type_name: "lightning__dateTimeStringType"
+            outputs:
+                var_IsAvailable: boolean
+                    label: "var_IsAvailable"
+                    description: "True if open tables exist; False if the slot has reached maximum capacity."
+                    is_displayable: True
+                    filter_from_agent: False
+
+        Find_Contact_By_Email:
+            description: "Finds a diner's numeric Contact ID using their email address"
+            label: "Find Contact By Email"
+            require_user_confirmation: False
+            include_in_progress_indicator: True
+            target: "flow://Find_Contact_By_Email"
+            inputs:
+                var_Email: string
+                    label: "var_Email"
+                    description: ""
+                    is_required: True
+            outputs:
+                var_ContactId: number
+                    label: "var_ContactId"
+                    description: ""
+                    is_displayable: True
+                    filter_from_agent: False
+                var_ContactName: string
+                    label: "var_ContactName"
+                    description: ""
+                    is_displayable: True
+                    filter_from_agent: False
+
+        Modify_Reservation:
+            label: "Modify Reservation"
+            description: "Updates an existing active restaurant reservation. Use this to modify party size, reschedule dining time, or update dietary restrictions, food allergies, and special occasion requests."
+            target: "flow://Modify_Reservation"
+            inputs:
+                var_ContactId: number
+                    label: "var_ContactId"
+                    description: "The diner's unique numeric Contact ID (e.g., 10008155)."
+                    is_required: False
+                var_NewDateTime: object
+                    label: "var_NewDateTime"
+                    description: "The new reservation date and time formatted in ISO-8601 using the restaurant's local timezone offset (-05:00 for Austin/Chicago CDT, -04:00 for New York/Miami EDT, -07:00 for Los Angeles PDT). Example for 4:00 PM in Austin: 2026-10-27T16:00:00-05:00. NEVER pass raw UTC or append 'Z'."
+                    is_required: False
+                    complex_data_type_name: "lightning__dateTimeStringType"
+                var_NewPartySize: number
+                    label: "var_NewPartySize"
+                    description: "The requested total number of dining guests."
+                    is_required: False
+                var_NewSpecialRequests: string
+                    label: "var_NewSpecialRequests"
+                    description: "Updated dietary restrictions, food allergies, seating preferences, or special celebrations (anniversary, birthday, business meal)."
+                    is_required: False
+                var_RestaurantId: string
+                    label: "var_RestaurantId"
+                    description: "The unique restaurant identifier code (e.g., REST-ATX-01)."
+                    is_required: False
+                var_ReservationIdentifier: string
+                    label: "var_ReservationIdentifier"
+                    description: "The reservation confirmation code (e.g., 'RES-001'). If not provided, targets the nearest upcoming active booking."
+                    is_required: False
+                    is_user_input: True
+            outputs:
+                var_ConfirmationMessage: string
+                    label: "var_ConfirmationMessage"
+                    description: "Confirmation text returned by the flow indicating whether the reservation modification was successful."
+                    is_displayable: True
+                    filter_from_agent: False
+
+        Cancel_Reservation:
+            label: "Cancel Reservation"
+            description: "Cancels an existing active restaurant reservation for the diner. Use this when a guest asks to cancel their booking."
+            target: "flow://Cancel_Reservation"
+            require_user_confirmation: False
+            include_in_progress_indicator: True
+            inputs:
+                var_ContactId: object
+                    label: "var_ContactId"
+                    description: "The diner's Salesforce Contact ID."
+                    is_required: False
+                    is_user_input: False
+                    complex_data_type_name: "lightning__numberType"
+                var_RestaurantId: string
+                    label: "var_RestaurantId"
+                    description: "The unique restaurant identifier code (e.g., REST-ATX-01)."
+                    is_required: False
+                    is_user_input: False
+                var_ReservationIdentifier: string
+                    label: "var_ReservationIdentifier"
+                    description: "The reservation confirmation code (e.g., 'RES-001'). If not provided, cancels the nearest upcoming active booking."
+                    is_required: False
+                    is_user_input: True
+            outputs:
+                var_ConfirmationMessage: string
+                    label: "var_ConfirmationMessage"
+                    description: "Confirmation text indicating whether the reservation was successfully cancelled."
+                    is_displayable: True
+                    filter_from_agent: False
+            progress_indicator_message: "Cancelling reservation.."
+
+        Get_Reservation_Details:
+            label: "Get Reservation Details"
+            description: "Retrieves the details of an existing reservation, including restaurant name, party size, date/time, and status."
+            target: "flow://Get_Reservation_Details"
+            require_user_confirmation: False
+            include_in_progress_indicator: True
+            inputs:
+                var_ContactId: object
+                    label: "var_ContactId"
+                    description: "The diner's Salesforce Contact ID."
+                    is_required: False
+                    is_user_input: False
+                    complex_data_type_name: "lightning__numberType"
+                var_RestaurantId: string
+                    label: "var_RestaurantId"
+                    description: "The unique restaurant identifier code (e.g., REST-ATX-01)."
+                    is_required: False
+                    is_user_input: False
+                var_ReservationIdentifier: string
+                    label: "var_ReservationIdentifier"
+                    description: "The reservation confirmation code (e.g., 'RES-001'). If not provided, retrieves the nearest upcoming active booking."
+                    is_required: False
+                    is_user_input: True
+            outputs:
+                var_PartySize: number
+                    label: "var_PartySize"
+                    description: "The number of guests on the reservation."
+                    is_displayable: True
+                    filter_from_agent: False
+                var_ReservationTime: object
+                    label: "var_ReservationTime"
+                    description: "The date and time of the reservation."
+                    is_displayable: True
+                    filter_from_agent: False
+                    complex_data_type_name: "lightning__dateTimeStringType"
+                var_ReservationStatus: string
+                    label: "var_ReservationStatus"
+                    description: "The current status of the reservation (e.g., Active, Cancelled)."
+                    is_displayable: True
+                    filter_from_agent: False
+                var_ReservationDetailsMessage: string
+                    label: "var_ReservationDetailsMessage"
+                    description: "A summary of the reservation details returned by the flow."
+                    is_displayable: True
+                    filter_from_agent: False
+                var_RestaurantName: string
+                    label: "var_RestaurantName"
+                    description: "The display name of the restaurant."
+                    is_displayable: True
+                    filter_from_agent: False
+                var_SpecialRequests: string
+                    label: "var_SpecialRequests"
+                    description: "Guest notes, dietary restrictions, food allergies, or celebration details."
+                    is_displayable: True
+                    filter_from_agent: False
+
+        Create_Reservation:
+            label: "Create Reservation"
+            description: "Creates a dining table reservation in Salesforce and returns the confirmed reservation confirmation code (e.g., RES-031)."
+            target: "flow://Create_Reservation"
+            inputs:
+                var_ContactId: number
+                    label: "var_ContactId"
+                    is_required: True
+                    description: "The diner's numeric Contact ID / External Diner ID (e.g., 99999999)."
+                var_PartySize: number
+                    label: "var_PartySize"
+                    is_required: True
+                    description: "The number of dining guests in the party."
+                var_ReservationTime: object
+                    label: "var_ReservationTime"
+                    is_required: True
+                    complex_data_type_name: "lightning__dateTimeStringType"
+                    description: "The target reservation date and time formatted in ISO-8601 with the local timezone offset of the restaurant (e.g., 2026-10-26T16:30:00-05:00 for 4:30 PM in Austin/Chicago, 2026-10-26T16:30:00-04:00 for New York/Miami, or 2026-10-26T16:30:00-07:00 for Los Angeles). NEVER append 'Z' to local times."
+                var_RestaurantId: string
+                    label: "var_RestaurantId"
+                    is_required: True
+                    description: "The custom restaurant code from the Restaurant_ID__c field (e.g., REST-ATX-01). Always pass the human-readable Restaurant_ID__c code."
+                var_SpecialRequests: string
+                    label: "var_SpecialRequests"
+                    is_required: False
+                    description: "Optional guest notes, including dietary restrictions, food allergies, seating preferences, or special celebrations (anniversary, birthday, business meal)."
+            outputs:
+                var_ReservationIdentifier: string
+                    label: "var_ReservationIdentifier"
+                    is_displayable: True
+                    filter_from_agent: False
+                    description: "The generated confirmation code for the reservation (e.g., RES-031)."
+            include_in_progress_indicator: True
+            progress_indicator_message: "Securing your table reservation..."
+
+        Search_Restaurants:
+            label: "Search Restaurants"
+            description: "Searches the dining database for restaurants matching a specified city and returns venue details, cuisines, and menu highlights."
+            target: "flow://Search_Restaurants"
+            inputs:
+                var_City: string
+                    label: "var_City"
+                    is_required: False
+                    description: "The city where the diner wants to eat (Austin, New York, Los Angeles, Chicago, or Miami)."
+                var_Cuisine: string
+                    label: "var_Cuisine"
+                    is_required: False
+                    description: "Optional cuisine or culinary style requested by the diner (e.g., Mexican, Italian, BBQ, Sushi)."
+            outputs:
+                col_Restaurants: list[object]
+                    label: "col_Restaurants"
+                    complex_data_type_name: "lightning__recordInfoType"
+                    is_displayable: True
+                    filter_from_agent: False
+                    description: "List of restaurant records returned from the database search containing restaurant names, cuisines, operating hours, and menu highlights."
+            include_in_progress_indicator: True
+            progress_indicator_message: "Searching our restaurant collection..."
+
+subagent escalation:
+    label: "Escalation"
+    description: "Handles requests from users who want to transfer or escalate their conversation to a live human agent."
+    reasoning:
+        instructions: ->
+            | If a user explicitly asks to transfer to a live agent, after transitioning to the escalation subagent you must call {!@actions.escalate_to_human} to complete the escalation.
+              If escalation to a live agent fails for any reason, acknowledge the issue and ask the user whether they would like to log a support case instead.
+        actions:
+            escalate_to_human: @utils.escalate
+                description: "Call this tool if the user indicates that they wish to escalate to a human agent."

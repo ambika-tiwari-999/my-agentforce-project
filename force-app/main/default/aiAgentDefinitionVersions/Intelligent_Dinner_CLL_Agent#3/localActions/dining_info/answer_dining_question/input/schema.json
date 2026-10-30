@@ -1,0 +1,28 @@
+{
+  "required" : [ "Input:question", "Input:passages", "Input:restaurantName" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "Input:restaurantName" : {
+      "title" : "Input:Restaurant Name",
+      "description" : "Restaurant name",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "Input:passages" : {
+      "title" : "Input:Passages",
+      "description" : "Labeled source passages for the restaurant",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "Input:question" : {
+      "title" : "Input:Question",
+      "description" : "The diner's question",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

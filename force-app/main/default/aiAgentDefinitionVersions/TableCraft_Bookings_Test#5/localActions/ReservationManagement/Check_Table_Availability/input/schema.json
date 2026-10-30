@@ -1,0 +1,21 @@
+{
+  "required" : [ "var_RestaurantId", "var_ReservationTime" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "var_ReservationTime" : {
+      "title" : "var_ReservationTime",
+      "description" : "The requested reservation date and time formatted in ISO-8601 with local timezone offset.",
+      "lightning:type" : "lightning__dateTimeStringType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_RestaurantId" : {
+      "title" : "var_RestaurantId",
+      "description" : "The custom restaurant identifier code (e.g., REST-ATX-01).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

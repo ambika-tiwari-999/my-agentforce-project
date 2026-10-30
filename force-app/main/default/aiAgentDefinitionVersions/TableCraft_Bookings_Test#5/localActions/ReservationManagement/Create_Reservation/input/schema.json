@@ -1,0 +1,42 @@
+{
+  "required" : [ "var_ContactId", "var_PartySize", "var_ReservationTime", "var_RestaurantId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "var_ContactId" : {
+      "title" : "var_ContactId",
+      "description" : "The diner's numeric Contact ID / External Diner ID (e.g., 99999999).",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_PartySize" : {
+      "title" : "var_PartySize",
+      "description" : "The number of dining guests in the party.",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_ReservationTime" : {
+      "title" : "var_ReservationTime",
+      "description" : "The target reservation date and time formatted in ISO-8601 with the local timezone offset of the restaurant (e.g., 2026-10-26T16:30:00-05:00 for 4:30 PM in Austin/Chicago, 2026-10-26T16:30:00-04:00 for New York/Miami, or 2026-10-26T16:30:00-07:00 for Los Angeles). NEVER append 'Z' to local times.",
+      "lightning:type" : "lightning__dateTimeStringType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_RestaurantId" : {
+      "title" : "var_RestaurantId",
+      "description" : "The custom restaurant code from the Restaurant_ID__c field (e.g., REST-ATX-01). Always pass the human-readable Restaurant_ID__c code.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_SpecialRequests" : {
+      "title" : "var_SpecialRequests",
+      "description" : "Optional guest notes, including dietary restrictions, food allergies, seating preferences, or special celebrations (anniversary, birthday, business meal).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

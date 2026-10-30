@@ -1,0 +1,14 @@
+{
+  "required" : [ "restaurantId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "restaurantId" : {
+      "title" : "Restaurant ID",
+      "description" : "Business key e.g. REST-ATX-01",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

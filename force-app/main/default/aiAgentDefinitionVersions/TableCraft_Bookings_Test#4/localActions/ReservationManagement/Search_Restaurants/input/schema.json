@@ -1,0 +1,21 @@
+{
+  "required" : [ ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "var_City" : {
+      "title" : "var_City",
+      "description" : "The city where the diner wants to eat (Austin, New York, Los Angeles, Chicago, or Miami). If the diner names a specific restaurant instead of a city, leave this blank to search across the whole portfolio.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "var_Cuisine" : {
+      "title" : "var_Cuisine",
+      "description" : "Optional cuisine or culinary style requested by the diner (e.g., Mexican, Italian, BBQ, Sushi).",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -1,0 +1,42 @@
+{
+  "required" : [ "membershipId", "restaurantId", "reservationTime", "partySize" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "membershipId" : {
+      "title" : "Membership Id",
+      "description" : "Diner membership number",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "partySize" : {
+      "title" : "Party Size",
+      "description" : "Number of guests",
+      "lightning:type" : "lightning__integerType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "reservationTime" : {
+      "title" : "Reservation Time",
+      "description" : "Date and time as yyyy-MM-dd HH:mm, restaurant local time",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "restaurantId" : {
+      "title" : "Restaurant Id",
+      "description" : "Restaurant code",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "specialRequests" : {
+      "title" : "Special Requests",
+      "description" : "Occasion, seating or dietary notes exactly as the diner said them, for example: anniversary; nut allergy",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

@@ -28,28 +28,11 @@ public with sharing class CLL_FindRestaurant {
             r.message = 'Ask the diner for the restaurant name, city or zip code.';
             return r;
         }
-        String nameFilter = '%' + term + '%';
-        List<Restaurant__c> matches;
-        if (cityFilter == '') {
-            matches = [
-                SELECT Name, Name__c, Restaurant_ID__c, City__c, Cuisine__c, Zip_Code__c, Operating_Hours__c
-                FROM Restaurant__c
-                WHERE Zip_Code__c = :term OR City__c = :term OR Cuisine__c LIKE :nameFilter OR Name LIKE :nameFilter OR Name__c LIKE :nameFilter
-                WITH USER_MODE
-                ORDER BY Name
-                LIMIT 10
-            ];
-        } else {
-            // A city narrows a name, cuisine or zip search, e.g. "Japanese" in "New York".
-            matches = [
-                SELECT Name, Name__c, Restaurant_ID__c, City__c, Cuisine__c, Zip_Code__c, Operating_Hours__c
-                FROM Restaurant__c
-                WHERE City__c = :cityFilter
-                  AND (Zip_Code__c = :term OR Cuisine__c LIKE :nameFilter OR Name LIKE :nameFilter OR Name__c LIKE :nameFilter)
-                WITH USER_MODE
-                ORDER BY Name
-                LIMIT 10
-            ];
+        List<Restaurant__c> matches = search(term, cityFilter);
+        // A word such as "steakhouse" may not appear as written in the data; retry once with its root ("steak").
+        String root = rootTerm(term);
+        if (matches.isEmpty() && root != term) {
+            matches = search(root, cityFilter);
         }
         String label = cityFilter == '' ? term : (term == '' ? cityFilter : term + ' in ' + cityFilter);
         r.matchCount = matches.size();
@@ -71,6 +54,45 @@ public with sharing class CLL_FindRestaurant {
             r.message = 'Several restaurants match: ' + String.join(options, '; ') + '. Ask the diner which one.';
         }
         return r;
+    }
+
+    private static List<Restaurant__c> search(String term, String cityFilter) {
+        String nameFilter = '%' + term + '%';
+        if (cityFilter == '') {
+            return [
+                SELECT Name, Name__c, Restaurant_ID__c, City__c, Cuisine__c, Zip_Code__c, Operating_Hours__c
+                FROM Restaurant__c
+                WHERE Zip_Code__c = :term OR City__c = :term OR Cuisine__c LIKE :nameFilter OR Name LIKE :nameFilter OR Name__c LIKE :nameFilter
+                WITH USER_MODE
+                ORDER BY Name
+                LIMIT 10
+            ];
+        }
+        // A city narrows a name, cuisine or zip search, e.g. "Japanese" in "New York".
+        return [
+            SELECT Name, Name__c, Restaurant_ID__c, City__c, Cuisine__c, Zip_Code__c, Operating_Hours__c
+            FROM Restaurant__c
+            WHERE City__c = :cityFilter
+              AND (Zip_Code__c = :term OR Cuisine__c LIKE :nameFilter OR Name LIKE :nameFilter OR Name__c LIKE :nameFilter)
+            WITH USER_MODE
+            ORDER BY Name
+            LIMIT 10
+        ];
+    }
+
+    private static final List<String> GENERIC_SUFFIXES = new List<String>{
+        'restaurants', 'restaurant', 'houses', 'house', 'places', 'place', 'joints', 'joint', 'eria', 'bars', 'bar', 's'
+    };
+
+    /** Strips one generic suffix: steakhouse -> steak, pizzeria -> pizz, tacos -> taco. */
+    private static String rootTerm(String term) {
+        String lower = term.toLowerCase().trim();
+        for (String suffix : GENERIC_SUFFIXES) {
+            if (lower.endsWith(suffix) && lower.length() - suffix.length() >= 4) {
+                return lower.removeEnd(suffix).trim();
+            }
+        }
+        return term;
     }
 
     public class Request {

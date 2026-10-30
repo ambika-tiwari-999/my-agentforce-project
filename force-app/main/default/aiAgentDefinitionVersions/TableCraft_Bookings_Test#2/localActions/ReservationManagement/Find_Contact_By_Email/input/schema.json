@@ -1,0 +1,14 @@
+{
+  "required" : [ "var_Email" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "var_Email" : {
+      "title" : "var_Email",
+      "description" : "",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
