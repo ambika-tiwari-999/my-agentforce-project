@@ -4,7 +4,7 @@
 # One agent, four subagents:
 #   orchestrator (start_agent)  - greet, find restaurant, capture intent, route   [Joseph's role]
 #   booking                     - look up / create / change / cancel               [Luke's role, Christian's guardrails]
-#   dining_info                 - grounded restaurant Q&A (Data 360 + prompt)      [Ambika's role]
+#   faq                         - grounded restaurant Q&A (Data 360 + prompt)      [Ambika's role]
 #   escalation                  - create Case with summary, then hand off          [Joseph's Human_Escalation]
 #
 # Skeleton + identifiers (developer_name, agent user, Omni flow) come from Christian's
@@ -121,7 +121,7 @@ variables:
     passages_restaurant_id: mutable string = ""
 
     active_area: mutable string = ""
-        description: "Subagent that owns the ongoing conversation: booking, dining_info, escalation, or empty for the front desk"
+        description: "Subagent that owns the ongoing conversation: booking, faq, escalation, or empty for the front desk"
 
 connection messaging:
     outbound_route_type: "OmniChannelFlow"
@@ -139,8 +139,8 @@ start_agent orchestrator:
     before_reasoning:
         if @variables.active_area == "booking":
             transition to @subagent.booking
-        else if @variables.active_area == "dining_info":
-            transition to @subagent.dining_info
+        else if @variables.active_area == "faq":
+            transition to @subagent.faq
         else if @variables.active_area == "escalation":
             transition to @subagent.escalation
 
@@ -157,9 +157,9 @@ start_agent orchestrator:
               When the diner states what they want to do, record it with {!@actions.capture_context}. If the diner volunteers a callback phone number, record it with {!@actions.capture_callback_phone}; never ask for one.
             if @variables.restaurant_selected == True:
                 | The selected restaurant is {!@variables.restaurant_name}.
-                  Use {!@actions.go_dining_info} for any question about the restaurant: whether it is open, hours, happy hour, menu, dietary options, dress code, space for groups, phone, parking or policies, even when the question mentions tonight or a date.
+                  Use {!@actions.go_faq} for any question about the restaurant: whether it is open, hours, happy hour, menu, dietary options, dress code, space for groups, phone, parking or policies, even when the question mentions tonight or a date.
                   Use {!@actions.go_booking} for looking up, creating, changing or cancelling a reservation.
-                  When one message asks a restaurant question and also asks for a reservation, use {!@actions.go_dining_info} first; the reservation is handled right after the answer.
+                  When one message asks a restaurant question and also asks for a reservation, use {!@actions.go_faq} first; the reservation is handled right after the answer.
                   When one message mixes an unrelated topic with a reservation or restaurant request, give the scope reply for the unrelated part in one sentence and still route the TableCraft request.
                   Never answer reservation or restaurant-detail questions yourself; route them. If the diner has not said what they need, ask.
             else:
@@ -183,7 +183,7 @@ start_agent orchestrator:
             go_booking: @utils.transition to @subagent.booking
                 description: "Look up, create, change or cancel a reservation at the selected restaurant"
                 available when @variables.restaurant_selected == True
-            go_dining_info: @utils.transition to @subagent.dining_info
+            go_faq: @utils.transition to @subagent.faq
                 description: "Answer a question about the selected restaurant: hours, phone, menu, parking or policies"
                 available when @variables.restaurant_selected == True
             go_escalation: @utils.transition to @subagent.escalation
@@ -262,7 +262,7 @@ subagent booking:
             else:
                 | To look up, change or cancel an existing reservation, ask for the diner's last name and the reservation ID (for example RES-001), then use {!@actions.lookup_reservation}. If it does not match, say that no reservation matches those details and ask the diner to check them. Never say which detail was wrong. Never look up a reservation by email or by "the nearest one".
             | If an escalation rule applies, first handle any reservation step the diner asked for in the same message, such as calling {!@actions.create_reservation}. Show the confirmation with the reservation ID in your reply, then ask whether they want to be connected with a person now, and use {!@actions.go_escalation} only after they say yes. Never escalate in the same turn as a booking, because the confirmation would be lost.
-            | If the diner asks about restaurant information (hours, phone, menu, parking, policies), use {!@actions.go_dining_info}. If the diner wants a different restaurant or something unrelated to reservations, use {!@actions.back_to_orchestrator} and do not answer that request yourself.
+            | If the diner asks about restaurant information (hours, phone, menu, parking, policies), use {!@actions.go_faq}. If the diner wants a different restaurant or something unrelated to reservations, use {!@actions.back_to_orchestrator} and do not answer that request yourself.
 
         actions:
             lookup_reservation: @actions.get_reservation
@@ -304,7 +304,7 @@ subagent booking:
                 available when @variables.cancel_offer_made == True
             go_escalation: @utils.transition to @subagent.escalation
                 description: "Connect the diner with a person: they asked for one, are frustrated, reported a severe allergy or medical emergency, asked for an allergy guarantee, raised a legal or safety issue, want a refund, compensation, fee waiver or exception, want a group booking of 11 or more, or reservation verification failed twice"
-            go_dining_info: @utils.transition to @subagent.dining_info
+            go_faq: @utils.transition to @subagent.faq
                 description: "Answer a question about the selected restaurant: hours, phone, menu, parking or policies"
             back_to_orchestrator: @utils.setVariables
                 description: "Hand the conversation back to the front desk to switch restaurant or handle a request that is not about reservations"
@@ -421,11 +421,11 @@ subagent booking:
                     description: "Result summary"
 
 # ---------------------------------------------------------------------
-# DINING INFO  (restaurant questions only; grounded in Data 360)
+# FAQ  (restaurant questions only; grounded in Data 360)
 # ---------------------------------------------------------------------
-subagent dining_info:
-    label: "Dining Info"
-    description: "Answers questions about the selected restaurant (hours, phone, menu, parking, policies) from CRM facts and the Data 360 library only; never answers from general knowledge"
+subagent faq:
+    label: "FAQ"
+    description: "Answers restaurant-specific questions on menu, parking, hours, and other FAQs, grounding its answers in specific documents. If it is not able to answer the question, it asks the user if they would like to call a number, and then provides the restaurant's phone number. It takes no actions."
 
     # Deterministic pre-check (no LLM): the restaurant comes from the orchestrator, never from the diner.
     before_reasoning:
@@ -440,7 +440,7 @@ subagent dining_info:
         if @variables.restaurant_validated == False:
             set @variables.active_area = ""
             transition to @subagent.orchestrator
-        set @variables.active_area = "dining_info"
+        set @variables.active_area = "faq"
 
     reasoning:
         instructions: ->

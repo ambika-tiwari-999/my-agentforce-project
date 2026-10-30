@@ -1,0 +1,14 @@
+{
+  "required" : [ "membershipId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "membershipId" : {
+      "title" : "Membership Id",
+      "description" : "Diner membership number",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
