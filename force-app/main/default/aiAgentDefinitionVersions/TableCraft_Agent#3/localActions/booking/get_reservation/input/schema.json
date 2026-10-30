@@ -1,0 +1,35 @@
+{
+  "required" : [ "membershipId", "lastName", "reservationId" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "lastName" : {
+      "title" : "Last Name",
+      "description" : "Diner last name as given by the diner",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "membershipId" : {
+      "title" : "Membership Id",
+      "description" : "Diner membership number",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "priorFailedAttempts" : {
+      "title" : "Prior Failed Attempts",
+      "description" : "Failed lookups so far",
+      "lightning:type" : "lightning__numberType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    },
+    "reservationId" : {
+      "title" : "Reservation Id",
+      "description" : "Reservation ID given by the diner, for example RES-001",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
