@@ -100,6 +100,10 @@ variables:
         description: "True after validate_restaurant_context confirms restaurant_id in CRM"
     escalation_phone_number: mutable string = ""
         description: "Restaurant phone loaded from CRM by validate_restaurant_context; never collected from the diner"
+    operating_hours: mutable string = ""
+        description: "Restaurant Operating_Hours__c loaded from CRM by validate_restaurant_context"
+    current_date_time: mutable string = ""
+        description: "Current date and time loaded by validate_restaurant_context"
 
     reservation_verified: mutable boolean = False
     reservation_id: mutable string = ""
@@ -437,6 +441,8 @@ subagent faq:
                 with restaurantId = @variables.restaurant_id
                 set @variables.restaurant_validated = @outputs.found
                 set @variables.escalation_phone_number = @outputs.phone
+                set @variables.operating_hours = @outputs.operatingHours
+                set @variables.current_date_time = @outputs.currentDateTime
         if @variables.restaurant_validated == False:
             set @variables.active_area = ""
             transition to @subagent.orchestrator
@@ -537,6 +543,12 @@ subagent faq:
                 phone: string
                     label: "Phone"
                     description: "Phone_Number__c from Restaurant__c"
+                operatingHours: string
+                    label: "Operating Hours"
+                    description: "Operating_Hours__c from Restaurant__c"
+                currentDateTime: string
+                    label: "Current Date Time"
+                    description: "Current date and time when validated"
                 message: string
                     label: "Message"
                     description: "Result summary for the planner"

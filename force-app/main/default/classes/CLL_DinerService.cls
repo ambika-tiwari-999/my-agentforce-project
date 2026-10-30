@@ -205,6 +205,8 @@ public with sharing class CLL_DinerService {
         r.found = false;
         r.restaurantName = '';
         r.phone = '';
+        r.operatingHours = '';
+        r.currentDateTime = Datetime.now().format('EEE, MMM d, yyyy h:mm a z');
         String code = String.isBlank(restaurantId) ? '' : restaurantId.trim();
         if (code == '') {
             r.message = 'Provide a restaurant ID (for example REST-ATX-01).';
@@ -218,6 +220,7 @@ public with sharing class CLL_DinerService {
         r.found = true;
         r.restaurantName = displayName(restaurant);
         r.phone = restaurant.Phone_Number__c == null ? '' : String.valueOf(restaurant.Phone_Number__c);
+        r.operatingHours = restaurant.Operating_Hours__c == null ? '' : String.valueOf(restaurant.Operating_Hours__c);
         r.message = 'Found ' + r.restaurantName + ' (' + code + ').';
         return r;
     }
@@ -236,6 +239,12 @@ public with sharing class CLL_DinerService {
 
         @InvocableVariable(label='Phone' description='Restaurant Phone_Number__c from CRM')
         public String phone;
+
+        @InvocableVariable(label='Operating Hours' description='Restaurant Operating_Hours__c from CRM')
+        public String operatingHours;
+
+        @InvocableVariable(label='Current Date Time' description='Current date and time when validated')
+        public String currentDateTime;
 
         @InvocableVariable(label='Message' description='Summary for the agent planner')
         public String message;
