@@ -1,10 +1,31 @@
-# Setup guides
+# Setup
 
-| Doc | Purpose |
-|-----|---------|
-| [pull-from-org.md](./pull-from-org.md) | What to retrieve/export from `agentforce-org` and how to verify each step |
-| [publish-ambika-monday-demo-agent.md](./publish-ambika-monday-demo-agent.md) | Terminal commands to **publish** git → Agent Builder (Preview on Committed version; activate optional for go-live) |
+Default org alias: **`agentforce-org`** (see `.sf/config.json`).
 
-**FAQ flow:** [ambika-monday-demo-faq-pipeline.md](../ambika-monday-demo-faq-pipeline.md) (step 0 = harness; **steps 1–10** = bundle to ship) · **Concepts:** [learning/](../learning/README.md)
+This repo tracks **`TableCraft_Agent`** only (authoring bundle, definition versions, CLL Apex, FAQ/dining prompts, Omni routing flows).
 
-Default org alias for this project: **`agentforce-org`** (see `.sf/config.json`).
+## Retrieve from org
+
+```bash
+cd /Users/ambika.tiwari/Documents/salesforce_onboarding_notes/my-agentforce-project
+
+sf project retrieve start --target-org agentforce-org \
+  --metadata AiAuthoringBundle:TableCraft_Agent \
+  --metadata AiAgentDefinition:TableCraft_Agent \
+  --metadata Agent:TableCraft_Agent \
+  --metadata ApexClass:CLL_DinerService \
+  --metadata ApexClass:CLL_DiningKnowledgeRetriever \
+  --metadata ApexClass:CLL_FindRestaurant \
+  --metadata ApexClass:CLL_GetDinerContext \
+  --metadata ApexClass:CLL_GetReservation \
+  --metadata ApexClass:CLL_CreateReservation \
+  --metadata ApexClass:CLL_ModifyReservation \
+  --metadata ApexClass:CLL_CancelReservation \
+  --metadata ApexClass:CLL_EscalateToHuman \
+  --metadata GenAiPromptTemplate:Ambika_TableCraft_FAQ_Prompt \
+  --metadata GenAiPromptTemplate:CLL_Answer_Dining_Question \
+  --metadata Flow:Route_CLL_Escalations \
+  --metadata Flow:Route_To_TableCraft_Agent \
+  --metadata CustomObject:Restaurant__c \
+  --metadata CustomObject:Reservation__c
+```

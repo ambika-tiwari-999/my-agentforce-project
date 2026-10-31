@@ -24,6 +24,9 @@
       --blue-change: #0369a1;
       --blue-bg: #f0f9ff;
       --blue-border: #bae6fd;
+      --teal-change: #0f766e;
+      --teal-bg: #f0fdfa;
+      --teal-border: #99f6e4;
     }
 
     * {
@@ -392,6 +395,35 @@
       border-radius: 4px;
     }
 
+    /* Teal styling for CHANGE #3 (single shared DLO + restaurant_id metadata scoping) */
+    .add-change-3,
+    ins.add-change-3 {
+      color: var(--teal-change);
+      text-decoration: none;
+      background-color: var(--teal-bg);
+      border: 1px dashed var(--teal-border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .add-change-3 code,
+    ins.add-change-3 code {
+      color: var(--teal-change);
+      background-color: #ccfbf1;
+    }
+
+    .change-3-tag {
+      display: inline-block;
+      color: var(--teal-change);
+      background-color: var(--teal-bg);
+      border: 1px solid var(--teal-border);
+      font-weight: 700;
+      font-size: 0.85em;
+      padding: 1px 8px;
+      border-radius: 4px;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -553,7 +585,7 @@
       <li>
         <strong>Einstein Retriever queries the Data 360 Data Lake Object (DLO):</strong>
         <ol>
-          <li><span class="change-5-tag">CHANGE #5</span></li>
+          <li><span class="change-3-tag">CHANGE #3</span> <span class="change-5-tag">CHANGE #5</span></li>
         </ol>
         <ul>
           <li>In the Salesforce org (<code>agentforce-org</code>), the retriever <code>File_Diner_Restaurant_FAQ_and_Policies_1Cx_8Ec8b60f20d</code> is connected to the Agentforce Data Library <code>ADL_Diner_Restauran</code> (documented in <code><a href="../../data/data360_assets.json">data/data360_assets.json</a></code>).</li>
@@ -562,6 +594,16 @@
               <li><strong>Data Lake Object:</strong> <code>ADL_Diner_Restauran__dlm</code></li>
               <li><strong>Chunk and Index Objects:</strong> <code>ADL_Diner_Restauran chunk</code> and <code>ADL_Diner_Restauran index</code></li>
             </ul>
+          </li>
+        </ul>
+
+        <h4><span class="change-3-tag">CHANGE #3</span> Single Shared DLO + Uploading Restaurant PDFs with <code>restaurant_id</code> Metadata</h4>
+        <ul>
+          <li>
+            <ins class="add-change-3">+ <strong>Single shared DLO across all restaurants (Best Practice):</strong> Keep all restaurant FAQ/menu/policy PDFs inside the single shared Data 360 Data Lake Object (<code>ADL_Diner_Restauran__dlm</code>) rather than creating separate DLOs or retrievers per restaurant.</ins>
+          </li>
+          <li>
+            <ins class="add-change-3">+ <strong>Scope/filter documents by <code>restaurant_id</code> metadata:</strong> Upload each restaurant's PDF into the Data Library with its <code>restaurant_id</code> (e.g., <code>REST-ATX-01</code>) attached as metadata / filterable attribute (or clearly tagged in the document/chunk metadata) so the retriever filters chunks by <code>restaurant_id = @variables.restaurant_id</code> before running semantic search on the diner's <code>question</code>.</ins>
           </li>
         </ul>
 
