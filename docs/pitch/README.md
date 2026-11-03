@@ -69,14 +69,18 @@ Instead of stranding diners in a read-only Q&A widget that can't touch reservati
 
 ## 5. How We Mocked the Data from OpenTable → Stepping Into the UAT Roleplay
 
-To make our 1-week sandbox build behave like OpenTable's real environment, we modeled our mock data directly after the two sections of OpenTable's B2B Restaurant Partner Portal:
+To make our 1-week sandbox build behave like OpenTable's real environment across discovery, reservations, FAQ, and support, we modeled our mock data after OpenTable's core objects:
 
-1. **OpenTable "Basic Information" Tab → Mocked as Salesforce CRM Objects (**`Restaurant__c` **&** `Reservation__c`**):**
-  - Contains the structured fields every restaurant fills out (`Restaurant_ID__c`, `Operating_Hours__c`, `Phone_Number__c`, `Cuisine__c`, `City__c`, `Zip_Code__c`), plus 30 mock `Reservation__c` rows across 5 demo restaurants.
-2. **OpenTable "Menus & Details" Tab → Mocked in Data 360 (**`ADL_Diner_Restauran`**):**
-  - Contains the unstructured PDF menus, parking/valet rules, dress codes, and house policies that restaurants upload under their `restaurant_id`.
+1. **CRM Objects (`Contact`, `Restaurant__c`, `Reservation__c`):**
+  - **Diner Identity (`Contact`):** Signed-in diner profiles (`External_Diner_ID__c` / `membership_id`) used by `orchestrator` and `booking` to scope reservation access.
+  - **Restaurant Profile (`Restaurant__c`):** 5 demo restaurants across Austin, NYC, LA, Chicago, and Miami with `Restaurant_ID__c`, `Name__c`, `Cuisine__c`, `City__c`, `Zip_Code__c`, `Operating_Hours__c`, and `Phone_Number__c`.
+  - **Reservation Inventory (`Reservation__c`):** 30 mock reservations with `Reservation_ID__c`, `Contact_ID__c`, `Restaurant_ID__c`, `Party_Size__c`, `Reservation_Time__c`, and `Status__c` (`Active`, `Completed`, `Canceled`) for lookup, creation, modification, and cancellation.
+2. **Unstructured Restaurant Menus & Policies in Data 360 (`ADL_Diner_Restauran`):**
+  - Contains the unstructured PDF menus, parking/valet rules, dress codes, and house policies uploaded per `restaurant_id`.
+3. **Service Cloud Escalation (`Case` & Omni-Channel Flow):**
+  - `Case` records and `flow://Route_CLL_Escalations` for live human handoffs when exceptions, severe allergies, or failed verifications occur.
 
-**From here on, we put our UAT delivery hats on** — presenting the live demo, our Agentforce & Data 360 architecture, security/testing results, and the phased production rollout (10% → 50% → 100%) to OpenTable stakeholders for **UAT sign-off**.
+**From here on, we put our UAT delivery hats on** — presenting the live demo, our full 4-subagent architecture, security/testing results, and the phased production rollout (10% → 50% → 100%) to OpenTable stakeholders for **UAT sign-off**.
 
 ---
 
@@ -101,8 +105,12 @@ To make our 1-week sandbox build behave like OpenTable's real environment, we mo
 
 ## 7. Slide 7: Persona Journey & Quantifiable Business Value
 
-- **Persona & Journey Map ("Sofia's Evening"):** Sofia's table is 2 hours away and plans change — comparing today's 18-minute queue / disconnected Concierge widget vs. 2-turn resolution in one unified agent.
-- **Target KPIs:** `-25%` response time, `>80%` first-contact resolution, higher booking conversion, and `10%` cancel-save rate.
+- **Persona & Journey Map ("Sofia's Evening"):** Diners spend nearly **1 hour researching restaurants** before booking. When Sofia's dinner is 2 hours away and plans change, she shouldn't have to bounce between a read-only Concierge Q&A widget and an 18-minute support queue — `TableCraft_Agent` resolves both her restaurant question and her reservation change in 2–3 turns.
+- **Customer Stated Goals & Target KPIs:**
+  - **Reduce average response times for common requests by `25%`**
+  - **Achieve a First-Contact Resolution (FCR) rate above `80%`** (building on OpenTable's initial **73%** autonomous resolution baseline across **11,000+ weekly Agentforce conversations**)
+  - **Ensure robust escalation for complex issues** (`100%` of severe allergy, 11+ group, and verification-lockout cases routed to Service Cloud with full context)
+  - **Improve Diner Satisfaction (`DSAT`) for automated interactions** and **increase booking conversion rates** ("turning lookers into bookers" across OpenTable's **60,000+ restaurants** and **1.9B annual seats** by integrating restaurant Q&A directly with the core reservation system during the initial deployment period)
 
 > **Rubric Covered — Criterion 1 (Use Case Identification & Relevance):**
 >
@@ -113,29 +121,43 @@ To make our 1-week sandbox build behave like OpenTable's real environment, we mo
 
 
 
-## 8. Slide 8: Data Architecture (`CRM` + `Data 360`)
+## 8. Slide 8: Data Architecture (`CRM` + `Data 360` + `Service Cloud` Across All 4 Subagents)
 
-- **Structured CRM (**`Restaurant__c`**,** `Reservation__c`**):** Deterministic `before_reasoning` hook (`validate_restaurant_context`) loads `operating_hours`, `escalation_phone_number`, and `current_date_time` in 1 SOQL query (`WITH USER_MODE`), answering routine hours/phone questions in 1 hop with **zero RAG or extra LLM overhead**.
-- **Unstructured Data 360 (**`ADL_Diner_Restauran`**):** Restaurant PDFs chunked (`_chunk__dlm`), vectorized (`_index__dlm`), and queried on-demand via Apex (`CLL_DiningKnowledgeRetriever.cls`) scoped by `restaurant_id` — returning grounded chunks directly to `subagent faq` without a separate Prompt Builder LLM hop.
+- **1. Diner & Discovery Data (`Contact` + `Restaurant__c` → `orchestrator`):**
+  - `CLL_GetDinerContext` resolves the signed-in diner's first name from `membership_id`; `CLL_FindRestaurant` searches `Restaurant__c` by name, cuisine, city, or zip code and sets `restaurant_id` for downstream subagents.
+- **2. Transactional Reservation Data (`Reservation__c` + `Restaurant__c` → `booking`):**
+  - `CLL_GetReservation`, `CLL_CreateReservation`, `CLL_ModifyReservation`, and `CLL_CancelReservation` enforce diner ownership (`Contact_ID__c` + Last Name + `Reservation_ID__c`), party size limits ($\le 10$), and opening-hours/last-seating rules (`Operating_Hours__c`).
+- **3. Restaurant Knowledge (`Restaurant__c` + Data 360 `ADL_Diner_Restauran` → `faq`):**
+  - `before_reasoning` loads structured CRM `operating_hours`, `escalation_phone_number`, and `current_date_time` in 1 SOQL query; unstructured PDF menus and policies in Data 360 (`_chunk__dlm` / `_index__dlm`) are queried on-demand via Apex (`CLL_DiningKnowledgeRetriever.cls`).
+- **4. Support & Handoff Data (`Case` + Omni-Channel → `escalation`):**
+  - Creates a `Case` with an AI conversation summary and transfers the session to a live rep via `flow://Route_CLL_Escalations`.
+- **5. API Integrations & Production Scalability (5 Demo Restaurants → 60,000+ Restaurants & 10x Peak Diners):**
+  - **Mocked-to-Live API Contract (`booking` & `orchestrator`):** Every Apex `@InvocableMethod` (`CLL_FindRestaurant`, `CLL_GetReservation`, `CLL_CreateReservation`, `CLL_ModifyReservation`, `CLL_CancelReservation`) is **stateless, bulkified (`List<Request>`), and decoupled from the `.agent` script**. In production, the mocked SOQL against `Restaurant__c` / `Reservation__c` swaps directly to **MuleSoft / Named Credential REST callouts** to OpenTable's live reservation and table-inventory APIs without changing a single line of Agent Script.
+  - **Single-Table Data 360 Scaling (`faq`):** All restaurant menus and policies live in **one shared Data 360 DMO (`ADL_Diner_Restauran__dlm`)** filtered by `restaurant_id`, plus an Automated S3 / Ingestion API pipeline from the OpenTable Merchant Portal — scaling from 5 restaurants to **60,000+ restaurants** with zero new DLOs or `.agent` changes.
+  - **Peak-Hour Concurrency & Digital Wallet Scaling:** Restaurant traffic spikes 10x on Friday/Saturday between 5–8 PM. By hydrating `operating_hours` and `escalation_phone_number` deterministically in `before_reasoning` (1 indexed SOQL lookup by `Restaurant_ID__c` external ID) and skipping the Prompt Builder + RAG hop on simple questions, we cut LLM calls, latency, and Flex Credit burn in half at peak load.
 
 > **Rubric Covered — Criterion 2 (Solution Design & Walkthrough) & Criterion 5 (Business Impact & Consultative Readiness):**
 >
-> - **Criterion 2 (Level 3):** *"Data 360 integration demonstrated or clearly explained."*
+> - **Criterion 2 (Level 3):** *"Architecture outlined including key API integrations and deployment considerations... Data 360 integration demonstrated or clearly explained."*
 > - **Criterion 5 (Level 4):** *"Consumption-aware architecture: architectural tradeoffs explicitly connected to Digital Wallet impact."*
 
 ---
 
 
 
-## 9. Slide 9: Solution Design & Agentic Patterns (`Agent Script`)
+## 9. Slide 9: Solution Design & Agentic Patterns (`Agent Script` — All 4 Subagents)
 
-- **Agent Archetype:** Multi-topic hub-and-spoke (`orchestrator` → `faq`, `booking`, `escalation`) built in **New Agent Builder with Agent Script** (`TableCraft_Agent.agent`)
-- **Agentic Design Patterns Applied:**
-  1. *Deterministic Pre-Check Gate (*`before_reasoning`*):* Validates `restaurant_id` and hydrates CRM context before planner reasoning.
-  2. *Two-Step Save-Offer Gate (*`available when`*):* `cancel_reservation` is locked until `offer_alternative` (`cancel_offer_made == True`) runs.
-  3. *Grounded RAG with Explicit Abstention:* Answers strictly from CRM/Data 360 sources or provides the restaurant's phone number + human handoff.
-  4. *Context-Preserving Escalation:* Creates a `Case` with an AI summary and routes via Omni-Channel (`flow://Route_CLL_Escalations`).
-- **AIforce & Omni-Channel / Surface-Agnostic Strategy:** Deployed on MIAW (Messaging for In-App and Web), web, and mobile-ready; explicit justification of AIforce applicability and stateless Apex action scalability.
+- **Agent Archetype:** Single multi-topic hub-and-spoke agent (`TableCraft_Agent.agent`) built in **New Agent Builder with Agent Script** with 4 subagents sharing session state (`@variables`):
+  - **`orchestrator` (Joseph):** Greets diner, resolves restaurant via `find_restaurant`, captures intent, and routes without answering domain questions itself.
+  - **`booking` (Luke & Christian):** Handles reservation lookup, creation, modification, and cancellation with ownership verification, overlap checks, and user confirmation (`require_user_confirmation: True`).
+  - **`faq` (Ambika):** Answers restaurant hours/phone from deterministic `before_reasoning` CRM hydration and menu/parking/policy questions from Data 360 RAG.
+  - **`escalation` (Joseph & Christian):** Transfers to a live Service Cloud rep via Omni-Channel on human request, severe allergy/medical emergency, 11+ group booking, policy exception, or 2 failed reservation lookups.
+- **Agentic Design Patterns Applied Across the Agent:**
+  1. *Hub-and-Spoke Sticky Routing (`active_area`):* Subagents own multi-turn follow-ups and hand back to `orchestrator` only when restaurant or intent changes.
+  2. *Two-Step Save-Offer Gate (`booking` `available when`):* `cancel_reservation` is locked until `offer_alternative` (`cancel_offer_made == True`) offers a time/party change first.
+  3. *Verification Lockout & Automatic Escalation (`booking`):* Tracks `failed_attempts`; after 2 failed reservation lookups, locks `lookup_reservation` (`available when @variables.failed_attempts < 2`) and routes to `escalation`.
+  4. *Deterministic Pre-Check & Grounded Abstention (`faq` `before_reasoning`):* Validates `restaurant_id` and hydrates CRM context before planner reasoning; abstains with restaurant phone + human offer when Data 360 has no source.
+- **AIforce & Omni-Channel / Surface-Agnostic Strategy:** Deployed on MIAW (Messaging for In-App and Web), web, and mobile-ready; stateless Apex actions allow horizontal scaling and drop-in replacement of mocked CRM reservation tables with live OpenTable booking APIs.
 
 > **Rubric Covered — Criterion 2 (Solution Design & Walkthrough):**
 >
@@ -184,10 +206,13 @@ To make our 1-week sandbox build behave like OpenTable's real environment, we mo
 
 ## 12. Slide 12: Comprehensive Testing Suite & Trace Debugging
 
-- **Testing Center Suite:** Functional, Guardrail (`100%`), Edge cases, Multi-turn context retention, Perturbation (typos/paraphrase), and Adversarial (`100%`).
+- **Testing Center Suite Across All 4 Subagents:** Functional (`orchestrator`, `booking`, `faq`, `escalation`), Guardrail (`100%`), Edge cases (party of 11+, closed hours, 2x wrong reservation ID), Multi-turn context retention (FAQ → Booking in one session), Perturbation (typos/paraphrase), and Adversarial (`100%` — cross-diner lookup & prompt injection).
 - **Trace / Splunk Debugging & Optimization Evidence:**
-  - Show the live execution trace proving `faq` answers hours/phone with `GROUNDED` evaluation and 0 redundant RAG action calls.
-  - Highlight 3 real bugs caught and fixed by testing: timezone offset conversion, `orchestrator` resolving `restaurant_id` so `faq` never asks the diner for an internal code, and separating plain dietary notes from severe-allergy escalations.
+  - Show execution traces across subagent transitions (`orchestrator` → `booking` / `faq` / `escalation`) verifying action grounding and state handoffs.
+  - Highlight 3 real cross-agent bugs caught and fixed by testing:
+    1. **Booking (`booking`):** Reservation times stored 5 hours off → fixed with restaurant local timezone handling.
+    2. **Booking vs. Escalation (`booking` / `escalation`):** Over-escalating on a plain dietary note during booking → fixed so plain notes save as a special request with an arrival reminder, while severe allergies / safety guarantees escalate to a person.
+    3. **Orchestrator vs. FAQ (`orchestrator` / `faq`):** Asking diners for internal `REST-ATX-01` codes → fixed so `orchestrator` resolves `restaurant_id` by name/city/zip and passes it down automatically.
 
 > **Rubric Covered — Criterion 3 (Testing Suite):**
 >
@@ -200,9 +225,15 @@ To make our 1-week sandbox build behave like OpenTable's real environment, we mo
 
 ## 13. Slide 13: ROI, Consumption Model & Phased UAT Rollout (The Ask)
 
-- **Quantifiable ROI (Conservative / Base / Upside):** Support hours returned, cost per contact (`$5.00` human vs. `$0.40` agent), cancel-save revenue, and payback period.
-- **Consumption Model Fit (Flex Credits → Outcome-Based):** Why **Flex Credits** fit UAT and initial launch (shared Digital Wallet pool across Agent actions and Data 360 with 75%/90% budget alerts), plus how our `before_reasoning` optimization cuts Flex Credit burn per conversation.
-- **Phased Deployment, Change Management & Roadmap:** `10%` UAT pilot in one market with kill switch → `50%` → `100%` with weekly regression loop; MVP+ roadmap (Waitlist, Loyalty subagent, Voice concierge).
+- **Quantifiable Business Impact (Anchored on OpenTable's Published Baseline + Stated Goals):**
+  - **Baseline Scale:** **60,000+ restaurants**, **1.9B seats/year**, and **11,000+ weekly Agentforce support conversations** (**10,000+/week** on the diner agent) currently resolving at **73%** (a **40–50%** lift over OpenTable's legacy chatbot).
+  - **Target KPI Impact in UAT & Initial Deployment:**
+    1. **Response Time (`-25%`):** Deterministic `before_reasoning` CRM hydration + instant in-chat booking actions eliminate the support queue wait for common requests.
+    2. **First-Contact Resolution (`>80%` FCR, up from `73%`):** Absorbing restaurant-specific hours, menu, parking, and policy Q&A into the same agent that modifies/creates reservations closes the gap that previously forced diners out of self-service.
+    3. **Booking Conversion & Saved Covers ("Lookers into Bookers" + `DSAT`):** Captures diners during the ~1 hour they spend researching restaurants and transitions them directly into `subagent booking` in the same turn, while the 2-step `offer_alternative` gate saves cancellations by rebooking to a new time/party size.
+    4. **Robust Escalation & Restaurant Staff Deflection:** Deflects routine pre-visit calls away from restaurant hosts during dinner service while guaranteeing `100%` context-rich Service Cloud handoffs for complex or safety-critical issues.
+- **Consumption Model Fit (Flex Credits → Outcome-Based):** Why **Flex Credits** fit UAT and initial launch (shared Digital Wallet pool across Agent actions and Data 360 with 75%/90% budget alerts), plus how our `before_reasoning` optimization cuts Flex Credit burn per conversation across 10,000+ weekly chats.
+- **Phased Deployment, Change Management & Roadmap:** `10%` UAT pilot in one market with kill switch → `50%` → `100%` with weekly regression loop tracking FCR (`>80%`), response time (`-25%`), DSAT, and booking conversion; MVP+ roadmap (Waitlist, Loyalty subagent, Voice concierge).
 
 > **Rubric Covered — Criterion 5 (Business Impact & Consultative Readiness):**
 >
