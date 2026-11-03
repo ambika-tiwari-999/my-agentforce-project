@@ -7,22 +7,13 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
+                <field>Detail__c</field>
+            </layoutItems>
+            <layoutItems>
                 <field>Title</field>
             </layoutItems>
             <layoutItems>
                 <field>UrlName</field>
-            </layoutItems>
-            <layoutItems>
-                <field>Restaurant_ID__c</field>
-            </layoutItems>
-            <layoutItems>
-                <field>Category__c</field>
-            </layoutItems>
-            <layoutItems>
-                <field>Summary</field>
-            </layoutItems>
-            <layoutItems>
-                <field>Detail__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
