@@ -568,11 +568,14 @@
       color: #cfcfcf;
     }
     #slide-4 .title-value,
+    #slide-4 .title-workforce,
     #slide-4 .frame-value { display: none; }
     #slide-4.revealed .title-beta,
     #slide-4.revealed .frame-beta { display: none; }
     #slide-4.revealed .title-value,
     #slide-4.revealed .frame-value { display: block; }
+    #slide-4.workforce .title-value { display: none; }
+    #slide-4.workforce .title-workforce { display: block; }
     #slide-4 .split {
       flex: 1;
       min-height: 0;
@@ -608,11 +611,18 @@
       pointer-events: auto;
     }
     #slide-4 .find-board,
-    #slide-4 .value-board {
+    #slide-4 .value-board,
+    #slide-4 .fte-board {
       flex: 1;
       min-height: 0;
       display: grid;
       gap: 0.85rem;
+    }
+    #slide-4 .fte-board { display: none; }
+    #slide-4.workforce .value-board { display: none; }
+    #slide-4.workforce .fte-board {
+      display: grid;
+      animation: fteStackIn 0.5s ease both;
     }
     #slide-4 .find-board { grid-template-columns: 1fr; grid-template-rows: repeat(4, minmax(0, 1fr)); }
     #slide-4 .find {
@@ -694,16 +704,25 @@
     #slide-4 .split:not(.revealed) .find-num,
     #slide-4 .split:not(.revealed) .find-detail { margin: 0; }
     #slide-4 .split.revealed .find-board,
-    #slide-4 .split.revealed .value-board {
+    #slide-4 .split.revealed .value-board,
+    #slide-4 .split.revealed .fte-board {
       grid-template-columns: 1fr;
       gap: 0.6rem;
     }
     #slide-4 .split.revealed .find-board { grid-template-rows: repeat(4, minmax(0, 1fr)); }
-    #slide-4 .split.revealed .value-board { grid-template-rows: repeat(3, minmax(0, 1fr)); }
+    #slide-4 .split.revealed .value-board,
+    #slide-4 .split.revealed .fte-board { grid-template-rows: repeat(3, minmax(0, 1fr)); }
     #slide-4 .split.revealed .find { padding: 0.75rem 1rem; }
     #slide-4 .split.revealed .find-num { font-size: clamp(1.7rem, 2.4vw, 2.35rem); margin-top: 0.25rem; }
-    #slide-4 .split.revealed .value-board .find-num { font-size: clamp(2.1rem, 3vw, 2.9rem); }
+    #slide-4 .split.revealed .value-board .find-num,
+    #slide-4 .split.revealed .fte-board .find-num { font-size: clamp(2.1rem, 3vw, 2.9rem); }
     #slide-4 .split.revealed .find-detail { margin-top: 0.3rem; font-size: clamp(0.88rem, 1.05vw, 1rem); }
+    #slide-4 .find-fte { background: #162033; border-left: 0; border-top: 3px solid #90D0FE; }
+    #slide-4 .find-fte.total { border-top-color: #2E844A; }
+    @keyframes fteStackIn {
+      from { opacity: 0; transform: translateX(2rem); }
+      to { opacity: 1; transform: translateX(0); }
+    }
     #slide-3.revealed h1,
     #slide-4 h1,
     #slide-5 h1 { font-size: clamp(28pt, 3.4vw, 38pt); }
@@ -735,6 +754,7 @@
       #slide-3 .deal-pane,
       #slide-4 .split,
       #slide-4 .value-pane { transition: none; }
+      #slide-4 .fte-board { animation: none; }
     }
     #slide-7.decision-slide {
       justify-content: flex-start;
@@ -908,6 +928,7 @@
     <p class="num">Slide 5</p>
     <h1 class="title-beta">Key Findings</h1>
     <h1 class="title-value">You Save $4.18M a year</h1>
+    <h1 class="title-workforce">You Save 29,588 Hours a Year</h1>
     <p class="frame frame-beta">5-city beta, against the targets.</p>
     <div class="split">
       <div class="pane find-pane">
@@ -958,10 +979,27 @@
             <span class="math">22,500 bookings a year from the FAQ-to-booking handoff</span>
           </button>
         </div>
+        <div class="fte-board">
+          <article class="find find-fte">
+            <span class="find-label">OpenTable support</span>
+            <span class="find-num">7.4 FTE</span>
+            <span class="find-detail"><strong>15,444 hours</strong> returned from 51,480 deflected tickets at an 18-minute handle time.</span>
+          </article>
+          <article class="find find-fte">
+            <span class="find-label">Restaurant hosts</span>
+            <span class="find-num">6.8 FTE</span>
+            <span class="find-detail"><strong>14,144 hours</strong> returned by deflecting routine restaurant questions.</span>
+          </article>
+          <article class="find find-fte total">
+            <span class="find-label">Combined annual capacity</span>
+            <span class="find-num">14.2 FTE</span>
+            <span class="find-detail"><strong>29,588 hours</strong> redirected to higher-value work.</span>
+          </article>
+        </div>
       </div>
     </div>
     <ol class="cites">
-      <li>Salesforce, <a href="https://www.salesforce.com/customer-stories/opentable/">OpenTable customer story</a>, Aug 7, 2025. 73% case resolution is the published restaurant-agent baseline. The beta results and the dollar model are ours.</li>
+      <li>Salesforce, <a href="https://www.salesforce.com/customer-stories/opentable/">OpenTable customer story</a>, Aug 7, 2025. 73% case resolution is the published restaurant-agent baseline. The beta results, dollar model, and FTE model are ours.</li>
     </ol>
   </section>
   <section id="slide-5" class="dense">
@@ -1141,7 +1179,11 @@
       const from = i;
       i = Math.max(0, Math.min(n, slides.length - 1));
       const split = splitOf(i);
-      if (split) paintSplit(split, n < from);
+      const enteredFromNextSlide = n < from;
+      if (split) paintSplit(split, enteredFromNextSlide);
+      if (slides[i].id === "slide-4") {
+        slides[i].classList.toggle("workforce", enteredFromNextSlide);
+      }
       slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
       prev.disabled = i === 0;
       next.disabled = i === slides.length - 1 && !(splitOf(i) && !splitOf(i).classList.contains("revealed"));
@@ -1157,11 +1199,19 @@
         next.disabled = i === slides.length - 1;
         return;
       }
+      if (slides[i].id === "slide-4" && !slides[i].classList.contains("workforce")) {
+        slides[i].classList.add("workforce");
+        return;
+      }
       show(i + 1);
     }
 
     function back() {
       const split = splitOf(i);
+      if (slides[i].id === "slide-4" && slides[i].classList.contains("workforce")) {
+        slides[i].classList.remove("workforce");
+        return;
+      }
       if (split && split.classList.contains("revealed")) {
         paintSplit(split, false);
         return;

@@ -4,7 +4,7 @@
 >
 > - **🖥️ On the Slide (Keep It Visual & Scannable):** Max 3–4 short cards, big numbers, or a clean diagram. **Zero walls of text.**
 > - **🎙️ What We'll Say (Speaker Talk Track):** All the deep context, numbers, and rubric points live in our voice, not crammed onto the slide.
-> - **⚡ Interactive Moment (Only Where Genuinely Useful):** Included on **5 high-leverage slides** (Slides 3, 5, 7, 12, and 13) where involving the judges actually proves a point or builds energy.
+> - **⚡ Interactive Moment (Only Where Genuinely Useful):** Included on **5 high-leverage slides** (Slides 3, 5, 8, 13, and 14) where involving the judges actually proves a point or builds energy.
 
 ---
 
@@ -80,7 +80,7 @@
 
 ## Slide 5: Key Findings (Beta KPIs, then the Business Impact)
 
-> **Advance:** First `>` shows only the beta KPI stack. The next `>` slides in the business-impact half. One more `>` goes to Slide 6 (Assumptions). `<` slides the impact half away before leaving the slide.
+> **Advance:** First `>` shows only the beta KPI stack. The next `>` slides in the business-impact half. One more `>` goes to Slide 6 (Efficiency & Workforce Impact). `<` slides the impact half away before leaving the slide.
 
 ### 🖥️ On the Slide (Left first, then right on the next `>`)
 
@@ -123,9 +123,54 @@
 
 ---
 
-## Slide 6: Breaking The 4th Wall - Sandbox Assumptions
+## Slide 6: Efficiency & Workforce Impact
 
-> **Advance:** First `>` shows the three OpenTable surfaces as a vertical stack. The next `>` slides in the matching sandbox stand-ins. One more `>` goes to Slide 7. `<` reverses the reveal.
+### 🖥️ On the Slide (Capacity Math + Salesforce 4R Workforce Model)
+
+- **Headline:** **`14.2 FTE` of capacity returned — not 14.2 jobs removed**
+- **Subline:** Routine work moves to Agentforce. People move to higher-value work.
+
+- **LEFT — Efficiency and FTE-equivalent impact:**
+  1. **OpenTable support — `7.4 FTE`**
+     - `51,480` tickets deflected × `18 minutes` ÷ `2,080 hours/FTE`
+     - **`15,444` support hours returned per year**
+  2. **Restaurant hosts — `6.8 FTE`**
+     - **`14,144` modeled host hours returned per year** by deflecting routine hours, menu, address, parking, and policy contacts
+  3. **Combined annual capacity — `14.2 FTE`**
+     - `29,588` human hours redirected to higher-value work
+
+- **RIGHT — Salesforce Workforce Innovation Playbook (`4Rs`):**
+  1. **Redesign:** Agentforce handles routine FAQ and reservation workflows; humans own judgment-heavy work.
+  2. **Reskill:** OpenTable support learns agent supervision, exception handling, knowledge quality, and escalation management.
+  3. **Redeploy:** Returned capacity moves to complex diner cases, restaurant partner success, and proactive service.
+  4. **Rebalance:** Digital labor handles repeatable volume; people retain safety, refund, exception, and relationship ownership.
+
+- **Bottom callout:** **Workforce outcome:** absorb growth without proportional hiring while improving the work humans keep.
+
+### 🎙️ What We'll Say (Speaker Track)
+
+> *"The `$4.18M` is the financial outcome. This is the operating outcome: **29,588 hours of annual capacity returned, equivalent to 14.2 full-time roles.** We are describing FTE-equivalent capacity — not recommending 14.2 job eliminations.*
+>
+> *On OpenTable support, deflecting 51,480 tickets at an 18-minute average handle time returns 15,444 hours, or 7.4 FTE. At the restaurant level, our model returns another 14,144 host hours — 6.8 FTE — by moving routine hours, menu, address, parking, and policy contacts away from the host stand.*
+>
+> *We apply Salesforce’s Workforce Innovation Playbook to decide what happens to that capacity. We **redesign** the workflow so agents take repeatable volume. We **reskill** OpenTable support to supervise quality and handle exceptions. We **redeploy** capacity into complex diner needs and restaurant partner success. And we **rebalance** work so people retain safety, refunds, exceptions, and relationships.*
+>
+> *The goal is not fewer humans. The goal is to absorb growth without proportional hiring and make the human work more valuable."*
+
+### Model Notes and Sources
+
+1. **Support FTE math:** `51,480 × 18 minutes ÷ 60 ÷ 2,080 = 7.4 FTE`.
+2. **Host FTE math:** `14,144 modeled hours ÷ 2,080 = 6.8 FTE`. Validate this planning assumption with OpenTable call-volume and handle-time data during the pilot.
+3. Salesforce, [Workforce Innovation Playbook for Agentic AI](https://www.salesforce.com/news/stories/workforce-innovation-playbook-agentic-ai/). The verified public framework is the **4R model**: Redesign, Reskill, Redeploy, and Rebalance.
+4. Forrester, [The Total Economic Impact™ of Agentforce for Customer Service](https://tei.forrester.com/go/Salesforce/Agentforce/index.html). Frames workforce value as case deflection, lower handling time, and FTE avoidance/capacity rather than automatic headcount reduction.
+
+> **Team note:** We could not verify a formal public Salesforce framework named the “WSI model.” Use the sourced **Workforce Innovation 4R model** unless “WSI” is an internal course framework with a definition supplied by the instructor.
+
+---
+
+## Slide 7: Breaking The 4th Wall - Sandbox Assumptions
+
+> **Advance:** First `>` shows the three OpenTable surfaces as a vertical stack. The next `>` slides in the matching sandbox stand-ins. One more `>` goes to Slide 8. `<` reverses the reveal.
 
 ### 🖥️ On the Slide (Stacked Source-to-Mock Reveal)
 
@@ -155,7 +200,7 @@
 
 ---
 
-## Slide 7: Agent Architecture
+## Slide 8: Agent Architecture
 
 ### 🖥️ On the Slide (Interactive Architecture Diagram)
 
@@ -204,7 +249,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 8: Design Decisions and Tradeoffs
+## Slide 9: Design Decisions and Tradeoffs
 
 ### 🖥️ On the Slide (Decision Table)
 
@@ -247,36 +292,101 @@ FAQ retrieval ── safety concern ──────────────�
 - **Solution Design & Walkthrough:** Explains the deployment surface, OpenTable API integration, Data 360 grounding, production operating model, and scalability constraints.
 - **Security Measures:** Connects authenticated web access to diner identity, identifies API authentication and external-service dependencies, and defines a human recovery path.
 - **Business Impact & Consultative Readiness:** Names Flex Credits as the consumption model, explains why it fits variable demand, and connects Digital Wallet thresholds to phased deployment.
-- **Use Case, Testing, and Presentation:** Supported elsewhere in the deck by Slides 3–5, 12, and the speaker ownership plan; they should not be forced into this tradeoff table.
+- **Use Case, Testing, and Presentation:** Supported elsewhere in the deck by Slides 3–6, 10, and the speaker ownership plan; they should not be forced into this tradeoff table.
 
 ---
 
-## Slide 9: Responsible AI
+## Slide 10: AI KPIs + Testing
 
-### 🖥️ On the Slide (Visual & Minimal)
+### 🖥️ On the Slide (Static Category → KPI → Release Target Grid)
 
-- **2x2 Consequence Scanning Grid (Short Bullet Badges Only):**
+- **Headline:** We test whether the agent works—not only whether it responds.
+- **Subline:** Four KPI categories define the release gate and the production baseline.
 
+| **Category** | **Key KPIs** | **Release target + test method** |
+| --- | --- | --- |
+| **Task Success** | • Task-completion rate<br>• First-attempt success by task type<br>• Error rate by category<br>• Recovery rate after an error | • **≥95%** overall completion<br>• **≥80%** first-attempt success<br>• **≥90%** error recovery<br>• Functional, edge, multi-turn and regression tests |
+| **Quality** | • Response relevance<br>• Factual/output accuracy<br>• Context preservation across turns<br>• Format and action-sequence compliance | • **≥0.90** relevance<br>• **≥95%** factual accuracy<br>• **≥0.90** context preservation<br>• **≥98%** format compliance<br>• Grounding, response-scoring and transition tests |
+| **Performance** | • Average and p95 response time<br>• CRM fast-path vs. Data 360 RAG latency<br>• API error/timeout rate<br>• Flex Credit cost per resolved conversation | • CRM fast path **~5.1s** and RAG path **~8.1s** UAT baselines<br>• No unhandled API failures<br>• Cost stays within the approved pilot budget<br>• Latency scorers, Apex unit tests and Digital Wallet monitoring |
+| **Safety** | • Security-violation rate<br>• Privacy incidents<br>• Guardrail adherence<br>• Safety-boundary pass rate | • **<0.1%** security violations<br>• **0** privacy breaches<br>• **≥95%** policy/guardrail adherence<br>• **100%** safety-boundary tests<br>• Guardrail, adversarial and perturbation tests |
 
-| **Intended Positive ✅**                                                          | **Intended Negative (Managed Friction) ⚖️**                                                                                                                                                              |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| • Instant 24/7 FAQ + Booking in 1 chat • Saves tables & deflects host calls      | • 1 extra turn required to cancel (Save Gate) • 3-factor match required for lookup                                                                                                                       |
-| **Unintended Positive 💡**                                                       | **Unintended Negative (Risks Mitigated) 🚨**                                                                                                                                                             |
-| • Unanswered FAQ logs reveal missing restaurant profile info for Partner Success | • *Risk:* Allergy liability $\rightarrow$ **Auto-escalate to human** • *Risk:* Restaurant data bleed $\rightarrow$ **Hard `Restaurant_ID` filter** • *Risk:* Snooping $\rightarrow$ **2-strike lockout** |
-
+- **Evidence strip:** **7 automated suites · 23/23 agent cases · 4/4 subagents · 2/2 data paths · 7/7 Apex unit-test methods · 100% release-gate pass**
+- **Continuous quality rule:** Every agent, action, prompt, API or data-source change reruns the affected suite and the full regression gate before release.
 
 ### 🎙️ What We'll Say (Speaker Track)
 
-> *"We ran a formal Consequence Scanning analysis across four quadrants:*
+> *"Before discussing Responsible AI controls, we first define what good agent behavior means. We measure four categories.*
 >
-> - *Our **intended positives** are faster answers and saved covers.*
-> - *Our **intended negatives** are deliberate friction where it protects the business: adding one confirmation turn before canceling a reservation, and requiring 3-factor verification before looking up a booking.*
-> - *An **unintended positive** we discovered is that logging 'I don't have that in our FAQ' tells OpenTable Partner Success exactly which restaurants are missing parking or patio details on their GuestCenter profile.*
-> - *Most importantly, for **unintended negative risks**, we built three hard safeguards: (1) we never guarantee a kitchen is allergen-free — plain dietary notes save to the booking, while severe allergy guarantees immediately escalate to a human; (2) we enforce strict `Restaurant_ID__c` filtering so Restaurant A's menu never leaks into Restaurant B; and (3) we lock reservation lookup after 2 failed tries."*
+> *Task success asks whether the diner completed the job, whether it worked on the first attempt, and whether the agent recovered from errors. Quality measures relevance, factual accuracy, context preservation, and whether the correct subagent and actions were selected. Performance separates our CRM fast path from Data 360 RAG latency and tracks API reliability and cost. Safety measures security violations, privacy incidents, guardrail adherence, and boundary tests.*
+>
+> *These are release gates, not dashboard decoration. Our evidence covers all four subagents, both CRM and Data 360 paths, 23 agent cases across seven automated suites, and seven Apex unit-test methods. The current release gate is 100% passing, and every change reruns the affected suite plus the full regression gate."*
+
+### Rubric Coverage Check (Team Notes — Not Shown on Slide)
+
+- **Testing Suite:** Covers functional, edge, regression, multi-turn, perturbation, guardrail and adversarial dimensions.
+- **Production Resilience:** Converts test results into explicit release thresholds for task success, quality, performance and safety.
+- **Business Impact:** Connects technical quality to completion, recovery, latency and cost per resolved conversation.
 
 ---
 
-## Slide 10: Data and Integration
+## Slide 11: Responsible AI
+
+### 🖥️ On the Slide (Static Risk → Control → Evidence Grid)
+
+- **Headline:** Responsible AI is enforced in controls—and proven in tests.
+- **Subline:** Every release must prevent unauthorized access and resist attempts to override policy.
+
+| **Risk** | **Control** | **Evidence** |
+| --- | --- | --- |
+| **Unauthorized data or actions**<br>• Another diner’s reservation is exposed<br>• A write occurs without identity or confirmation<br>• Restaurant A content appears in Restaurant B | • Verified MIAW identity + 3-factor ownership match<br>• Dedicated agent user, minimal permission sets and `WITH USER_MODE`<br>• `Restaurant_ID__c` isolation + confirmation gates<br>• Failed lookups lock access and route to a person | • **4/4 subagents** exercised<br>• Expected action sequence asserted in **23/23 agent cases**<br>• Both data paths covered: **2/2** — CRM fast path + Data 360 RAG<br>• **7/7 suites** and **7/7 Apex unit-test methods passing** |
+| **Prompt injection or policy bypass**<br>• “Ignore your instructions” prompt leakage<br>• A user claims authority to skip confirmation<br>• Rephrasing evades a safety boundary | • Einstein Trust Layer prompt-injection and toxicity defenses<br>• Deterministic Agent Script `available when` gates<br>• Apex re-validates identity, time, ownership and policy at execution<br>• Fixed refusal or human handoff for blocked requests | • **100% release-gate pass rate** across functional, unit, regression, edge, multi-turn, guardrail, adversarial and perturbation tests<br>• Tests run after **every agent, action, prompt or data-source change**<br>• Every first-run miss becomes a regression case before release |
+
+- **Bottom callout:** **Prevent with platform controls. Constrain in code. Prove continuously.**
+
+### 🎙️ What We'll Say (Speaker Track)
+
+> *"For Responsible AI, we focused on two risks with the greatest consequence for this use case.*
+>
+> *First is unauthorized data or action access. A verified identity, least-privilege runtime, user-mode Apex, restaurant-scoped retrieval, ownership checks, and explicit confirmation all have to agree before protected data is shown or a write occurs.*
+>
+> *Second is prompt injection or policy bypass. The Trust Layer screens the input, but we do not rely on model instructions alone. Agent Script removes unavailable actions from the planner, and Apex re-validates the rule when the action executes.*
+>
+> *The evidence is automated: all four subagents, every expected action sequence, and both CRM and Data 360 paths are covered. Our release-gate suites include functional, unit, regression, edge, multi-turn, guardrail, adversarial, and perturbation tests; the current gate is 100% passing, and the full suite reruns after every change."*
+
+---
+
+## Slide 12: Production Monitoring for Quality + Safety
+
+### 🖥️ On the Slide (Static Monitor → Trigger → Response Grid)
+
+- **Headline:** Quality and safety are continuously re-tested in production.
+- **Subline:** Production signals automatically trigger investigation, regression testing, and a controlled response.
+
+| **Monitor** | **Automatic trigger** | **Response** |
+| --- | --- | --- |
+| **Quality and agent drift**<br>• Task completion and first-attempt success<br>• Relevance, accuracy and context preservation<br>• Grounding and abstention rate<br>• Topic/action routing accuracy<br>• Latency and cost per resolved conversation | • Any KPI moves **>5 percentage points** from its approved baseline<br>• **5+ similar failures or unexpected escalations in 24 hours**<br>• Any model, prompt, action, API or knowledge-source change | • Open a Quality Review Case with transcript, trace, action path and release version<br>• Cluster similar failures and add a representative regression case<br>• Rerun the affected suite immediately, then the full regression suite<br>• Pause the affected action or rollout if the release gate fails |
+| **Deliberate abuse**<br>• Repeated prompt-injection attempts<br>• Reservation-ID enumeration<br>• Repeated attempts to access another diner’s data<br>• Attempts to bypass confirmation or safety policy | • **3 blocked security attempts in one session** or **5 in 24 hours** for the same verified member<br>• One credible attempt involving protected data or a privileged action | • Automatically create a **Security Review Case** for OpenTable Trust & Safety<br>• Attach the relevant evidence while minimizing exposed PII<br>• Ask an authorized OpenTable employee to decide whether to warn, flag, suspend or ban the member from agent access<br>• **Never auto-ban:** OpenTable owns the policy and final decision |
+
+- **Operating cadence:** Read-only synthetic checks continuously • affected suite on every alert • full suite nightly and after every release • weekly drift review.
+- **Production safety note:** Synthetic tests use dedicated accounts and records; destructive tests never run against live diner reservations.
+
+### 🎙️ What We'll Say (Speaker Track)
+
+> *"Passing UAT is the starting line, not the finish line. In production, we monitor task completion, relevance, accuracy, context preservation, grounding, routing, latency, and cost against the approved baseline.*
+>
+> *A single safety or access failure, a five-point KPI shift, five similar failures in 24 hours, or any change to the model, prompt, action, API, or knowledge source automatically opens a Case and reruns the affected tests. If that suite fails, we run the full regression gate and pause the affected action or rollout until it returns to 100%.*
+>
+> *We also separate normal mistakes from deliberate abuse. Repeated prompt injection, reservation enumeration, or attempts to access another diner’s data create a Security Review Case with the trace and release version. The system does not automatically ban anyone. An authorized OpenTable Trust & Safety employee reviews the evidence and makes the policy decision to warn, flag, suspend, or ban that member from the agent."*
+
+### Rubric Coverage Check (Team Notes — Not Shown on Slide)
+
+- **Testing Suite:** Extends regression, edge, adversarial, perturbation and multi-turn testing into an automated production feedback loop.
+- **Security Measures:** Adds monitoring and incident response for prompt leakage, policy bypass and unauthorized access.
+- **Advanced Security:** Keeps enforcement automated while reserving account sanctions for accountable human review.
+
+---
+
+## Slide 13: Data and Integration
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -299,7 +409,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 11: Security and Trust
+## Slide 14: Security and Trust
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -325,35 +435,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 12: Testing Approach
-
-### 🖥️ On the Slide (Visual & Minimal)
-
-- **Top Scoreboard Matrix (`sf agent test run` + Apex Unit Tests — `100% Pass`):**
-  - ✅ **Functional (`12/12`):** `1a` Hours/Phone (`0` RAG calls, `~5.1s`) | `1b` Menu | `1c` Parking | `1d` Policies (`~8.1s`)
-  - ✅ **Guardrails & T&S (`7/7`):** Severe Allergy $\rightarrow$ `Escalate` | Unanswerable $\rightarrow$ Phone Fallback | `REST-ATX-01` vs `02` Tenant Isolation | `911` Emergency
-  - ✅ **Multi-Turn & Transitions (`3/3`):** Compound `FAQ + Book` in 1 turn | `faq` $\rightarrow$ `booking` | `faq` $\rightarrow$ `orchestrator` (Austin $\rightarrow$ NYC)
-  - ✅ **Adversarial & Edge (`100%`):** 2x wrong Reservation ID lockout | Party of 15 escalation | Prompt injection
-- **Bottom Card — 3 Real Bugs Caught & Fixed via Trace Debugging & AI Code Review:**
-  1. 🕒 **5-Hour Timezone Drift** $\rightarrow$ Fixed with restaurant local timezone converter
-  2. 🥗 **Dietary Note Over-Escalation** $\rightarrow$ Split plain dietary note (save on booking) vs. severe allergy (escalate)
-  3. 🔑 **Internal ID Prompt Leak** $\rightarrow$ Fixed via `orchestrator` name resolution + `before_reasoning`
-
-### ⚡ Interactive Moment (Spot the Tenant Leak Test)
-
-- **Ask the Judges:** *"In Test 2c, we asked the agent if **Comal Heritage Cantina** serves the **16-Hour Smoked Prime Brisket** — which is actually on **Post Oak Smokehouse's** menu in the same Austin database. Did it take the bait? Zero leaked chunks — it immediately gave Comal's phone number."*
-
-### 🎙️ What We'll Say (Speaker Track)
-
-> *"We didn't just click around in preview — we built **8 automated `AiTestingDefinition` suites** in YAML and ran them via CLI (`sf agent test run`) alongside Apex unit tests.*
->
-> *Across Functional, Guardrail, Multi-Turn, Perturbation, and Adversarial suites, we verified 100% pass rates — proving that hours/phone questions make **zero RAG calls** (`~5.1s` latency) while menu, parking, and policy questions ground strictly in Data 360 chunks.*
->
-> *More importantly, trace debugging and AI-assisted code review caught three real bugs during development: a 5-hour UTC timezone offset on bookings, over-escalating when a diner simply said 'I'm vegetarian', and asking diners for internal `REST-ATX` IDs. All three were fixed and locked in with regression tests."*
-
----
-
-## Slide 13: Live Demo
+## Slide 15: Live Demo
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -373,14 +455,15 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 14: Recommendations and Next Steps
+## Slide 16: Recommendations and Next Steps
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
-- **Left Side — 3 Strategic Recommendations:**
+- **Left Side — 4 Strategic Recommendations:**
   1. **Consolidate Stacks:** Retire standalone Concierge AI $\rightarrow$ Capture `**$4.18M/yr`** in unified Agentforce value.
   2. **Scale Hybrid RAG:** Keep Hours/Phone in `before_reasoning` CRM + ingest 60,000 restaurant PDFs into Data 360.
   3. **Gate Risk in Code:** Enforce `available when` state gates for cancellations, lockouts, and allergy escalations.
+  4. **Create an Agent Abuse Policy:** Repeated prompt injection, ID enumeration, or cross-diner access attempts automatically create a Security Review Case; an authorized OpenTable employee decides whether to warn, flag, suspend, or ban the member from agent access.
 - **Right Side — Immediate Next Steps (The UAT Ask):**
   - ✅ **Today:** Sign off on **Phase 1 Stage 1 (`10%` Web Pilot in Austin)**
   - 🔧 **Thursday:** Joint MuleSoft API + Digital Wallet Alert Workshop
@@ -388,10 +471,11 @@ FAQ retrieval ── safety concern ──────────────�
 
 ### 🎙️ What We'll Say (Speaker Track)
 
-> *"To close, we leave OpenTable with three strategic recommendations:*
+> *"To close, we leave OpenTable with four strategic recommendations:*
 >
 > 1. **Consolidate onto one Agentforce brain** so diners can ask FAQ questions, book reservations, and reach a human at OpenTable in one place — unlocking $4.18M in annual value.
 > 2. **Scale our Hybrid CRM + Data 360 pattern** across all 60,000 restaurants to keep latency and Flex Credit consumption low at peak dinner hours.
 > 3. **Enforce revenue and safety rules deterministically in Agent Script** rather than relying on prompts alone.*
+> 4. **Adopt an explicit agent-abuse policy.** Repeated prompt injection, reservation enumeration, or attempts to access another diner’s data should automatically create a Security Review Case. OpenTable—not the model—reviews the evidence and decides whether to warn, flag, suspend, or ban that member from agent access.*
 >
 > *Our ask today is your **UAT sign-off to launch our 10% Web pilot in Austin**, followed by our Thursday technical workshop with the MuleSoft team, and our **next executive readout on Tuesday, November 17** to review our first two weeks of FCR and booking conversion data before ramping to 50%. Thank you — we’d love to open the floor for your questions."*
