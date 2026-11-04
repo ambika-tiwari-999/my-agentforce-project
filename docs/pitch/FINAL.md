@@ -40,14 +40,14 @@
 
 ## Slide 3: The KPIs You Want to Improve
 
-> **Advance:** First `>` shows only the KPI board. The next `>` reveals the right half and retitles the slide as **Slide 4**. One more `>` goes to Slide 5 (Key Findings). `<` hides the right half and returns to Slide 3.
+> **Advance:** First `>` shows only the KPI stack. The next `>` slides in the right half and retitles the slide as **Slide 4**. One more `>` goes to Slide 5 (Key Findings). `<` slides the right half away and returns to Slide 3.
 
 ### 🖥️ On the Slide (Left first, then right on the next `>`)
 
-- **SLIDE 3 — KPI board (Visible first):**
+- **SLIDE 3 — KPI stack (Visible first):**
   - **Headline:** These are the KPIs you want to improve.
   - **Subline:** You're willing to use AI. Your agent isn't strong enough.
-  - **Three stat cards**<sup>1</sup> *(OpenTable / PureSpectrum, 1,500 US consumers, May 12–16, 2025):*
+  - **Three vertically stacked stat cards**<sup>1</sup> *(OpenTable / PureSpectrum, 1,500 US consumers, May 12–16, 2025):*
     - **`54%`** research a restaurant before booking, and those who do spend about **`21 minutes`**.
     - **`27%`** did not book because the information was too hard to find. **`17%`** did not book because they couldn't find it and didn't want to call.
     - They contact the restaurant for **hours (`46%`)**, **menu (`39%`)**, and the **address (`22%`)**.
@@ -80,11 +80,11 @@
 
 ## Slide 5: Key Findings (Beta KPIs, then the Business Impact)
 
-> **Advance:** First `>` shows only the beta KPI scorecard. The next `>` reveals the business-impact half. One more `>` goes to Slide 6 (Assumptions). `<` hides the impact half before leaving the slide.
+> **Advance:** First `>` shows only the beta KPI stack. The next `>` slides in the business-impact half. One more `>` goes to Slide 6 (Assumptions). `<` slides the impact half away before leaving the slide.
 
 ### 🖥️ On the Slide (Left first, then right on the next `>`)
 
-- **LEFT — four finding cards in a 2×2 (Visible first).** Headline: **Key Findings.** Subline: 5-city beta, against the targets.
+- **LEFT — four vertically stacked finding cards (Visible first).** Headline: **Key Findings.** Subline: 5-city beta, against the targets.
   1. **Agent response latency — `−30%`.** Average latency was 6.6 seconds, down from 9.4 seconds in Concierge AI.
   2. **First-contact resolution — `84%+`.** Above the 80% target, up from 73%, across FAQ and booking.
   3. **Looker to booker — `1 turn`.** FAQ hands off to booking. Every cancel hits the save-offer gate first.
@@ -119,7 +119,7 @@
 
 ---
 
-## Slide 6: Assumptions (How the Mock Data Was Built from Their B2B2C Platform)
+## Slide 6: Breaking The 4th Wall - Sandbox Assumptions
 
 > **Advance:** First `>` shows the three OpenTable surfaces as a vertical stack. The next `>` slides in the matching sandbox stand-ins. One more `>` goes to Slide 7. `<` reverses the reveal.
 

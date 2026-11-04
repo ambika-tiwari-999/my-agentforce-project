@@ -146,7 +146,8 @@
       line-height: 1.35;
     }
     .tag { margin: 0 0 0.45rem; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: #90D0FE; }
-    #slide-5 .assumption-intro { margin: 0; color: #cfcfcf; font-size: 0.9rem; line-height: 1.35; }
+    #slide-5 h1 { font-size: clamp(1.8rem, 2.7vw, 2.4rem); }
+    #slide-5 .assumption-intro { margin: 0; color: #cfcfcf; font-size: 1.05rem; line-height: 1.35; }
     #slide-5 .assumption-intro.mock { display: none; }
     #slide-5.revealed .assumption-intro.platform { display: none; }
     #slide-5.revealed .assumption-intro.mock { display: block; }
@@ -181,7 +182,7 @@
     #slide-5 .assumption-side-title {
       margin: 0;
       color: #90D0FE;
-      font-size: 0.72rem;
+      font-size: 0.82rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -198,7 +199,7 @@
       flex: 1;
       min-height: 0;
       display: grid;
-      grid-template-columns: 4.5rem minmax(0, 1fr);
+      grid-template-columns: 5.25rem minmax(0, 1fr);
       align-items: center;
       gap: 0.8rem;
       padding: 0.75rem 0.9rem;
@@ -209,14 +210,14 @@
     #slide-5 .mocked .assumption-card { border-left-color: #2E844A; background: #162033; }
     #slide-5 .surface-label {
       color: #90D0FE;
-      font-size: 0.72rem;
+      font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
     #slide-5 .mocked .surface-label { color: #fff; }
-    #slide-5 .assumption-card h2 { margin: 0 0 0.25rem; font-size: 1rem; }
-    #slide-5 .assumption-card p { margin: 0; color: #cfcfcf; font-size: 0.8rem; line-height: 1.3; }
+    #slide-5 .assumption-card h2 { margin: 0 0 0.3rem; font-size: 1.15rem; }
+    #slide-5 .assumption-card p { margin: 0; color: #cfcfcf; font-size: 0.94rem; line-height: 1.35; }
     @media (prefers-reduced-motion: reduce) {
       #slide-5 .assumptions-split,
       #slide-5 .assumption-side.curtain { transition: none; }
@@ -292,25 +293,44 @@
       font-style: normal;
       color: #90D0FE;
     }
-    #slide-3 .split { flex: 0 1 auto; width: 100%; align-items: stretch; }
+    #slide-3 .split {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      align-items: stretch;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0fr);
+      gap: 0;
+      transition: grid-template-columns 0.55s ease, gap 0.55s ease;
+    }
+    #slide-3 .split.revealed {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0.8rem;
+    }
     #slide-3 .kpi-pane {
+      display: flex;
+      min-width: 0;
       background: transparent;
       padding: 0;
       overflow: visible;
     }
     #slide-3 .kpi-board {
+      flex: 1;
+      min-height: 0;
       display: grid;
-      grid-template-columns: 0.9fr 1.25fr 1.15fr;
-      gap: 0.9rem;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      gap: 0.65rem;
     }
     #slide-3 .kpi {
       margin: 0;
       background: #1c1c1c;
       border-radius: 16px;
-      border-top: 3px solid #90D0FE;
-      padding: 1.45rem 1.35rem 1.5rem;
-      display: flex;
-      flex-direction: column;
+      border-left: 4px solid #90D0FE;
+      padding: 0.9rem 1.2rem;
+      display: grid;
+      grid-template-columns: minmax(8rem, 0.38fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 1rem;
     }
     #slide-3 .kpi-label {
       margin: 0;
@@ -319,8 +339,15 @@
       text-transform: uppercase;
       color: #90D0FE;
     }
+    #slide-3 .kpi-content {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      gap: 1rem;
+    }
     #slide-3 .kpi-num {
-      margin: 0.55rem 0 0;
+      margin: 0;
       font-size: clamp(3.1rem, 5.4vw, 5rem);
       font-weight: 650;
       letter-spacing: -0.04em;
@@ -328,7 +355,7 @@
       color: #fff;
     }
     #slide-3 .kpi-detail {
-      margin: 0.7rem 0 0;
+      margin: 0;
       color: #cfcfcf;
       font-size: clamp(0.92rem, 1.15vw, 1.05rem);
       line-height: 1.35;
@@ -338,20 +365,30 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.85rem 1rem;
-      margin-top: 0.7rem;
+      margin: 0;
+      grid-column: 1 / -1;
     }
     #slide-3 .figures-3 { grid-template-columns: repeat(3, 1fr); }
     #slide-3 .figures .kpi-num { margin: 0; font-size: clamp(2.4rem, 4vw, 3.8rem); }
     #slide-3 .figures .kpi-detail { margin: 0.35rem 0 0; }
     #slide-3 .deal-pane {
-      display: none;
-      background: #162033;
-      border-radius: 16px;
-      padding: 1.35rem 1.4rem;
+      display: flex;
+      min-width: 0;
+      overflow: hidden;
+      background: transparent;
+      padding: 0;
       flex-direction: column;
       justify-content: center;
+      opacity: 0;
+      transform: translateX(2rem);
+      pointer-events: none;
+      transition: opacity 0.35s ease 0.15s, transform 0.5s ease;
     }
-    #slide-3 .split.revealed .deal-pane { display: flex; }
+    #slide-3 .split.revealed .deal-pane {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
     #slide-3 .num-seal,
     #slide-3 .title-seal { display: none; }
     #slide-3.revealed .num-kpi,
@@ -404,19 +441,16 @@
       grid-template-rows: repeat(3, minmax(0, 1fr));
       gap: 0.7rem;
     }
-    #slide-3 .split.revealed .kpi {
-      justify-content: center;
-      padding: 1rem 1.2rem;
-    }
+    #slide-3 .split.revealed .kpi { padding: 0.85rem 1rem; }
     #slide-3 .split.revealed .kpi-label { font-size: 0.8rem; }
     #slide-3 .split.revealed .kpi-num,
     #slide-3 .split.revealed .figures .kpi-num {
       font-size: clamp(2.6rem, 3.6vw, 3.7rem);
-      margin-top: 0.45rem;
+      margin: 0;
     }
-    #slide-3 .split.revealed .figures { margin-top: 0.65rem; }
+    #slide-3 .split.revealed .figures { margin: 0; }
     #slide-3 .split.revealed .kpi-detail {
-      margin-top: 0.5rem;
+      margin: 0;
       font-size: clamp(1.02rem, 1.25vw, 1.18rem);
     }
     #slide-3 .split.revealed .deal-pane {
@@ -480,16 +514,40 @@
     #slide-4.revealed .frame-beta { display: none; }
     #slide-4.revealed .title-value,
     #slide-4.revealed .frame-value { display: block; }
-    #slide-4 .split { flex: 1; min-height: 0; width: 100%; align-items: stretch; }
+    #slide-4 .split {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      align-items: stretch;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0fr);
+      gap: 0;
+      transition: grid-template-columns 0.55s ease, gap 0.55s ease;
+    }
+    #slide-4 .split.revealed {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0.8rem;
+    }
     #slide-4 .find-pane,
     #slide-4 .value-pane {
       background: transparent;
       padding: 0;
+      min-width: 0;
       min-height: 0;
     }
     #slide-4 .find-pane { display: flex; }
-    #slide-4 .value-pane { display: none; }
-    #slide-4 .split.revealed .value-pane { display: flex; }
+    #slide-4 .value-pane {
+      display: flex;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateX(2rem);
+      pointer-events: none;
+      transition: opacity 0.35s ease 0.15s, transform 0.5s ease;
+    }
+    #slide-4 .split.revealed .value-pane {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
     #slide-4 .find-board,
     #slide-4 .value-board {
       flex: 1;
@@ -497,12 +555,12 @@
       display: grid;
       gap: 0.85rem;
     }
-    #slide-4 .find-board { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+    #slide-4 .find-board { grid-template-columns: 1fr; grid-template-rows: repeat(4, minmax(0, 1fr)); }
     #slide-4 .find {
       margin: 0;
       background: #1c1c1c;
       border-radius: 16px;
-      border-top: 3px solid #90D0FE;
+      border-left: 4px solid #90D0FE;
       padding: 1.15rem 1.25rem;
       display: flex;
       flex-direction: column;
@@ -567,6 +625,15 @@
       font-size: clamp(0.92rem, 1.15vw, 1.05rem);
       line-height: 1.35;
     }
+    #slide-4 .split:not(.revealed) .find {
+      display: grid;
+      grid-template-columns: minmax(7rem, 0.42fr) minmax(8rem, 0.38fr) minmax(0, 1.3fr);
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem 1.15rem;
+    }
+    #slide-4 .split:not(.revealed) .find-num,
+    #slide-4 .split:not(.revealed) .find-detail { margin: 0; }
     #slide-4 .split.revealed .find-board,
     #slide-4 .split.revealed .value-board {
       grid-template-columns: 1fr;
@@ -578,6 +645,38 @@
     #slide-4 .split.revealed .find-num { font-size: clamp(1.7rem, 2.4vw, 2.35rem); margin-top: 0.25rem; }
     #slide-4 .split.revealed .value-board .find-num { font-size: clamp(2.1rem, 3vw, 2.9rem); }
     #slide-4 .split.revealed .find-detail { margin-top: 0.3rem; font-size: clamp(0.88rem, 1.05vw, 1rem); }
+    #slide-3.revealed h1,
+    #slide-4 h1,
+    #slide-5 h1 { font-size: clamp(28pt, 3.4vw, 38pt); }
+    #slide-3.revealed .num,
+    #slide-3.revealed .kpi-label,
+    #slide-3.revealed .kpi-detail,
+    #slide-3.revealed .step,
+    #slide-3.revealed .job-copy,
+    #slide-3.revealed .cites,
+    #slide-4 .num,
+    #slide-4 .frame,
+    #slide-4 .find-label,
+    #slide-4 .find-detail,
+    #slide-4 .math-cue,
+    #slide-4 .math,
+    #slide-4 .cites,
+    #slide-5 .num,
+    #slide-5 .assumption-intro,
+    #slide-5 .assumption-side-title,
+    #slide-5 .surface-label,
+    #slide-5 .assumption-card p,
+    #slide-5 .cites { font-size: 14pt; }
+    #slide-5 .assumption-card h2 { font-size: clamp(17pt, 1.8vw, 21pt); }
+    #slide-3.revealed code,
+    #slide-4 code,
+    #slide-5 code { font-size: 1em; }
+    @media (prefers-reduced-motion: reduce) {
+      #slide-3 .split,
+      #slide-3 .deal-pane,
+      #slide-4 .split,
+      #slide-4 .value-pane { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -601,36 +700,42 @@
         <div class="kpi-board">
           <article class="kpi">
             <p class="kpi-label">Before they book<sup class="cite">1</sup></p>
-            <p class="kpi-num">54%</p>
-            <p class="kpi-detail">of Americans research the restaurant first. Those who do spend about <strong>21 minutes</strong>.</p>
+            <div class="kpi-content">
+              <p class="kpi-num">54%</p>
+              <p class="kpi-detail">of Americans research the restaurant first. Those who do spend about <strong>21 minutes</strong>.</p>
+            </div>
           </article>
           <article class="kpi">
             <p class="kpi-label">They decided not to book<sup class="cite">1</sup></p>
-            <div class="figures">
-              <div>
-                <p class="kpi-num">27%</p>
-                <p class="kpi-detail">Information was too hard to find.</p>
-              </div>
-              <div>
-                <p class="kpi-num">17%</p>
-                <p class="kpi-detail">Couldn't find it, and didn't want to call.</p>
+            <div class="kpi-content">
+              <div class="figures">
+                <div>
+                  <p class="kpi-num">27%</p>
+                  <p class="kpi-detail">Information was too hard to find.</p>
+                </div>
+                <div>
+                  <p class="kpi-num">17%</p>
+                  <p class="kpi-detail">Couldn't find it, and didn't want to call.</p>
+                </div>
               </div>
             </div>
           </article>
           <article class="kpi">
             <p class="kpi-label">They contact the restaurant for<sup class="cite">1</sup></p>
-            <div class="figures figures-3">
-              <div>
-                <p class="kpi-num">46%</p>
-                <p class="kpi-detail">Hours</p>
-              </div>
-              <div>
-                <p class="kpi-num">39%</p>
-                <p class="kpi-detail">Menu</p>
-              </div>
-              <div>
-                <p class="kpi-num">22%</p>
-                <p class="kpi-detail">Address</p>
+            <div class="kpi-content">
+              <div class="figures figures-3">
+                <div>
+                  <p class="kpi-num">46%</p>
+                  <p class="kpi-detail">Hours</p>
+                </div>
+                <div>
+                  <p class="kpi-num">39%</p>
+                  <p class="kpi-detail">Menu</p>
+                </div>
+                <div>
+                  <p class="kpi-num">22%</p>
+                  <p class="kpi-detail">Address</p>
+                </div>
               </div>
             </div>
           </article>
@@ -729,9 +834,8 @@
   </section>
   <section id="slide-5" class="dense">
     <p class="num">Slide 6</p>
-    <h1>Assumptions</h1>
+    <h1>Breaking The 4th Wall - Sandbox Assumptions</h1>
     <p class="assumption-intro platform">First, the three OpenTable surfaces represented in our beta.</p>
-    <p class="assumption-intro mock">Then, how we mirrored each surface in the Salesforce sandbox.</p>
     <div class="split assumptions-split">
       <div class="assumption-side">
         <p class="assumption-side-title">OpenTable platform</p>
@@ -787,9 +891,9 @@
       </div>
     </div>
     <ol class="cites">
-      <li>OpenTable, <a href="https://support.opentable.com/s/article/Updating-your-restaurant-profile-in-GuestCenter">Updating your restaurant profile in GuestCenter</a>. Structured profile fields and uploaded menus and house rules.</li>
-      <li>OpenTable, <a href="https://www.opentable.com/blog/press/page/ai-concierge/">Concierge launch</a>, July 15, 2025. Diners ask how to get there, what to order, and about dietary needs. Grounded in menus, reviews, and descriptions, on the profile where booking happens.</li>
-      <li>Salesforce, <a href="https://www.salesforce.com/customer-stories/opentable/">OpenTable customer story</a>, Aug 7, 2025. Diners reserve on mobile or web. Agentforce creates a Service Cloud case and hands the chat to a rep.</li>
+      <li>OpenTable, <a href="https://support.opentable.com/s/article/Updating-your-restaurant-profile-in-GuestCenter">GuestCenter restaurant profiles</a>.</li>
+      <li>OpenTable, <a href="https://www.opentable.com/blog/press/page/ai-concierge/">Concierge launch</a>, July 15, 2025.</li>
+      <li>Salesforce, <a href="https://www.salesforce.com/customer-stories/opentable/">OpenTable customer story</a>, Aug 7, 2025.</li>
     </ol>
   </section>
   <section id="slide-6" class="dense">
