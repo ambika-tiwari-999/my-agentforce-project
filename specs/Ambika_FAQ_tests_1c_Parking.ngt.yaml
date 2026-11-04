@@ -1,0 +1,35 @@
+name: Ambika_FAQ_tests_1c_Parking
+description: "Category 1c: Parking & Access (Data 360 Knowledge RAG - Parking_And_Access)"
+subjectType: AGENT
+subjectName: TableCraft_Agent
+subjectVersion: v13
+testCases:
+  # 1. Single-turn: Parking availability (free lot vs. valet)
+  - inputs:
+      - utterance: "Where can I park at Post Oak Smokehouse in Austin, and do they have valet?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context', 'retrieve_dining_knowledge']"
+      - name: bot_response_rating
+        expected: "Post Oak Smokehouse has a free private surface parking lot directly behind the restaurant (entered from South Lamar Blvd) with 45 spaces, plus free street parking on Barton Springs Rd after 6:00 PM. They do not offer valet parking."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 2. Single-turn: Outdoor patio & wheelchair accessibility
+  - inputs:
+      - utterance: "Does Post Oak Smokehouse in Austin have outdoor patio seating and wheelchair access?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context', 'retrieve_dining_knowledge']"
+      - name: bot_response_rating
+        expected: "Yes, Post Oak Smokehouse has a shaded outdoor live-oak beer garden patio with misting fans in summer and heaters in winter, as well as step-free wheelchair ramp access at both entrances and ADA-compliant restrooms."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds

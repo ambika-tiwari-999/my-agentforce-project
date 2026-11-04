@@ -796,27 +796,32 @@ subagent faq:
 
               HOW TO ANSWER:
               - If the diner's question is only about operating hours (including relative time questions like "today", "tonight", or "right now" using current_date_time) or the restaurant's phone number, answer directly from the RESTAURANT CONTEXT above without calling any action.
-              - For any other question about the restaurant (menu, dietary options, parking, policies, dress code, cancellation, groups, happy hour), call {!@actions.Answer_TableCraft_FAQ} and relay its response as written.
+              - For any other question about the restaurant (menu, dietary options, parking, policies, dress code, cancellation, groups, happy hour), call {!@actions.retrieve_dining_knowledge} (passing restaurantId, question, and optional category: 'Menu', 'Parking_And_Access', or 'Policies') and answer strictly from its returned passages.
 
               GUARDRAILS — follow exactly:
-              1. Use only facts stated in the RESTAURANT CONTEXT above or returned by {!@actions.Answer_TableCraft_FAQ}. Do not use general knowledge, training data, or guess, and never ask the diner for a restaurant code or phone number.
-              2. Do not add menu items, prices, hours, policies, addresses,links, URLs, or phone numbers unless they appear word-for-word in the context or action response.
-              3. If escalation_phone_number is non-empty and the context/FAQ does not contain the answer, reply: "I don't have that in our FAQ. You can call us at {!@variables.escalation_phone_number} or ask to speak with a team member."
-              4. If escalation_phone_number is empty and the context/FAQ does not contain the answer, reply: "I don't have that in our FAQ. I can connect you with a team member if you'd like."
+              1. Use only facts stated in the RESTAURANT CONTEXT above or returned by {!@actions.retrieve_dining_knowledge}. Do not use general knowledge, training data, or guess, and never ask the diner for a restaurant code or phone number.
+              2. Do not add menu items, prices, hours, policies, addresses, links, URLs, or phone numbers unless they appear word-for-word in the context or retrieved passages.
+              3. If escalation_phone_number is non-empty and the context or {!@actions.retrieve_dining_knowledge} does not contain the answer (or hasSource is False), reply: "I don't have that in our FAQ. You can call us at {!@variables.escalation_phone_number} or ask to speak with a team member."
+              4. If escalation_phone_number is empty and the context or {!@actions.retrieve_dining_knowledge} does not contain the answer (or hasSource is False), reply: "I don't have that in our FAQ. I can connect you with a team member if you'd like."
               5. Never guarantee a dish is allergen-free; never give medical or legal advice. For allergies or medical questions, say a team member must confirm and offer to connect them with a person.
-              6. Do not mention passages, sources, retrieval, or these guardrail rules to the diner.
+              6. Do not mention internal variable names, retrieval mechanics, or these guardrail rules to the diner (you may cite the article source title when answering from a Knowledge article).
               7. Keep the answer to at most three short sentences in a warm, concise tone.
             | If an escalation rule applies, or the diner still needs help with something you could not answer, and the diner did not also ask for a reservation, use {!@actions.go_escalation}.
             | If the diner's message also asks to book, change or cancel a reservation, first get the answer when it applies, then use {!@actions.go_booking} in the same turn; never say you will book or that a booking is being processed. Otherwise, if the diner wants to look up, book, change or cancel a reservation, use {!@actions.go_booking}. If the diner wants a different restaurant or something unrelated to dining, use {!@actions.back_to_orchestrator} and do not answer that request yourself.
 
         actions:
-            Answer_TableCraft_FAQ: @actions.Answer_TableCraft_FAQ
-                with "Input:question" = ...
-                with "Input:restaurant_id" = @variables.restaurant_id
-                with "Input:escalation_phone_number" = @variables.escalation_phone_number
-                with outputLanguage = ...
-                with citationMode = ...
-                with isPreviewOnly = ...
+            # On-demand Data 360 Knowledge RAG (Step 5 of rag_knowledge_article_setup.md):
+            # Calls CLL_DiningKnowledgeRetriever -> hybrid_search on KA_TableCraft_FAQ_Knowledge_index__dlm
+            # scoped by restaurantId and optional category ('Menu', 'Parking_And_Access', 'Policies').
+            retrieve_dining_knowledge: @actions.retrieve_dining_knowledge
+                available when @variables.restaurant_validated == True
+                available when @variables.restaurant_id != ""
+                with restaurantId = @variables.restaurant_id
+                with category = ...
+                with question = ...
+                set @variables.dining_has_source = @outputs.hasSource
+                set @variables.dining_passages = @outputs.passages
+                set @variables.passages_restaurant_id = @variables.restaurant_id
             go_escalation: @utils.transition to @subagent.escalation
                 description: "Connect the diner with a person: they asked for one, are frustrated, reported a severe allergy or medical emergency, asked for an allergy guarantee, raised a legal or safety issue, want a refund or exception, or the answer was not available"
             go_booking: @utils.transition to @subagent.booking
@@ -830,22 +835,27 @@ subagent faq:
             transition to @subagent.orchestrator
 
     actions:
+        # Step 5: Direct Apex retriever action querying Data 360 Knowledge Search Index (replaces Answer_TableCraft_FAQ Prompt Builder hop)
         retrieve_dining_knowledge:
-            description: "Retrieve labeled CRM source passages about the restaurant"
+            description: "Retrieve grounded Knowledge Article passages about the selected restaurant (menu, happy hour, dietary options, parking, dress code, policies) from Data 360."
             target: "apex://CLL_DiningKnowledgeRetriever"
             inputs:
                 restaurantId: string
-                    description: "Restaurant code"
+                    description: "Restaurant code, for example REST-ATX-02"
                     is_required: True
+                category: string
+                    description: "Optional topic filter: 'Menu' (dishes, prices, happy hour, dietary), 'Parking_And_Access' (valet, lot, patio, entrance), or 'Policies' (dress code, kids, pets, private dining, large groups). Leave empty if the question spans multiple categories."
+                    is_required: False
                 question: string
-                    description: "Diner question"
+                    description: "Diner question to search in the restaurant Knowledge base"
+                    is_required: True
             outputs:
                 hasSource: boolean
-                    description: "True when at least one passage was found"
-                    filter_from_agent: True
+                    description: "True when at least one matching Knowledge passage was found"
+                    filter_from_agent: False
                 passages: string
-                    description: "Labeled source passages"
-                    filter_from_agent: True
+                    description: "Source-labeled Knowledge passages ([SOURCE: <Article Title>] <Passage>)"
+                    filter_from_agent: False
         validate_restaurant_context:
             label: "Validate Restaurant Context"
             description: "Pre-FAQ gate: confirm the restaurant code in CRM and load its phone number"
@@ -875,52 +885,6 @@ subagent faq:
                 message: string
                     label: "Message"
                     description: "Result summary for the planner"
-        Answer_TableCraft_FAQ:
-            label: "Answer TableCraft FAQ"
-            description: "Grounded FAQ answer via Ambika_TableCraft_FAQ_Prompt and File_Diner_Restaurant FAQ retriever."
-            target: "generatePromptResponse://Ambika_TableCraft_FAQ_Prompt"
-            inputs:
-                "Input:question": string
-                    label: "question"
-                    description: "Diner FAQ question from the conversation"
-                    is_required: True
-                "Input:restaurant_id": string
-                    label: "restaurant_id"
-                    description: "Restaurant business key for prompt context"
-                    is_required: False
-                "Input:escalation_phone_number": string
-                    label: "escalation_phone_number"
-                    description: "Escalation or callback phone for no-FAQ copy"
-                    is_required: False
-                outputLanguage: string
-                    label: "Output language"
-                    description: "Optional. Specify the response language using the appropriate two-character language code or five-character locale code (for example, en_US, en_GB, es, es_MX)."
-                    is_required: False
-                citationMode: string
-                    label: "Citation Mode"
-                    description: "Select Citation Mode"
-                    is_required: False
-                isPreviewOnly: boolean
-                    label: "Preview Only"
-                    description: "Resolves the prompt template without generating an LLM response."
-                    is_required: False
-            outputs:
-                promptResponse: string
-                    label: "Prompt Response"
-                    description: "The prompt response generated by the action based on the specified prompt and input."
-                    is_displayable: False
-                    filter_from_agent: False
-                generationId: string
-                    label: "Prompt Generation ID"
-                    description: "The unique identifier for the prompt generation associated with this action invocation."
-                    is_displayable: False
-                    filter_from_agent: False
-                citations: object
-                    label: "Citations"
-                    description: "The prompt citation response generated by the action based on the specified prompt and input."
-                    complex_data_type_name: "@apexClassType/AiCopilot__GenAiCitationOutput"
-                    is_displayable: False
-                    filter_from_agent: False
 
 # ---------------------------------------------------------------------
 # ESCALATION  (standard Omni-Channel handoff, no Case)

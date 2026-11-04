@@ -1,0 +1,64 @@
+name: Ambika_FAQ_tests_4_Transitions
+description: "Category 4: Transitions Out of FAQ (go_booking & back_to_orchestrator)"
+subjectType: AGENT
+subjectName: TableCraft_Agent
+subjectVersion: v13
+testCases:
+  # 4a-1. Compound FAQ + Booking request in a single turn
+  - inputs:
+      - utterance: "What are the hours for Post Oak Smokehouse in Austin, and can I book a table for 4 this Friday at 7:00 PM?"
+    scorers:
+      - name: topic_sequence_match
+        expected: booking
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context', 'get_restaurant_clock', 'check_booking_time']"
+      - name: bot_response_rating
+        expected: "Post Oak Smokehouse is open Wednesday through Sunday from 11:30 AM to 10:00 PM. Friday at 7:00 PM is a valid time for a reservation, and to book your table for 4 I just need your email address."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 4a-2. Multi-turn: Diner asks an FAQ question first, then decides to book in the next turn
+  - inputs:
+      - utterance: "That sounds great! Can I book a table for 4 at Post Oak Smokehouse this Saturday at 6:30 PM?"
+        conversationHistory:
+          - role: user
+            topic: orchestrator
+            message: "What are the hours for Post Oak Smokehouse in Austin?"
+          - role: agent
+            topic: faq
+            message: "Post Oak Smokehouse in Austin is open Wednesday through Sunday from 11:30 AM to 10:00 PM. They are closed on Mondays and Tuesdays. Would you like help with a reservation or more information?"
+    scorers:
+      - name: topic_sequence_match
+        expected: booking
+      - name: action_sequence_match
+        expected: "['verify_diner', 'get_restaurant_clock', 'check_booking_time']"
+      - name: bot_response_rating
+        expected: "Saturday at 6:30 PM is valid at Post Oak Smokehouse. To book your table for 4, please share your email address."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 4b. Multi-turn: Diner is in FAQ for Post Oak Smokehouse, then switches to another city/restaurant (back_to_orchestrator)
+  - inputs:
+      - utterance: "Actually, what restaurants do you have in New York?"
+        conversationHistory:
+          - role: user
+            topic: orchestrator
+            message: "What are the hours for Post Oak Smokehouse in Austin?"
+          - role: agent
+            topic: faq
+            message: "Post Oak Smokehouse in Austin is open Wednesday through Sunday from 11:30 AM to 10:00 PM. They are closed on Mondays and Tuesdays. Would you like help with a reservation or more information?"
+    scorers:
+      - name: topic_sequence_match
+        expected: orchestrator
+      - name: action_sequence_match
+        expected: "['verify_diner', 'verify_diner', 'find_restaurant']"
+      - name: bot_response_rating
+        expected: "Here are three TableCraft restaurants in New York: Brick & Ember Pizzeria, Kuro Izakaya & Omakase, and L'Antica Trattoria."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds

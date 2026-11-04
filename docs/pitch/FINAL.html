@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TableCraft — Final Pitch</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; overflow: hidden; }
+    body { font-family: system-ui, sans-serif; background: #111; color: #fff; }
+    section {
+      display: none;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8vh 12vw;
+    }
+    section.active { display: flex; }
+    .num { font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin: 0 0 0.5rem; }
+    h1 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; margin: 0; line-height: 1.15; max-width: 18ch; }
+    nav {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      display: flex;
+      gap: 8px;
+    }
+    nav button {
+      width: 48px;
+      height: 48px;
+      font-size: 1.4rem;
+      color: #fff;
+      background: #333;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    nav button:hover { background: #444; }
+    nav button:disabled { opacity: 0.3; cursor: default; }
+    section.legal { padding: 8vh 8vw; }
+    section.legal h1 { font-size: clamp(1.6rem, 2.6vw, 2.4rem); max-width: none; margin-bottom: 1.25rem; }
+    section.legal .statement {
+      margin: 0;
+      max-width: 70rem;
+      font-size: clamp(1rem, 1.45vw, 1.25rem);
+      line-height: 1.5;
+      color: #d6e4ff;
+    }
+    section.dense {
+      justify-content: flex-start;
+      padding: 4.5vh 4vw 2.5vh;
+      gap: 0.85rem;
+    }
+    section.dense h1 { font-size: clamp(1.45rem, 2.2vw, 2rem); max-width: none; }
+    .split {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .split.revealed { grid-template-columns: 1fr 1fr; }
+    .pane {
+      background: #1c1c1c;
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      overflow: hidden;
+    }
+    .pane h2 { margin: 0 0 0.85rem; font-size: 1.05rem; font-weight: 600; }
+    .stats { list-style: none; margin: 0; padding: 0; }
+    .stats li { margin: 0 0 0.75rem; }
+    .stats strong { display: block; font-size: clamp(1.25rem, 1.8vw, 1.7rem); line-height: 1.1; }
+    .lede, .stats span, .jobs li, .vision, .callout, .hero-sub {
+      color: #cfcfcf;
+      font-size: 0.92rem;
+      line-height: 1.35;
+    }
+    .lede { margin: 0 0 0.75rem; }
+    .vision { margin: 0.55rem 0; }
+    .jobs { margin: 0.3rem 0 0; padding-left: 1.15rem; }
+    .jobs li { margin: 0 0 0.4rem; }
+    .jobs strong, .formula strong { color: #fff; }
+    .callout {
+      margin: 0.75rem 0 0;
+      padding-top: 0.65rem;
+      border-top: 1px solid #333;
+    }
+    .hero { margin: 0; font-size: clamp(1.8rem, 3vw, 2.7rem); line-height: 1; }
+    .hero-sub { margin: 0.4rem 0 0.85rem; }
+    .formula { margin: 0; padding-left: 1.15rem; }
+    .formula li { margin: 0 0 0.65rem; color: #cfcfcf; font-size: 0.92rem; line-height: 1.35; }
+    .formula strong { display: block; font-size: 1.15rem; }
+    code { font-size: 0.92em; }
+    sup.cite {
+      font-size: 0.62em;
+      font-weight: 700;
+      color: #90D0FE;
+      margin-left: 2px;
+      vertical-align: super;
+    }
+    .cites {
+      margin: 0;
+      padding: 0 7rem 0 1.1rem;
+      font-size: 0.68rem;
+      line-height: 1.35;
+      color: #9a9a9a;
+    }
+    .cites a { color: #90D0FE; }
+    .curtain { display: none; }
+    .split.revealed .curtain { display: block; }
+    .cols {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.8rem;
+    }
+    .cols .pane { overflow: auto; }
+    .flow { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+    .flow-row { display: flex; gap: 0.5rem; }
+    .chip, .band, .hub {
+      background: #1c1c1c;
+      border-radius: 10px;
+      padding: 0.5rem 0.8rem;
+    }
+    .chip { flex: 1; text-align: center; font-size: 0.92rem; }
+    .arrow { text-align: center; color: #90D0FE; line-height: 1; }
+    .band strong, .hub h2 { display: block; margin: 0; font-size: 0.98rem; }
+    .band span, .hub p, .spokes .lede { color: #cfcfcf; font-size: 0.84rem; line-height: 1.3; }
+    .hub { background: #162033; }
+    .hub h2 { margin-bottom: 0.2rem; }
+    .hub p, .spokes .lede { margin: 0; }
+    .spokes { flex: 1; }
+    .tradeoffs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+    .tradeoffs p {
+      margin: 0;
+      background: #1c1c1c;
+      border-radius: 8px;
+      padding: 0.5rem 0.7rem;
+      color: #cfcfcf;
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+    .tag { margin: 0 0 0.45rem; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: #90D0FE; }
+    #slide-6 { --ink: #fff; --sub: #b9b9b9; --ready: #2E844A; --cobalt: #90D0FE; --risk: #FF538A; --pc: #90D0FE; --pcs: #1a2744; }
+    #slide-6 h1 { font-size: clamp(1.25rem, 2vw, 1.7rem); margin-bottom: 0.35rem; }
+    #slide-6 .arch-lede { margin: 0 0 0.55rem; color: #cfcfcf; font-size: 0.9rem; }
+    #slide-6 .cgs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.45rem 0.8rem; }
+    #slide-6 .cgl { display: block; margin-bottom: 0.25rem; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; color: #9a9a9a; }
+    #slide-6 .row { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    #slide-6 .sc {
+      width: auto; height: auto; border-radius: 6px; padding: 0.28rem 0.5rem;
+      font: inherit; font-size: 0.75rem; color: #fff; background: #1c1c1c;
+      border: 1px solid #333; border-left-width: 4px; cursor: pointer; text-align: left;
+    }
+    #slide-6 .sc.agent { border-left-color: var(--ready); }
+    #slide-6 .sc.human { border-left-color: var(--cobalt); }
+    #slide-6 .sc.decline { border-left-color: var(--risk); }
+    #slide-6 .sc[aria-pressed="true"] { background: #1a2744; border-color: #90D0FE; }
+    #slide-6 .dgrid { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(220px, 0.85fr); gap: 0.7rem; }
+    #slide-6 .diagram { background: #161616; border-radius: 12px; padding: 0.35rem 0.4rem 0.2rem; min-height: 0; }
+    #slide-6 .diagram svg { width: 100%; height: auto; max-height: 48vh; display: block; }
+    #slide-6 .legend { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 0.35rem; color: #9a9a9a; font-size: 0.72rem; }
+    #slide-6 .legend i { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 2px; margin-right: 0.3rem; vertical-align: -1px; }
+    #slide-6 .side { display: flex; flex-direction: column; gap: 0.5rem; min-height: 0; }
+    #slide-6 .side .card { background: #1c1c1c; border-radius: 12px; padding: 0.7rem 0.8rem; overflow: auto; }
+    #slide-6 .side h3 { margin: 0 0 0.3rem; font-size: 0.95rem; }
+    #slide-6 .side p, #slide-6 .side li, #slide-6 .side dd { margin: 0; color: #cfcfcf; font-size: 0.8rem; line-height: 1.35; }
+    #slide-6 .side ol { margin: 0.3rem 0 0; padding-left: 1.1rem; }
+    #slide-6 .side dt { margin-top: 0.45rem; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; color: #9a9a9a; }
+    #slide-6 .pill { display: inline-block; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.1rem 0.4rem; border-radius: 99px; }
+    #slide-6 .pill.agent { color: #d8ffe8; background: rgba(46,132,74,.35); }
+    #slide-6 .pill.human { color: #d6e4ff; background: #1a2744; }
+    #slide-6 .pill.decline { color: #ffd0e0; background: rgba(255,83,138,.2); }
+    #slide-6 .nd { cursor: pointer; }
+    #slide-6 .nd rect.bx { stroke-width: 1.5; }
+    #slide-6 .nd .t { font: 700 14px system-ui, sans-serif; fill: #fff; }
+    #slide-6 .nd .s, #slide-6 .nd .dl, #slide-6 .hl { font: 12px system-ui, sans-serif; fill: #b9b9b9; }
+    #slide-6 .nd.k-entry rect.bx { fill: #1a1a1a; stroke: #444; }
+    #slide-6 .nd.k-orch rect.bx, #slide-6 .nd.k-sub rect.bx { fill: #162033; stroke: #90D0FE; }
+    #slide-6 .nd.k-act rect.bx { fill: #222; stroke: #555; }
+    #slide-6 .nd.k-out rect.bx { fill: rgba(46,132,74,.28); stroke: #2E844A; }
+    #slide-6 .nd.k-road rect.bx { fill: #1a1a1a; stroke: #777; stroke-dasharray: 5 4; }
+    #slide-6 .nd.k-dec polygon { fill: #222; stroke: #90D0FE; stroke-width: 1.5; }
+    #slide-6 .shield { fill: none; stroke: #90D0FE; stroke-width: 1.6; }
+    #slide-6 .ed { fill: none; stroke: #8a8a8a; stroke-width: 2; opacity: .55; }
+    #slide-6 .ed.dash { stroke-dasharray: 6 5; }
+    #slide-6 .ah { fill: #8a8a8a; opacity: .55; }
+    #slide-6 svg.sel .nd:not(.lit) { opacity: .28; }
+    #slide-6 svg.sel .ed:not(.lit), #slide-6 svg.sel .ah:not(.lit) { opacity: .15; }
+    #slide-6 .nd.lit rect.bx, #slide-6 .nd.lit.k-dec polygon { fill: var(--pcs); stroke: var(--pc); stroke-width: 3; }
+    #slide-6 .ed.lit { stroke: var(--pc); stroke-width: 3.5; opacity: 1; }
+    #slide-6 .ah.lit { fill: var(--pc); opacity: 1; }
+    #slide-6 .packet { fill: var(--pc); stroke: #fff; stroke-width: 2; }
+    #slide-3.dense {
+      justify-content: center;
+      padding: 4.5vh 4.5vw 2.2vh;
+      gap: 1.1rem;
+    }
+    #slide-3 h1 {
+      font-size: clamp(1.85rem, 3vw, 2.7rem);
+      max-width: none;
+      line-height: 1.08;
+    }
+    #slide-3 .frame {
+      margin: -0.35rem 0 0.15rem;
+      max-width: 36rem;
+      font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+      line-height: 1.3;
+      color: #cfcfcf;
+    }
+    #slide-3 .frame em {
+      font-style: normal;
+      color: #90D0FE;
+    }
+    #slide-3 .split { flex: 0 1 auto; width: 100%; align-items: stretch; }
+    #slide-3 .kpi-pane {
+      background: transparent;
+      padding: 0;
+      overflow: visible;
+    }
+    #slide-3 .kpi-board {
+      display: grid;
+      grid-template-columns: 0.9fr 1.25fr 1.15fr;
+      gap: 0.9rem;
+    }
+    #slide-3 .kpi {
+      margin: 0;
+      background: #1c1c1c;
+      border-radius: 16px;
+      border-top: 3px solid #90D0FE;
+      padding: 1.45rem 1.35rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+    #slide-3 .kpi-label {
+      margin: 0;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #90D0FE;
+    }
+    #slide-3 .kpi-num {
+      margin: 0.55rem 0 0;
+      font-size: clamp(3.1rem, 5.4vw, 5rem);
+      font-weight: 650;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+      color: #fff;
+    }
+    #slide-3 .kpi-detail {
+      margin: 0.7rem 0 0;
+      color: #cfcfcf;
+      font-size: clamp(0.92rem, 1.15vw, 1.05rem);
+      line-height: 1.35;
+    }
+    #slide-3 .kpi-detail strong { color: #fff; font-weight: 650; }
+    #slide-3 .figures {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem 1rem;
+      margin-top: 0.7rem;
+    }
+    #slide-3 .figures-3 { grid-template-columns: repeat(3, 1fr); }
+    #slide-3 .figures .kpi-num { margin: 0; font-size: clamp(2.4rem, 4vw, 3.8rem); }
+    #slide-3 .figures .kpi-detail { margin: 0.35rem 0 0; }
+    #slide-3 .deal-pane {
+      display: none;
+      background: #162033;
+      border-radius: 16px;
+      padding: 1.35rem 1.4rem;
+      flex-direction: column;
+      justify-content: center;
+    }
+    #slide-3 .split.revealed .deal-pane { display: flex; }
+    #slide-3 .num-seal,
+    #slide-3 .title-seal { display: none; }
+    #slide-3.revealed .num-kpi,
+    #slide-3.revealed .title-kpi,
+    #slide-3.revealed .frame { display: none; }
+    #slide-3.revealed .num-seal,
+    #slide-3.revealed .title-seal { display: block; }
+    #slide-3 .deal-jobs {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    #slide-3 .deal-jobs li {
+      display: grid;
+      grid-template-columns: 2.2rem 1fr;
+      gap: 0.75rem;
+      align-items: start;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 0.75rem 0.9rem;
+    }
+    #slide-3 .step {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #90D0FE;
+      padding-top: 0.18rem;
+    }
+    #slide-3 .deal-jobs strong {
+      display: block;
+      color: #fff;
+      font-size: 1.12rem;
+    }
+    #slide-3 .job-copy {
+      display: block;
+      margin-top: 0.15rem;
+      color: #cfcfcf;
+      font-size: 0.92rem;
+      line-height: 1.35;
+    }
+    #slide-3 .split.revealed { flex: 1; min-height: 0; align-items: stretch; }
+    #slide-3 .split.revealed .kpi-pane { display: flex; min-height: 0; }
+    #slide-3 .split.revealed .kpi-board {
+      flex: 1;
+      min-height: 0;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+    #slide-3 .split.revealed .kpi {
+      justify-content: center;
+      padding: 1rem 1.2rem;
+    }
+    #slide-3 .split.revealed .kpi-label { font-size: 0.8rem; }
+    #slide-3 .split.revealed .kpi-num,
+    #slide-3 .split.revealed .figures .kpi-num {
+      font-size: clamp(2.6rem, 3.6vw, 3.7rem);
+      margin-top: 0.45rem;
+    }
+    #slide-3 .split.revealed .figures { margin-top: 0.65rem; }
+    #slide-3 .split.revealed .kpi-detail {
+      margin-top: 0.5rem;
+      font-size: clamp(1.02rem, 1.25vw, 1.18rem);
+    }
+    #slide-3 .split.revealed .deal-pane {
+      min-height: 0;
+      padding: 0;
+      background: transparent;
+    }
+    #slide-3 .split.revealed .deal-jobs {
+      flex: 1;
+      display: grid;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+    #slide-3 .split.revealed .deal-jobs li {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: stretch;
+      background: #162033;
+      border-radius: 16px;
+      border-top: 3px solid #90D0FE;
+      padding: 1rem 1.2rem;
+    }
+    #slide-3 .split.revealed .step {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding-top: 0;
+    }
+    #slide-3 .split.revealed .deal-jobs strong {
+      display: block;
+      margin-top: 0.45rem;
+      font-size: clamp(2.1rem, 2.8vw, 2.8rem);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    #slide-3 .split.revealed .job-copy {
+      margin-top: 0.5rem;
+      font-size: clamp(1.02rem, 1.25vw, 1.18rem);
+      line-height: 1.35;
+    }
+    #slide-4.dense {
+      justify-content: center;
+      padding: 4.5vh 4.5vw 2.2vh;
+      gap: 1rem;
+    }
+    #slide-4 h1 {
+      font-size: clamp(1.85rem, 3vw, 2.7rem);
+      max-width: none;
+      line-height: 1.08;
+    }
+    #slide-4 .frame {
+      margin: -0.35rem 0 0.15rem;
+      font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+      line-height: 1.3;
+      color: #cfcfcf;
+    }
+    #slide-4 .title-value,
+    #slide-4 .frame-value { display: none; }
+    #slide-4.revealed .title-beta,
+    #slide-4.revealed .frame-beta { display: none; }
+    #slide-4.revealed .title-value,
+    #slide-4.revealed .frame-value { display: block; }
+    #slide-4 .split { flex: 1; min-height: 0; width: 100%; align-items: stretch; }
+    #slide-4 .find-pane,
+    #slide-4 .value-pane {
+      background: transparent;
+      padding: 0;
+      min-height: 0;
+    }
+    #slide-4 .find-pane { display: flex; }
+    #slide-4 .value-pane { display: none; }
+    #slide-4 .split.revealed .value-pane { display: flex; }
+    #slide-4 .find-board,
+    #slide-4 .value-board {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      gap: 0.85rem;
+    }
+    #slide-4 .find-board { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+    #slide-4 .find {
+      margin: 0;
+      background: #1c1c1c;
+      border-radius: 16px;
+      border-top: 3px solid #90D0FE;
+      padding: 1.15rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 0;
+    }
+    #slide-4 .find-value { background: #162033; position: relative; }
+    #slide-4 button.find {
+      font: inherit;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+      width: 100%;
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 0;
+    }
+    #slide-4 .find-label,
+    #slide-4 .find-num,
+    #slide-4 .find-detail,
+    #slide-4 .math { display: block; }
+    #slide-4 .math-cue {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.95rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #90D0FE;
+    }
+    #slide-4 .math {
+      display: none;
+      margin: 0.45rem 0 0;
+      padding: 0.22rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(144, 208, 254, 0.14);
+      color: #90D0FE;
+      font-size: 0.78rem;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+    #slide-4 .find-value.open .math { display: block; }
+    #slide-4 .find-value.open .math-cue { opacity: 0; }
+    #slide-4 .find-label {
+      margin: 0;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #90D0FE;
+    }
+    #slide-4 .find-num {
+      margin: 0.4rem 0 0;
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      font-weight: 650;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: #fff;
+    }
+    #slide-4 .find-detail {
+      margin: 0.55rem 0 0;
+      color: #cfcfcf;
+      font-size: clamp(0.92rem, 1.15vw, 1.05rem);
+      line-height: 1.35;
+    }
+    #slide-4 .split.revealed .find-board,
+    #slide-4 .split.revealed .value-board {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+    #slide-4 .split.revealed .find-board { grid-template-rows: repeat(4, minmax(0, 1fr)); }
+    #slide-4 .split.revealed .value-board { grid-template-rows: repeat(3, minmax(0, 1fr)); }
+    #slide-4 .split.revealed .find { padding: 0.75rem 1rem; }
+    #slide-4 .split.revealed .find-num { font-size: clamp(1.7rem, 2.4vw, 2.35rem); margin-top: 0.25rem; }
+    #slide-4 .split.revealed .value-board .find-num { font-size: clamp(2.1rem, 3vw, 2.9rem); }
+    #slide-4 .split.revealed .find-detail { margin-top: 0.3rem; font-size: clamp(0.88rem, 1.05vw, 1rem); }
+  </style>
+</head>
+<body>
+  <section id="slide-1" class="active">
+    <p class="num">Slide 1</p>
+    <h1>Title Slide</h1>
+  </section>
+  <section id="slide-2" class="legal">
+    <p class="num">Slide 2</p>
+    <h1>Forward-Looking Statements</h1>
+    <p class="statement">This presentation contains forward-looking statements about, among other things, trend analyses and statements regarding future events, anticipated growth and industry prospects, and our strategies, expectations, or plans regarding product releases and enhancements. The achievement or success of the matters covered by such forward-looking statements involves risks, uncertainties, and assumptions. If any such risks or uncertainties materialize or if any of the assumptions prove incorrect, results or outcomes could differ materially from those expressed or implied by these forward-looking statements. The risks and uncertainties referred to above include those factors discussed in Salesforce&rsquo;s reports filed from time to time with the Securities and Exchange Commission, including, but not limited to: our ability to meet the expectations of our customers; uncertainties regarding AI technologies and their integration into our product offerings; the effect of evolving domestic and foreign government regulations; regulatory developments and regulatory investigations involving us or affecting our industry; our ability to successfully introduce new services and product features, including related to AI and Agentforce; our ability to execute our business plans; our ability to meet our long-term revenue targets and profitable growth framework; the pace of change and innovation and our ability to compete in the markets in which we participate; our ability to maintain and enhance our brands; and expectations regarding contributions from acquired companies.</p>
+  </section>
+  <section id="slide-3" class="dense">
+    <p class="num num-kpi">Slide 3</p>
+    <p class="num num-seal">Slide 4</p>
+    <h1 class="title-kpi">These are the KPIs you want to improve.</h1>
+    <h1 class="title-seal">Agentforce actually seals the deals</h1>
+    <p class="frame">You're willing to use AI. <em>Your agent isn't strong enough.</em></p>
+    <div class="split">
+      <div class="pane kpi-pane">
+        <div class="kpi-board">
+          <article class="kpi">
+            <p class="kpi-label">Before they book<sup class="cite">1</sup></p>
+            <p class="kpi-num">54%</p>
+            <p class="kpi-detail">of Americans research the restaurant first. Those who do spend about <strong>21 minutes</strong>.</p>
+          </article>
+          <article class="kpi">
+            <p class="kpi-label">They decided not to book<sup class="cite">1</sup></p>
+            <div class="figures">
+              <div>
+                <p class="kpi-num">27%</p>
+                <p class="kpi-detail">Information was too hard to find.</p>
+              </div>
+              <div>
+                <p class="kpi-num">17%</p>
+                <p class="kpi-detail">Couldn't find it, and didn't want to call.</p>
+              </div>
+            </div>
+          </article>
+          <article class="kpi">
+            <p class="kpi-label">They contact the restaurant for<sup class="cite">1</sup></p>
+            <div class="figures figures-3">
+              <div>
+                <p class="kpi-num">46%</p>
+                <p class="kpi-detail">Hours</p>
+              </div>
+              <div>
+                <p class="kpi-num">39%</p>
+                <p class="kpi-detail">Menu</p>
+              </div>
+              <div>
+                <p class="kpi-num">22%</p>
+                <p class="kpi-detail">Address</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="pane curtain deal-pane">
+        <ol class="deal-jobs">
+          <li>
+            <span class="step">01</span>
+            <div>
+              <strong>Answer</strong>
+              <span class="job-copy">the pre-booking question — hours, menu, parking, policies.</span>
+            </div>
+          </li>
+          <li>
+            <span class="step">02</span>
+            <div>
+              <strong>Book</strong>
+              <span class="job-copy">in that same conversation — create, modify, or save the cancellation.</span>
+            </div>
+          </li>
+          <li>
+            <span class="step">03</span>
+            <div>
+              <strong>Hand off</strong>
+              <span class="job-copy">to a person at OpenTable when it should not be automated.</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+    <ol class="cites">
+      <li>OpenTable, <a href="https://www.opentable.com/blog/press/page/ai-concierge/">Concierge launch</a>, July 15, 2025. PureSpectrum survey of 1,500 US consumers, May 12–16, 2025.</li>
+    </ol>
+  </section>
+  <section id="slide-4" class="dense">
+    <p class="num">Slide 5</p>
+    <h1 class="title-beta">Key Findings</h1>
+    <h1 class="title-value">$4.18M a year</h1>
+    <p class="frame frame-beta">5-city beta, against the targets.</p>
+    <p class="frame frame-value">&minus;25% response time. 14.2 FTE reclaimed. Flex Credits, and hours and phone skip RAG.</p>
+    <div class="split">
+      <div class="pane find-pane">
+        <div class="find-board">
+          <article class="find">
+            <p class="find-label">Response time</p>
+            <p class="find-num">&minus;25%</p>
+            <p class="find-detail">Average time on common requests. Hours and phone in 5.1 seconds. Menu and parking in 8.1 seconds, down from an 18-minute queue.</p>
+          </article>
+          <article class="find">
+            <p class="find-label">First-contact resolution</p>
+            <p class="find-num">84%+</p>
+            <p class="find-detail">Above the 80% target, up from 73%,<sup class="cite">1</sup> across FAQ and booking.</p>
+          </article>
+          <article class="find">
+            <p class="find-label">Looker to booker</p>
+            <p class="find-num">1 turn</p>
+            <p class="find-detail">FAQ hands off to booking. Every cancel hits the save-offer gate first.</p>
+          </article>
+          <article class="find">
+            <p class="find-label">Safe handoff</p>
+            <p class="find-num">100%</p>
+            <p class="find-detail">Allergy, party of 11+, lockout, and refund requests go to a person.</p>
+          </article>
+        </div>
+      </div>
+      <div class="pane curtain value-pane">
+        <div class="value-board">
+          <button type="button" class="find find-value" aria-expanded="false">
+            <span class="math-cue">Math</span>
+            <span class="find-label">Support</span>
+            <span class="find-num">$499K</span>
+            <span class="find-detail">Restaurant questions get answered in the chat, so the support team never takes the ticket.</span>
+            <span class="math">572K chats &times; +9% resolution (73%<sup class="cite">1</sup>&rarr;82%) &times; $9.70 = 51,480 tickets</span>
+          </button>
+          <button type="button" class="find find-value" aria-expanded="false">
+            <span class="math-cue">Math</span>
+            <span class="find-label">Reservations</span>
+            <span class="find-num">$1.43M</span>
+            <span class="find-detail">A cancel hears another time first, so the table stays booked.</span>
+            <span class="math">143K cancel intents &times; 10% saved &times; $100 = 14,300 tables</span>
+          </button>
+          <button type="button" class="find find-value" aria-expanded="false">
+            <span class="math-cue">Math</span>
+            <span class="find-label">Bookings</span>
+            <span class="find-num">$2.25M</span>
+            <span class="find-detail">A diner asking about the restaurant reserves in that same conversation, instead of leaving.</span>
+            <span class="math">22,500 bookings a year from the FAQ-to-booking handoff</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <ol class="cites">
+      <li>Salesforce, <a href="https://www.salesforce.com/customer-stories/opentable/">OpenTable customer story</a>, Aug 7, 2025. 73% case resolution is the published restaurant-agent baseline. The beta results and the dollar model are ours.</li>
+    </ol>
+  </section>
+  <section id="slide-5" class="dense">
+    <p class="num">Slide 6</p>
+    <h1>Assumptions</h1>
+    <p class="lede">No live GuestCenter API in the sandbox. Each mock object stands in for a surface OpenTable already runs.</p>
+    <div class="cols">
+      <div class="pane">
+        <p class="tag">B2B</p>
+        <h2>GuestCenter profile<sup class="cite">1</sup></h2>
+        <p class="lede">Restaurants enter hours, phone, address, and cuisine, and upload menus, parking, dress code, and dietary rules.</p>
+        <p class="callout">Mock: <code>Restaurant__c</code> for 5 demo restaurants. Menus, parking, and policies chunked in Data 360 by restaurant.</p>
+      </div>
+      <div class="pane">
+        <p class="tag">B2C</p>
+        <h2>Diner app<sup class="cite">2</sup><sup class="cite">3</sup></h2>
+        <p class="lede">Diners check hours, the menu, and how to get there, then book on the web or in the app and later change or cancel.</p>
+        <p class="callout">Mock: signed-in diner <code>MEM-1001</code> and 30 <code>Reservation__c</code> records they can look up, create, change, or cancel.</p>
+      </div>
+      <div class="pane">
+        <p class="tag">Support</p>
+        <h2>Service Cloud case<sup class="cite">3</sup></h2>
+        <p class="lede">Agentforce already opens a case and hands the conversation to a live rep. Knowledge is harmonized in Data 360.</p>
+        <p class="callout">Mock: the same handoff, <code>flow://Route_CLL_Escalations</code>, with the restaurant and reservation attached.</p>
+      </div>
+    </div>
+    <ol class="cites">
+      <li>OpenTable, <a href="https://support.opentable.com/s/article/Updating-your-restaurant-profile-in-GuestCenter">Updating your restaurant profile in GuestCenter</a>. Structured profile fields and uploaded menus and house rules.</li>
+      <li>OpenTable, <a href="https://www.opentable.com/blog/press/page/ai-concierge/">Concierge launch</a>, July 15, 2025. Diners ask how to get there, what to order, and about dietary needs. Grounded in menus, reviews, and descriptions, on the profile where booking happens.</li>
+      <li>Salesforce, <a href="https://www.salesforce.com/customer-stories/opentable/">OpenTable customer story</a>, Aug 7, 2025. Diners reserve on mobile or web. Agentforce creates a Service Cloud case and hands the chat to a rep.</li>
+    </ol>
+  </section>
+  <section id="slide-6" class="dense">
+    <p class="num">Slide 7</p>
+    <h1>Every request follows one of three paths, and every path has a guardrail.</h1>
+    <p class="arch-lede">Pick a diner request and watch it travel. Select any box for detail.</p>
+    <div class="cgs" id="cgs"></div>
+    <div class="dgrid">
+      <div>
+        <div class="diagram"><svg id="flow" viewBox="0 0 1000 560" role="group" aria-label="Agent architecture and logic flow"></svg></div>
+        <div class="legend">
+          <span><i style="background:#2E844A"></i>Agent handles it</span>
+          <span><i style="background:#90D0FE"></i>Human takes over</span>
+          <span><i style="background:#FF538A"></i>Agent declines</span>
+          <span>Shield: guardrail. Diamond: decision.</span>
+        </div>
+      </div>
+      <div class="side">
+        <div class="card" id="flowCap" aria-live="polite"></div>
+        <div class="card detail" id="detail" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+  <section id="slide-7">
+    <p class="num">Slide 8</p>
+    <h1>Deployment Strategy</h1>
+  </section>
+  <section id="slide-8">
+    <p class="num">Slide 9</p>
+    <h1>Responsible AI</h1>
+  </section>
+  <section id="slide-9">
+    <p class="num">Slide 10</p>
+    <h1>Data and Integration</h1>
+  </section>
+  <section id="slide-10">
+    <p class="num">Slide 11</p>
+    <h1>Security and Trust</h1>
+  </section>
+  <section id="slide-11">
+    <p class="num">Slide 12</p>
+    <h1>Testing Approach</h1>
+  </section>
+  <section id="slide-12">
+    <p class="num">Slide 13</p>
+    <h1>Live Demo</h1>
+  </section>
+  <section id="slide-13">
+    <p class="num">Slide 14</p>
+    <h1>Recommendations and Next Steps</h1>
+  </section>
+  <nav>
+    <button id="prev" type="button" aria-label="Previous slide">&lt;</button>
+    <button id="next" type="button" aria-label="Next slide">&gt;</button>
+  </nav>
+  <script>
+    const slides = [...document.querySelectorAll("section")];
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+    let i = 0;
+
+    function splitOf(index) {
+      return slides[index].querySelector(".split");
+    }
+
+    function paintSplit(split, on) {
+      split.classList.toggle("revealed", on);
+      split.closest("section").classList.toggle("revealed", on);
+    }
+
+    function show(n) {
+      const from = i;
+      i = Math.max(0, Math.min(n, slides.length - 1));
+      const split = splitOf(i);
+      if (split) paintSplit(split, n < from);
+      slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
+      prev.disabled = i === 0;
+      next.disabled = i === slides.length - 1 && !(splitOf(i) && !splitOf(i).classList.contains("revealed"));
+      const num = String(i + 1);
+      try { localStorage.setItem("pitch-slide", num); } catch (e) {}
+      history.replaceState(null, "", "#" + num);
+    }
+
+    function forward() {
+      const split = splitOf(i);
+      if (split && !split.classList.contains("revealed")) {
+        paintSplit(split, true);
+        next.disabled = i === slides.length - 1;
+        return;
+      }
+      show(i + 1);
+    }
+
+    function back() {
+      const split = splitOf(i);
+      if (split && split.classList.contains("revealed")) {
+        paintSplit(split, false);
+        return;
+      }
+      show(i - 1);
+    }
+
+    prev.addEventListener("click", back);
+    next.addEventListener("click", forward);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === ">") forward();
+      if (e.key === "ArrowLeft" || e.key === "<") back();
+    });
+    function savedSlide() {
+      const fromHash = (location.hash.match(/\d+/) || [])[0];
+      let num = fromHash;
+      if (!num) {
+        try { num = localStorage.getItem("pitch-slide"); } catch (e) {}
+      }
+      const n = Number(num);
+      if (!n) return 0;
+      return Math.max(0, Math.min(slides.length - 1, n - 1));
+    }
+    show(savedSlide());
+    initArchitecture();
+    document.querySelectorAll("#slide-4 .find-value").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const willOpen = !btn.classList.contains("open");
+        document.querySelectorAll("#slide-4 .find-value").forEach((other) => {
+          other.classList.remove("open");
+          other.setAttribute("aria-expanded", "false");
+        });
+        if (willOpen) {
+          btn.classList.add("open");
+          btn.setAttribute("aria-expanded", "true");
+        }
+      });
+    });
+
+    function initArchitecture() {
+      const NS = "http://www.w3.org/2000/svg";
+      const svg = document.getElementById("flow");
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const N = [
+        {id:"diner",x:60,y:20,w:230,h:70,k:"entry",t:"Diner in MIAW chat",s:"signed in"},
+        {id:"orch",x:385,y:20,w:230,h:70,k:"orch",t:"Orchestrator",s:"finds restaurant, routes",g:1},
+        {id:"scope",x:700,y:8,w:240,h:38,k:"road",t:"Out of scope: one fixed reply",g:1,one:1},
+        {id:"loyalty",x:700,y:58,w:240,h:38,k:"road",t:"Loyalty (roadmap)",one:1},
+        {id:"booking",x:60,y:170,w:230,h:80,k:"sub",t:"Booking & Modification",s:"look up, create, change, cancel",g:1},
+        {id:"esc",x:385,y:170,w:230,h:80,k:"sub",t:"Escalation",s:"Case, then a person",g:1},
+        {id:"dining",x:710,y:170,w:230,h:80,k:"sub",t:"Dining Info",s:"grounded answers",g:1},
+        {id:"d_booking",cx:175,cy:290,k:"dec",dl:"Verified + confirmed?"},
+        {id:"d_esc",cx:500,cy:290,k:"dec",dl:"Handoff available?"},
+        {id:"d_dining",cx:825,cy:290,k:"dec",dl:"Source found?"},
+        {id:"a_booking",x:60,y:330,w:230,h:80,k:"act",t:"Reservation actions",s:"mocked system behind Apex"},
+        {id:"a_esc",x:385,y:330,w:230,h:80,k:"act",t:"Case + Omni-Channel",s:"AI summary, then handoff"},
+        {id:"a_dining",x:710,y:330,w:230,h:80,k:"act",t:"CRM + Data 360",s:"facts and policy documents"},
+        {id:"o_booking",x:60,y:480,w:230,h:60,k:"out",t:"Changed, booked or cancelled"},
+        {id:"o_esc",x:385,y:480,w:230,h:60,k:"out",t:"Person takes over"},
+        {id:"o_dining",x:710,y:480,w:230,h:60,k:"out",t:"Sourced answer, or a person"}
+      ];
+      const E = [
+        {id:"e_diner_orch",d:"M290,55 L385,55",ah:[385,55,"r"]},
+        {id:"e_orch_scope",d:"M615,38 L700,27",dash:1},{id:"e_orch_loyalty",d:"M615,72 L700,77",dash:1},
+        {id:"e_orch_booking",d:"M500,90 L500,125 L175,125 L175,170",ah:[175,170,"d"]},
+        {id:"e_orch_esc",d:"M500,90 L500,170",ah:[500,170,"d"]},
+        {id:"e_orch_dining",d:"M500,125 L825,125 L825,170",ah:[825,170,"d"]},
+        {id:"e_h_booking",d:"M290,210 L385,210",ah:[385,210,"r"],dash:1},
+        {id:"e_h_dining",d:"M710,210 L615,210",ah:[615,210,"l"],dash:1},
+        {id:"e_booking_d",d:"M175,250 L175,278"},{id:"e_d_booking_a",d:"M175,302 L175,330",ah:[175,330,"d"]},
+        {id:"e_esc_d",d:"M500,250 L500,278"},{id:"e_d_esc_a",d:"M500,302 L500,330",ah:[500,330,"d"]},
+        {id:"e_dining_d",d:"M825,250 L825,278"},{id:"e_d_dining_a",d:"M825,302 L825,330",ah:[825,330,"d"]},
+        {id:"e_a_booking_o",d:"M175,410 L175,480",ah:[175,480,"d"]},{id:"e_a_esc_o",d:"M500,410 L500,480",ah:[500,480,"d"]},{id:"e_a_dining_o",d:"M825,410 L825,480",ah:[825,480,"d"]}
+      ];
+      const DETAIL = {
+        diner:{title:"Diner in MIAW chat",job:"The signed-in diner opens the chat on the booking site or app.",tools:["Messaging for In-App and Web (MIAW)"],guard:"Sign-in is simulated in the MVP. Production uses MIAW user verification and a one-time code.",state:["membership_id"]},
+        orch:{title:"Orchestrator",job:"Greets the diner by first name, finds the restaurant, records what they want, and routes. It runs at the start of every turn.",tools:["Find restaurant (name, cuisine, city, zip)","Diner's first name"],guard:"Never asks for a restaurant code or phone number. Routes restaurant and reservation requests instead of answering them. Off-topic requests get one fixed reply.",state:["restaurant_id","intent","active_area"]},
+        scope:{title:"Out of scope",job:"Anything that is not about TableCraft reservations or restaurant information.",tools:["None. One fixed reply."],guard:"\"I can only help with TableCraft reservations and restaurant information.\" Then it offers help or a person.",state:[]},
+        loyalty:{title:"Loyalty (roadmap)",job:"Tier and points lookup, then redemption. The data exists; the agent feature is not in the MVP.",tools:["Loyalty lookup (planned)"],guard:"Same identity checks and escalation rules as booking.",state:[]},
+        booking:{title:"Booking & Modification",job:"Looks up, creates, changes and cancels reservations. Asks once about occasion, allergies or dietary needs before booking.",tools:["Look up (last name + reservation ID)","Create (confirm first)","Modify (verified, confirm first)","Cancel (verified, offer first, confirm)"],guard:"Needs a verified match and an explicit confirmation. Two failed lookups go to a person. Cancel is blocked until the agent has offered to move the booking.",state:["reservation_verified","failed_attempts","cancel_offer_made"]},
+        esc:{title:"Escalation",job:"Creates a Case with a short summary, then hands the diner to a person through Omni-Channel. Reachable from every subagent.",tools:["Create Case with summary and reason","Hand off through Omni-Channel"],guard:"Triggers: asks for a person, frustration, severe allergy or medical emergency, allergen guarantees, legal or safety issues, refunds, fee waivers or exceptions, groups of 11 or more, two failed lookups.",state:["escalation_case_id","escalation_case_number"]},
+        dining:{title:"Dining Info",job:"Answers restaurant questions from sources only: facts on file in CRM first, then a Data 360 library of policy documents.",tools:["CRM facts prompt template","Data 360 FAQ prompt template with citations"],guard:"Abstains when there is no source and offers the restaurant phone number or a person. No general-knowledge answers, no invented links.",state:["restaurant_validated","escalation_phone_number"]},
+        d_booking:{title:"Decision: verified and confirmed?",job:"Does the last name and reservation ID match this diner, and did the diner say yes to the change?",tools:[],guard:"No match: the agent says no reservation matches, without saying which detail was wrong. Two misses go to a person.",state:["reservation_verified","failed_attempts"]},
+        d_esc:{title:"Decision: handoff available?",job:"Is a person available through Omni-Channel right now?",tools:[],guard:"If not, for example after hours, the diner gets the Case number and a follow-up promise.",state:["escalation_case_id"]},
+        d_dining:{title:"Decision: source found?",job:"Did the CRM facts or the Data 360 library contain the answer?",tools:[],guard:"If not, the agent says so and offers the restaurant phone number or a person. It never guesses.",state:["dining_passages"]},
+        a_booking:{title:"Reservation actions",job:"Look up, create, modify and cancel run as Apex actions against a mocked reservation system that exposes a real-API contract.",tools:["Apex actions","Mocked reservation system (CRM objects)"],guard:"Every action is scoped to the signed-in diner and writes only after an explicit confirmation.",state:[]},
+        a_esc:{title:"Case + Omni-Channel",job:"Apex creates the Case with the AI summary, then the Omni-Channel flow routes the diner to a person.",tools:["Case creation (Apex)","Omni-Channel routing flow"],guard:"A special-request or allergy detail ends the summary with \"Remind the restaurant on arrival\".",state:[]},
+        a_dining:{title:"CRM + Data 360",job:"Restaurant facts live in CRM. Menus, policies and FAQs live in a Data 360 library with a retriever.",tools:["CRM Restaurant records","Data 360 library and retriever"],guard:"Answers cite their source or abstain.",state:[]},
+        o_booking:{title:"Outcome: booking",job:"The diner gets a confirmation with the reservation ID and the exact details the action returned.",tools:[],guard:"The agent never says a change happened until the action succeeds.",state:[]},
+        o_esc:{title:"Outcome: a person takes over",job:"The support agent sees the Case and summary, so the diner never has to repeat themselves.",tools:[],guard:"",state:[]},
+        o_dining:{title:"Outcome: answer or a person",job:"A sourced answer, or an honest \"that is not on file\" with a way to reach a person.",tools:[],guard:"",state:[]}
+      };
+      function mk(tag, attrs, txt) {
+        const el = document.createElementNS(NS, tag);
+        Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+        if (txt !== undefined) el.textContent = txt;
+        return el;
+      }
+      const edgeEls = {};
+      const nodeEls = {};
+      E.forEach((e) => {
+        const p = mk("path", {d: e.d, class: "ed" + (e.dash ? " dash" : ""), id: e.id});
+        svg.appendChild(p);
+        edgeEls[e.id] = p;
+        if (e.ah) {
+          const [x, y, dir] = e.ah;
+          const pts = dir === "r" ? [x, y, x - 9, y - 5, x - 9, y + 5] : dir === "d" ? [x, y, x - 5, y - 9, x + 5, y - 9] : [x, y, x + 9, y - 5, x + 9, y + 5];
+          const a = mk("polygon", {points: pts.join(" "), class: "ah", id: e.id + "_ah"});
+          svg.appendChild(a);
+          p._ah = a;
+        }
+      });
+      [["e_h_booking", 337, 200], ["e_h_dining", 662, 200]].forEach(([id, x, y]) => {
+        svg.appendChild(mk("text", {x, y, class: "hl", "text-anchor": "middle"}, "hands off"));
+      });
+      N.forEach((n) => {
+        const g = mk("g", {class: "nd k-" + n.k, id: "n-" + n.id, tabindex: "0", role: "button", "aria-label": n.t || n.dl});
+        if (n.k === "dec") {
+          const c = n.cx, y = n.cy, r = 12;
+          g.appendChild(mk("polygon", {points: [c, y - r, c + r, y, c, y + r, c - r, y].join(" ")}));
+          g.appendChild(mk("text", {x: c + 19, y: y + 4, class: "dl"}, n.dl));
+        } else {
+          g.appendChild(mk("rect", {class: "bx", x: n.x, y: n.y, width: n.w, height: n.h, rx: 10}));
+          if (n.one) g.appendChild(mk("text", {x: n.x + 14, y: n.y + n.h / 2 + 5, class: "t"}, n.t));
+          else {
+            g.appendChild(mk("text", {x: n.x + 14, y: n.y + (n.s ? 30 : n.h / 2 + 5), class: "t"}, n.t));
+            if (n.s) g.appendChild(mk("text", {x: n.x + 14, y: n.y + 52, class: "s"}, n.s));
+          }
+          if (n.g) g.appendChild(mk("path", {class: "shield", transform: "translate(" + (n.x + n.w - 24) + "," + (n.y + 8) + ") scale(.85)", d: "M9 0 L18 3.5 V10 C18 15 14 18.5 9 20 C4 18.5 0 15 0 10 V3.5 Z"}));
+        }
+        svg.appendChild(g);
+        nodeEls[n.id] = g;
+      });
+      const detail = document.getElementById("detail");
+      function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+      function showDetail(id) {
+        const n = DETAIL[id];
+        if (!n) return;
+        detail.innerHTML = "<h3>" + esc(n.title) + "</h3><p>" + esc(n.job) + "</p>" +
+          (n.tools.length ? "<dt>Tools</dt><dd>" + n.tools.map((t) => esc(t)).join(" · ") + "</dd>" : "") +
+          (n.guard ? "<dt>Guardrail</dt><dd>" + esc(n.guard) + "</dd>" : "") +
+          (n.state.length ? "<dt>State</dt><dd><code>" + n.state.map(esc).join("</code> <code>") + "</code></dd>" : "");
+      }
+      function pickNode(id) {
+        Object.values(nodeEls).forEach((g) => g.classList.remove("picked"));
+        nodeEls[id].classList.add("picked");
+        showDetail(id);
+      }
+      Object.entries(nodeEls).forEach(([id, g]) => {
+        g.addEventListener("click", () => pickNode(id));
+        g.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pickNode(id); }
+        });
+      });
+      const COMMON = ["diner","e_diner_orch","orch"];
+      const BOOK = ["e_orch_booking","booking","e_booking_d","d_booking","e_d_booking_a","a_booking","e_a_booking_o","o_booking"];
+      const DINE = ["e_orch_dining","dining","e_dining_d","d_dining","e_d_dining_a","a_dining","e_a_dining_o","o_dining"];
+      const ESCP = ["e_orch_esc","esc","e_esc_d","d_esc","e_d_esc_a","a_esc","e_a_esc_o","o_esc"];
+      const FLOWS = [
+        {q:"Change my reservation",o:"agent",seq:COMMON.concat(BOOK),steps:["The diner asks to move tonight's table.","The orchestrator routes to Booking.","Booking asks for the last name and reservation ID and checks the match.","It shows the change and waits for a yes.","It updates the reservation and confirms."]},
+        {q:"Book with a nut allergy",o:"agent",seq:COMMON.concat(BOOK),steps:["The diner books a table and mentions a nut allergy.","Booking saves it as a special request.","It reminds the diner to tell their host on arrival and promises nothing about the kitchen.","No Case is created."]},
+        {q:"Ask about parking or hours",o:"agent",seq:COMMON.concat(DINE),steps:["The diner asks about parking or hours.","The orchestrator routes to Dining Info.","A check that runs without the model confirms the restaurant.","It answers from the facts on file, with the source."]},
+        {q:"Ask a policy question",o:"agent",seq:COMMON.concat(DINE),steps:["The diner asks about the cancellation policy.","The orchestrator routes to Dining Info.","It checks the CRM facts, then the policy library.","If the answer is not on file, it says so, gives the restaurant's phone number and offers a person."]},
+        {q:"Guarantee no cross-contact",o:"human",seq:COMMON.concat(ESCP),steps:["The diner asks the agent to guarantee no nut cross-contact.","The orchestrator sends this straight to Escalation.","Escalation creates a Case with a summary (\"Remind the restaurant on arrival\").","A person takes over through Omni-Channel."]},
+        {q:"Wrong details twice",o:"human",seq:COMMON.concat(["e_orch_booking","booking","e_booking_d","d_booking","e_h_booking"]).concat(ESCP.slice(1)),steps:["The diner gives details that do not match, twice.","Booking never says which detail was wrong.","After the second miss it hands off to Escalation.","A Case with a summary goes to a person."]},
+        {q:"Someone else's reservation",o:"decline",seq:COMMON.concat(["e_orch_booking","booking","e_booking_d","d_booking"]),steps:["The diner asks about another diner's reservation.","Booking checks the match and finds none.","It says no reservation matches, and reveals nothing."]},
+        {q:"Off-topic or prompt injection",o:"decline",seq:COMMON.concat(["e_orch_scope","scope"]),steps:["The diner asks something unrelated, or tries to override the agent's instructions.","The orchestrator gives one fixed reply.","It offers reservation help or a person."]}
+      ];
+      const COLORS = {agent:["#2E844A","rgba(46,132,74,.35)","Agent handles it"],human:["#90D0FE","#1a2744","Human takes over"],decline:["#FF538A","rgba(255,83,138,.25)","Agent declines"]};
+      const flowCap = document.getElementById("flowCap");
+      const groups = {};
+      const cgs = document.getElementById("cgs");
+      ["agent","human","decline"].forEach((k) => {
+        const g = document.createElement("div");
+        g.className = "cg";
+        g.innerHTML = '<span class="cgl">' + COLORS[k][2] + '</span><div class="row"></div>';
+        cgs.appendChild(g);
+        groups[k] = g.querySelector(".row");
+      });
+      let activeFlow = -1, travelRAF = null, packet = null;
+      function stopTravel() {
+        if (travelRAF) cancelAnimationFrame(travelRAF);
+        travelRAF = null;
+        if (packet && packet.parentNode) packet.parentNode.removeChild(packet);
+        packet = null;
+      }
+      function clearFlow() {
+        stopTravel();
+        svg.classList.remove("sel");
+        Object.values(nodeEls).forEach((g) => g.classList.remove("lit"));
+        Object.values(edgeEls).forEach((el) => {
+          el.classList.remove("lit");
+          el.style.transition = "";
+          el.style.strokeDasharray = "";
+          el.style.strokeDashoffset = "";
+          if (el._ah) el._ah.classList.remove("lit");
+        });
+      }
+      function flowCaption(i) {
+        if (i < 0) {
+          flowCap.innerHTML = "";
+          flowCap.hidden = true;
+          return;
+        }
+        flowCap.hidden = false;
+        const f = FLOWS[i];
+        flowCap.innerHTML = '<span class="pill ' + f.o + '">' + COLORS[f.o][2] + '</span><h3>' + esc(f.q) + "</h3><ol>" + f.steps.map((s) => "<li>" + esc(s) + "</li>").join("") + "</ol>";
+      }
+      function travel(edges) {
+        if (reduce || !edges.length || !edges[0].getTotalLength) return;
+        const lens = edges.map((e) => e.getTotalLength());
+        const total = lens.reduce((a, b) => a + b, 0);
+        let t0 = null;
+        const dur = Math.max(1400, total * 3.2);
+        packet = mk("circle", {r: 7, class: "packet"});
+        svg.appendChild(packet);
+        function step(ts) {
+          if (t0 === null) t0 = ts;
+          let p = Math.min(1, (ts - t0) / dur), d = p * total, k = 0;
+          while (k < lens.length - 1 && d > lens[k]) { d -= lens[k]; k++; }
+          const pt = edges[k].getPointAtLength(Math.max(0, Math.min(lens[k], d)));
+          packet.setAttribute("cx", pt.x);
+          packet.setAttribute("cy", pt.y);
+          if (p < 1) travelRAF = requestAnimationFrame(step);
+          else travelRAF = null;
+        }
+        travelRAF = requestAnimationFrame(step);
+      }
+      function runFlow(i) {
+        clearFlow();
+        if (i < 0) { flowCaption(-1); return; }
+        const f = FLOWS[i], c = COLORS[f.o];
+        svg.style.setProperty("--pc", c[0]);
+        svg.style.setProperty("--pcs", c[1]);
+        svg.classList.add("sel");
+        const litEdges = [];
+        f.seq.forEach((id) => {
+          if (nodeEls[id]) nodeEls[id].classList.add("lit");
+          else if (edgeEls[id]) {
+            const el = edgeEls[id];
+            el.classList.add("lit");
+            if (el._ah) el._ah.classList.add("lit");
+            litEdges.push(el);
+          }
+        });
+        flowCaption(i);
+        travel(litEdges);
+      }
+      FLOWS.forEach((f, i) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "sc " + f.o;
+        b.textContent = f.q;
+        b.setAttribute("aria-pressed", "false");
+        b.addEventListener("click", () => {
+          const on = activeFlow === i;
+          activeFlow = on ? -1 : i;
+          cgs.querySelectorAll(".sc").forEach((x) => x.setAttribute("aria-pressed", "false"));
+          if (!on) b.setAttribute("aria-pressed", "true");
+          runFlow(activeFlow);
+        });
+        groups[f.o].appendChild(b);
+      });
+      flowCaption(-1);
+      pickNode("orch");
+    }
+  </script>
+</body>
+</html>

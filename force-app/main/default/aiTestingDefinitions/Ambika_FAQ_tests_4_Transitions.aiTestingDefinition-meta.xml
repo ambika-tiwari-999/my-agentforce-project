@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AiTestingDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Category 4: Transitions Out of FAQ (go_booking &amp; back_to_orchestrator)</description>
+    <name>Ambika_FAQ_tests_4_Transitions</name>
+    <subjectName>TableCraft_Agent</subjectName>
+    <subjectType>AGENT</subjectType>
+    <subjectVersion>v13</subjectVersion>
+    <testCase>
+        <number>1</number>
+        <inputs>
+            <utterance>What are the hours for Post Oak Smokehouse in Austin, and can I book a table for 4 this Friday at 7:00 PM?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>booking</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;get_restaurant_clock&apos;, &apos;check_booking_time&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse is open Wednesday through Sunday from 11:30 AM to 10:00 PM. Friday at 7:00 PM is a valid time for a reservation, and to book your table for 4 I just need your email address.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>2</number>
+        <inputs>
+            <utterance>That sounds great! Can I book a table for 4 at Post Oak Smokehouse this Saturday at 6:30 PM?</utterance>
+            <conversationHistory>
+                <role>user</role>
+                <message>What are the hours for Post Oak Smokehouse in Austin?</message>
+                <index>0</index>
+                <topic>orchestrator</topic>
+            </conversationHistory>
+            <conversationHistory>
+                <role>agent</role>
+                <message>Post Oak Smokehouse in Austin is open Wednesday through Sunday from 11:30 AM to 10:00 PM. They are closed on Mondays and Tuesdays. Would you like help with a reservation or more information?</message>
+                <topic>faq</topic>
+                <index>1</index>
+            </conversationHistory>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>booking</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;get_restaurant_clock&apos;, &apos;check_booking_time&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Saturday at 6:30 PM is valid at Post Oak Smokehouse. To book your table for 4, please share your email address.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>3</number>
+        <inputs>
+            <utterance>Actually, what restaurants do you have in New York?</utterance>
+            <conversationHistory>
+                <role>user</role>
+                <message>What are the hours for Post Oak Smokehouse in Austin?</message>
+                <index>0</index>
+                <topic>orchestrator</topic>
+            </conversationHistory>
+            <conversationHistory>
+                <role>agent</role>
+                <message>Post Oak Smokehouse in Austin is open Wednesday through Sunday from 11:30 AM to 10:00 PM. They are closed on Mondays and Tuesdays. Would you like help with a reservation or more information?</message>
+                <topic>faq</topic>
+                <index>1</index>
+            </conversationHistory>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>orchestrator</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;verify_diner&apos;, &apos;find_restaurant&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Here are three TableCraft restaurants in New York: Brick &amp; Ember Pizzeria, Kuro Izakaya &amp; Omakase, and L&apos;Antica Trattoria.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+</AiTestingDefinition>

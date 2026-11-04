@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AiTestingDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Category 1a: Hours &amp; Phone Only (CRM Fast Path - 0 RAG Calls)</description>
+    <name>Ambika_FAQ_tests_1a_Hours_Phone</name>
+    <subjectName>TableCraft_Agent</subjectName>
+    <subjectType>AGENT</subjectType>
+    <subjectVersion>v13</subjectVersion>
+    <testCase>
+        <number>1</number>
+        <inputs>
+            <utterance>What are the hours for Post Oak Smokehouse in Austin?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse is open Wednesday through Sunday from 11:30 AM to 10:00 PM, and closed Monday and Tuesday.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>2</number>
+        <inputs>
+            <utterance>Is Post Oak Smokehouse in Austin open on Mondays?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>No, Post Oak Smokehouse is closed on Mondays and Tuesdays. It is open Wednesday through Sunday from 11:30 AM to 10:00 PM.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>3</number>
+        <inputs>
+            <utterance>What is the phone number for Post Oak Smokehouse in Austin?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>The phone number for Post Oak Smokehouse is (512) 555-0122.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>4</number>
+        <inputs>
+            <utterance>What are the hours and phone number for Post Oak Smokehouse?</utterance>
+            <conversationHistory>
+                <role>user</role>
+                <message>idk what i want but im in austin texas give me some recs</message>
+                <index>0</index>
+                <topic>orchestrator</topic>
+            </conversationHistory>
+            <conversationHistory>
+                <role>agent</role>
+                <message>Here are some Austin options you might like:
+
+- Comal Heritage Cantina
+  - Cuisine: Mexican, Tex-Mex, Agave Bar
+  - Hours: Mon-Thu: 11:00 AM - 10:00 PM; Fri-Sat: 11:00 AM - 11:30 PM; Sun: 10:00 AM - 9:00 PM
+
+- Harvest &amp; Wild Farmstead
+  - Cuisine: Vegan, Organic, Farm-to-Table
+  - Hours: Daily: 8:00 AM - 9:00 PM
+
+- Post Oak Smokehouse
+  - Cuisine: Texas BBQ, Southern, Craft Beer
+  - Hours: Wed-Sun: 11:30 AM - 10:00 PM; closed Mon-Tue
+
+There are more options if you want to narrow it down by cuisine or a specific name. Would you like to know more about any of these, or see a different type of food?</message>
+                <topic>orchestrator</topic>
+                <index>1</index>
+            </conversationHistory>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse is open Wednesday through Sunday from 11:30 AM to 10:00 PM (closed Monday and Tuesday), and their phone number is (512) 555-0122.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+</AiTestingDefinition>

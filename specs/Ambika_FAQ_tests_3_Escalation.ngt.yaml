@@ -1,0 +1,50 @@
+name: Ambika_FAQ_tests_3_Escalation
+description: "Category 3: Escalation (Human Request, Frustrated Diner & Large Group 11+)"
+subjectType: AGENT
+subjectName: TableCraft_Agent
+subjectVersion: v13
+testCases:
+  # 3a. Explicit request for a human
+  - inputs:
+      - utterance: "I just want to speak with a real person at Post Oak Smokehouse in Austin."
+    scorers:
+      - name: topic_sequence_match
+        expected: escalation
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant']"
+      - name: bot_response_rating
+        expected: "I'm connecting you with a member of our team now."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 3b. Frustrated / annoyed diner with complaint
+  - inputs:
+      - utterance: "This is ridiculous and frustrating, you haven't helped me at all. Connect me with a manager at Post Oak Smokehouse right now!"
+    scorers:
+      - name: topic_sequence_match
+        expected: __human__
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant']"
+      - name: bot_response_rating
+        expected: "Thank you for your patience. Kindly hold as we connect you to the next available agent."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 3c. Large group (11+ guests) & fee waiver / policy exception
+  - inputs:
+      - utterance: "We have a group of 15 people for Post Oak Smokehouse in Austin and we need the deposit fee waived."
+    scorers:
+      - name: topic_sequence_match
+        expected: __human__
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant']"
+      - name: bot_response_rating
+        expected: "Thank you for your patience. Kindly hold as we connect you to the next available agent."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds

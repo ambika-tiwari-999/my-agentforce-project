@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RestrictionRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <description>Restricts the TableCraft Einstein Agent User to Active Reservation__c records only, preventing access to archived or canceled historical records.</description>
+    <enforcementType>Restrict</enforcementType>
+    <masterLabel>TableCraft Agent Reservation Access</masterLabel>
+    <recordFilter>Status__c=&apos;Active&apos;</recordFilter>
+    <targetEntity>Reservation__c</targetEntity>
+    <userCriteria>$User.Id=&apos;005g700000FWUITAA5&apos;</userCriteria>
+    <version>1</version>
+</RestrictionRule>

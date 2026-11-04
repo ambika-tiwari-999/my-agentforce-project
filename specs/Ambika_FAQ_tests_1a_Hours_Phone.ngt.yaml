@@ -1,0 +1,72 @@
+name: Ambika_FAQ_tests_1a_Hours_Phone
+description: "Category 1a: Hours & Phone Only (CRM Fast Path - 0 RAG Calls)"
+subjectType: AGENT
+subjectName: TableCraft_Agent
+subjectVersion: v13
+testCases:
+  # 1. Single-turn: Direct operating hours query
+  - inputs:
+      - utterance: "What are the hours for Post Oak Smokehouse in Austin?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context']"
+      - name: bot_response_rating
+        expected: "Post Oak Smokehouse is open Wednesday through Sunday from 11:30 AM to 10:00 PM, and closed Monday and Tuesday."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 2. Single-turn: Specific day open/closed query
+  - inputs:
+      - utterance: "Is Post Oak Smokehouse in Austin open on Mondays?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context']"
+      - name: bot_response_rating
+        expected: "No, Post Oak Smokehouse is closed on Mondays and Tuesdays. It is open Wednesday through Sunday from 11:30 AM to 10:00 PM."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 3. Single-turn: Direct phone number query
+  - inputs:
+      - utterance: "What is the phone number for Post Oak Smokehouse in Austin?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context']"
+      - name: bot_response_rating
+        expected: "The phone number for Post Oak Smokehouse is (512) 555-0122."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 4. Multi-turn: Diner first asks for Austin recommendations, then asks about Post Oak Smokehouse hours & phone
+  - inputs:
+      - utterance: "What are the hours and phone number for Post Oak Smokehouse?"
+        conversationHistory:
+          - role: user
+            topic: orchestrator
+            message: "idk what i want but im in austin texas give me some recs"
+          - role: agent
+            topic: orchestrator
+            message: "Here are some Austin options you might like:\n\n- Comal Heritage Cantina\n  - Cuisine: Mexican, Tex-Mex, Agave Bar\n  - Hours: Mon-Thu: 11:00 AM - 10:00 PM; Fri-Sat: 11:00 AM - 11:30 PM; Sun: 10:00 AM - 9:00 PM\n\n- Harvest & Wild Farmstead\n  - Cuisine: Vegan, Organic, Farm-to-Table\n  - Hours: Daily: 8:00 AM - 9:00 PM\n\n- Post Oak Smokehouse\n  - Cuisine: Texas BBQ, Southern, Craft Beer\n  - Hours: Wed-Sun: 11:30 AM - 10:00 PM; closed Mon-Tue\n\nThere are more options if you want to narrow it down by cuisine or a specific name. Would you like to know more about any of these, or see a different type of food?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context']"
+      - name: bot_response_rating
+        expected: "Post Oak Smokehouse is open Wednesday through Sunday from 11:30 AM to 10:00 PM (closed Monday and Tuesday), and their phone number is (512) 555-0122."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds

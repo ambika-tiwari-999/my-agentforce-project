@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AiTestingDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Category 3: Escalation (Human Request, Frustrated Diner &amp; Large Group 11+)</description>
+    <name>Ambika_FAQ_tests_3_Escalation</name>
+    <subjectName>TableCraft_Agent</subjectName>
+    <subjectType>AGENT</subjectType>
+    <subjectVersion>v13</subjectVersion>
+    <testCase>
+        <number>1</number>
+        <inputs>
+            <utterance>I just want to speak with a real person at Post Oak Smokehouse in Austin.</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>escalation</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>I&apos;m connecting you with a member of our team now.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>2</number>
+        <inputs>
+            <utterance>This is ridiculous and frustrating, you haven&apos;t helped me at all. Connect me with a manager at Post Oak Smokehouse right now!</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>__human__</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Thank you for your patience. Kindly hold as we connect you to the next available agent.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>3</number>
+        <inputs>
+            <utterance>We have a group of 15 people for Post Oak Smokehouse in Austin and we need the deposit fee waived.</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>__human__</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Thank you for your patience. Kindly hold as we connect you to the next available agent.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+</AiTestingDefinition>

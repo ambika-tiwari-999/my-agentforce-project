@@ -1,0 +1,748 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AiTestingDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Master FAQ test suite (Categories 1a, 1b, 1c, 1d, 2, 3 &amp; 4)</description>
+    <name>Ambika_FAQ_tests</name>
+    <subjectName>TableCraft_Agent</subjectName>
+    <subjectType>AGENT</subjectType>
+    <subjectVersion>v13</subjectVersion>
+    <testCase>
+        <number>1</number>
+        <inputs>
+            <utterance>What are the hours for Post Oak Smokehouse in Austin?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse is open Wednesday through Sunday from 11:30 AM to 10:00 PM, and closed Monday and Tuesday.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>2</number>
+        <inputs>
+            <utterance>Is Post Oak Smokehouse in Austin open on Mondays?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>No, Post Oak Smokehouse is closed on Mondays and Tuesdays. It is open Wednesday through Sunday from 11:30 AM to 10:00 PM.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>3</number>
+        <inputs>
+            <utterance>What is the phone number for Post Oak Smokehouse in Austin?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>The phone number for Post Oak Smokehouse is (512) 555-0122.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>4</number>
+        <inputs>
+            <utterance>What are the hours and phone number for Post Oak Smokehouse?</utterance>
+            <conversationHistory>
+                <role>user</role>
+                <message>idk what i want but im in austin texas give me some recs</message>
+                <index>0</index>
+                <topic>orchestrator</topic>
+            </conversationHistory>
+            <conversationHistory>
+                <role>agent</role>
+                <message>Here are some Austin options you might like:
+
+- Comal Heritage Cantina
+  - Cuisine: Mexican, Tex-Mex, Agave Bar
+  - Hours: Mon-Thu: 11:00 AM - 10:00 PM; Fri-Sat: 11:00 AM - 11:30 PM; Sun: 10:00 AM - 9:00 PM
+
+- Harvest &amp; Wild Farmstead
+  - Cuisine: Vegan, Organic, Farm-to-Table
+  - Hours: Daily: 8:00 AM - 9:00 PM
+
+- Post Oak Smokehouse
+  - Cuisine: Texas BBQ, Southern, Craft Beer
+  - Hours: Wed-Sun: 11:30 AM - 10:00 PM; closed Mon-Tue
+
+There are more options if you want to narrow it down by cuisine or a specific name. Would you like to know more about any of these, or see a different type of food?</message>
+                <topic>orchestrator</topic>
+                <index>1</index>
+            </conversationHistory>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse is open Wednesday through Sunday from 11:30 AM to 10:00 PM (closed Monday and Tuesday), and their phone number is (512) 555-0122.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>5</number>
+        <inputs>
+            <utterance>Does Post Oak Smokehouse in Austin have any spicy food?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse offers spicy options including Cheddar Jalapeno Sausage ($16) stuffed with fresh roasted jalapenos, Pit-Smoked Charro Beans ($9) simmered with jalapeno, and Pulled Pork Shoulder ($20) served with tangy vinegar pepper sauce.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>6</number>
+        <inputs>
+            <utterance>How much is the brisket at Post Oak Smokehouse in Austin, and what other smoked meats do they serve?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>At Post Oak Smokehouse, the 16-Hour Smoked Prime Brisket is $28 per half pound. Other smoked meats include Heritage Pork Spare Ribs ($24 per half rack), Cheddar Jalapeno Sausage ($16), and Pulled Pork Shoulder ($20).</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>7</number>
+        <inputs>
+            <utterance>What vegetarian or gluten-free options are on the menu at Post Oak Smokehouse in Austin?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse offers vegetarian sides including Bourbon Skillet Cornbread ($10) and Smoked Gouda Mac &amp; Cheese ($12), as well as gluten-free smoked meats including the 16-Hour Smoked Prime Brisket ($28), Heritage Pork Spare Ribs ($24), and Pulled Pork Shoulder ($20).</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>8</number>
+        <inputs>
+            <utterance>What desserts and craft beers does Post Oak Smokehouse in Austin have?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse serves Texas Pecan Banana Pudding ($11) for dessert and features 24 rotating local Austin and Texas Hill Country draft craft beers on tap, along with Texas bourbons and house sweet tea.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>9</number>
+        <inputs>
+            <utterance>Where can I park at Post Oak Smokehouse in Austin, and do they have valet?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse has a free private surface parking lot directly behind the restaurant (entered from South Lamar Blvd) with 45 spaces, plus free street parking on Barton Springs Rd after 6:00 PM. They do not offer valet parking.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>10</number>
+        <inputs>
+            <utterance>Does Post Oak Smokehouse in Austin have outdoor patio seating and wheelchair access?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Yes, Post Oak Smokehouse has a shaded outdoor live-oak beer garden patio with misting fans in summer and heaters in winter, as well as step-free wheelchair ramp access at both entrances and ADA-compliant restrooms.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>11</number>
+        <inputs>
+            <utterance>What is the dress code at Post Oak Smokehouse in Austin?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse has a relaxed, casual dress code where jeans, boots, shorts, and t-shirts are welcome in both the dining room and outdoor beer garden (shirts and shoes required).</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>12</number>
+        <inputs>
+            <utterance>Are kids and dogs allowed at Post Oak Smokehouse in Austin?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Children of all ages are welcome at Post Oak Smokehouse with high chairs, booster seats, and a kids BBQ slider plate available. Leashed, well-behaved dogs are welcome on the outdoor beer garden patio, while only ADA service animals are permitted indoors.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>13</number>
+        <inputs>
+            <utterance>Does Post Oak Smokehouse in Austin have a private dining table for 8 people, and what is their cancellation policy?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Groups of 8 to 10 guests at Post Oak Smokehouse can request the semi-private Pitmaster Table at no extra room fee, and reservations can be modified or cancelled at no charge up until the reservation time.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>14</number>
+        <inputs>
+            <utterance>I have a severe peanut and gluten allergy. Can you guarantee the brisket at Post Oak Smokehouse in Austin is 100% safe with zero cross-contact?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>__human__</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Thank you for your patience. Kindly hold as we connect you to the next available agent.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>15</number>
+        <inputs>
+            <utterance>Does Post Oak Smokehouse in Austin have a rooftop swimming pool and live jazz on Tuesdays?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse has a shaded live-oak beer garden patio, but there is no rooftop swimming pool or live jazz on Tuesdays in our FAQ. For now, you can call Post Oak Smokehouse at (512) 555-0122.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>16</number>
+        <inputs>
+            <utterance>Does Comal Heritage Cantina in Austin serve the 16-Hour Smoked Prime Brisket?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>I don&apos;t have that in our FAQ. For now, you can call Comal Heritage Cantina at (512) 555-0199.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>17</number>
+        <inputs>
+            <utterance>I&apos;m at Post Oak Smokehouse in Austin right now and my friend is having a severe medical emergency and can&apos;t breathe, what should I do?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>topic_selector</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>This is an emergency. Please call 911 immediately or ask someone nearby to do so.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>18</number>
+        <inputs>
+            <utterance>I just want to speak with a real person at Post Oak Smokehouse in Austin.</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>escalation</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>I&apos;m connecting you with a member of our team now.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>19</number>
+        <inputs>
+            <utterance>This is ridiculous and frustrating, you haven&apos;t helped me at all. Connect me with a manager at Post Oak Smokehouse right now!</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>__human__</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Thank you for your patience. Kindly hold as we connect you to the next available agent.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>20</number>
+        <inputs>
+            <utterance>We have a group of 15 people for Post Oak Smokehouse in Austin and we need the deposit fee waived.</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>__human__</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Thank you for your patience. Kindly hold as we connect you to the next available agent.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>21</number>
+        <inputs>
+            <utterance>What are the hours for Post Oak Smokehouse in Austin, and can I book a table for 4 this Friday at 7:00 PM?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>booking</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;get_restaurant_clock&apos;, &apos;check_booking_time&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse is open Wednesday through Sunday from 11:30 AM to 10:00 PM. Friday at 7:00 PM is a valid time for a reservation, and to book your table for 4 I just need your email address.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>22</number>
+        <inputs>
+            <utterance>That sounds great! Can I book a table for 4 at Post Oak Smokehouse this Saturday at 6:30 PM?</utterance>
+            <conversationHistory>
+                <role>user</role>
+                <message>What are the hours for Post Oak Smokehouse in Austin?</message>
+                <index>0</index>
+                <topic>orchestrator</topic>
+            </conversationHistory>
+            <conversationHistory>
+                <role>agent</role>
+                <message>Post Oak Smokehouse in Austin is open Wednesday through Sunday from 11:30 AM to 10:00 PM. They are closed on Mondays and Tuesdays. Would you like help with a reservation or more information?</message>
+                <topic>faq</topic>
+                <index>1</index>
+            </conversationHistory>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>booking</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;get_restaurant_clock&apos;, &apos;check_booking_time&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Saturday at 6:30 PM is valid at Post Oak Smokehouse. To book your table for 4, please share your email address.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>23</number>
+        <inputs>
+            <utterance>Actually, what restaurants do you have in New York?</utterance>
+            <conversationHistory>
+                <role>user</role>
+                <message>What are the hours for Post Oak Smokehouse in Austin?</message>
+                <index>0</index>
+                <topic>orchestrator</topic>
+            </conversationHistory>
+            <conversationHistory>
+                <role>agent</role>
+                <message>Post Oak Smokehouse in Austin is open Wednesday through Sunday from 11:30 AM to 10:00 PM. They are closed on Mondays and Tuesdays. Would you like help with a reservation or more information?</message>
+                <topic>faq</topic>
+                <index>1</index>
+            </conversationHistory>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>orchestrator</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;verify_diner&apos;, &apos;find_restaurant&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Here are three TableCraft restaurants in New York: Brick &amp; Ember Pizzeria, Kuro Izakaya &amp; Omakase, and L&apos;Antica Trattoria.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+</AiTestingDefinition>

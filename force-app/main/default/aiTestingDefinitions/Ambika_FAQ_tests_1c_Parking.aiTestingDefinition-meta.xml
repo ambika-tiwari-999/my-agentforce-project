@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AiTestingDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Category 1c: Parking &amp; Access (Data 360 Knowledge RAG - Parking_And_Access)</description>
+    <name>Ambika_FAQ_tests_1c_Parking</name>
+    <subjectName>TableCraft_Agent</subjectName>
+    <subjectType>AGENT</subjectType>
+    <subjectVersion>v13</subjectVersion>
+    <testCase>
+        <number>1</number>
+        <inputs>
+            <utterance>Where can I park at Post Oak Smokehouse in Austin, and do they have valet?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Post Oak Smokehouse has a free private surface parking lot directly behind the restaurant (entered from South Lamar Blvd) with 45 spaces, plus free street parking on Barton Springs Rd after 6:00 PM. They do not offer valet parking.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+    <testCase>
+        <number>2</number>
+        <inputs>
+            <utterance>Does Post Oak Smokehouse in Austin have outdoor patio seating and wheelchair access?</utterance>
+        </inputs>
+        <scorer>
+            <name>topic_sequence_match</name>
+            <expectedValue>faq</expectedValue>
+        </scorer>
+        <scorer>
+            <name>action_sequence_match</name>
+            <expectedValue>[&apos;verify_diner&apos;, &apos;find_restaurant&apos;, &apos;validate_restaurant_context&apos;, &apos;retrieve_dining_knowledge&apos;]</expectedValue>
+        </scorer>
+        <scorer>
+            <name>bot_response_rating</name>
+            <expectedValue>Yes, Post Oak Smokehouse has a shaded outdoor live-oak beer garden patio with misting fans in summer and heaters in winter, as well as step-free wheelchair ramp access at both entrances and ADA-compliant restrooms.</expectedValue>
+        </scorer>
+        <scorer>
+            <name>conciseness</name>
+        </scorer>
+        <scorer>
+            <name>coherence</name>
+        </scorer>
+        <scorer>
+            <name>completeness</name>
+        </scorer>
+        <scorer>
+            <name>output_latency_milliseconds</name>
+        </scorer>
+    </testCase>
+</AiTestingDefinition>

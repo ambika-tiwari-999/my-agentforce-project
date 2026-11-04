@@ -1,0 +1,65 @@
+name: Ambika_FAQ_tests_1b_Menu
+description: "Category 1b: Menu (Data 360 Knowledge RAG - Category = Menu)"
+subjectType: AGENT
+subjectName: TableCraft_Agent
+subjectVersion: v13
+testCases:
+  # 1. Single-turn: Flavor / ingredient query (spicy items)
+  - inputs:
+      - utterance: "Does Post Oak Smokehouse in Austin have any spicy food?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context', 'retrieve_dining_knowledge']"
+      - name: bot_response_rating
+        expected: "Post Oak Smokehouse offers spicy options including Cheddar Jalapeno Sausage ($16) stuffed with fresh roasted jalapenos, Pit-Smoked Charro Beans ($9) simmered with jalapeno, and Pulled Pork Shoulder ($20) served with tangy vinegar pepper sauce."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 2. Single-turn: Signature smoked meats & brisket price
+  - inputs:
+      - utterance: "How much is the brisket at Post Oak Smokehouse in Austin, and what other smoked meats do they serve?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context', 'retrieve_dining_knowledge']"
+      - name: bot_response_rating
+        expected: "At Post Oak Smokehouse, the 16-Hour Smoked Prime Brisket is $28 per half pound. Other smoked meats include Heritage Pork Spare Ribs ($24 per half rack), Cheddar Jalapeno Sausage ($16), and Pulled Pork Shoulder ($20)."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 3. Single-turn: Dietary tags (Vegetarian & Gluten-Free options)
+  - inputs:
+      - utterance: "What vegetarian or gluten-free options are on the menu at Post Oak Smokehouse in Austin?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context', 'retrieve_dining_knowledge']"
+      - name: bot_response_rating
+        expected: "Post Oak Smokehouse offers vegetarian sides including Bourbon Skillet Cornbread ($10) and Smoked Gouda Mac & Cheese ($12), as well as gluten-free smoked meats including the 16-Hour Smoked Prime Brisket ($28), Heritage Pork Spare Ribs ($24), and Pulled Pork Shoulder ($20)."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 4. Single-turn: Desserts & craft beer bar
+  - inputs:
+      - utterance: "What desserts and craft beers does Post Oak Smokehouse in Austin have?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context', 'retrieve_dining_knowledge']"
+      - name: bot_response_rating
+        expected: "Post Oak Smokehouse serves Texas Pecan Banana Pudding ($11) for dessert and features 24 rotating local Austin and Texas Hill Country draft craft beers on tap, along with Texas bourbons and house sweet tea."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds

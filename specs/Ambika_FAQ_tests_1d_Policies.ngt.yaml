@@ -1,0 +1,50 @@
+name: Ambika_FAQ_tests_1d_Policies
+description: "Category 1d: Dress Code & Policies (Data 360 Knowledge RAG - Policies)"
+subjectType: AGENT
+subjectName: TableCraft_Agent
+subjectVersion: v13
+testCases:
+  # 1. Single-turn: Dress code
+  - inputs:
+      - utterance: "What is the dress code at Post Oak Smokehouse in Austin?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context', 'retrieve_dining_knowledge']"
+      - name: bot_response_rating
+        expected: "Post Oak Smokehouse has a relaxed, casual dress code where jeans, boots, shorts, and t-shirts are welcome in both the dining room and outdoor beer garden (shirts and shoes required)."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 2. Single-turn: Kids & dog/pet policy
+  - inputs:
+      - utterance: "Are kids and dogs allowed at Post Oak Smokehouse in Austin?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context', 'retrieve_dining_knowledge']"
+      - name: bot_response_rating
+        expected: "Children of all ages are welcome at Post Oak Smokehouse with high chairs, booster seats, and a kids BBQ slider plate available. Leashed, well-behaved dogs are welcome on the outdoor beer garden patio, while only ADA service animals are permitted indoors."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
+
+  # 3. Single-turn: Private dining & cancellation policy
+  - inputs:
+      - utterance: "Does Post Oak Smokehouse in Austin have a private dining table for 8 people, and what is their cancellation policy?"
+    scorers:
+      - name: topic_sequence_match
+        expected: faq
+      - name: action_sequence_match
+        expected: "['verify_diner', 'find_restaurant', 'validate_restaurant_context', 'retrieve_dining_knowledge']"
+      - name: bot_response_rating
+        expected: "Groups of 8 to 10 guests at Post Oak Smokehouse can request the semi-private Pitmaster Table at no extra room fee, and reservations can be modified or cancelled at no charge up until the reservation time."
+      - name: conciseness
+      - name: coherence
+      - name: completeness
+      - name: output_latency_milliseconds
