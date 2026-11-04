@@ -80,7 +80,7 @@
 
 ## Slide 5: Key Findings (Beta KPIs, then the Business Impact)
 
-> **Advance:** First `>` shows only the beta KPI stack. The next `>` slides in the business-impact half. One more `>` goes to Slide 6 (Efficiency & Workforce Impact). `<` slides the impact half away before leaving the slide.
+> **Advance:** First `>` shows only the beta KPI stack. The next `>` slides in the business-impact half. One more `>` advances to the Efficiency & Workforce Impact section of Slide 5. `<` slides the impact half away before leaving the section.
 
 ### 🖥️ On the Slide (Left first, then right on the next `>`)
 
@@ -123,7 +123,7 @@
 
 ---
 
-## Slide 6: Efficiency & Workforce Impact
+## Slide 5 (continued): Efficiency & Workforce Impact
 
 ### 🖥️ On the Slide (Capacity Math + Salesforce 4R Workforce Model)
 
@@ -168,9 +168,9 @@
 
 ---
 
-## Slide 7: Breaking The 4th Wall - Sandbox Assumptions
+## Slide 6: Breaking The 4th Wall - Sandbox Assumptions
 
-> **Advance:** First `>` shows the three OpenTable surfaces as a vertical stack. The next `>` slides in the matching sandbox stand-ins. One more `>` goes to Slide 8. `<` reverses the reveal.
+> **Advance:** First `>` shows the three OpenTable surfaces as a vertical stack. The next `>` slides in the matching sandbox stand-ins. One more `>` goes to Slide 7. `<` reverses the reveal.
 
 ### 🖥️ On the Slide (Stacked Source-to-Mock Reveal)
 
@@ -200,7 +200,7 @@
 
 ---
 
-## Slide 8: Agent Architecture
+## Slide 7: Agent Architecture
 
 ### 🖥️ On the Slide (Interactive Architecture Diagram)
 
@@ -249,7 +249,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 9: Design Decisions and Tradeoffs
+## Slide 8: Design Decisions and Tradeoffs
 
 ### 🖥️ On the Slide (Decision Table)
 
@@ -296,7 +296,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 10: AI KPIs + Testing
+## Slide 9: AI KPIs + Testing
 
 ### 🖥️ On the Slide (Static Category → KPI → Release Target Grid)
 
@@ -329,7 +329,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 11: Responsible AI
+## Slide 10: Responsible AI
 
 ### 🖥️ On the Slide (Static Risk → Control → Evidence Grid)
 
@@ -355,7 +355,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 12: Production Monitoring for Quality + Safety
+## Slide 11: Production Monitoring for Quality + Safety
 
 ### 🖥️ On the Slide (Static Monitor → Trigger → Response Grid)
 
@@ -386,7 +386,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 13: Data and Integration
+## Slide 12: Data and Integration
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -409,7 +409,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 14: Security and Trust
+## Slide 13: Security and Trust
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -435,7 +435,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 15: Live Demo
+## Slide 14: Live Demo
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -455,7 +455,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 16: Recommendations and Next Steps
+## Slide 15: Recommendations and Next Steps
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
