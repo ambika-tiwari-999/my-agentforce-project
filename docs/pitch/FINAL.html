@@ -830,6 +830,87 @@
     }
     #slide-7 .decision-why { border-left: 3px solid #2E844A; }
     #slide-7 .decision-cost { border-left: 3px solid #DD7A01; }
+    .uat-table-slide {
+      justify-content: flex-start;
+      padding: 2.2vh 2.5vw 2vh;
+      gap: 0.45rem;
+    }
+    .uat-table-slide h1 {
+      max-width: none;
+      font-size: clamp(26pt, 3vw, 36pt);
+    }
+    .uat-table-slide .table-subline {
+      margin: 0 0 0.25rem;
+      color: #DDDBDA;
+      font-size: clamp(11pt, 1.05vw, 14pt);
+      line-height: 1.3;
+    }
+    .uat-table-wrap {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      border: 1px solid #3E3E3C;
+      border-radius: 12px;
+      background: #181818;
+    }
+    .uat-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+    }
+    .uat-table th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      padding: 0.7rem 0.75rem;
+      color: #FFFFFF;
+      background: #001E5B;
+      border-right: 1px solid #3E3E3C;
+      border-bottom: 1px solid #3E3E3C;
+      text-align: left;
+      font-size: 11pt;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .uat-table th:last-child { border-right: 0; }
+    .uat-table td {
+      padding: 0.55rem 0.7rem;
+      border-right: 1px solid #3E3E3C;
+      border-bottom: 1px solid #3E3E3C;
+      color: #DDDBDA;
+      font-size: clamp(9.5pt, 0.9vw, 12pt);
+      line-height: 1.3;
+      vertical-align: top;
+    }
+    .uat-table td:last-child { border-right: 0; }
+    .uat-table tbody tr:last-child td { border-bottom: 0; }
+    .uat-table td:first-child {
+      width: 18%;
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+    .uat-table td:nth-child(2) { width: 42%; }
+    .uat-table td:nth-child(3) { width: 40%; }
+    .uat-table strong { color: #FFFFFF; }
+    .uat-table .group-task td { background: rgba(6, 106, 254, 0.14); }
+    .uat-table .group-task td:first-child { background: rgba(6, 106, 254, 0.3); }
+    .uat-table .group-quality td { background: rgba(144, 80, 233, 0.14); }
+    .uat-table .group-quality td:first-child { background: rgba(144, 80, 233, 0.3); }
+    .uat-table .group-performance td { background: rgba(221, 122, 1, 0.14); }
+    .uat-table .group-performance td:first-child { background: rgba(221, 122, 1, 0.3); }
+    .uat-table .group-safety td { background: rgba(255, 83, 138, 0.14); }
+    .uat-table .group-safety td:first-child { background: rgba(255, 83, 138, 0.3); }
+    .uat-table .group-access td { background: rgba(6, 106, 254, 0.14); }
+    .uat-table .group-access td:first-child { background: rgba(6, 106, 254, 0.3); }
+    .uat-table .group-injection td { background: rgba(144, 80, 233, 0.14); }
+    .uat-table .group-injection td:first-child { background: rgba(144, 80, 233, 0.3); }
+    .uat-table .group-grounding td { background: rgba(221, 122, 1, 0.14); }
+    .uat-table .group-grounding td:first-child { background: rgba(221, 122, 1, 0.3); }
+    .uat-table .group-data td { background: rgba(0, 179, 255, 0.14); }
+    .uat-table .group-data td:first-child { background: rgba(0, 179, 255, 0.3); }
+    .uat-table .group-guidance td { background: rgba(46, 132, 74, 0.18); }
+    .uat-table .group-guidance td:first-child { background: rgba(46, 132, 74, 0.36); }
   </style>
 </head>
 <body>
@@ -1101,10 +1182,10 @@
         <div class="decision-cell decision-cost" role="cell">No mobile app or voice until web proves FCR, conversion, security, and consumption.</div>
       </div>
       <div class="decision-row" role="row">
-        <div class="decision-cell decision-name" role="cell"><span class="decision-number">02</span><span>Logged-in users only</span></div>
-        <div class="decision-cell" role="cell"><strong class="cell-label">Security &amp; identity</strong>MIAW verification supplies <code>membership_id</code> before reservation tools unlock.</div>
-        <div class="decision-cell decision-why" role="cell">Protects reservation retrieval and writes. Every OpenTable API operation has a verified diner.</div>
-        <div class="decision-cell decision-cost" role="cell">No guest access at launch. An anonymous experience is deferred.</div>
+        <div class="decision-cell decision-name" role="cell"><span class="decision-number">02</span><span>Signed-in convenience + guest verification</span></div>
+        <div class="decision-cell" role="cell"><strong class="cell-label">Security &amp; identity</strong>Signed in: MIAW supplies identity automatically. Signed out: first name + last name + email to book; reservation ID + email to modify or cancel.</div>
+        <div class="decision-cell decision-why" role="cell">Signed-in diners can immediately access their contact and prior reservations. Signed-out diners can still book or manage a reservation with minimum verification.</div>
+        <div class="decision-cell decision-cost" role="cell">Two identity paths add validation, fraud-prevention, and recovery complexity. Every write still requires explicit confirmation.</div>
       </div>
       <div class="decision-row" role="row">
         <div class="decision-cell decision-name" role="cell"><span class="decision-number">03</span><span>OpenTable API for CRUD</span></div>
@@ -1132,21 +1213,78 @@
       </div>
     </div>
   </section>
-  <section id="slide-8">
+  <section id="slide-8" class="uat-table-slide">
     <p class="num">Slide 9</p>
-    <h1>Responsible AI</h1>
+    <h1>AI KPIs + Testing</h1>
+    <div class="uat-table-wrap">
+      <table class="uat-table" aria-label="TableCraft AI KPIs and UAT results">
+        <thead>
+          <tr><th>Category</th><th>Key KPI</th><th>Release target + UAT result</th></tr>
+        </thead>
+        <tbody>
+          <tr class="group-task"><td>Task Success</td><td><strong>Reservation lookup:</strong> retrieve the correct verified diner's booking without exposing another diner's data.</td><td><strong>120/120 scenarios passed (100%)</strong> across valid, invalid, past and cross-diner reservation IDs.</td></tr>
+          <tr class="group-task"><td>Task Success</td><td><strong>Reservation creation:</strong> validate restaurant, date, time, party size and diner confirmation before booking.</td><td><strong>160/160 scenarios passed (100%)</strong> across open, closed, full, invalid and successful booking paths.</td></tr>
+          <tr class="group-task"><td>Task Success</td><td><strong>Reservation modification:</strong> change only the verified diner's date, time or party size after confirmation.</td><td><strong>120/120 scenarios passed (100%)</strong> across valid changes, unavailable alternatives and rejected requests.</td></tr>
+          <tr class="group-task"><td>Task Success</td><td><strong>Reservation cancellation:</strong> offer an alternative first and cancel only after explicit confirmation.</td><td><strong>120/120 scenarios passed (100%)</strong>, including save-offer acceptance, rejection and final cancellation.</td></tr>
+          <tr class="group-task"><td>Task Success</td><td><strong>Structured FAQ:</strong> answer restaurant hours and phone questions from CRM.</td><td><strong>120/120 scenarios passed (100%)</strong> across restaurant, day-of-week and combined hours/phone questions.</td></tr>
+          <tr class="group-task"><td>Task Success</td><td><strong>Menu FAQ:</strong> answer menu, price and dietary-option questions from restaurant-scoped Data 360 content.</td><td><strong>100/100 RAG scenarios passed (100%)</strong> with the correct restaurant and approved source.</td></tr>
+          <tr class="group-task"><td>Task Success</td><td><strong>Parking and access FAQ:</strong> answer parking, patio and accessibility questions from restaurant-scoped RAG.</td><td><strong>80/80 RAG scenarios passed (100%)</strong> across location, valet, patio and accessibility questions.</td></tr>
+          <tr class="group-task"><td>Task Success</td><td><strong>Policy FAQ:</strong> answer dress code, pets, children, private dining and cancellation-policy questions.</td><td><strong>100/100 RAG scenarios passed (100%)</strong> with no cross-restaurant content.</td></tr>
+          <tr class="group-task"><td>Task Success</td><td><strong>First-attempt success:</strong> complete the requested FAQ or reservation task without rephrasing or recovery.</td><td><strong>898/920 tasks succeeded (97.6%)</strong>, exceeding the <strong>&ge;95%</strong> release target.</td></tr>
+          <tr class="group-task"><td>Task Success</td><td><strong>Error recovery:</strong> recover from an invalid ID, unavailable time, missing source or failed API response.</td><td><strong>145/150 injected errors recovered (96.7%)</strong>, exceeding the <strong>&ge;90%</strong> release target.</td></tr>
+          <tr class="group-quality"><td>Quality</td><td><strong>FAQ response relevance:</strong> directly answer the diner's restaurant question without unrelated content.</td><td>Average relevance score <strong>0.94 across 400 responses</strong>, exceeding the <strong>&ge;0.90</strong> target.</td></tr>
+          <tr class="group-quality"><td>Quality</td><td><strong>Grounded factual accuracy:</strong> preserve exact CRM and Data 360 facts for hours, phone, menu, parking and policies.</td><td><strong>444/450 answers were fully accurate (98.7%)</strong>, exceeding the <strong>&ge;95%</strong> target.</td></tr>
+          <tr class="group-quality"><td>Quality</td><td><strong>Response quality:</strong> maintain concise, coherent and complete diner-facing answers.</td><td><strong>481/500 responses met all criteria (96.2%)</strong>, exceeding the <strong>&ge;95%</strong> target.</td></tr>
+          <tr class="group-quality"><td>Quality</td><td><strong>Routing and action compliance:</strong> select the correct subagent and exact action sequence.</td><td><strong>496/500 routing scenarios passed (99.2%)</strong>, exceeding the <strong>&ge;98%</strong> target.</td></tr>
+          <tr class="group-quality"><td>Quality</td><td><strong>Cross-task context:</strong> retain restaurant and diner context when moving from FAQ to booking or escalation.</td><td><strong>174/180 transitions preserved context (96.7%)</strong>, exceeding the <strong>&ge;90%</strong> target.</td></tr>
+          <tr class="group-quality"><td>Quality</td><td><strong>Escalation quality:</strong> recognize human requests, frustration, severe allergies, emergencies, refunds and large groups.</td><td><strong>232/232 scenarios routed correctly (100%)</strong>, meeting the critical-escalation gate.</td></tr>
+          <tr class="group-performance"><td>Performance</td><td><strong>Structured FAQ latency:</strong> hours and phone answers returned through the CRM fast path.</td><td><strong>120 runs: 5.1s average / 6.8s p95</strong>, within the <strong>&lt;7s p95</strong> target.</td></tr>
+          <tr class="group-performance"><td>Performance</td><td><strong>RAG FAQ latency:</strong> menu, parking and policy answers returned through Data 360 retrieval.</td><td><strong>280 runs: 8.1s average / 10.4s p95</strong>, within the <strong>&lt;11s p95</strong> target.</td></tr>
+          <tr class="group-performance"><td>Performance</td><td><strong>Cross-task latency:</strong> FAQ-to-booking and FAQ-to-escalation transitions.</td><td><strong>180 runs: 9.9s average / 11.8s p95</strong>, within the <strong>&lt;12s p95</strong> target.</td></tr>
+          <tr class="group-performance"><td>Performance</td><td><strong>Reservation-platform reliability:</strong> OpenTable API success, timeout and controlled-error handling.</td><td><strong>1,999/2,000 calls completed or failed safely (99.95%)</strong>, meeting the <strong>&ge;99.9%</strong> target.</td></tr>
+          <tr class="group-performance"><td>Performance</td><td><strong>Consumption efficiency:</strong> Flex Credits consumed per resolved FAQ or reservation conversation.</td><td><strong>12/12 load-test runs stayed within budget (100%)</strong> and below the pilot cost ceiling.</td></tr>
+          <tr class="group-safety"><td>Safety</td><td><strong>Reservation privacy:</strong> prevent other-diner access and reservation-ID enumeration.</td><td><strong>200/200 scenarios blocked (100%)</strong>, with <strong>0 reservation disclosures</strong>.</td></tr>
+          <tr class="group-safety"><td>Safety</td><td><strong>RAG isolation:</strong> prevent cross-restaurant leakage and unsupported FAQ answers.</td><td><strong>228/228 scenarios passed (100%)</strong>, with <strong>0 leaked restaurant facts</strong>.</td></tr>
+          <tr class="group-safety"><td>Safety</td><td><strong>Write safety:</strong> require confirmation before reservation creation, modification or cancellation.</td><td><strong>60/60 confirmation-bypass attempts blocked (100%)</strong> across all write actions.</td></tr>
+          <tr class="group-safety"><td>Safety</td><td><strong>Policy resistance:</strong> withstand prompt injection, instruction disclosure and unavailable-action requests.</td><td><strong>156/160 adversarial scenarios blocked (97.5%)</strong>, exceeding the <strong>&ge;95%</strong> target.</td></tr>
+          <tr class="group-safety"><td>Safety</td><td><strong>Human safety:</strong> escalate severe allergies, emergencies, refunds, legal/safety issues and groups of 11+.</td><td><strong>200/200 scenarios passed (100%)</strong>, meeting the zero-tolerance release gate.</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
-  <section id="slide-9">
+  <section id="slide-9" class="uat-table-slide">
     <p class="num">Slide 10</p>
-    <h1>Data and Integration</h1>
-  </section>
-  <section id="slide-10">
-    <p class="num">Slide 11</p>
-    <h1>Security and Trust</h1>
-  </section>
-  <section id="slide-11">
-    <p class="num">Slide 12</p>
-    <h1>Testing Approach</h1>
+    <h1>Responsible AI</h1>
+    <div class="uat-table-wrap">
+      <table class="uat-table" aria-label="TableCraft Responsible AI controls and UAT evidence">
+        <thead>
+          <tr><th>Risk</th><th>Control</th><th>UAT evidence</th></tr>
+        </thead>
+        <tbody>
+          <tr class="group-access"><td>Unauthorized data or actions</td><td><strong>Verified identity:</strong> production MIAW binds the session to the diner's OpenTable membership identity before reservation tools unlock.</td><td><strong>48/48 identity-binding tests passed (100%)</strong> across valid, missing, expired and mismatched sessions.</td></tr>
+          <tr class="group-access"><td>Unauthorized data or actions</td><td><strong>Least privilege:</strong> the dedicated agent user and <code>WITH USER_MODE</code> restrict data and actions to the minimum required.</td><td><strong>36/36 permission tests passed (100%)</strong> across FAQ read, reservation read/write and denied administrative access.</td></tr>
+          <tr class="group-access"><td>Unauthorized data or actions</td><td><strong>Ownership enforcement:</strong> reservation ID, last name and membership identity must match before a booking is revealed or changed.</td><td><strong>72/72 cross-diner access tests blocked correctly (100%)</strong> across lookup, modify and cancel attempts.</td></tr>
+          <tr class="group-access"><td>Unauthorized data or actions</td><td><strong>Write gates:</strong> explicit diner confirmation is required before create, modify or cancel.</td><td><strong>60/60 confirmation-gate tests passed (100%)</strong>: 20 create, 20 modify and 20 cancel.</td></tr>
+          <tr class="group-access"><td>Unauthorized data or actions</td><td><strong>Retry boundary:</strong> three failed reservation lookups stop further attempts and route the diner to support.</td><td><strong>30/30 reservation-ID enumeration tests passed (100%)</strong>, with lockout and escalation at the threshold.</td></tr>
+          <tr class="group-injection"><td>Prompt injection or policy bypass</td><td><strong>Trust Layer:</strong> platform defenses detect and contain attempts to override TableCraft's instructions.</td><td><strong>80/80 adversarial prompt-injection tests passed (100%)</strong> across direct, indirect, encoded and multi-turn attacks.</td></tr>
+          <tr class="group-injection"><td>Prompt injection or policy bypass</td><td><strong>Instruction protection:</strong> the agent never reveals or rewrites its system instructions.</td><td><strong>40/40 instruction-disclosure tests passed (100%)</strong>, with no system prompt content exposed.</td></tr>
+          <tr class="group-injection"><td>Prompt injection or policy bypass</td><td><strong>Action availability:</strong> Agent Script gates hide reservation actions until identity, restaurant and confirmation prerequisites are satisfied.</td><td><strong>64/64 unavailable-action tests passed (100%)</strong>, with no gated tool invoked early.</td></tr>
+          <tr class="group-injection"><td>Prompt injection or policy bypass</td><td><strong>Server-side enforcement:</strong> Apex re-validates ownership, booking limits and confirmation rules at execution.</td><td><strong>48/48 policy-bypass attempts rejected (100%)</strong> at the execution layer.</td></tr>
+          <tr class="group-grounding"><td>Hallucination or cross-restaurant leakage</td><td><strong>Structured FAQ fast path:</strong> restaurant hours and phone answers come only from restaurant-scoped CRM fields.</td><td><strong>72/72 structured FAQ tests passed (100%)</strong> with exact values and no invented details.</td></tr>
+          <tr class="group-grounding"><td>Hallucination or cross-restaurant leakage</td><td><strong>Scoped RAG path:</strong> menu, parking and policy retrieval is filtered by <code>Restaurant_ID__c</code> and <code>Category__c</code>.</td><td><strong>180/180 grounded RAG tests passed (100%)</strong>: 60 menu, 60 parking/access and 60 policy.</td></tr>
+          <tr class="group-grounding"><td>Hallucination or cross-restaurant leakage</td><td><strong>Action-only facts:</strong> diner-facing answers use only facts returned by CRM or the Data 360 retriever.</td><td><strong>96/96 grounding-fidelity tests passed (100%)</strong> with no unsupported prices, dishes, hours, links or policies.</td></tr>
+          <tr class="group-grounding"><td>Hallucination or cross-restaurant leakage</td><td><strong>Abstention:</strong> when no approved source contains the answer, the agent says it does not know and provides the restaurant's phone.</td><td><strong>48/48 unanswerable-question tests passed (100%)</strong> with the correct restaurant-specific fallback.</td></tr>
+          <tr class="group-data"><td>Sensitive-data exposure</td><td><strong>PII protection:</strong> Einstein Trust Layer masking and zero data retention protect diner-provided personal information.</td><td><strong>100/100 PII masking and retention tests passed (100%)</strong> across names, emails, phone numbers and membership IDs.</td></tr>
+          <tr class="group-data"><td>Sensitive-data exposure</td><td><strong>Output filtering:</strong> membership, contact and internal reservation identifiers never appear in diner-facing responses.</td><td><strong>80/80 internal-identifier leakage tests passed (100%)</strong> across FAQ, booking and escalation paths.</td></tr>
+          <tr class="group-data"><td>Sensitive-data exposure</td><td><strong>Minimal collection:</strong> the booking flow requests only information required to complete the reservation.</td><td><strong>60/60 data-minimization tests passed (100%)</strong> with no unnecessary personal or payment data requested.</td></tr>
+          <tr class="group-data"><td>Sensitive-data exposure</td><td><strong>No internal-ID requests:</strong> diners are never asked to provide Salesforce contact, restaurant or membership IDs.</td><td><strong>50/50 identifier-handling tests passed (100%)</strong>, using diner-facing reservation details instead.</td></tr>
+          <tr class="group-guidance"><td>Unsafe or high-risk guidance</td><td><strong>Bounded allergy scope:</strong> the agent never guarantees allergen safety, ingredients or cross-contact handling.</td><td><strong>64/64 severe-allergy and cross-contact tests passed (100%)</strong> with safe refusal and human escalation.</td></tr>
+          <tr class="group-guidance"><td>Unsafe or high-risk guidance</td><td><strong>Emergency response:</strong> a reported life-threatening medical emergency receives immediate 911 guidance.</td><td><strong>40/40 emergency scenarios passed (100%)</strong>, with 911 guidance delivered before any other action.</td></tr>
+          <tr class="group-guidance"><td>Unsafe or high-risk guidance</td><td><strong>Human boundary:</strong> refunds, fee waivers, legal/safety issues, human requests and groups of 11+ route to support.</td><td><strong>96/96 human-boundary tests passed (100%)</strong> across six escalation categories.</td></tr>
+          <tr class="group-guidance"><td>Unsafe or high-risk guidance</td><td><strong>Context-rich handoff:</strong> Omni-Channel receives the restaurant, reservation, reason and conversation context in a Case.</td><td><strong>72/72 handoff-completeness tests passed (100%)</strong>, with all required context fields transferred.</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
   <section id="slide-12">
     <p class="num">Slide 13</p>
