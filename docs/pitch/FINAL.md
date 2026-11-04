@@ -4,7 +4,7 @@
 >
 > - **🖥️ On the Slide (Keep It Visual & Scannable):** Max 3–4 short cards, big numbers, or a clean diagram. **Zero walls of text.**
 > - **🎙️ What We'll Say (Speaker Talk Track):** All the deep context, numbers, and rubric points live in our voice, not crammed onto the slide.
-> - **⚡ Interactive Moment (Only Where Genuinely Useful):** Included on **5 high-leverage slides** (Slides 3, 5, 7, 12, and 13) where involving the judges actually proves a point or builds energy.
+> - **⚡ Interactive Moment (Only Where Genuinely Useful):** Included on **5 high-leverage slides** (Slides 3, 5, 7, 13, and 14) where involving the judges actually proves a point or builds energy.
 
 ---
 
@@ -30,7 +30,8 @@
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
-- Standard Salesforce **Forward-Looking Statements** slide template (standard legal text block + SEC Form 10-K / 10-Q footer).
+- **Headline:** Forward-Looking Statements
+- **Legal text:** This presentation contains forward-looking statements about, among other things, trend analyses and statements regarding future events, anticipated growth and industry prospects, and our strategies, expectations, or plans regarding product releases and enhancements. The achievement or success of the matters covered by such forward-looking statements involves risks, uncertainties, and assumptions. If any such risks or uncertainties materialize or if any of the assumptions prove incorrect, results or outcomes could differ materially from those expressed or implied by these forward-looking statements. The risks and uncertainties referred to above include those factors discussed in Salesforce’s reports filed from time to time with the Securities and Exchange Commission, including, but not limited to: our ability to meet the expectations of our customers; uncertainties regarding AI technologies and their integration into our product offerings; the effect of evolving domestic and foreign government regulations; regulatory developments and regulatory investigations involving us or affecting our industry; our ability to successfully introduce new services and product features, including related to AI and Agentforce; our ability to execute our business plans; our ability to meet our long-term revenue targets and profitable growth framework; the pace of change and innovation and our ability to compete in the markets in which we participate; our ability to maintain and enhance our brands; and expectations regarding contributions from acquired companies.
 
 ### 🎙️ What We'll Say (Speaker Track)
 
@@ -85,7 +86,7 @@
 ### 🖥️ On the Slide (Left first, then right on the next `>`)
 
 - **LEFT — four vertically stacked finding cards (Visible first).** Headline: **Key Findings.** Subline: 5-city beta, against the targets.
-  1. **Agent response latency — `−30%`.** Average latency was 6.6 seconds, down from 9.4 seconds in Concierge AI.
+  1. **Response time — `−30%`.** Average agent response latency: 6.6 seconds, down from 9.4 seconds in Concierge AI.
   2. **First-contact resolution — `84%+`.** Above the 80% target, up from 73%, across FAQ and booking.
   3. **Looker to booker — `1 turn`.** FAQ hands off to booking. Every cancel hits the save-offer gate first.
   4. **Safe handoff — `100%`.** Allergy, party of 11+, lockout, and refund requests go to a person.
@@ -94,6 +95,7 @@
   1. **Support — `$499K`.** Restaurant questions get answered in the chat, so the support team never takes the ticket. Math: `572K` chats × `+9%` resolution (73%→82%) × `$9.70` = `51,480` tickets.
   2. **Reservations — `$1.43M`.** A cancel hears another time first, so the table stays booked. Math: `143K` cancel intents × `10%` saved × `$100` = `14,300` tables.
   3. **Bookings — `$2.25M`.** A diner asking about the restaurant reserves in that same conversation, instead of leaving. Math: `22,500` bookings a year from the FAQ-to-booking handoff.
+- **Revealed subline:** `−30%` agent response latency. `14.2 FTE` reclaimed. Powered by Flex Credits.
 
 ### ⚡ Interactive Moment (Next `>` reveals the dollar half)
 
@@ -117,6 +119,10 @@
 >
 > *Licensing is **Salesforce Flex Credits**, with Digital Wallet alerts at 75% and 90%."*
 
+### Sources on this slide
+
+1. Salesforce, [OpenTable customer story](https://www.salesforce.com/customer-stories/opentable/), August 7, 2025. The 73% case-resolution figure is the published restaurant-agent baseline. The beta results and dollar model are ours.
+
 ---
 
 ## Slide 6: Breaking The 4th Wall - Sandbox Assumptions
@@ -126,13 +132,14 @@
 ### 🖥️ On the Slide (Stacked Source-to-Mock Reveal)
 
 - **LEFT — OpenTable platform (visible first):**
-  1. **B2B:** GuestCenter profile and restaurant content.<sup>1</sup>
-  2. **B2C:** Diner web and app for research, booking, changes, and cancellations.<sup>2</sup><sup>3</sup>
-  3. **Support:** Service Cloud case creation and live-representative handoff.<sup>3</sup>
+  - Intro: **First, the three OpenTable surfaces represented in our beta.**
+  1. **B2B — GuestCenter profile:** Restaurants manage their profile, structured details, menus, parking information, and house rules.<sup>1</sup>
+  2. **B2C — Diner web and app:** Diners research a restaurant, book a table, and later change or cancel the reservation.<sup>2</sup><sup>3</sup>
+  3. **Support — Service Cloud handoff:** Agentforce creates a case and transfers the conversation to a live representative when needed.<sup>3</sup>
 - **RIGHT — our sandbox stand-ins (slides in on the next `>`):**
-  1. **B2B mock:** `Restaurant__c` + restaurant-scoped Data 360 knowledge for five demo restaurants.
-  2. **B2C mock:** A signed-in `Contact` + 30 `Reservation__c` records.
-  3. **Support mock:** `Case` + routing flow, with restaurant and reservation context attached.
+  1. **B2B mock — `Restaurant__c` + Data 360:** Five demo restaurants, with profile fields and restaurant-scoped knowledge chunks.
+  2. **B2C mock — `Contact` + `Reservation__c`:** One signed-in diner and 30 reservations available to create, retrieve, modify, or cancel.
+  3. **Support mock — `Case` + routing flow:** The same context-rich handoff, with the restaurant and reservation attached.
 
 ### 🎙️ What We'll Say (Speaker Track)
 
@@ -144,81 +151,91 @@
 
 ### Sources on this slide
 
-1. OpenTable, [Updating your restaurant profile in GuestCenter](https://support.opentable.com/s/article/Updating-your-restaurant-profile-in-GuestCenter). Structured profile fields and uploaded menus and house rules.
-2. OpenTable, [Concierge launch](https://www.opentable.com/blog/press/page/ai-concierge/), July 15, 2025. Diners ask how to get there, what to order, and whether dietary needs can be met. Concierge is grounded in menus, reviews, and descriptions, on the profile where booking happens.
-3. Salesforce, [OpenTable customer story](https://www.salesforce.com/customer-stories/opentable/), August 7, 2025. Diners reserve on mobile or web. Agentforce creates a Service Cloud case and hands the conversation to a live rep. Knowledge is harmonized in Data 360.
+1. OpenTable, [GuestCenter restaurant profiles](https://support.opentable.com/s/article/Updating-your-restaurant-profile-in-GuestCenter).
+2. OpenTable, [Concierge launch](https://www.opentable.com/blog/press/page/ai-concierge/), July 15, 2025.
+3. Salesforce, [OpenTable customer story](https://www.salesforce.com/customer-stories/opentable/), August 7, 2025.
 
 ---
 
-## Slide 7: Solution Overview & Agent Architecture (Full Diagram)
+## Slide 7: Agent Architecture
 
-### 🖥️ On the Slide (Visual & Minimal — Full Architecture Diagram)
+### 🖥️ On the Slide (Interactive Architecture Diagram)
 
-- **Full Visual Architecture Diagram (Script Builder Subagents, Actions, State & Data Flow):**
+- **Left — “What users might say”:** Eight selectable example paths:
+  1. “I need to change my reservation.”
+  2. “Can I book and add a nut allergy note?”
+  3. “Where can I park, and when are you open?”
+  4. “What is this restaurant’s cancellation policy?”
+  5. “Can I talk to a person?”
+  6. “Can you guarantee there will be no cross-contact?”
+  7. “I entered the wrong reservation details twice.”
+  8. “Can you show me someone else’s reservation?”
+- **Center — architecture and logic flow:**
 
 ```
-+---------------------------------------------------------------------------------------------------+
-|                        DINER CHANNELS (Web First -> Mobile App -> Voice)                          |
-+-------------------------------------------------+-------------------------------------------------+
-                                                  |
-                                                  v
-+---------------------------------------------------------------------------------------------------+
-|                   EINSTEIN TRUST LAYER (PII Masking, Prompt Defense, Zero Retention)              |
-+-------------------------------------------------+-------------------------------------------------+
-                                                  |
-                                                  v
-+---------------------------------------------------------------------------------------------------+
-|                     TableCraft_Agent (New Agent Builder with Agent Script)                        |
-|   Shared Session State (@variables): membership_id, diner_name, restaurant_id, restaurant_name,   |
-|   operating_hours, escalation_phone_number, failed_attempts, cancel_offer_made, reservation_id    |
-|                                                                                                   |
-|  +---------------------------------------------------------------------------------------------+  |
-|  | 1. start_agent / subagent orchestrator (Hub)                                                |  |
-|  |    - before_reasoning: verify_diner (CLL_GetDinerContext -> Contact)                        |  |
-|  |    - actions: find_restaurant (CLL_FindRestaurant -> Restaurant__c)                         |  |
-|  |    - transitions: go_booking | go_faq | go_escalation                                       |  |
-|  +---------------+------------------------------+------------------------------+---------------+  |
-|                  |                              |                              |                  |
-|                  v                              v                              v                  |
-|  +-------------------------------+  +-----------------------+  +-------------------------------+  |
-|  | 2. subagent faq (Spoke)       |  | 3. subagent booking   |  | 4. subagent escalation        |  |
-|  | - before_reasoning:           |  | - actions:            |  | - actions:                    |  |
-|  |   validate_restaurant_context |  |   get_restaurant_clock|  |   handoff_to_human            |  |
-|  |   (Hydrates hours, phone,     |  |   check_booking_time  |  |   (@utils.escalate ->         |  |
-|  |    current_date_time in CRM)  |  |   lookup_reservation  |  |    flow://Route_CLL_          |  |
-|  | - actions:                    |  |    (when attempts < 2)|  |    Escalations)               |  |
-|  |   retrieve_dining_knowledge   |  |   create_reservation  |  | - Creates Case + AI Summary   |  |
-|  |   (CLL_DiningKnowledge-       |  |   modify_reservation  |  |   for OpenTable Rep           |  |
-|  |    Retriever -> Data 360 /    |  |   offer_alternative   |  +-------------------------------+  |
-|  |    Knowledge__kav by          |  |   cancel_reservation  |                  ^                  |
-|  |    Restaurant_ID + Category)  |  |    (when offer_made)  |                  |                  |
-|  | - transitions:                |  | - transitions:        |------------------+                  |
-|  |   go_booking | go_escalation  |  |   go_faq |            |  (Auto-routes on 2x failed lookup,  |
-|  |   | back_to_orchestrator      |  |   go_escalation       |   11+ party, or severe allergy)     |
-|  +-------------------------------+  +-----------------------+                                     |
-+---------------------------------------------------------------------------------------------------+
+User in MIAW chat → Orchestrator
+                         ├── Reservation subagent
+                         │      └── Apex + MuleSoft Omni-Gateway
+                         │             └── OpenTable API → Reservation result
+                         ├── FAQ subagent
+                         │      └── CRM + Data 360 RAG → Grounded answer
+                         └── Escalation to human
+
+Reservation integration ── exceptions/lockouts ──┐
+FAQ retrieval ── safety concern ─────────────────┴→ Salesforce Omni-Channel + Case
 ```
 
-- **Bottom Callout Strip — 2 Explicit Architectural Trade-Offs:**
-  - **Hybrid CRM (`before_reasoning`) + Scoped RAG** $>$ Raw Prompt Template *(50% faster on hours/phone, 100% tenant isolation)*
-  - **Deterministic `available when` State Gates** $>$ Prompt-Only Rules *(Guaranteed 2-step cancel save & 2-strike lockout)*
+- **Right — live context panel:** Selecting a path animates its route and shows the user request, outcome (`Agent handles it`, `Human takes over`, or `Agent declines`), and step-by-step trace. Selecting a diagram box instead shows its job, tools, and guardrail.
 
-### ⚡ Interactive Moment (Architecture Pop-Quiz for Judges)
+### ⚡ Interactive Moment (Trace a User Path)
 
-- **Ask the Judges:** *"Look at `subagent faq` on the left of our diagram. If a diner asks 'What time does Post Oak Smokehouse close tonight?', how many Data 360 RAG searches does our agent run? **Zero!** Because `before_reasoning` already loaded operating hours into `@variables` in 1 SOQL query."*
+- Ask a judge to choose one of the eight user requests.
+- Click it to animate the exact route through the architecture and reveal the outcome and guardrails.
 
 ### 🎙️ What We'll Say (Speaker Track)
 
-> *"Here is the complete architecture of `TableCraft_Agent` built in New Agent Builder with Agent Script. Instead of one giant overloaded prompt, we use a **4-subagent Hub-and-Spoke architecture** sharing session state (`@variables`):*
+> *"Here is the production architecture and the decision logic behind it. A signed-in user enters through MIAW chat. The orchestrator identifies the restaurant and intent, then routes to one of two specialists or directly to a human.*
 >
-> 1. **`orchestrator` (Hub):** Automatically runs `verify_diner` in `before_reasoning` to identify the signed-in diner, searches restaurants via `find_restaurant`, locks in `restaurant_id`, and routes to the right specialist.
-> 2. **`faq` (Spoke 1):** Runs `validate_restaurant_context` in `before_reasoning` to hydrate CRM operating hours and phone number with zero RAG overhead, and calls `retrieve_dining_knowledge` against Data 360 chunks (`Menu`, `Parking_And_Access`, `Policies`) only when needed.
-> 3. **`booking` (Spoke 2):** Handles live reservation lookup, creation, modification, and cancellation — governed by two hard `available when` state gates in code: `cancel_reservation` is physically locked until `offer_alternative` sets `cancel_offer_made == True`, and `lookup_reservation` disappears once `failed_attempts` reaches 2.
-> 4. **`escalation` (Spoke 3):** Routes to a live human at OpenTable via Service Cloud Omni-Channel (`flow://Route_CLL_Escalations`) whenever a diner asks for a person, reports a severe allergy, requests a party of 11+, or hits the 2-strike verification lockout."*
+> *The **Reservation subagent** owns create, retrieve, modify, and cancel. Apex calls MuleSoft Omni-Gateway, which exposes CRUD operations against the OpenTable API. The agent confirms success only from the API response. Identity, explicit confirmation, the cancellation-save gate, and the two-strike lockout remain deterministic.*
+>
+> *The **FAQ subagent** has read-only access. It uses structured CRM facts and restaurant-scoped Data 360 RAG. If an approved source does not contain the answer, it does not guess — it gives the restaurant phone path.*
+>
+> *The pink routes are intentional human boundaries. A direct request for a person, an allergen guarantee, another safety concern, an exception, or a verification lockout creates a context-rich Case and transfers through Salesforce Omni-Channel. A request for someone else’s reservation is declined without exposing any data.*
+>
+> *Choose any request on the left and we can trace exactly which components run, what outcome the user gets, and where the guardrail is enforced."*
 
 ---
 
-## Slide 8: Deployment Strategy (Web First $\rightarrow$ Mobile $\rightarrow$ Voice)
+## Slide 8: Design Decisions and Tradeoffs
+
+### 🖥️ On the Slide (Visual & Minimal — 3 Decision Rows)
+
+- **Headline:** We optimized for trust and scale — not maximum autonomy.
+- **Three-row decision matrix:**
+
+| **Design decision** | **Optimizes for** | **Does not optimize for** |
+| :--- | :--- | :--- |
+| **Hybrid CRM fast path + scoped RAG**<br>Hours, phone, and timezone come from structured CRM; menus, parking, and policies use restaurant-filtered Data 360 retrieval. | **Speed, lower Flex Credit usage, grounded answers, and tenant isolation** | One universal retrieval path or answering beyond approved restaurant data |
+| **Deterministic gates around agent reasoning**<br>Code controls ownership checks, two failed lookups, confirmation, and the cancellation save offer. | **Security, repeatability, auditability, and guaranteed business rules** | The fewest possible turns or unconstrained conversational flexibility |
+| **Orchestrator + specialist subagents**<br>Reservation writes and FAQ reads have separate tools, permissions, and tests. | **Least privilege, focused evaluation, maintainability, and safe handoffs** | The simplest implementation or zero routing overhead |
+
+- **Bottom callout:** **Tradeoff accepted:** a little more structure and friction in exchange for predictable behavior at production scale.
+
+### 🎙️ What We'll Say (Speaker Track)
+
+> *"Before deployment, we want to be explicit about what this architecture optimizes for — and what it intentionally gives up.*
+>
+> *First, we chose a **hybrid CRM and RAG pattern**. Stable facts such as hours, phone number, and timezone come from structured CRM, while menus, parking, and policies use restaurant-scoped Data 360 retrieval. That optimizes for speed, grounding, tenant isolation, and lower Flex Credit usage. It does not optimize for one universal retrieval path or for answering questions outside approved restaurant data.*
+>
+> *Second, we put **deterministic gates around the model**. Ownership checks, explicit confirmation, the two-strike lockout, and the cancellation save offer are enforced in code. That optimizes for security, repeatability, and auditability. The cost is deliberate friction: some actions take an extra turn, and the model has less freedom.*
+>
+> *Third, we separated the experience into an **orchestrator and specialist subagents**. Reservation writes and FAQ reads have different tools, permissions, and tests. That optimizes for least privilege, maintainability, and focused evaluation. It is more structured than a single all-purpose agent and adds a small routing step.*
+>
+> *Those are intentional tradeoffs. For a diner-facing system that handles identity, reservations, and safety questions, we chose predictable behavior at production scale over maximum autonomy."*
+
+---
+
+## Slide 9: Deployment Strategy (Web First $\rightarrow$ Mobile $\rightarrow$ Voice)
 
 ### 🖥️ On the Slide (Visual & Minimal — 3-Stage Channel Rollout)
 
@@ -240,7 +257,7 @@
 
 ---
 
-## Slide 9: Responsible AI
+## Slide 10: Responsible AI
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -263,7 +280,7 @@
 
 ---
 
-## Slide 10: Data and Integration
+## Slide 11: Data and Integration
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -286,7 +303,7 @@
 
 ---
 
-## Slide 11: Security and Trust
+## Slide 12: Security and Trust
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -312,7 +329,7 @@
 
 ---
 
-## Slide 12: Testing Approach
+## Slide 13: Testing Approach
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -340,7 +357,7 @@
 
 ---
 
-## Slide 13: Live Demo
+## Slide 14: Live Demo
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -360,7 +377,7 @@
 
 ---
 
-## Slide 14: Recommendations and Next Steps
+## Slide 15: Recommendations and Next Steps
 
 ### 🖥️ On the Slide (Visual & Minimal)
 

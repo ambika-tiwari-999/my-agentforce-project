@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Team 16: Intelligent Diner Support Agent</title>
+<title>Team 16: Intelligent Diner Support Agent (v4, production-ready)</title>
 <style>
 /* =====================================================================
    Salesforce brand system (web-design skill): palette tokens only.
@@ -321,7 +321,7 @@ details.q p{padding:0 0 12px;max-width:70ch}
     <div>
       <p class="kick">Team 16 · Online Hospitality Platform</p>
       <h1>Intelligent Diner Support Agent</h1>
-      <p class="lead">Is it ready for UAT? We think so. Here is what it saves, how it works, and the proof.</p>
+      <p class="lead">Built, tested and secured. We are asking you to approve it for production.</p>
       <p class="who" id="whoLine"></p>
     </div>
     <div class="stats">
@@ -331,12 +331,41 @@ details.q p{padding:0 0 12px;max-width:70ch}
     </div>
   </div>
   <div class="agenda" id="agenda" aria-label="What we will cover"></div>
-  <p class="foot">*Base-case team assumptions, explained on the ROI slide.</p>
-  <aside class="note">Say: Two numbers first, then the story. We will show the problem, the agent live, how it is built and secured, and what it saves, and then ask for a decision.</aside>
+  <p class="foot">*Base-case team assumptions, listed on the next slide and explained on the ROI slide.</p>
+  <aside class="note">Say: Two numbers first, then the ask: approve promotion to production, with UAT acceptance as the final gate. Then one honest slide on what is real, mocked and assumed, and the story, the live agent, the build, the security, the testing and the savings.</aside>
+</section>
+
+<!-- 1b ASSUMPTIONS -->
+<section class="slide" id="assumptions" data-label="Assumptions" data-rubric="Presentation: transparency · Business impact" data-budget="2" aria-label="Assumptions and what is mocked">
+  <h2>Before we start: what is real, what is mocked, and what we assumed.</h2>
+  <p class="lede" style="margin:8px 0 16px">We would rather say it now than have you find it. None of it blocks promotion to production.</p>
+  <div class="grid c3" style="align-items:start">
+    <div class="card"><span class="pill ready">Real, built and tested</span><ul class="small" style="margin-top:8px">
+      <li>New Agent Builder with Agent Script: orchestrator plus booking, FAQ and escalation subagents</li>
+      <li>Apex actions in user mode, run by a least-privilege agent user</li>
+      <li>Hours, time zones, 90-day window, party-size limit and nearest-time suggestions enforced in code</li>
+      <li>89 automated test cases in 7 suites in Agentforce Studio</li>
+      <li>Omni-Channel handoff to a person from every subagent</li>
+      <li>A signed-in chat session identifies the diner with no questions</li></ul></div>
+    <div class="card"><span class="pill watch">Mocked for this demo</span><ul class="small" style="margin-top:8px">
+      <li>The reservation system: reservations are Salesforce records behind Apex actions that follow a real-API contract. In production, MuleSoft maps the same actions to the platform’s API</li>
+      <li>Restaurants, reservations and policy documents are demo data</li>
+      <li>Guest identity: an email lookup, not yet confirmed by a one-time code. Signed-in sessions are the verified path</li>
+      <li>Splunk audit export: <b>[state the true status before presenting]</b></li></ul></div>
+    <div class="card"><span class="pill pending">Assumed, to be measured in the pilot</span><ul class="small" style="margin-top:8px">
+      <li>1.2M diner contacts a year; 40% in scope; 70% handled by the agent</li>
+      <li>12 minutes and $25 an hour per human contact; about $0.40 per agent conversation</li>
+      <li>$300K one-time rollout and $20K a year for Data 360</li>
+      <li>Targets: 25% faster responses, over 80% first-contact resolution, satisfaction at least equal to the human channel</li>
+      <li>Web chat first; voice later</li></ul></div>
+  </div>
+  <div class="card" style="margin-top:14px;background:var(--cobalt-soft)"><b>Why this is safe to promote:</b> the contract with the reservation system is fixed, the security controls are platform features, and every assumption becomes a measured number in a 10% pilot with a kill switch.</div>
+  <div class="meta"></div>
+  <aside class="note">Say: Be plain and quick. Real means built and tested. Mocked means demo data or a stand-in with a defined production path. Assumed means a number we will replace with platform data. If asked about authentication, say the verified path already works for signed-in sessions.</aside>
 </section>
 
 <!-- 2 CHALLENGE -->
-<section class="slide" id="challenge" data-label="Challenge" data-rubric="Use case and relevance" data-budget="2.5" aria-label="The challenge">
+<section class="slide" id="challenge" data-label="Challenge" data-rubric="Use case and relevance" data-budget="2" aria-label="The challenge">
   <h2>Plans change in minutes. Support answers in a queue.</h2>
   <div class="tiles" style="margin-top:20px">
     <div class="card tile"><strong>1.2M*</strong><span>diner contacts a year, split between FAQs and human agents</span></div>
@@ -347,7 +376,7 @@ details.q p{padding:0 0 12px;max-width:70ch}
     <div class="card">
       <h3>Sofia’s evening today</h3>
       <div class="rail before"><div class="step">Plans change</div><div class="step">Search the FAQ</div><div class="step">Wait in a queue</div><div class="step">A person makes the change</div></div>
-      <p class="small sub">Sofia is signed in on her phone, and the table is two hours away. Critical issues, like allergies and billing disputes, also queue behind routine ones.</p>
+      <p class="small sub">Sofia is on her phone, and the table is two hours away. Critical issues, like allergies and billing disputes, also queue behind routine ones.</p>
     </div>
     <div class="card">
       <h3>Why earlier restaurant agents failed</h3>
@@ -366,7 +395,7 @@ details.q p{padding:0 0 12px;max-width:70ch}
   <h2>What if the answer arrived in two turns, with a person one step away?</h2>
   <div style="margin-top:20px" class="card">
     <h3>Sofia’s evening with the agent</h3>
-    <div class="rail after"><div class="step">Plans change</div><div class="step">Open the chat</div><div class="step">Last name + reservation ID</div><div class="step">Confirm the change</div><div class="step">Done in 2 to 3 turns*</div></div>
+    <div class="rail after"><div class="step">Plans change</div><div class="step">Open the chat</div><div class="step">Reservation ID</div><div class="step">Confirm the change</div><div class="step">Done in 2 to 3 turns*</div></div>
   </div>
   <div class="grid c2" style="margin-top:16px;align-items:start">
     <div class="card"><h3>The agent takes</h3><ul class="two"><li>Looking up, changing and cancelling reservations</li><li>Questions about hours, menus, parking and policies</li><li>The first reply, any hour of the day</li></ul></div>
@@ -387,29 +416,29 @@ details.q p{padding:0 0 12px;max-width:70ch}
 <section class="slide" id="solution" data-label="Solution" data-rubric="Solution design" data-budget="2" aria-label="The solution">
   <h2>One agent that books, answers and hands off, and never guesses.</h2>
   <div class="grid c3" style="margin-top:20px;align-items:start">
-    <div class="card"><h3>Change or cancel a booking</h3><ul>
-      <li>Verifies last name and reservation ID</li>
-      <li>Shows the change and waits for a yes</li>
-      <li>Offers a better option before any cancel</li>
-      <li>Saves notes like an allergy, with a reminder to tell the host</li></ul></div>
+    <div class="card"><h3>Book, change or cancel</h3><ul>
+      <li>Books from one message: party size, date, time and email</li>
+      <li>Checks hours, the 90-day window and the 10-guest limit first, and offers the nearest times</li>
+      <li>Shows the details and waits for a yes</li>
+      <li>Changes and cancels need only the reservation ID, with a better option offered before any cancel</li></ul></div>
     <div class="card"><h3>Answer restaurant questions</h3><ul>
       <li>Hours, menu and parking from facts on file</li>
       <li>Policies from a Data 360 library, with citations</li>
       <li>Says “not on file” and offers a person</li>
       <li>Never invents an answer or a link</li></ul></div>
     <div class="card"><h3>Hand off to a person</h3><ul>
-      <li>A Case with an AI summary, so no one re-asks</li>
+      <li>Live handoff through Omni-Channel</li>
       <li>Available from every subagent</li>
-      <li>After hours: a Case number and a follow-up</li>
-      <li>Triggered by a request, frustration or a sensitive issue</li></ul></div>
+      <li>Triggered by a request, a complaint, a sensitive issue, a group of 11 or more, or 3 failed attempts</li>
+      <li>Never promises a refund or an allergy guarantee</li></ul></div>
   </div>
   <div class="card" style="margin-top:16px;background:var(--cobalt-soft)"><b>Always true:</b> it says it is an AI assistant · a person is one step away · answers come only from sources · nothing changes without a confirmation.</div>
   <div class="meta"></div>
-  <aside class="note">Say: Three jobs, and four promises that never change. Keep this slide short so the demo starts quickly.</aside>
+  <aside class="note">Say: Three jobs, and four promises that never change. These map to the customer’s stated goals: faster responses, first-contact resolution above 80%, and robust escalation. Keep it short so the demo starts quickly.</aside>
 </section>
 
 <!-- 5 LIVE DEMO -->
-<section class="slide" id="demo" data-label="Live demo" data-rubric="Solution design: walkthrough" data-budget="8" aria-label="Live demo">
+<section class="slide" id="demo" data-label="Live demo" data-rubric="Solution design: walkthrough" data-budget="7" aria-label="Live demo">
   <div class="grid c2" style="align-items:stretch">
     <div class="cta">
       <h3>Now, the agent itself.</h3>
@@ -419,8 +448,8 @@ details.q p{padding:0 0 12px;max-width:70ch}
       <div class="toast" id="demoToast">Add your demo link in <code>CONFIG.demoUrl</code> at the top of this file.</div>
     </div>
     <div class="card">
-      <h3>Four moments</h3><div id="moments"></div>
-      <p class="small sub" style="margin-top:8px"><b>Then try to break it:</b> ask for someone else’s reservation, or tell it to ignore its instructions.</p>
+      <h3>Five moments</h3><div id="moments"></div>
+      <p class="small sub" style="margin-top:8px"><b>Then try to break it:</b> ask for someone else’s reservation, or tell it to ignore its instructions. <b>Then open the script view</b> and point at the cancel rule.</p>
     </div>
   </div>
   <p class="foot">If it goes off-script: say what we expected, show the trace to explain why, retry once, then move on. Never replace the live demo with a recording.</p>
@@ -429,7 +458,7 @@ details.q p{padding:0 0 12px;max-width:70ch}
 </section>
 
 <!-- 6 ARCHITECTURE -->
-<section class="slide" id="architecture" data-label="Architecture" data-rubric="Solution design: architecture" data-budget="4" aria-label="Architecture">
+<section class="slide" id="architecture" data-label="Architecture" data-rubric="Solution design: architecture" data-budget="3.5" aria-label="Architecture">
   <h2>Every request follows one of three paths, and every path has a guardrail.</h2>
   <p class="lede" style="margin:8px 0 12px">Pick a diner request and watch it travel. Select any box for detail.</p>
   <div class="cgs" id="cgs"></div>
@@ -443,6 +472,7 @@ details.q p{padding:0 0 12px;max-width:70ch}
       <div class="card detail" id="detail" aria-live="polite"></div>
     </div>
   </div>
+  <div class="card small" style="margin-top:12px"><b>Archetype:</b> service agent. <b>Pattern:</b> a router with specialist subagents and a human-in-the-loop handoff. <b>AIforce:</b> surface-agnostic, so the same actions serve web chat now and voice later. <b>Data 360:</b> the restaurant policy library and retriever. <b>Channel:</b> Messaging for In-App and Web.</div>
   <details class="more" style="margin-top:12px">
     <summary>See the rule in Agent Script</summary>
     <div class="ide">
@@ -452,11 +482,29 @@ details.q p{padding:0 0 12px;max-width:70ch}
     </div>
   </details>
   <div class="meta"></div>
-  <aside class="note">Say: Click a request and read the path. The rules are in Agent Script, the data work is in Apex, and the model only does the talking. Production scalability: actions are stateless, cost is per action, and the real reservation API slots in behind the same contract.</aside>
+  <aside class="note">Say: Click a request and read the path. The rules are in Agent Script, the data work is in Apex, and the model only does the talking. Archetype is a service agent. The pattern is a router with specialist subagents and a human-in-the-loop handoff. AIforce: surface-agnostic, web chat now, voice later with the same actions. Data 360 holds the policy library. Production scalability: actions are stateless, cost is per action, and the real reservation API slots in behind the same contract through MuleSoft.</aside>
+</section>
+
+<!-- 6b DECISIONS -->
+<section class="slide" id="decisions" data-label="Decisions" data-rubric="Solution design: rationale and alternatives" data-budget="2" aria-label="Decisions and alternatives">
+  <h2>Eight decisions, and what we rejected.</h2>
+  <div class="card" style="margin-top:16px;padding:6px 18px">
+    <div class="fail" style="grid-template-columns:1.1fr 1.4fr 1.4fr 1.8fr;border-top:0"><b>Decision</b><b>We chose</b><b>We rejected</b><b>Why</b></div>
+    <div class="fail" style="grid-template-columns:1.1fr 1.4fr 1.4fr 1.8fr"><div>Agent shape</div><div>One agent, three subagents behind an orchestrator</div><div>Separate agents</div><div class="sub">One trace, one set of guardrails, simpler to test</div></div>
+    <div class="fail" style="grid-template-columns:1.1fr 1.4fr 1.4fr 1.8fr"><div>Where rules live</div><div>Hours, limits, ownership and cancel rules in Apex</div><div>Rules in prompt text</div><div class="sub">Code cannot be argued away</div></div>
+    <div class="fail" style="grid-template-columns:1.1fr 1.4fr 1.4fr 1.8fr"><div>Actions</div><div>Apex in user mode</div><div>Admin-mode code or Flow only</div><div class="sub">Object and field security enforced</div></div>
+    <div class="fail" style="grid-template-columns:1.1fr 1.4fr 1.4fr 1.8fr"><div>Identity</div><div>Verified contact when signed in; email for guests</div><div>Asking for membership numbers</div><div class="sub">Fewer questions; production adds a one-time code</div></div>
+    <div class="fail" style="grid-template-columns:1.1fr 1.4fr 1.4fr 1.8fr"><div>Knowledge</div><div>CRM facts, then a Data 360 library</div><div>Model memory</div><div class="sub">Cited answers, no invention</div></div>
+    <div class="fail" style="grid-template-columns:1.1fr 1.4fr 1.4fr 1.8fr"><div>Restaurant search</div><div>Fuzzy search in Apex, city as a hard filter</div><div>Model-written lists</div><div class="sub">A real bug: the model once invented restaurants</div></div>
+    <div class="fail" style="grid-template-columns:1.1fr 1.4fr 1.4fr 1.8fr"><div>Channel</div><div>Web chat first</div><div>Voice first</div><div class="sub">More consistent; the same actions serve voice later</div></div>
+    <div class="fail" style="grid-template-columns:1.1fr 1.4fr 1.4fr 1.8fr"><div>Handoff</div><div>From every subagent through Omni-Channel</div><div>Only from the front desk</div><div class="sub">The Smartsheet failure: no way to a person</div></div>
+  </div>
+  <div class="meta"></div>
+  <aside class="note">Say: These are the forks in the road. For each, say what we chose, what we rejected and why. Pick two to tell as a story: rules in Apex, and the invented-restaurants bug.</aside>
 </section>
 
 <!-- 7 SECURITY & TESTING -->
-<section class="slide" id="sectest" data-label="Security & testing" data-rubric="Security measures · Testing suite" data-budget="6" aria-label="Security and testing">
+<section class="slide" id="sectest" data-label="Security & testing" data-rubric="Security measures · Testing suite" data-budget="5" aria-label="Security and testing">
   <h2>Built to resist attack, and tested like it.</h2>
   <div class="seg" id="stSeg" role="group" aria-label="Security or testing"></div>
   <div id="stSec">
@@ -470,7 +518,7 @@ details.q p{padding:0 0 12px;max-width:70ch}
     <div class="grid c2" style="align-items:start">
       <div class="card"><h3>Testing Center results</h3><div id="bars"></div><p class="small sub" id="overall"></p></div>
       <div><h3>What testing caught</h3><div class="grid" id="caught" style="gap:10px"></div>
-        <p class="small sub" style="margin-top:10px">Suites: functional, guardrail, edge, multi-turn, perturbation (typos and paraphrase) and adversarial, rerun after every change.</p></div>
+        <p class="small sub" style="margin-top:10px">Seven suites in Agentforce Studio, 89 cases: knowledge, happy path, negative, adversarial, edge, off-topic and multi-turn, rerun after every change. Scored on response and subagent. Every first-run miss was triaged: either a fix we made, or a test expectation we corrected.</p></div>
     </div>
   </div>
   <div class="meta"></div>
@@ -478,7 +526,7 @@ details.q p{padding:0 0 12px;max-width:70ch}
 </section>
 
 <!-- 8 ROI -->
-<section class="slide" id="roi" data-label="ROI" data-rubric="Business impact and consultative readiness" data-budget="4" aria-label="Return on investment">
+<section class="slide" id="roi" data-label="ROI" data-rubric="Business impact and consultative readiness" data-budget="3.5" aria-label="Return on investment">
   <h2 id="roiTitle">Hours and dollars handed back to your team, every year.*</h2>
   <div class="seg" id="scSeg" role="group" aria-label="Scenario" style="margin-top:14px"></div>
   <div class="roihero">
@@ -514,8 +562,8 @@ details.q p{padding:0 0 12px;max-width:70ch}
   <div class="card" id="dialOut" aria-live="polite" style="margin-top:12px"></div>
   <div class="grid c3" style="margin-top:14px">
     <div class="card"><h3>Now</h3><p class="small">Modify, cancel, create, restaurant information, escalate, in web chat. Reservation system mocked behind Apex.</p></div>
-    <div class="card"><h3>Next</h3><p class="small">Waitlist, reminders, a Loyalty subagent, native mobile, MuleSoft to the real system, user verification and a one-time code.</p></div>
-    <div class="card"><h3>Later</h3><p class="small">A concierge that knows the diner, books for groups and speaks on the phone.</p></div>
+    <div class="card"><h3>Next</h3><p class="small">MuleSoft to the real reservation system, MIAW user verification and a one-time code for guests, a Splunk audit export, then waitlist, reminders, a Loyalty subagent and native mobile.</p></div>
+    <div class="card"><h3>Later</h3><p class="small">A Concierge Agent: personalized recommendations from history and preferences, loyalty, group booking, and seamless handoffs across channels.</p></div>
   </div>
   <div class="ideas">
     <div class="idea"><b>Personalized picks</b><span class="small sub">Suggest tables from a diner’s history and tastes.</span></div>
@@ -531,16 +579,16 @@ details.q p{padding:0 0 12px;max-width:70ch}
 
 <!-- 10 THE ASK -->
 <section class="slide" id="ask" data-label="The ask" data-rubric="Presentation: close" data-budget="2" aria-label="The ask">
-  <h2>Proceed to UAT, with three open items we’ll close inside it.</h2>
+  <h2>Approve promotion to production, with UAT acceptance as the final gate.</h2>
   <div class="grid c3" style="margin-top:20px;align-items:start">
-    <div class="card"><h3>The decision</h3><ul><li>Approve entry to UAT</li><li>A 10% pilot in one market, with a kill switch</li><li>A monthly Flex Credit budget with alerts</li></ul></div>
+    <div class="card"><h3>The decision</h3><ul><li>Approve promotion to production</li><li>A 10% pilot in one market, with a kill switch</li><li>A monthly Flex Credit budget with alerts</li></ul></div>
     <div class="card"><h3>Ready now</h3><div id="readyList"></div></div>
-    <div class="card"><h3>Open, with owners</h3><div id="openList"></div></div>
+    <div class="card"><h3>Closes before go-live</h3><div id="openList"></div></div>
   </div>
-  <div class="card small" style="margin-top:14px"><b>Exit criteria:</b> Testing Center at least 90% overall and 100% on escalation and guardrail cases · zero invented links · runs as a least-privilege agent user · every escalation creates a Case with a summary. <b>We report weekly:</b> containment, first-contact resolution, response time, grounding, save rate and cost per resolved contact.</div>
+  <div class="card small" style="margin-top:14px"><b>Conditions:</b> UAT acceptance in the sandbox · test pass rate at least 90% overall (80% on the first run, every miss triaged) and 100% on escalation and guardrail cases · no invented restaurants or links · runs as a least-privilege agent user · every handoff reaches a person. <b>We report weekly:</b> containment, first-contact resolution, response time, grounding, save rate and cost per resolved contact.</div>
   <div class="grid c4" id="people" style="margin-top:14px"></div>
   <div class="meta"></div>
-  <aside class="note">Say: Ask plainly for the decision. If an item is amber, say what closes it and who owns it. Then each person says one sentence about what they built.</aside>
+  <aside class="note">Say: Ask plainly: approve promotion to production, with UAT acceptance as the gate. If an item is amber, say what closes it and who owns it. Then each person says one sentence about what they built.</aside>
 </section>
 
 <!-- 11 Q&A -->
@@ -580,30 +628,32 @@ const CONFIG = {
     {name:'Luke Swint',        title:'Forward Deployed Engineer', speaks:'Live demo',
      built:['Data model, reservation flows','Booking logic, merged script']}
   ],
-  speakers: {open:'Christian', challenge:'Christian', opportunity:'Ambika', solution:'Ambika', demo:'Luke',
+  speakers: {open:'Christian', assumptions:'Christian', decisions:'Joseph', challenge:'Christian', opportunity:'Ambika', solution:'Ambika', demo:'Luke',
              architecture:'Joseph', sectest:'Joseph (security), Ambika (testing)', roi:'Christian', roadmap:'Joseph', ask:'All', qa:'All'},
   gates: [  // status: 'ready' | 'watch' | 'pending'
-    {label:'Business case', status:'ready'}, {label:'Design and build', status:'ready'}, {label:'Live demo', status:'pending'},
-    {label:'Testing', status:'pending'}, {label:'Security', status:'pending'}, {label:'Business impact', status:'ready'}
+    {label:'Business case', status:'ready'}, {label:'Design and build', status:'ready'}, {label:'Live demo', status:'ready'},
+    {label:'Testing (80% first run)', status:'watch'}, {label:'Security', status:'watch'}, {label:'Business impact', status:'ready'}
   ],
-  // MOCK DATA: replace with real Testing Center counts, then set mock:false
-  results: {mock:true, rows:[
-    {key:'Functional',   passed:38, total:40, target:90},
-    {key:'Guardrail',    passed:24, total:24, target:100},
-    {key:'Edge cases',   passed:21, total:24, target:90},
-    {key:'Multi-turn',   passed:14, total:16, target:90},
-    {key:'Perturbation', passed:18, total:20, target:90},
-    {key:'Adversarial',  passed:15, total:15, target:100}
+  // Real results from the final Agentforce Studio runs (Response + Subagent; Action scorer excluded)
+  results: {mock:false, rows:[
+    {key:'Knowledge',    passed:14, total:14, target:90},
+    {key:'Happy paths',  passed:12, total:13, target:90},
+    {key:'Off-topic',    passed:12, total:12, target:90},
+    {key:'Edge cases',   passed:10, total:13, target:90},
+    {key:'Adversarial',  passed:10, total:14, target:100},
+    {key:'Negative',     passed:8,  total:13, target:90},
+    {key:'Multi-turn',   passed:5,  total:10, target:90}
   ]},
   caught: [
-    {title:'Booked times stored 5 hours off', fix:'Convert with the restaurant’s named time zone', status:'watch'},
-    {title:'The FAQ asked diners for a restaurant ID', fix:'The orchestrator resolves it and passes it down', status:'ready'},
-    {title:'Over-escalation on a plain dietary note', fix:'Save it as a special request; escalate only severe cases', status:'ready'}
+    {title:'Invented confirmation: a booking card for a past date with a made-up ID', fix:'Placeholders in the example; a confirmation may appear only after the booking action succeeds', status:'ready'},
+    {title:'Invented restaurants when a question mixed off-topic and on-topic', fix:'The agent may name only restaurants the search returned', status:'ready'},
+    {title:'Booked times stored 5 hours off', fix:'Store UTC and convert with the restaurant’s named time zone', status:'ready'}
   ],
   openItems: [
     {item:'Live MIAW handoff verified end to end', owner:'Joseph', status:'watch'},
-    {item:'FAQ policy documents loaded in Data 360', owner:'Ambika', status:'watch'},
-    {item:'Time zone and special-request fixes deployed', owner:'Luke', status:'watch'}
+    {item:'Data 360 policy library content verified', owner:'Ambika', status:'watch'},
+    {item:'Final test re-run after the last fixes', owner:'Luke', status:'watch'},
+    {item:'Trust Layer evidence and audit export decision', owner:'Joseph', status:'watch'}
   ]
 };
 /* ================================================================================ */
@@ -614,7 +664,7 @@ const CONFIG = {
   var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   function $(id){ return document.getElementById(id); }
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
-  var STAT = {ready:'Ready', watch:'Closing inside UAT', pending:'Evidence to add'};
+  var STAT = {ready:'Ready', watch:'Closes before go-live', pending:'Evidence to add'};
 
   /* ---------- ROI model (shared) ---------- */
   var C={contacts:1200000,cancelShare:0.30,saveRate:0.10,covers:3,fee:1.5,escMin:2,humanMin:12,hourly:25,fteHours:1800,actionsPer:4,actionCost:0.10,data360:20000,oneTime:300000};
@@ -698,10 +748,11 @@ const CONFIG = {
 
   /* ---------- demo ---------- */
   var MOMENTS=[
-    ['Find a table','“Austin”, then pick the BBQ place','Searches by city and lists real restaurants.'],
-    ['Ask, don’t guess','Parking, then a policy that is not on file','Answers from facts on file. Where there is no source it says so and offers a person.'],
-    ['Change, then cancel','Move the time, then ask to cancel','Cancel starts with an offer to move it. Only if the diner insists does it confirm and cancel.'],
-    ['Hand it to a person','“Can you guarantee no cross-contact?”','Creates a Case with a summary. Show the Case in the Service Console.']
+    ['Find a table','“post oack smokehouse” (a typo), or “Austin”','Finds the right restaurant despite the typo, lists at most three, and says when there are more. It asks to confirm before booking.'],
+    ['Book from one message','“Thursday 7pm for 4, my email is …”, then a closed day','Checks the time first. On a closed day it offers the nearest open times. For a new email it asks only for a name.'],
+    ['Ask, don’t guess','Hours, then a policy that is not on file','Answers from facts on file. Where there is no source it says so and offers a person. [Confirm the policy answer works before presenting]'],
+    ['Change, then cancel','“Make it 6 people”, then “cancel”','Change needs only the reservation ID and a yes. Cancel starts with an offer to move it, once. Past reservations cannot be cancelled.'],
+    ['Hand it to a person','“Can you guarantee no cross-contact?”','Declines to guarantee and hands off through Omni-Channel.']
   ];
   $('moments').innerHTML=MOMENTS.map(function(m,i){ return '<div class="moment"><div class="mn">'+(i+1)+'</div><div><b>'+esc(m[0])+'</b><div class="say small">'+esc(m[1])+'</div><div class="small sub">'+esc(m[2])+'</div></div></div>'; }).join('');
   var demoBtn=$('demoBtn');
@@ -711,18 +762,18 @@ const CONFIG = {
   /* ---------- architecture diagram ---------- */
   var NS='http://www.w3.org/2000/svg';
   var N=[
-    {id:'diner',x:60,y:20,w:230,h:70,k:'entry',t:'Diner in MIAW chat',s:'signed in*'},
+    {id:'diner',x:60,y:20,w:230,h:70,k:'entry',t:'Diner in MIAW chat',s:'web chat (MIAW)'},
     {id:'orch',x:385,y:20,w:230,h:70,k:'orch',t:'Orchestrator',s:'finds restaurant, routes',g:1},
     {id:'scope',x:700,y:8,w:240,h:38,k:'road',t:'Out of scope: one fixed reply',g:1,one:1},
     {id:'loyalty',x:700,y:58,w:240,h:38,k:'road',t:'Loyalty (roadmap)',one:1},
     {id:'booking',x:60,y:170,w:230,h:80,k:'sub',t:'Booking & Modification',s:'look up, create, change, cancel',g:1},
-    {id:'esc',x:385,y:170,w:230,h:80,k:'sub',t:'Escalation',s:'Case, then a person',g:1},
-    {id:'dining',x:710,y:170,w:230,h:80,k:'sub',t:'Dining Info',s:'grounded answers',g:1},
-    {id:'d_booking',cx:175,cy:290,k:'dec',dl:'Verified + confirmed?'},
+    {id:'esc',x:385,y:170,w:230,h:80,k:'sub',t:'Escalation',s:'hands off to a person',g:1},
+    {id:'dining',x:710,y:170,w:230,h:80,k:'sub',t:'FAQ',s:'grounded answers',g:1},
+    {id:'d_booking',cx:175,cy:290,k:'dec',dl:'ID found + confirmed?'},
     {id:'d_esc',cx:500,cy:290,k:'dec',dl:'Handoff available?'},
     {id:'d_dining',cx:825,cy:290,k:'dec',dl:'Source found?'},
     {id:'a_booking',x:60,y:330,w:230,h:80,k:'act',t:'Reservation actions',s:'mocked system behind Apex'},
-    {id:'a_esc',x:385,y:330,w:230,h:80,k:'act',t:'Case + Omni-Channel',s:'AI summary, then handoff'},
+    {id:'a_esc',x:385,y:330,w:230,h:80,k:'act',t:'Omni-Channel handoff',s:'flow routes to a person'},
     {id:'a_dining',x:710,y:330,w:230,h:80,k:'act',t:'CRM + Data 360',s:'facts and policy documents'},
     {id:'o_booking',x:60,y:480,w:230,h:60,k:'out',t:'Changed, booked or cancelled'},
     {id:'o_esc',x:385,y:480,w:230,h:60,k:'out',t:'Person takes over'},
@@ -762,21 +813,21 @@ const CONFIG = {
   });
 
   var DETAIL={
-    diner:{title:'Diner in MIAW chat',job:'The signed-in diner opens the chat on the booking site or app.*',tools:['Messaging for In-App and Web (MIAW)'],guard:'Sign-in is simulated in the MVP. Production uses MIAW user verification and a one-time code.',state:['membership_id']},
-    orch:{title:'Orchestrator',job:'Greets the diner by first name, finds the restaurant, records what they want, and routes. It runs at the start of every turn.',tools:['Find restaurant (name, cuisine, city, zip)','Diner’s first name'],guard:'Never asks for a restaurant code or phone number. Routes restaurant and reservation requests instead of answering them. Off-topic requests get one fixed reply.',state:['restaurant_id','intent','active_area']},
+    diner:{title:'Diner in MIAW chat',job:'The diner opens the chat on the booking site or app.',tools:['Messaging for In-App and Web (MIAW)'],guard:'A signed-in session supplies a verified contact and the agent asks nothing. Guests are identified by email when they book; production adds a one-time code.',state:['ContactId','membership_id']},
+    orch:{title:'Orchestrator',job:'Finds and confirms the restaurant, records what the diner wants, and routes. It asks for no personal details.',tools:['Find restaurant (fuzzy name, cuisine, city, zip; city is a hard filter; at most 3 shown)'],guard:'Never invents a restaurant: it names only what the search returned. Never asks for a restaurant code or a membership number. Off-topic requests get one fixed reply.',state:['restaurant_id','intent','active_area']},
     scope:{title:'Out of scope',job:'Anything that is not about TableCraft reservations or restaurant information.',tools:['None. One fixed reply.'],guard:'“I can only help with TableCraft reservations and restaurant information.” Then it offers help or a person.',state:[]},
     loyalty:{title:'Loyalty (roadmap)',job:'Tier and points lookup, then redemption. The data exists; the agent feature is not in the MVP.',tools:['Loyalty lookup (planned)'],guard:'Same identity checks and escalation rules as booking.',state:[]},
-    booking:{title:'Booking & Modification',job:'Looks up, creates, changes and cancels reservations. Asks once about occasion, allergies or dietary needs before booking.',tools:['Look up (last name + reservation ID)','Create (confirm first)','Modify (verified, confirm first)','Cancel (verified, offer first, confirm)'],guard:'Needs a verified match and an explicit confirmation. Two failed lookups go to a person. Cancel is blocked until the agent has offered to move the booking.',state:['reservation_verified','failed_attempts','cancel_offer_made']},
-    esc:{title:'Escalation',job:'Creates a Case with a short summary, then hands the diner to a person through Omni-Channel. Reachable from every subagent.',tools:['Create Case with summary and reason','Hand off through Omni-Channel'],guard:'Triggers: asks for a person, frustration, severe allergy or medical emergency, allergen guarantees, legal or safety issues, refunds, fee waivers or exceptions, groups of 11 or more, two failed lookups.',state:['escalation_case_id','escalation_case_number']},
-    dining:{title:'Dining Info',job:'Answers restaurant questions from sources only: facts on file in CRM first, then a Data 360 library of policy documents.',tools:['CRM facts prompt template','Data 360 FAQ prompt template with citations'],guard:'Abstains when there is no source and offers the restaurant phone number or a person. No general-knowledge answers, no invented links.',state:['restaurant_validated','escalation_phone_number']},
-    d_booking:{title:'Decision: verified and confirmed?',job:'Does the last name and reservation ID match this diner, and did the diner say yes to the change?',tools:[],guard:'No match: the agent says no reservation matches, without saying which detail was wrong. Two misses go to a person.',state:['reservation_verified','failed_attempts']},
+    booking:{title:'Booking & Modification',job:'Books, changes and cancels. Collects party size, date, time and email in one message and checks the time as soon as it knows it.',tools:['Time check (hours, 90 days, last seating, nearest times)','Identify by email (creates a profile only for a new email)','Create (diner confirms first)','Look up and modify by reservation ID (diner confirms)','Cancel (offer an alternative once, never in the past)'],guard:'Rules live in Apex, not in the prompt. Writes need the diner’s yes. 3 failed lookups go to a person. A party of 11 or more goes to a person; 10 or fewer is a normal booking.',state:['diner_identified','reservation_verified','failed_attempts','cancel_offer_made']},
+    esc:{title:'Escalation',job:'Hands the diner to a person through Omni-Channel. Reachable from every subagent.',tools:['Omni-Channel routing flow'],guard:'Triggers: asks for a person, a complaint, frustration, a severe allergy or allergen guarantee, legal or safety, refunds and exceptions, a group of 11 or more, or 3 failed attempts.',state:['active_area','escalation_turns']},
+    dining:{title:'FAQ',job:'Answers restaurant questions from sources only: facts on file in CRM first (hours, phone), then the Data 360 policy library.',tools:['CRM restaurant facts','Data 360 library and retriever, grounded prompt template'],guard:'Abstains when there is no source and offers the restaurant phone number or a person. No general-knowledge answers, no invented links.',state:['restaurant_validated','escalation_phone_number']},
+    d_booking:{title:'Decision: ID found and confirmed?',job:'Does the reservation ID match a reservation, and did the diner say yes to the change?',tools:[],guard:'No match: the agent says no reservation matches. The lookup always runs; it never says “no match” without checking. 3 misses go to a person.',state:['reservation_verified','failed_attempts']},
     d_esc:{title:'Decision: handoff available?',job:'Is a person available through Omni-Channel right now?',tools:[],guard:'If not, for example after hours, the diner gets the Case number and a follow-up promise.',state:['escalation_case_id']},
     d_dining:{title:'Decision: source found?',job:'Did the CRM facts or the Data 360 library contain the answer?',tools:[],guard:'If not, the agent says so and offers the restaurant phone number or a person. It never guesses.',state:['dining_passages']},
-    a_booking:{title:'Reservation actions',job:'Look up, create, modify and cancel run as Apex actions against a mocked reservation system that exposes a real-API contract.',tools:['Apex actions','Mocked reservation system (CRM objects)'],guard:'Every action is scoped to the signed-in diner and writes only after an explicit confirmation.',state:[]},
-    a_esc:{title:'Case + Omni-Channel',job:'Apex creates the Case with the AI summary, then the Omni-Channel flow routes the diner to a person.',tools:['Case creation (Apex)','Omni-Channel routing flow'],guard:'A special-request or allergy detail ends the summary with “Remind the restaurant on arrival”.',state:[]},
+    a_booking:{title:'Reservation actions',job:'Time check, create, modify and cancel run as Apex actions against a mocked reservation system that exposes a real-API contract.',tools:['Apex actions in user mode','Mocked reservation system (CRM objects)'],guard:'Hours, time zones, the 90-day window, the party-size limit, ownership and the past-cancel rule are enforced in code and re-checked at write time.',state:[]},
+    a_esc:{title:'Omni-Channel handoff',job:'The Omni-Channel flow routes the diner, with the conversation so far, to a person.',tools:['Omni-Channel routing flow'],guard:'[Add the Case and summary step only if it is built before presenting.]',state:[]},
     a_dining:{title:'CRM + Data 360',job:'Restaurant facts live in CRM. Menus, policies and FAQs live in a Data 360 library with a retriever.',tools:['CRM Restaurant records','Data 360 library and retriever'],guard:'Answers cite their source or abstain.',state:[]},
     o_booking:{title:'Outcome: booking',job:'The diner gets a confirmation with the reservation ID and the exact details the action returned.',tools:[],guard:'The agent never says a change happened until the action succeeds.',state:[]},
-    o_esc:{title:'Outcome: a person takes over',job:'The support agent sees the Case and summary, so the diner never has to repeat themselves.',tools:[],guard:'',state:[]},
+    o_esc:{title:'Outcome: a person takes over',job:'The support agent receives the conversation so the diner does not repeat themselves.',tools:[],guard:'',state:[]},
     o_dining:{title:'Outcome: answer or a person',job:'A sourced answer, or an honest “that is not on file” with a way to reach a person.',tools:[],guard:'',state:[]}
   };
   var detail=$('detail');
@@ -796,14 +847,15 @@ const CONFIG = {
   var DINE=['e_orch_dining','dining','e_dining_d','d_dining','e_d_dining_a','a_dining','e_a_dining_o','o_dining'];
   var ESCP=['e_orch_esc','esc','e_esc_d','d_esc','e_d_esc_a','a_esc','e_a_esc_o','o_esc'];
   var FLOWS=[
-    {q:'Change my reservation',o:'agent',seq:COMMON.concat(BOOK),steps:['The diner asks to move tonight’s table.','The orchestrator routes to Booking.','Booking asks for the last name and reservation ID and checks the match.','It shows the change and waits for a yes.','It updates the reservation and confirms.']},
-    {q:'Book with a nut allergy',o:'agent',seq:COMMON.concat(BOOK),steps:['The diner books a table and mentions a nut allergy.','Booking saves it as a special request.','It reminds the diner to tell their host on arrival and promises nothing about the kitchen.','No Case is created.']},
-    {q:'Ask about parking or hours',o:'agent',seq:COMMON.concat(DINE),steps:['The diner asks about parking or hours.','The orchestrator routes to Dining Info.','A check that runs without the model confirms the restaurant.','It answers from the facts on file, with the source.']},
-    {q:'Ask a policy question',o:'agent',seq:COMMON.concat(DINE),steps:['The diner asks about the cancellation policy.','The orchestrator routes to Dining Info.','It checks the CRM facts, then the policy library.','If the answer is not on file, it says so, gives the restaurant’s phone number and offers a person.']},
-    {q:'Guarantee no cross-contact',o:'human',seq:COMMON.concat(ESCP),steps:['The diner asks the agent to guarantee no nut cross-contact.','The orchestrator sends this straight to Escalation.','Escalation creates a Case with a summary (“Remind the restaurant on arrival”).','A person takes over through Omni-Channel.']},
-    {q:'Wrong details twice',o:'human',seq:COMMON.concat(['e_orch_booking','booking','e_booking_d','d_booking','e_h_booking']).concat(ESCP.slice(1)),steps:['The diner gives details that do not match, twice.','Booking never says which detail was wrong.','After the second miss it hands off to Escalation.','A Case with a summary goes to a person.']},
-    {q:'Someone else’s reservation',o:'decline',seq:COMMON.concat(['e_orch_booking','booking','e_booking_d','d_booking']),steps:['The diner asks about another diner’s reservation.','Booking checks the match and finds none.','It says no reservation matches, and reveals nothing.']},
-    {q:'Off-topic or prompt injection',o:'decline',seq:COMMON.concat(['e_orch_scope','scope']),steps:['The diner asks something unrelated, or tries to override the agent’s instructions.','The orchestrator gives one fixed reply.','It offers reservation help or a person.']}
+    {q:'Book a table',o:'agent',seq:COMMON.concat(BOOK),steps:['The diner picks a restaurant and sends party size, date, time and email in one message.','Booking checks the time first: hours, the 90-day window, last seating.','It identifies the diner by email and shows the booking details.','It creates the reservation only after a yes, and gives the reservation ID.']},
+    {q:'Change my reservation',o:'agent',seq:COMMON.concat(BOOK),steps:['The diner gives only the reservation ID.','Booking looks it up and shows the change.','It waits for a yes.','It updates the reservation and confirms.']},
+    {q:'Book with a nut allergy',o:'agent',seq:COMMON.concat(BOOK),steps:['The diner books and mentions a nut allergy.','Booking saves it as a special request, in the diner’s own words.','It reminds the diner to tell their host and promises nothing about the kitchen.','No handoff is needed.']},
+    {q:'Ask about parking or hours',o:'agent',seq:COMMON.concat(DINE),steps:['The diner asks about hours or parking.','The orchestrator routes to FAQ.','A check that runs without the model confirms the restaurant.','It answers from the facts on file, or from the Data 360 library.']},
+    {q:'Ask a policy question',o:'agent',seq:COMMON.concat(DINE),steps:['The diner asks about a policy.','FAQ checks the CRM facts, then the policy library.','If the answer is not on file, it says so, gives the restaurant’s phone number and offers a person.']},
+    {q:'Guarantee no cross-contact',o:'human',seq:COMMON.concat(ESCP),steps:['The diner asks the agent to guarantee no nut cross-contact.','The orchestrator sends this straight to Escalation.','The agent says it cannot guarantee it and hands off.','A person takes over through Omni-Channel.']},
+    {q:'ID not found three times',o:'human',seq:COMMON.concat(['e_orch_booking','booking','e_booking_d','d_booking','e_h_booking']).concat(ESCP.slice(1)),steps:['The diner gives reservation IDs that match nothing.','Booking never says which detail was wrong.','After the third miss it hands off to Escalation.','A person takes over.']},
+    {q:'Someone else’s reservation',o:'decline',seq:COMMON.concat(['e_orch_booking','booking','e_booking_d','d_booking']),steps:['The diner asks about a friend’s reservation.','Booking refuses and shares nothing about it.','It offers to help with the diner’s own.']},
+    {q:'Off-topic or prompt injection',o:'decline',seq:COMMON.concat(['e_orch_scope','scope']),steps:['The diner asks something unrelated, or tries to override the agent’s instructions.','The platform guardrails and the orchestrator give one fixed reply.','It offers reservation help or a person.']}
   ];
   var COLORS={agent:['var(--ready)','var(--ready-soft)','Agent handles it'],human:['var(--cobalt)','var(--cobalt-soft)','Human takes over'],decline:['var(--risk)','var(--risk-soft)','Agent declines']};
   var flowCap=$('flowCap'), activeFlow=-1, travelRAF=null, packet=null;
@@ -850,7 +902,7 @@ const CONFIG = {
 
   /* ---------- IDE excerpt ---------- */
   var CODE={
-    'Cancel gate':'offer_alternative: @utils.setVariables\n    description: "Record that you offered to move the reservation..."\n    set @variables.cancel_offer_made = True\ncancel_reservation: @actions.cancel_reservation\n    with membershipId = @variables.membership_id\n    with reservationId = @variables.reservation_id\n    available when @variables.reservation_verified == True\n    available when @variables.cancel_offer_made == True',
+    'Cancel gate':'offer_alternative: @utils.setVariables\n    description: "Record that you offered to move the reservation..."\n    set @variables.cancel_offer_made = True\ncancel_reservation: @actions.cancel_reservation\n    with membershipId = @variables.res_membership_id\n    with reservationId = @variables.reservation_id\n    available when @variables.reservation_verified == True\n    available when @variables.cancel_offer_made == True',
     'Dining pre-check':'before_reasoning:\n    if @variables.restaurant_id == "":\n        set @variables.active_area = ""\n        transition to @subagent.orchestrator\n    else if @variables.restaurant_validated == False:\n        run @actions.validate_restaurant_context\n            with restaurantId = @variables.restaurant_id\n            set @variables.restaurant_validated = @outputs.found'
   };
   function hi(src){
@@ -873,7 +925,7 @@ const CONFIG = {
   ['Security','Testing'].forEach(function(k,i){ var b=document.createElement('button'); b.textContent=k; b.setAttribute('aria-pressed',i===0?'true':'false');
     b.addEventListener('click',function(){ Array.prototype.forEach.call(stSeg.children,function(x){x.setAttribute('aria-pressed',x===b?'true':'false');}); stSec.hidden=i!==0; stTest.hidden=i!==1; }); stSeg.appendChild(b); });
   var LAYERS=[
-    {id:'identity',name:'Identity and channel',what:'A signed-in MIAW session. Changes need the last name and reservation ID. Production adds MIAW user verification and a one-time code.',proof:'Wrong-details and other-diner test cases.',stops:['unauth']},
+    {id:'identity',name:'Identity and channel',what:'A signed-in MIAW session supplies a verified contact, so the agent asks nothing. Guests are identified by email; production adds a one-time code. A reservation is found by its ID and shown only to the diner it belongs to.',proof:'Other-diner and unknown-ID test cases.',stops:['unauth']},
     {id:'input',name:'Input defenses',what:'Trust Layer prompt injection and toxicity detection (both beta), plus Agent Script refusing off-topic requests.',proof:'Adversarial suite.',stops:['leak','bypass']},
     {id:'mask',name:'Data masking',what:'The Trust Layer masks personal data before it reaches the model, and prompt templates grounded in CRM are masked automatically.',proof:'Trust Layer settings screenshot [add]; audit trail [confirm enabled].',stops:['unauth']},
     {id:'least',name:'Least privilege',what:'A dedicated agent user with a permission set and field-level security. Every reservation action is scoped to the signed-in diner.',proof:'Permission set and object security shown in the org.',stops:['unauth','bypass']},
@@ -902,7 +954,7 @@ const CONFIG = {
     var cls=known?(pct>=r.target?'':(pct>=r.target-10?'warn':'bad')):'';
     var row=document.createElement('div'); row.className='bar2';
     row.innerHTML='<div>'+esc(r.key)+'</div><div class="track"><div class="fill '+cls+'" style="width:'+pct+'%"></div></div><div class="small">'+(known?(r.passed+' of '+r.total+' · '+pct+'%'):'to add')+'</div>'; barsEl.appendChild(row); });
-  $('overall').textContent=tt?('Overall '+Math.round(tp/tt*100)+'% ('+tp+' of '+tt+'). Targets: 90% overall, 100% on guardrail and adversarial cases.'):'Targets: 90% overall, 100% on guardrail and adversarial cases.';
+  $('overall').textContent=tt?('Overall '+Math.round(tp/tt*100)+'% ('+tp+' of '+tt+') on the latest run. Target before the pilot: 90% overall.'):'Target before the pilot: 90% overall.';
   $('caught').innerHTML=CONFIG.caught.map(function(c){ return '<div class="card"><span class="pill '+c.status+'">'+(c.status==='ready'?'Fixed':'Fix in progress')+'</span><div style="margin-top:6px"><b>'+esc(c.title)+'</b></div><div class="small sub">'+esc(c.fix)+'</div></div>'; }).join('');
 
   /* ---------- ROI charts ---------- */
@@ -942,7 +994,7 @@ const CONFIG = {
 
   /* ---------- roadmap dial ---------- */
   var PH=[
-    {t:'10% of traffic, one market, kill switch ready',w:'Watch: containment, grounding errors, escalation summaries.',a:'Advance when there are no invented answers or links, every escalation carries a Case summary, and containment is trending toward 65%.'},
+    {t:'10% of traffic, one market, kill switch ready',w:'Watch: containment, grounding errors, handoffs reaching a person. Support leads are briefed before launch and review handoffs weekly.',a:'Advance when there are no invented answers or links, every escalation carries a Case summary, and containment is trending toward 65%.'},
     {t:'50% of traffic',w:'Watch: containment, first-contact resolution, satisfaction against the human channel, cost per resolved contact.',a:'Advance when containment is at least 65% and satisfaction is at least the human baseline.'},
     {t:'100% of traffic, with a weekly improvement loop',w:'Watch: the same measures, plus Flex Credit use against budget.',a:'Each week: review failed sessions, fix, add the case to regression, rerun Testing Center.'}
   ];
@@ -954,15 +1006,17 @@ const CONFIG = {
   $('openList').innerHTML=CONFIG.openItems.map(function(o){ return '<div style="padding:4px 0"><span class="pill '+o.status+'">'+(o.status==='ready'?'Done':'Open')+'</span> '+esc(o.item)+' <span class="sub small">· '+esc(o.owner)+'</span></div>'; }).join('');
   $('people').innerHTML=CONFIG.team.map(function(p){ return '<div class="card"><b>'+esc(p.name)+'</b><div class="small sub">'+esc(p.title)+'</div><div class="small" style="margin-top:6px"><span class="u">Speaks on:</span> '+esc(p.speaks)+'</div><ul class="small">'+p.built.map(function(b){return '<li>'+esc(b)+'</li>';}).join('')+'</ul></div>'; }).join('');
   var QA=[
-    ['Where do your numbers come from?','They are stated assumptions, each marked with an asterisk, and every driver can be changed. In UAT we replace each with platform data.'],
-    ['What stops it making things up?','It answers only from CRM facts or cited library documents, and says so when neither has the answer.'],
-    ['What if someone guesses a reservation ID?','A change needs the last name and the ID, scoped to the signed-in diner, and two failures route to a person. Production adds user verification and a one-time code.'],
+    ['Where do your numbers come from?','They are stated assumptions, each marked with an asterisk and listed on the assumptions slide. Every driver can be changed, and in the pilot each becomes a measured value.'],
+    ['Is the authentication real?','A signed-in chat session supplies a verified contact and the agent asks nothing. For guests, email lookup is the fallback; production adds a one-time code, and the identity action already has the place for it.'],
+    ['What if someone guesses a reservation ID?','In the demo the IDs are sequential, which is why production uses verified sessions and non-guessable IDs. A reservation is only shown to the diner it belongs to, and three failures route to a person.'],
+    ['Where is Data 360?','The restaurant policy library is a Data 360 Data Library with a retriever that feeds a grounded prompt template. Hours and phone come from CRM. [Say this only once the library content is verified.]'],
+    ['What stops it making things up?','It answers only from CRM facts or cited library documents, names only restaurants a search returned, and says so when it has no answer. We found and fixed two invention bugs in testing.'],
     ['Why Flex Credits?','Volume is unknown before launch, so cost should follow usage. Outcome-based pricing fits after a quarter above 80% first-contact resolution.'],
     ['What happens at ten times the volume?','Cost scales with actions, and the actions are stateless. We would validate limits and pricing before scaling, which is why rollout is phased.'],
     ['How do you handle data governance?','Personal data is masked before the model, access is least-privilege, retention is zero with the model provider, and the audit trail records actions. The demo uses demo data only.'],
+    ['Splunk?','[Match the true status.] If not configured: audit and trace come from event monitoring, and a Splunk export is in the production plan.'],
     ['Why one agent and not several?','Subagents share state, one trace shows everything, and guardrails live in one place. Specialist agents are a scale-out option later.'],
     ['How will you track performance?','Containment, first-contact resolution, response time, grounding, save rate and cost per resolved contact, reviewed weekly, with failed sessions turned into regression tests.'],
-    ['What are the industry trends?','Diners expect an immediate answer in the channel where they booked, and agents handling routine work with people on exceptions is the direction. We would bring sourced figures before using that claim externally.'],
     ['What would you never automate?','Refunds, fee waivers, allergen guarantees, and legal or medical advice. Those always go to a person.']
   ];
   $('qaList').innerHTML=QA.map(function(q){ return '<details class="q card"><summary>'+esc(q[0])+'</summary><p>'+esc(q[1])+'</p></details>'; }).join('');
