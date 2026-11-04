@@ -200,7 +200,7 @@
       min-height: 0;
       display: grid;
       grid-template-columns: 5.25rem minmax(0, 1fr);
-      align-items: center;
+      align-items: stretch;
       gap: 0.8rem;
       padding: 0.75rem 0.9rem;
       border-left: 4px solid #90D0FE;
@@ -222,55 +222,114 @@
       #slide-5 .assumptions-split,
       #slide-5 .assumption-side.curtain { transition: none; }
     }
-    #slide-6 { --ink: #fff; --sub: #b9b9b9; --ready: #2E844A; --cobalt: #90D0FE; --risk: #FF538A; --pc: #90D0FE; --pcs: #1a2744; }
-    #slide-6 h1 { font-size: clamp(1.25rem, 2vw, 1.7rem); margin-bottom: 0.35rem; }
-    #slide-6 .arch-lede { margin: 0 0 0.55rem; color: #cfcfcf; font-size: 0.9rem; }
-    #slide-6 .cgs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.45rem 0.8rem; }
-    #slide-6 .cgl { display: block; margin-bottom: 0.25rem; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; color: #9a9a9a; }
-    #slide-6 .row { display: flex; flex-wrap: wrap; gap: 0.3rem; }
-    #slide-6 .sc {
-      width: auto; height: auto; border-radius: 6px; padding: 0.28rem 0.5rem;
-      font: inherit; font-size: 0.75rem; color: #fff; background: #1c1c1c;
-      border: 1px solid #333; border-left-width: 4px; cursor: pointer; text-align: left;
+    #slide-6 { --ready: #2E844A; --risk: #FF538A; --decline: #DD7A01; --pc: #90D0FE; --pcs: #1a2744; }
+    #slide-6.dense { padding: 2.2vh 2.5vw 1.2vh; gap: 0.45rem; }
+    #slide-6 .num { font-size: 14pt; }
+    #slide-6 h1 { font-size: clamp(28pt, 3vw, 38pt); margin-bottom: 0.15rem; }
+    #slide-6 .system-layout {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(210px,.72fr) minmax(520px,1.7fr) minmax(260px,.88fr);
+      align-items: center;
+      gap: 0.75rem;
     }
-    #slide-6 .sc.agent { border-left-color: var(--ready); }
-    #slide-6 .sc.human { border-left-color: var(--cobalt); }
-    #slide-6 .sc.decline { border-left-color: var(--risk); }
-    #slide-6 .sc[aria-pressed="true"] { background: #1a2744; border-color: #90D0FE; }
-    #slide-6 .dgrid { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(220px, 0.85fr); gap: 0.7rem; }
-    #slide-6 .diagram { background: #161616; border-radius: 12px; padding: 0.35rem 0.4rem 0.2rem; min-height: 0; }
-    #slide-6 .diagram svg { width: 100%; height: auto; max-height: 48vh; display: block; }
-    #slide-6 .legend { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 0.35rem; color: #9a9a9a; font-size: 0.72rem; }
-    #slide-6 .legend i { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 2px; margin-right: 0.3rem; vertical-align: -1px; }
-    #slide-6 .side { display: flex; flex-direction: column; gap: 0.5rem; min-height: 0; }
-    #slide-6 .side .card { background: #1c1c1c; border-radius: 12px; padding: 0.7rem 0.8rem; overflow: auto; }
-    #slide-6 .side h3 { margin: 0 0 0.3rem; font-size: 0.95rem; }
-    #slide-6 .side p, #slide-6 .side li, #slide-6 .side dd { margin: 0; color: #cfcfcf; font-size: 0.8rem; line-height: 1.35; }
-    #slide-6 .side ol { margin: 0.3rem 0 0; padding-left: 1.1rem; }
-    #slide-6 .side dt { margin-top: 0.45rem; font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; color: #9a9a9a; }
-    #slide-6 .pill { display: inline-block; font-size: 0.68rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.1rem 0.4rem; border-radius: 99px; }
-    #slide-6 .pill.agent { color: #d8ffe8; background: rgba(46,132,74,.35); }
-    #slide-6 .pill.human { color: #d6e4ff; background: #1a2744; }
-    #slide-6 .pill.decline { color: #ffd0e0; background: rgba(255,83,138,.2); }
-    #slide-6 .nd { cursor: pointer; }
+    #slide-6 .path-panel,
+    #slide-6 .context-panel {
+      align-self: stretch;
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      padding: 0.85rem;
+      border-radius: 12px;
+      background: #181818;
+      overflow: auto;
+    }
+    #slide-6 .panel-label {
+      margin: 0 0 0.55rem;
+      color: #90D0FE;
+      font-size: 14pt;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    #slide-6 .path-list { display: flex; flex-direction: column; gap: 0.45rem; }
+    #slide-6 .path-btn {
+      width: 100%;
+      min-height: 2.65rem;
+      border: 1px solid #3E3E3C;
+      border-left-width: 4px;
+      border-radius: 8px;
+      padding: 0.5rem 0.65rem;
+      color: #fff;
+      background: #1c1c1c;
+      font: inherit;
+      font-size: 14pt;
+      line-height: 1.3;
+      text-align: left;
+      cursor: pointer;
+    }
+    #slide-6 .path-btn.agent { border-left-color: var(--ready); }
+    #slide-6 .path-btn.human { border-left-color: var(--risk); }
+    #slide-6 .path-btn.decline { border-left-color: var(--decline); }
+    #slide-6 .path-btn[aria-pressed="true"] { background: #001E5B; border-color: #90D0FE; }
+    #slide-6 .diagram-panel {
+      position: relative;
+      min-height: 0;
+      width: 100%;
+      height: auto;
+      align-self: stretch;
+      border-radius: 12px;
+      background: #161616;
+      overflow: hidden;
+    }
+    #slide-6 .diagram { width: 100%; height: 100%; display: flex; align-items: center; padding: 0.25rem; }
+    #slide-6 .diagram svg { width: 100%; height: 100%; display: block; }
+    #slide-6 .context-panel h2 { margin: 0 0 0.55rem; font-size: 18pt; line-height: 1.2; }
+    #slide-6 .context-body { color: #cfcfcf; font-size: 14pt; line-height: 1.4; }
+    #slide-6 .context-body p, #slide-6 .context-body dl { margin: 0.45rem 0 0; }
+    #slide-6 .context-body dt { margin-top: 0.65rem; color: #90D0FE; font-size: 14pt; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+    #slide-6 .context-body dd { margin: 0.15rem 0 0; }
+    #slide-6 .trace-list { list-style: none; margin: 0.55rem 0 0; padding: 0; }
+    #slide-6 .trace-step { position: relative; margin-left: 0.45rem; padding: 0 0 0.75rem 1.25rem; color: #706E6B; }
+    #slide-6 .trace-step::before {
+      content: ""; position: absolute; left: 0; top: 0.2rem; width: 0.55rem; height: 0.55rem;
+      border: 2px solid #706E6B; border-radius: 50%; background: #181818;
+    }
+    #slide-6 .trace-step:not(:last-child)::after {
+      content: ""; position: absolute; left: 0.3rem; top: 0.85rem; bottom: 0; width: 2px; background: #3E3E3C;
+    }
+    #slide-6 .trace-step.active { color: #fff; }
+    #slide-6 .trace-step.active::before { border-color: var(--pc); background: var(--pc); }
+    #slide-6 .trace-step.done { color: #cfcfcf; }
+    #slide-6 .trace-step.done::before { border-color: var(--pc); background: #181818; }
+    #slide-6 .pill { display: inline-block; font-size: 14pt; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.1rem 0.4rem; border-radius: 99px; }
+    #slide-6 .pill.agent { color: #fff; background: rgba(46,132,74,.35); }
+    #slide-6 .pill.human { color: #fff; background: rgba(255,83,138,.25); }
+    #slide-6 .pill.decline { color: #fff; background: rgba(221,122,1,.3); }
+    #slide-6 .nd { cursor: pointer; transition: opacity 0.2s ease; }
     #slide-6 .nd rect.bx { stroke-width: 1.5; }
-    #slide-6 .nd .t { font: 700 14px system-ui, sans-serif; fill: #fff; }
-    #slide-6 .nd .s, #slide-6 .nd .dl, #slide-6 .hl { font: 12px system-ui, sans-serif; fill: #b9b9b9; }
-    #slide-6 .nd.k-entry rect.bx { fill: #1a1a1a; stroke: #444; }
-    #slide-6 .nd.k-orch rect.bx, #slide-6 .nd.k-sub rect.bx { fill: #162033; stroke: #90D0FE; }
-    #slide-6 .nd.k-act rect.bx { fill: #222; stroke: #555; }
+    #slide-6 .nd .t { font: 700 19px system-ui, sans-serif; fill: #fff; }
+    #slide-6 .nd .s { font: 19px system-ui, sans-serif; fill: #b9b9b9; }
+    #slide-6 .nd.k-entry rect.bx { fill: #181818; stroke: #706E6B; }
+    #slide-6 .nd.k-orch rect.bx, #slide-6 .nd.k-sub rect.bx { fill: #001E5B; stroke: #90D0FE; }
+    #slide-6 .nd.k-act rect.bx { fill: #181818; stroke: #706E6B; }
     #slide-6 .nd.k-out rect.bx { fill: rgba(46,132,74,.28); stroke: #2E844A; }
-    #slide-6 .nd.k-road rect.bx { fill: #1a1a1a; stroke: #777; stroke-dasharray: 5 4; }
-    #slide-6 .nd.k-dec polygon { fill: #222; stroke: #90D0FE; stroke-width: 1.5; }
+    #slide-6 .nd.k-esc rect.bx { fill: rgba(255,83,138,.18); stroke: #FF538A; stroke-width: 2.5; }
     #slide-6 .shield { fill: none; stroke: #90D0FE; stroke-width: 1.6; }
-    #slide-6 .ed { fill: none; stroke: #8a8a8a; stroke-width: 2; opacity: .55; }
-    #slide-6 .ed.dash { stroke-dasharray: 6 5; }
-    #slide-6 .ah { fill: #8a8a8a; opacity: .55; }
-    #slide-6 svg.sel .nd:not(.lit) { opacity: .28; }
-    #slide-6 svg.sel .ed:not(.lit), #slide-6 svg.sel .ah:not(.lit) { opacity: .15; }
-    #slide-6 .nd.lit rect.bx, #slide-6 .nd.lit.k-dec polygon { fill: var(--pcs); stroke: var(--pc); stroke-width: 3; }
+    #slide-6 .ed { fill: none; stroke: #706E6B; stroke-width: 2.2; opacity: .7; }
+    #slide-6 .ed.escalate { stroke: #FF538A; stroke-width: 2.8; opacity: .9; }
+    #slide-6 .ah { fill: #706E6B; opacity: .7; }
+    #slide-6 .ah.escalate { fill: #FF538A; opacity: .9; }
+    #slide-6 svg.sel .nd:not(.lit) { opacity: .24; }
+    #slide-6 svg.sel .ed:not(.lit), #slide-6 svg.sel .ah:not(.lit) { opacity: .12; }
+    #slide-6 .nd.lit rect.bx { fill: var(--pcs); stroke: var(--pc); stroke-width: 3; }
+    #slide-6 .nd.lit.k-esc rect.bx { fill: rgba(255,83,138,.25); stroke: #FF538A; }
+    #slide-6 .nd.picked rect.bx { stroke: #fff; stroke-width: 3; }
     #slide-6 .ed.lit { stroke: var(--pc); stroke-width: 3.5; opacity: 1; }
+    #slide-6 .ed.escalate.lit { stroke: #FF538A; }
     #slide-6 .ah.lit { fill: var(--pc); opacity: 1; }
+    #slide-6 .ah.escalate.lit { fill: #FF538A; }
     #slide-6 .packet { fill: var(--pc); stroke: #fff; stroke-width: 2; }
     #slide-3.dense {
       justify-content: center;
@@ -898,23 +957,20 @@
   </section>
   <section id="slide-6" class="dense">
     <p class="num">Slide 7</p>
-    <h1>Every request follows one of three paths, and every path has a guardrail.</h1>
-    <p class="arch-lede">Pick a diner request and watch it travel. Select any box for detail.</p>
-    <div class="cgs" id="cgs"></div>
-    <div class="dgrid">
-      <div>
-        <div class="diagram"><svg id="flow" viewBox="0 0 1000 560" role="group" aria-label="Agent architecture and logic flow"></svg></div>
-        <div class="legend">
-          <span><i style="background:#2E844A"></i>Agent handles it</span>
-          <span><i style="background:#90D0FE"></i>Human takes over</span>
-          <span><i style="background:#FF538A"></i>Agent declines</span>
-          <span>Shield: guardrail. Diamond: decision.</span>
-        </div>
+    <h1>Agent Architecture</h1>
+    <div class="system-layout">
+      <aside class="path-panel" aria-label="Example user paths">
+        <p class="panel-label">What users might say</p>
+        <div class="path-list" id="pathList"></div>
+      </aside>
+      <div class="diagram-panel" id="diagramPanel">
+        <div class="diagram"><svg id="flow" viewBox="0 0 1000 650" role="group" aria-label="Agent architecture and logic flow"></svg></div>
       </div>
-      <div class="side">
-        <div class="card" id="flowCap" aria-live="polite"></div>
-        <div class="card detail" id="detail" aria-live="polite"></div>
-      </div>
+      <aside class="context-panel" id="contextPanel" aria-live="polite">
+        <p class="panel-label" id="contextLabel" hidden></p>
+        <h2 id="contextTitle">Select a path or diagram box</h2>
+        <div class="context-body" id="contextBody"></div>
+      </aside>
     </div>
   </section>
   <section id="slide-7">
@@ -1013,7 +1069,7 @@
       return Math.max(0, Math.min(slides.length - 1, n - 1));
     }
     show(savedSlide());
-    initArchitecture();
+    initArchitectureV2();
     document.querySelectorAll("#slide-4 .find-value").forEach((btn) => {
       btn.addEventListener("click", () => {
         const willOpen = !btn.classList.contains("open");
@@ -1028,7 +1084,226 @@
       });
     });
 
-    function initArchitecture() {
+    function initArchitectureV2() {
+      const NS = "http://www.w3.org/2000/svg";
+      const svg = document.getElementById("flow");
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const nodes = [
+        {id:"user",x:80,y:20,w:220,h:85,k:"entry",t:"User",lines:["MIAW chat"]},
+        {id:"orch",x:400,y:20,w:220,h:85,k:"orch",t:"Orchestrator",lines:["identifies intent and routes"],g:1},
+        {id:"reservation",x:90,y:150,w:350,h:90,k:"sub",t:"Reservation subagent",lines:["create, retrieve, modify, cancel"],g:1},
+        {id:"faq",x:560,y:150,w:350,h:90,k:"sub",t:"FAQ subagent",lines:["grounded restaurant answers"],g:1},
+        {id:"res_tool",x:90,y:300,w:350,h:110,k:"act",t:"Apex + MuleSoft Omni-Gateway",lines:["CRUD with OpenTable API","Call restaurant for special requests"]},
+        {id:"faq_tool",x:560,y:300,w:350,h:110,k:"act",t:"CRM + Data 360 RAG",lines:["Read access only","Call restaurant if answer is unavailable"]},
+        {id:"res_out",x:90,y:455,w:350,h:80,k:"out",t:"Reservation result",lines:["confirmed from the API response"]},
+        {id:"faq_out",x:560,y:455,w:350,h:80,k:"out",t:"Grounded answer",lines:["source-backed or an honest fallback"]},
+        {id:"escalation",x:280,y:550,w:440,h:85,k:"esc",t:"Escalation to human",lines:["Salesforce Omni-Channel Escalation + Case"]}
+      ];
+      const edges = [
+        {id:"e_user_orch",d:"M300,62 L400,62",ah:[400,62,"r"]},
+        {id:"e_orch_res",d:"M510,105 L510,120 L265,120 L265,150",ah:[265,150,"d"]},
+        {id:"e_orch_faq",d:"M510,105 L510,120 L735,120 L735,150",ah:[735,150,"d"]},
+        {id:"e_orch_esc",d:"M510,105 L510,550",ah:[510,550,"d"],escalate:1},
+        {id:"e_res_tool",d:"M265,240 L265,300",ah:[265,300,"d"]},
+        {id:"e_faq_tool",d:"M735,240 L735,300",ah:[735,300,"d"]},
+        {id:"e_res_out",d:"M265,410 L265,455",ah:[265,455,"d"]},
+        {id:"e_faq_out",d:"M735,410 L735,455",ah:[735,455,"d"]},
+        {id:"e_res_esc",d:"M440,355 L470,355 L470,540 L430,540 L430,550",ah:[430,550,"d"],escalate:1},
+        {id:"e_faq_esc",d:"M560,355 L530,355 L530,540 L570,540 L570,550",ah:[570,550,"d"],escalate:1}
+      ];
+      const details = {
+        user:{title:"User in MIAW chat",job:"A signed-in user starts from OpenTable web or mobile messaging.",tools:["Messaging for In-App and Web (MIAW)"],guard:"Production identity uses MIAW user verification."},
+        orch:{title:"Orchestrator",job:"Identifies the restaurant and intent, then routes to the correct specialist.",tools:["Diner context","Restaurant lookup","Intent routing"],guard:"It does not perform reservation writes or answer restaurant questions itself."},
+        reservation:{title:"Reservation subagent",job:"Owns reservation creation, retrieval, modification, and cancellation.",tools:["Reservation lookup","Create reservation","Modify reservation","Cancel reservation"],guard:"Identity, confirmation, cancellation-save, and two-strike verification rules remain deterministic."},
+        faq:{title:"FAQ subagent",job:"Answers restaurant questions only from approved CRM and Data 360 sources.",tools:["Restaurant context validation","Scoped knowledge retrieval"],guard:"Read access only. If the answer is unavailable, it directs the user to call the restaurant."},
+        res_tool:{title:"Reservation integration",job:"Apex invokes MuleSoft Omni-Gateway, which exposes CRUD operations against the OpenTable API.",tools:["Apex actions","MuleSoft Omni-Gateway","OpenTable API"],guard:"The agent uses only returned API data and directs special requests to the restaurant."},
+        faq_tool:{title:"FAQ retrieval",job:"Structured CRM facts and restaurant-scoped Data 360 RAG provide grounded answers.",tools:["CRM read access","Data 360 retriever","Restaurant-scoped RAG"],guard:"No writes and no guessing. Missing answers direct the user to call the restaurant."},
+        res_out:{title:"Reservation result",job:"The user receives the exact status and details returned by the OpenTable API.",tools:[],guard:"The agent confirms success only after the operation succeeds."},
+        faq_out:{title:"Grounded answer",job:"The user receives a source-backed answer or a clear statement that the information is unavailable.",tools:[],guard:"The fallback provides the restaurant phone path."},
+        escalation:{title:"Escalation to human",job:"A context-rich Case is created before Salesforce Omni-Channel transfers the conversation.",tools:["Salesforce Case","Omni-Channel escalation"],guard:"Used for human requests, safety concerns, exceptions, and verification lockouts."}
+      };
+      const flows = [
+        {q:"Change my reservation",say:"I need to change my reservation.",o:"agent",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool","e_res_out","res_out"],steps:["User request enters MIAW.","Orchestrator identifies a reservation change.","Reservation subagent verifies and prepares the update.","Apex calls MuleSoft Omni-Gateway and the OpenTable API.","Confirmed API result returns to the user."]},
+        {q:"Book with a nut allergy",say:"Can I book and add a nut allergy note?",o:"agent",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool","e_res_out","res_out"],steps:["User request enters MIAW.","Orchestrator routes to Reservation.","Reservation subagent saves the allergy as a note.","OpenTable API creates the reservation.","User is told to call the restaurant for special handling."]},
+        {q:"Ask about parking or hours",say:"Where can I park, and when are you open?",o:"agent",seq:["user","e_user_orch","orch","e_orch_faq","faq","e_faq_tool","faq_tool","e_faq_out","faq_out"],steps:["User question enters MIAW.","Orchestrator routes to FAQ.","FAQ subagent reads CRM and restaurant-scoped RAG.","A grounded answer returns to the user."]},
+        {q:"Ask a policy question",say:"What is this restaurant's cancellation policy?",o:"agent",seq:["user","e_user_orch","orch","e_orch_faq","faq","e_faq_tool","faq_tool","e_faq_out","faq_out"],steps:["User question enters MIAW.","Orchestrator routes to FAQ.","FAQ searches approved read-only sources.","It answers with grounding or directs the user to call."]},
+        {q:"Ask for a person",say:"Can I talk to a person?",o:"human",seq:["user","e_user_orch","orch","e_orch_esc","escalation"],steps:["User asks for a person.","Orchestrator routes directly to escalation.","A Case captures the conversation context.","Omni-Channel transfers to a human."]},
+        {q:"Guarantee no cross-contact",say:"Can you guarantee there will be no cross-contact?",o:"human",seq:["user","e_user_orch","orch","e_orch_faq","faq","e_faq_tool","faq_tool","e_faq_esc","escalation"],steps:["Safety question enters MIAW.","FAQ refuses to make a guarantee.","A Case captures the safety context.","Omni-Channel transfers to a human."]},
+        {q:"Wrong details twice",say:"I entered the wrong reservation details twice.",o:"human",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool","e_res_esc","escalation"],steps:["Reservation verification fails twice.","No private details are revealed.","A Case records the verification lockout.","Omni-Channel transfers to a human."]},
+        {q:"Someone else's reservation",say:"Can you show me someone else's reservation?",o:"decline",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool"],steps:["Request enters MIAW.","Reservation subagent cannot verify ownership.","No reservation data is exposed.","The request is declined."]}
+      ];
+      const colors = {
+        agent:["#2E844A","rgba(46,132,74,.35)","Agent handles it"],
+        human:["#FF538A","rgba(255,83,138,.25)","Human takes over"],
+        decline:["#DD7A01","rgba(221,122,1,.3)","Agent declines"]
+      };
+      function mk(tag, attrs, text) {
+        const el = document.createElementNS(NS, tag);
+        Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
+        if (text !== undefined) el.textContent = text;
+        return el;
+      }
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"]/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[char]));
+      }
+      const edgeEls = {};
+      const nodeEls = {};
+      edges.forEach((edge) => {
+        const className = "ed" + (edge.escalate ? " escalate" : "");
+        const path = mk("path", {d:edge.d,class:className,id:edge.id});
+        svg.appendChild(path);
+        edgeEls[edge.id] = path;
+        if (edge.ah) {
+          const [x,y,direction] = edge.ah;
+          const points = direction === "r"
+            ? [x,y,x-9,y-5,x-9,y+5]
+            : [x,y,x-5,y-9,x+5,y-9];
+          const arrow = mk("polygon", {points:points.join(" "),class:"ah" + (edge.escalate ? " escalate" : ""),id:edge.id+"_ah"});
+          svg.appendChild(arrow);
+          path._ah = arrow;
+        }
+      });
+      nodes.forEach((node) => {
+        const group = mk("g", {class:"nd k-"+node.k,id:"n-"+node.id,tabindex:"0",role:"button","aria-label":"Show details for "+node.t});
+        group.appendChild(mk("rect", {class:"bx",x:node.x,y:node.y,width:node.w,height:node.h,rx:10}));
+        group.appendChild(mk("text", {x:node.x+16,y:node.y+30,class:"t"}, node.t));
+        (node.lines || []).forEach((line,index) => {
+          group.appendChild(mk("text", {x:node.x+16,y:node.y+53+(index*19),class:"s"}, line));
+        });
+        if (node.g) {
+          group.appendChild(mk("path", {class:"shield",transform:"translate("+(node.x+node.w-28)+","+(node.y+10)+") scale(.85)",d:"M9 0 L18 3.5 V10 C18 15 14 18.5 9 20 C4 18.5 0 15 0 10 V3.5 Z"}));
+        }
+        svg.appendChild(group);
+        nodeEls[node.id] = group;
+      });
+
+      const contextLabel = document.getElementById("contextLabel");
+      const contextTitle = document.getElementById("contextTitle");
+      const contextBody = document.getElementById("contextBody");
+      function showNodeDetail(id) {
+        const info = details[id];
+        if (!info) return;
+        stopTravel();
+        Object.values(nodeEls).forEach((node) => node.classList.remove("picked"));
+        nodeEls[id].classList.add("picked");
+        contextLabel.hidden = false;
+        contextLabel.textContent = "System component";
+        contextTitle.textContent = info.title;
+        contextBody.innerHTML = "<p>"+escapeHtml(info.job)+"</p>"+
+          (info.tools.length ? "<dl><dt>Tools called</dt><dd>"+info.tools.map(escapeHtml).join(" · ")+"</dd></dl>" : "")+
+          "<dl><dt>Guardrail</dt><dd>"+escapeHtml(info.guard)+"</dd></dl>";
+      }
+      Object.entries(nodeEls).forEach(([id,node]) => {
+        node.addEventListener("click", () => showNodeDetail(id));
+        node.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            showNodeDetail(id);
+          }
+        });
+      });
+      const pathList = document.getElementById("pathList");
+      let activeFlow = -1;
+      let travelRAF = null;
+      let packet = null;
+      function stopTravel() {
+        if (travelRAF) cancelAnimationFrame(travelRAF);
+        travelRAF = null;
+        if (packet && packet.parentNode) packet.parentNode.removeChild(packet);
+        packet = null;
+      }
+      function clearFlow() {
+        stopTravel();
+        svg.classList.remove("sel");
+        Object.values(nodeEls).forEach((node) => node.classList.remove("lit"));
+        Object.values(edgeEls).forEach((edge) => {
+          edge.classList.remove("lit");
+          if (edge._ah) edge._ah.classList.remove("lit");
+        });
+      }
+      function travel(litEdges,onProgress) {
+        if (reduce || !litEdges.length || !litEdges[0].getTotalLength) {
+          onProgress(1);
+          return;
+        }
+        const lengths = litEdges.map((edge) => edge.getTotalLength());
+        const total = lengths.reduce((sum,length) => sum+length,0);
+        const duration = Math.max(1400,total*3.2);
+        let started = null;
+        packet = mk("circle", {r:7,class:"packet"});
+        svg.appendChild(packet);
+        function step(timestamp) {
+          if (started === null) started = timestamp;
+          const progress = Math.min(1,(timestamp-started)/duration);
+          let distance = progress*total;
+          let index = 0;
+          while (index < lengths.length-1 && distance > lengths[index]) {
+            distance -= lengths[index];
+            index++;
+          }
+          const point = litEdges[index].getPointAtLength(Math.max(0,Math.min(lengths[index],distance)));
+          packet.setAttribute("cx",point.x);
+          packet.setAttribute("cy",point.y);
+          onProgress(progress);
+          if (progress < 1) travelRAF = requestAnimationFrame(step);
+          else travelRAF = null;
+        }
+        travelRAF = requestAnimationFrame(step);
+      }
+      function renderTrace(flow) {
+        contextLabel.hidden = false;
+        contextLabel.textContent = "Live path trace";
+        contextTitle.textContent = flow.say;
+        contextBody.innerHTML = '<span class="pill '+flow.o+'">'+colors[flow.o][2]+'</span><ol class="trace-list">'+
+          flow.steps.map((step) => '<li class="trace-step">'+escapeHtml(step)+'</li>').join("")+
+          "</ol>";
+        return [...contextBody.querySelectorAll(".trace-step")];
+      }
+      function paintTrace(traceItems,progress) {
+        const activeIndex = Math.min(traceItems.length-1,Math.floor(progress*traceItems.length));
+        traceItems.forEach((item,index) => {
+          item.classList.toggle("done",index < activeIndex || progress === 1);
+          item.classList.toggle("active",progress < 1 && index === activeIndex);
+        });
+      }
+      function runFlow(index) {
+        clearFlow();
+        const flow = flows[index];
+        const color = colors[flow.o];
+        svg.style.setProperty("--pc",color[0]);
+        svg.style.setProperty("--pcs",color[1]);
+        svg.classList.add("sel");
+        Object.values(nodeEls).forEach((node) => node.classList.remove("picked"));
+        const litEdges = [];
+        flow.seq.forEach((id) => {
+          if (nodeEls[id]) nodeEls[id].classList.add("lit");
+          if (edgeEls[id]) {
+            edgeEls[id].classList.add("lit");
+            if (edgeEls[id]._ah) edgeEls[id]._ah.classList.add("lit");
+            litEdges.push(edgeEls[id]);
+          }
+        });
+        const traceItems = renderTrace(flow);
+        paintTrace(traceItems,0);
+        travel(litEdges,(progress) => paintTrace(traceItems,progress));
+      }
+      flows.forEach((flow,index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "path-btn "+flow.o;
+        button.textContent = flow.say;
+        button.setAttribute("aria-pressed","false");
+        button.addEventListener("click", () => {
+          activeFlow = index;
+          pathList.querySelectorAll(".path-btn").forEach((item) => item.setAttribute("aria-pressed","false"));
+          button.setAttribute("aria-pressed","true");
+          runFlow(activeFlow);
+        });
+        pathList.appendChild(button);
+      });
+    }
+
+    function initArchitectureLegacy() {
       const NS = "http://www.w3.org/2000/svg";
       const svg = document.getElementById("flow");
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
