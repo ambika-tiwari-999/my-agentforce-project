@@ -85,7 +85,7 @@
 ### 🖥️ On the Slide (Left first, then right on the next `>`)
 
 - **LEFT — four finding cards in a 2×2 (Visible first).** Headline: **Key Findings.** Subline: 5-city beta, against the targets.
-  1. **Response time — `−25%`.** Average time on common requests. Hours and phone in 5.1 seconds. Menu and parking in 8.1 seconds, down from an 18-minute queue.
+  1. **Agent response latency — `−30%`.** Average latency was 6.6 seconds, down from 9.4 seconds in Concierge AI.
   2. **First-contact resolution — `84%+`.** Above the 80% target, up from 73%, across FAQ and booking.
   3. **Looker to booker — `1 turn`.** FAQ hands off to booking. Every cancel hits the save-offer gate first.
   4. **Safe handoff — `100%`.** Allergy, party of 11+, lockout, and refund requests go to a person.
@@ -104,12 +104,10 @@
 
 > *(Left half — UAT hats on)* *"From here we are in the UAT review. We translated the goals into agent KPIs, and in the 5-city beta the agent hit all four:*
 >
-> 1. **Response Speed (`-25%` Target):** Hours and phone resolve in **5.1 seconds**. Menu and parking questions from Data 360 resolve in **8.1 seconds** — instead of an 18-minute support queue.
+> 1. **Agent Response Latency (`-30%`):** Our average response latency was **6.6 seconds**, down from **9.4 seconds** in Concierge AI.
 > 2. **First-Contact Resolution (`>80%` Target):** The support bot today resolves 73% because it has to punt restaurant-specific questions. Combining FAQ with booking pushed end-to-end resolution past **84%**.
 > 3. **Conversion & Retained Covers:** An FAQ answer can hand off to `booking` in **one turn**, and the 2-step cancel gate offers another time before a table is canceled.
 > 4. **100% Safe Escalation:** Allergies, parties of 11+, lockouts, and refund requests go to a person at OpenTable.*
->
-> *The reason the speed number moved: 40% of questions are just hours and phone, so `before_reasoning` loads them from CRM and makes zero RAG calls."*
 >
 > *(Next `>` — right half)* *"That is what the year is worth, on OpenTable's 572,000 annual Agentforce chats:*
 >
@@ -117,35 +115,30 @@
 > 2. **Saved Covers (`$1.43M/yr`):** Requiring `offer_alternative` before `cancel_reservation`, and saving 10% of cancel attempts, keeps 14,300 reservations — over 57,000 seated diners.
 > 3. **Looker-to-Booker (`$2.25M/yr`) plus 6.8 host-stand FTEs:** FAQ to booking in the same session is $2.25M in booking value, and it takes routine hours and parking calls off restaurant hosts. Together that is **$4.18M a year** and **14.2 FTEs**.*
 >
-> *Licensing is **Salesforce Flex Credits**, with Digital Wallet alerts at 75% and 90%. Hours and phone never make a RAG call, so FAQ credit burn on those questions drops by half at peak dinner hours."*
+> *Licensing is **Salesforce Flex Credits**, with Digital Wallet alerts at 75% and 90%."*
 
 ---
 
 ## Slide 6: Assumptions (How the Mock Data Was Built from Their B2B2C Platform)
 
-### 🖥️ On the Slide (Visual & Minimal — 3 Source-to-Mock Cards)
+> **Advance:** First `>` shows the three OpenTable surfaces as a vertical stack. The next `>` slides in the matching sandbox stand-ins. One more `>` goes to Slide 7. `<` reverses the reveal.
 
-- **Setup line:** No live GuestCenter API in the sandbox. Each mock object stands in for a surface OpenTable already runs.
-- **3 Cards:**
-  1. **B2B — GuestCenter profile → `Restaurant__c` + Data 360**<sup>1</sup>
-     - *Their platform:* A restaurant fills in structured profile fields (hours, phone, address, cuisine) and uploads unstructured menus, parking instructions, dress code, dietary rules, and private-dining notes.
-     - *Our mock:* 5 demo restaurants (Austin, NYC, LA, Chicago, Miami) with those fields on `Restaurant__c`. Menus, parking, and policies chunked in Data 360 by restaurant.
-  2. **B2C — Diner app → `Contact` + `Reservation__c`**<sup>2</sup><sup>3</sup>
-     - *Their platform:* Diners research hours, the menu, and how to get there, then book on the web or in the app, and later change or cancel.<sup>2</sup><sup>3</sup>
-     - *Our mock:* Signed-in diner `MEM-1001` and 30 `Reservation__c` records they can look up, create, change, or cancel.
-  3. **Support — Service Cloud → `Case`**<sup>3</sup>
-     - *Their platform:* Agentforce already opens a Service Cloud case and hands the conversation to a live rep.
-     - *Our mock:* The same handoff, `flow://Route_CLL_Escalations`, with the restaurant and reservation attached.
+### 🖥️ On the Slide (Stacked Source-to-Mock Reveal)
+
+- **LEFT — OpenTable platform (visible first):**
+  1. **B2B:** GuestCenter profile and restaurant content.<sup>1</sup>
+  2. **B2C:** Diner web and app for research, booking, changes, and cancellations.<sup>2</sup><sup>3</sup>
+  3. **Support:** Service Cloud case creation and live-representative handoff.<sup>3</sup>
+- **RIGHT — our sandbox stand-ins (slides in on the next `>`):**
+  1. **B2B mock:** `Restaurant__c` + restaurant-scoped Data 360 knowledge for five demo restaurants.
+  2. **B2C mock:** A signed-in `Contact` + 30 `Reservation__c` records.
+  3. **Support mock:** `Case` + routing flow, with restaurant and reservation context attached.
 
 ### 🎙️ What We'll Say (Speaker Track)
 
-> *"Before the architecture, one assumption. We did not have a live GuestCenter API, so the sandbox is a stand-in for the B2B2C platform in the research.*
+> *(Left stack)* *"Before the architecture, we modeled three surfaces OpenTable already runs: GuestCenter for restaurants, the diner web and app, and Service Cloud for support handoffs.*
 >
-> *On the restaurant side, GuestCenter is a profile: hours, phone, address, cuisine, plus uploaded menus, parking, and house rules. That is `Restaurant__c`, and the uploads are the Data 360 chunks.*
->
-> *On the diner side, people research hours, the menu, and how to get there, then book on the web or in the app and later change or cancel. That is a signed-in `Contact` and 30 `Reservation__c` records.*
->
-> *And the handoff is not new. Agentforce already opens a Service Cloud case and passes the chat to a rep. We kept that path.*
+> *(Next `>` — sandbox stack slides in)* *"Because we did not have a live GuestCenter API, we mirrored those shapes in the sandbox: `Restaurant__c` and Data 360 for B2B content, a signed-in `Contact` and 30 `Reservation__c` records for the diner journey, and a context-rich Case routing flow for support.*
 >
 > *The restaurants and the diner are fictional. The shapes are theirs. UAT hats stay on from here."*
 

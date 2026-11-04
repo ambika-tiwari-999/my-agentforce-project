@@ -146,6 +146,81 @@
       line-height: 1.35;
     }
     .tag { margin: 0 0 0.45rem; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: #90D0FE; }
+    #slide-5 .assumption-intro { margin: 0; color: #cfcfcf; font-size: 0.9rem; line-height: 1.35; }
+    #slide-5 .assumption-intro.mock { display: none; }
+    #slide-5.revealed .assumption-intro.platform { display: none; }
+    #slide-5.revealed .assumption-intro.mock { display: block; }
+    #slide-5 .assumptions-split {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0fr);
+      gap: 0;
+      transition: grid-template-columns 0.55s ease, gap 0.55s ease;
+    }
+    #slide-5 .assumptions-split.revealed {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0.8rem;
+    }
+    #slide-5 .assumption-side {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      overflow: hidden;
+    }
+    #slide-5 .assumption-side.curtain {
+      display: flex;
+      opacity: 0;
+      transform: translateX(2rem);
+      pointer-events: none;
+      transition: opacity 0.35s ease 0.15s, transform 0.5s ease;
+    }
+    #slide-5 .assumptions-split.revealed .assumption-side.curtain {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+    #slide-5 .assumption-side-title {
+      margin: 0;
+      color: #90D0FE;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    #slide-5 .assumption-side.mocked .assumption-side-title { color: #2E844A; }
+    #slide-5 .assumption-stack {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    #slide-5 .assumption-card {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 4.5rem minmax(0, 1fr);
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.75rem 0.9rem;
+      border-left: 4px solid #90D0FE;
+      border-radius: 10px;
+      background: #1c1c1c;
+    }
+    #slide-5 .mocked .assumption-card { border-left-color: #2E844A; background: #162033; }
+    #slide-5 .surface-label {
+      color: #90D0FE;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    #slide-5 .mocked .surface-label { color: #fff; }
+    #slide-5 .assumption-card h2 { margin: 0 0 0.25rem; font-size: 1rem; }
+    #slide-5 .assumption-card p { margin: 0; color: #cfcfcf; font-size: 0.8rem; line-height: 1.3; }
+    @media (prefers-reduced-motion: reduce) {
+      #slide-5 .assumptions-split,
+      #slide-5 .assumption-side.curtain { transition: none; }
+    }
     #slide-6 { --ink: #fff; --sub: #b9b9b9; --ready: #2E844A; --cobalt: #90D0FE; --risk: #FF538A; --pc: #90D0FE; --pcs: #1a2744; }
     #slide-6 h1 { font-size: clamp(1.25rem, 2vw, 1.7rem); margin-bottom: 0.35rem; }
     #slide-6 .arch-lede { margin: 0 0 0.55rem; color: #cfcfcf; font-size: 0.9rem; }
@@ -596,14 +671,14 @@
     <h1 class="title-beta">Key Findings</h1>
     <h1 class="title-value">$4.18M a year</h1>
     <p class="frame frame-beta">5-city beta, against the targets.</p>
-    <p class="frame frame-value">&minus;25% response time. 14.2 FTE reclaimed. Flex Credits, and hours and phone skip RAG.</p>
+    <p class="frame frame-value">&minus;30% agent response latency. 14.2 FTE reclaimed. Powered by Flex Credits.</p>
     <div class="split">
       <div class="pane find-pane">
         <div class="find-board">
           <article class="find">
             <p class="find-label">Response time</p>
-            <p class="find-num">&minus;25%</p>
-            <p class="find-detail">Average time on common requests. Hours and phone in 5.1 seconds. Menu and parking in 8.1 seconds, down from an 18-minute queue.</p>
+            <p class="find-num">&minus;30%</p>
+            <p class="find-detail">Average agent response latency: 6.6 seconds, down from 9.4 seconds in Concierge AI.</p>
           </article>
           <article class="find">
             <p class="find-label">First-contact resolution</p>
@@ -655,25 +730,60 @@
   <section id="slide-5" class="dense">
     <p class="num">Slide 6</p>
     <h1>Assumptions</h1>
-    <p class="lede">No live GuestCenter API in the sandbox. Each mock object stands in for a surface OpenTable already runs.</p>
-    <div class="cols">
-      <div class="pane">
-        <p class="tag">B2B</p>
-        <h2>GuestCenter profile<sup class="cite">1</sup></h2>
-        <p class="lede">Restaurants enter hours, phone, address, and cuisine, and upload menus, parking, dress code, and dietary rules.</p>
-        <p class="callout">Mock: <code>Restaurant__c</code> for 5 demo restaurants. Menus, parking, and policies chunked in Data 360 by restaurant.</p>
+    <p class="assumption-intro platform">First, the three OpenTable surfaces represented in our beta.</p>
+    <p class="assumption-intro mock">Then, how we mirrored each surface in the Salesforce sandbox.</p>
+    <div class="split assumptions-split">
+      <div class="assumption-side">
+        <p class="assumption-side-title">OpenTable platform</p>
+        <div class="assumption-stack">
+          <article class="assumption-card">
+            <span class="surface-label">B2B</span>
+            <div>
+              <h2>GuestCenter profile<sup class="cite">1</sup></h2>
+              <p>Restaurants manage their profile, structured details, menus, parking information, and house rules.</p>
+            </div>
+          </article>
+          <article class="assumption-card">
+            <span class="surface-label">B2C</span>
+            <div>
+              <h2>Diner web and app<sup class="cite">2</sup><sup class="cite">3</sup></h2>
+              <p>Diners research a restaurant, book a table, and later change or cancel the reservation.</p>
+            </div>
+          </article>
+          <article class="assumption-card">
+            <span class="surface-label">Support</span>
+            <div>
+              <h2>Service Cloud handoff<sup class="cite">3</sup></h2>
+              <p>Agentforce creates a case and transfers the conversation to a live representative when needed.</p>
+            </div>
+          </article>
+        </div>
       </div>
-      <div class="pane">
-        <p class="tag">B2C</p>
-        <h2>Diner app<sup class="cite">2</sup><sup class="cite">3</sup></h2>
-        <p class="lede">Diners check hours, the menu, and how to get there, then book on the web or in the app and later change or cancel.</p>
-        <p class="callout">Mock: signed-in diner <code>MEM-1001</code> and 30 <code>Reservation__c</code> records they can look up, create, change, or cancel.</p>
-      </div>
-      <div class="pane">
-        <p class="tag">Support</p>
-        <h2>Service Cloud case<sup class="cite">3</sup></h2>
-        <p class="lede">Agentforce already opens a case and hands the conversation to a live rep. Knowledge is harmonized in Data 360.</p>
-        <p class="callout">Mock: the same handoff, <code>flow://Route_CLL_Escalations</code>, with the restaurant and reservation attached.</p>
+      <div class="assumption-side mocked curtain">
+        <p class="assumption-side-title">Our sandbox stand-ins</p>
+        <div class="assumption-stack">
+          <article class="assumption-card">
+            <span class="surface-label">B2B mock</span>
+            <div>
+              <h2><code>Restaurant__c</code> + Data 360</h2>
+              <p>Five demo restaurants, with profile fields and restaurant-scoped knowledge chunks.</p>
+            </div>
+          </article>
+          <article class="assumption-card">
+            <span class="surface-label">B2C mock</span>
+            <div>
+              <h2><code>Contact</code> + <code>Reservation__c</code></h2>
+              <p>One signed-in diner and 30 reservations available to create, retrieve, modify, or cancel.</p>
+            </div>
+          </article>
+          <article class="assumption-card">
+            <span class="surface-label">Support mock</span>
+            <div>
+              <h2><code>Case</code> + routing flow</h2>
+              <p>The same context-rich handoff, with the restaurant and reservation attached.</p>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
     <ol class="cites">
