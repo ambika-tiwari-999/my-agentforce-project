@@ -736,6 +736,80 @@
       #slide-4 .split,
       #slide-4 .value-pane { transition: none; }
     }
+    #slide-7.decision-slide {
+      justify-content: flex-start;
+      padding: 2.4vh 3vw 1.6vh;
+      gap: 0.55rem;
+    }
+    #slide-7.decision-slide h1 {
+      max-width: none;
+      font-size: clamp(28pt, 3.4vw, 38pt);
+    }
+    #slide-7 .decision-table {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto repeat(6, minmax(0, 1fr));
+      gap: 2px;
+      overflow: hidden;
+      border: 1px solid #3E3E3C;
+      border-radius: 12px;
+      background: #3E3E3C;
+    }
+    #slide-7 .decision-row {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1.05fr 1.25fr 1.5fr 1.5fr;
+      gap: 2px;
+      background: #3E3E3C;
+    }
+    #slide-7 .decision-cell {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0.45rem 0.65rem;
+      background: #1c1c1c;
+      color: #cfcfcf;
+      font-size: clamp(11pt, 1.05vw, 14pt);
+      line-height: 1.28;
+    }
+    #slide-7 .decision-head .decision-cell {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      color: #90D0FE;
+      background: #162033;
+      font-size: 12pt;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    #slide-7 .decision-name {
+      display: grid;
+      grid-template-columns: 1.8rem minmax(0, 1fr);
+      align-items: center;
+      gap: 0.5rem;
+      color: #fff;
+      font-weight: 700;
+    }
+    #slide-7 .decision-number {
+      display: grid;
+      width: 1.7rem;
+      height: 1.7rem;
+      place-items: center;
+      border-radius: 50%;
+      color: #001E5B;
+      background: #90D0FE;
+      font-size: 10pt;
+    }
+    #slide-7 .cell-label {
+      display: block;
+      margin-bottom: 0.15rem;
+      color: #fff;
+      font-size: 0.92em;
+    }
+    #slide-7 .decision-why { border-left: 3px solid #2E844A; }
+    #slide-7 .decision-cost { border-left: 3px solid #DD7A01; }
   </style>
 </head>
 <body>
@@ -973,9 +1047,53 @@
       </aside>
     </div>
   </section>
-  <section id="slide-7">
+  <section id="slide-7" class="dense decision-slide">
     <p class="num">Slide 8</p>
-    <h1>Deployment Strategy</h1>
+    <h1>Design Decisions</h1>
+    <div class="decision-table" role="table" aria-label="Design decisions and tradeoffs">
+      <div class="decision-row decision-head" role="row">
+        <div class="decision-cell" role="columnheader">Design decision</div>
+        <div class="decision-cell" role="columnheader">Core concept</div>
+        <div class="decision-cell" role="columnheader">Why we chose this</div>
+        <div class="decision-cell" role="columnheader">What we sacrifice</div>
+      </div>
+      <div class="decision-row" role="row">
+        <div class="decision-cell decision-name" role="cell"><span class="decision-number">01</span><span>Web access first</span></div>
+        <div class="decision-cell" role="cell"><strong class="cell-label">Deployment method</strong>MIAW on OpenTable restaurant profile pages.</div>
+        <div class="decision-cell decision-why" role="cell">Meets diners where research and booking happen. Supports a controlled 10% &rarr; 50% &rarr; 100% rollout.</div>
+        <div class="decision-cell decision-cost" role="cell">No mobile app or voice until web proves FCR, conversion, security, and consumption.</div>
+      </div>
+      <div class="decision-row" role="row">
+        <div class="decision-cell decision-name" role="cell"><span class="decision-number">02</span><span>Logged-in users only</span></div>
+        <div class="decision-cell" role="cell"><strong class="cell-label">Security &amp; identity</strong>MIAW verification supplies <code>membership_id</code> before reservation tools unlock.</div>
+        <div class="decision-cell decision-why" role="cell">Protects reservation retrieval and writes. Every OpenTable API operation has a verified diner.</div>
+        <div class="decision-cell decision-cost" role="cell">No guest access at launch. An anonymous experience is deferred.</div>
+      </div>
+      <div class="decision-row" role="row">
+        <div class="decision-cell decision-name" role="cell"><span class="decision-number">03</span><span>OpenTable API for CRUD</span></div>
+        <div class="decision-cell" role="cell"><strong class="cell-label">Transactional integration</strong>Apex &rarr; MuleSoft Omni-Gateway &rarr; OpenTable API.</div>
+        <div class="decision-cell decision-why" role="cell">Keeps OpenTable as the reservation system of record with real-time availability and status.</div>
+        <div class="decision-cell decision-cost" role="cell">API authentication, rate limits, latency, and uptime become production dependencies.</div>
+      </div>
+      <div class="decision-row" role="row">
+        <div class="decision-cell decision-name" role="cell"><span class="decision-number">04</span><span>Knowledge Articles for RAG</span></div>
+        <div class="decision-cell" role="cell"><strong class="cell-label">Knowledge grounding</strong>Salesforce Knowledge indexed in Data 360 by restaurant and category.</div>
+        <div class="decision-cell decision-why" role="cell">Native governance, chunking, retrieval, citations, and permissions.</div>
+        <div class="decision-cell decision-cost" role="cell">More work to connect 60,000 OpenTable profiles and keep content synchronized.</div>
+      </div>
+      <div class="decision-row" role="row">
+        <div class="decision-cell decision-name" role="cell"><span class="decision-number">05</span><span>Flex Credits</span></div>
+        <div class="decision-cell" role="cell"><strong class="cell-label">Consumption model</strong>Agentforce usage monitored in Digital Wallet.</div>
+        <div class="decision-cell decision-why" role="cell">Fits variable diner demand. Alerts at 75% and 90% create control points before traffic expands.</div>
+        <div class="decision-cell decision-cost" role="cell">Variable spend requires active monitoring, forecasting, and optimization.</div>
+      </div>
+      <div class="decision-row" role="row">
+        <div class="decision-cell decision-name" role="cell"><span class="decision-number">06</span><span>OpenTable owns escalation</span></div>
+        <div class="decision-cell" role="cell"><strong class="cell-label">Human-in-the-loop</strong>Omni-Channel routes failures and exceptions to OpenTable support.</div>
+        <div class="decision-cell decision-why" role="cell">Restaurants inherit no agent-failure workload, reducing opt-in friction.</div>
+        <div class="decision-cell decision-cost" role="cell">OpenTable assumes support capacity, training, routing, and SLA ownership.</div>
+      </div>
+    </div>
   </section>
   <section id="slide-8">
     <p class="num">Slide 9</p>

@@ -4,7 +4,7 @@
 >
 > - **🖥️ On the Slide (Keep It Visual & Scannable):** Max 3–4 short cards, big numbers, or a clean diagram. **Zero walls of text.**
 > - **🎙️ What We'll Say (Speaker Talk Track):** All the deep context, numbers, and rubric points live in our voice, not crammed onto the slide.
-> - **⚡ Interactive Moment (Only Where Genuinely Useful):** Included on **5 high-leverage slides** (Slides 3, 5, 7, 13, and 14) where involving the judges actually proves a point or builds energy.
+> - **⚡ Interactive Moment (Only Where Genuinely Useful):** Included on **5 high-leverage slides** (Slides 3, 5, 7, 12, and 13) where involving the judges actually proves a point or builds energy.
 
 ---
 
@@ -48,11 +48,10 @@
 - **SLIDE 3 — KPI stack (Visible first):**
   - **Headline:** These are the KPIs you want to improve.
   - **Subline:** You're willing to use AI. Your agent isn't strong enough.
-  - **Three vertically stacked stat cards**<sup>1</sup> *(OpenTable / PureSpectrum, 1,500 US consumers, May 12–16, 2025):*
-    - **`54%`** research a restaurant before booking, and those who do spend about **`21 minutes`**.
-    - **`27%`** did not book because the information was too hard to find. **`17%`** did not book because they couldn't find it and didn't want to call.
+  - **Three vertically stacked stat cards**1 *(OpenTable / PureSpectrum, 1,500 US consumers, May 12–16, 2025):*
+    - `**54%**` research a restaurant before booking, and those who do spend about `**21 minutes**`.
+    - `**27%**` did not book because the information was too hard to find. `**17%**` did not book because they couldn't find it and didn't want to call.
     - They contact the restaurant for **hours (`46%`)**, **menu (`39%`)**, and the **address (`22%`)**.
-
 - **SLIDE 4 — revealed on the next `>`:**
   - **Headline:** Agentforce actually seals the deals
   - The three stat cards stack on the left. Three matching action cards fill the right:
@@ -90,8 +89,7 @@
   2. **First-contact resolution — `84%+`.** Above the 80% target, up from 73%, across FAQ and booking.
   3. **Looker to booker — `1 turn`.** FAQ hands off to booking. Every cancel hits the save-offer gate first.
   4. **Safe handoff — `100%`.** Allergy, party of 11+, lockout, and refund requests go to a person.
-
-- **RIGHT — revealed on the next `>`.** The title becomes **`$4.18M a year`.** The four findings stack on the left. Three cards name the field the money comes from. Click a card for a slim math row.
+- **RIGHT — revealed on the next `>`.** The title becomes `**$4.18M a year`.** The four findings stack on the left. Three cards name the field the money comes from. Click a card for a slim math row.
   1. **Support — `$499K`.** Restaurant questions get answered in the chat, so the support team never takes the ticket. Math: `572K` chats × `+9%` resolution (73%→82%) × `$9.70` = `51,480` tickets.
   2. **Reservations — `$1.43M`.** A cancel hears another time first, so the table stays booked. Math: `143K` cancel intents × `10%` saved × `$100` = `14,300` tables.
   3. **Bookings — `$2.25M`.** A diner asking about the restaurant reserves in that same conversation, instead of leaving. Math: `22,500` bookings a year from the FAQ-to-booking handoff.
@@ -133,9 +131,9 @@
 
 - **LEFT — OpenTable platform (visible first):**
   - Intro: **First, the three OpenTable surfaces represented in our beta.**
-  1. **B2B — GuestCenter profile:** Restaurants manage their profile, structured details, menus, parking information, and house rules.<sup>1</sup>
-  2. **B2C — Diner web and app:** Diners research a restaurant, book a table, and later change or cancel the reservation.<sup>2</sup><sup>3</sup>
-  3. **Support — Service Cloud handoff:** Agentforce creates a case and transfers the conversation to a live representative when needed.<sup>3</sup>
+  1. **B2B — GuestCenter profile:** Restaurants manage their profile, structured details, menus, parking information, and house rules.1
+  2. **B2C — Diner web and app:** Diners research a restaurant, book a table, and later change or cancel the reservation.23
+  3. **Support — Service Cloud handoff:** Agentforce creates a case and transfers the conversation to a live representative when needed.3
 - **RIGHT — our sandbox stand-ins (slides in on the next `>`):**
   1. **B2B mock — `Restaurant__c` + Data 360:** Five demo restaurants, with profile fields and restaurant-scoped knowledge chunks.
   2. **B2C mock — `Contact` + `Reservation__c`:** One signed-in diner and 30 reservations available to create, retrieve, modify, or cancel.
@@ -208,66 +206,64 @@ FAQ retrieval ── safety concern ──────────────�
 
 ## Slide 8: Design Decisions and Tradeoffs
 
-### 🖥️ On the Slide (Visual & Minimal — 3 Decision Rows)
+### 🖥️ On the Slide (Decision Table)
 
-- **Headline:** We optimized for trust and scale — not maximum autonomy.
-- **Three-row decision matrix:**
+- **Headline:** Every design decision has a cost.
+- **Subline:** What we chose, why we chose it, and what we intentionally deferred.
 
-| **Design decision** | **Optimizes for** | **Does not optimize for** |
-| :--- | :--- | :--- |
-| **Hybrid CRM fast path + scoped RAG**<br>Hours, phone, and timezone come from structured CRM; menus, parking, and policies use restaurant-filtered Data 360 retrieval. | **Speed, lower Flex Credit usage, grounded answers, and tenant isolation** | One universal retrieval path or answering beyond approved restaurant data |
-| **Deterministic gates around agent reasoning**<br>Code controls ownership checks, two failed lookups, confirmation, and the cancellation save offer. | **Security, repeatability, auditability, and guaranteed business rules** | The fewest possible turns or unconstrained conversational flexibility |
-| **Orchestrator + specialist subagents**<br>Reservation writes and FAQ reads have separate tools, permissions, and tests. | **Least privilege, focused evaluation, maintainability, and safe handoffs** | The simplest implementation or zero routing overhead |
 
-- **Bottom callout:** **Tradeoff accepted:** a little more structure and friction in exchange for predictable behavior at production scale.
+| **Design decision**                          | **Core concept**                                                                                                                                                      | **Why we chose this**                                                                                                                                                               | **What we sacrifice / defer**                                                                                                                                                         |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Web access first**                      | **Deployment method:** MIAW embedded on OpenTable restaurant profile pages.                                                                                           | Meets diners where restaurant research and booking already happen. Web supports a controlled `10% → 50% → 100%` rollout.                                                            | No mobile app or voice at launch. Those channels wait until web proves FCR, conversion, security, and consumption targets.                                                            |
+| **2. Logged-in users only**                  | **Security and identity:** MIAW user verification supplies the diner’s `membership_id` before the agent exposes reservation tools.                                    | Gives OpenTable API operations a verified customer identity and protects reservation retrieval, modification, and cancellation from unauthorized access.                            | Guest users cannot access the agent at launch, including its FAQ experience. A separate anonymous experience is deferred.                                                             |
+| **3. OpenTable API for reservation CRUD**    | **Transactional integration:** create, retrieve, update, and cancel directly against the OpenTable API through Apex and MuleSoft Omni-Gateway.                        | Keeps OpenTable as the reservation system of record and returns real-time availability and operation status. It avoids creating a second production booking database in Salesforce. | Availability, latency, authentication, rate limits, and outages of the OpenTable API become production dependencies that require monitoring and failure handling.                     |
+| **4. Salesforce Knowledge Articles for RAG** | **Knowledge grounding:** menus, parking, policies, and FAQs are stored as Salesforce Knowledge Articles and indexed in Data 360, filtered by restaurant and category. | Native Salesforce content governance, chunking, retrieval, citations, and permissions make Knowledge Articles the strongest fit for grounded RAG.                                   | More integration and content-sync work is required to connect 60,000 OpenTable restaurant profiles and keep profile changes reflected in Salesforce Knowledge.                        |
+| **5. Flex Credits consumption model**        | **Consumption model:** Agentforce usage is funded through Flex Credits and monitored in Digital Wallet.                                                               | Fits variable diner demand better than fixed capacity. OpenTable can track consumption by action and channel, with alerts at 75% and 90% before expanding traffic.                  | Spend varies with conversation volume, reasoning, and actions. It requires active monitoring, forecasting, and optimization; unrestricted rollout could create consumption surprises. |
+| **6. OpenTable-owned human escalation**      | **Human-in-the-loop ownership:** Omni-Channel routes agent failures and exceptions to OpenTable support, which owns triage and coordinates with restaurants as needed. | Restaurants do not inherit agent-failure workload or need new support operations. This lowers opt-in friction and gives OpenTable consistent oversight of quality and recovery.     | OpenTable assumes the support capacity, routing, training, and SLA responsibility. Restaurant-specific resolutions may require an additional handoff.                                 |
 
-### 🎙️ What We'll Say (Speaker Track)
 
-> *"Before deployment, we want to be explicit about what this architecture optimizes for — and what it intentionally gives up.*
->
-> *First, we chose a **hybrid CRM and RAG pattern**. Stable facts such as hours, phone number, and timezone come from structured CRM, while menus, parking, and policies use restaurant-scoped Data 360 retrieval. That optimizes for speed, grounding, tenant isolation, and lower Flex Credit usage. It does not optimize for one universal retrieval path or for answering questions outside approved restaurant data.*
->
-> *Second, we put **deterministic gates around the model**. Ownership checks, explicit confirmation, the two-strike lockout, and the cancellation save offer are enforced in code. That optimizes for security, repeatability, and auditability. The cost is deliberate friction: some actions take an extra turn, and the model has less freedom.*
->
-> *Third, we separated the experience into an **orchestrator and specialist subagents**. Reservation writes and FAQ reads have different tools, permissions, and tests. That optimizes for least privilege, maintainability, and focused evaluation. It is more structured than a single all-purpose agent and adds a small routing step.*
->
-> *Those are intentional tradeoffs. For a diner-facing system that handles identity, reservations, and safety questions, we chose predictable behavior at production scale over maximum autonomy."*
-
----
-
-## Slide 9: Deployment Strategy (Web First $\rightarrow$ Mobile $\rightarrow$ Voice)
-
-### 🖥️ On the Slide (Visual & Minimal — 3-Stage Channel Rollout)
-
-- **3-Step Horizontal Progression Cards (Web $\rightarrow$ Mobile $\rightarrow$ Voice):**
-  1. 🌐 **Stage 1: Web First (`MIAW on Restaurant Pages` — Phase 1 Launch)**
-     - Replaces the read-only Concierge AI widget on 60,000+ OpenTable restaurant web pages (`10% → 50% → 100%` traffic ramp).
-  2. 📱 **Stage 2: Mobile App (`MIAW In-App iOS & Android` — Phase 2 Fast-Follow)**
-     - Embedded directly in the OpenTable Diner App with authenticated `membership_id` and push-to-chat reservation modifications on the go.
-  3. 📞 **Stage 3: Eventually Voice (`Service Cloud Voice` — Phase 3 Expansion)**
-     - Connects each restaurant's published phone number to the exact same stateless Agent Script + Apex brain to deflect host-stand calls during Friday/Saturday dinner rush.
+- **Bottom callout:** **Our bias:** verified identity, bounded actions, and measurable rollout over maximum reach and autonomy.
 
 ### 🎙️ What We'll Say (Speaker Track)
 
-> *"Our deployment strategy rolls out across three diner surfaces in a deliberate sequence — **Web first, then Mobile, and eventually Voice**:*
+> *"Before deployment, we want to be explicit about six concrete product decisions and their costs.*
 >
-> - **First, Web (`MIAW`):** We start on OpenTable’s restaurant profile web pages — directly replacing the read-only Concierge AI widget where diners spend nearly an hour researching menus and parking before booking. We roll this out via a gated `10% → 50% → 100%` ramp with an instant kill-switch fallback.
-> - **Second, Mobile (`MIAW In-App`):** Once Web hits `>80%` FCR, we turn on the exact same MIAW deployment inside the iOS and Android OpenTable app — where signed-in diners (`membership_id`) modify reservations on the go when they're running late.
-> - **Third, eventually Voice (`Service Cloud Voice`):** Because every one of our Apex actions is 100% stateless and surface-agnostic, our long-term phase plugs the exact same agent brain into restaurant phone lines so diners calling during peak Friday dinner service can check hours or shift a booking without pulling the host away from the door."*
+> *First, we chose **web access through MIAW** as the initial deployment method. It puts the agent on the OpenTable restaurant pages where research and booking already happen and gives us a controlled traffic ramp. The tradeoff is channel reach: mobile and voice are not part of launch.*
+>
+> *Second, the agent is available to **logged-in users only**. MIAW user verification supplies the membership identity before reservation tools become available. That protects reservation access and gives every API operation a verified customer. The sacrifice is guest reach, including anonymous FAQ access.*
+>
+> *Third, production reservation CRUD goes to the **OpenTable API** through Apex and MuleSoft. OpenTable remains the source of truth, so availability and status are real time rather than copied into another booking database. The tradeoff is dependency on OpenTable API authentication, rate limits, latency, and uptime, which require production monitoring and resilient failure handling.*
+>
+> *Fourth, we chose **Salesforce Knowledge Articles indexed in Data 360** for RAG. That gives us native governance, retrieval, citations, and permissions for menus, parking, policies, and FAQs. The cost is ingestion: OpenTable profile content must be mapped, synchronized, and kept current across 60,000 restaurants.*
+>
+> *Fifth, we selected the **Flex Credits consumption model**. It fits variable diner demand and lets us track usage by action and channel in Digital Wallet. Alerts at 75% and 90% create a control point before traffic expands. The tradeoff is variable spend, so forecasting and ongoing optimization are operating requirements.*
+>
+> *Sixth, **OpenTable owns human escalation**. Agent failures and exceptions route through Omni-Channel to OpenTable support, which triages the issue and coordinates with the restaurant when needed. Restaurants do not take on agent-failure workload, which makes opting in lower stress. The tradeoff is that OpenTable assumes the support capacity, training, routing, and SLA responsibility.*
+>
+> *Our bias is deliberate: verified identity, bounded actions, and measurable rollout over maximum reach and autonomy."*
+
+### Rubric Coverage Check (Team Notes — Not Shown on Slide)
+
+- **Solution Design & Walkthrough:** Explains the deployment surface, OpenTable API integration, Data 360 grounding, production operating model, and scalability constraints.
+- **Security Measures:** Connects authenticated web access to diner identity, identifies API authentication and external-service dependencies, and defines a human recovery path.
+- **Business Impact & Consultative Readiness:** Names Flex Credits as the consumption model, explains why it fits variable demand, and connects Digital Wallet thresholds to phased deployment.
+- **Use Case, Testing, and Presentation:** Supported elsewhere in the deck by Slides 3–5, 12, and the speaker ownership plan; they should not be forced into this tradeoff table.
 
 ---
 
-## Slide 10: Responsible AI
+## Slide 9: Responsible AI
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
 - **2x2 Consequence Scanning Grid (Short Bullet Badges Only):**
 
-| **Intended Positive ✅** | **Intended Negative (Managed Friction) ⚖️** |
-| :--- | :--- |
-| • Instant 24/7 FAQ + Booking in 1 chat<br>• Saves tables & deflects host calls | • 1 extra turn required to cancel (Save Gate)<br>• 3-factor match required for lookup |
-| **Unintended Positive 💡** | **Unintended Negative (Risks Mitigated) 🚨** |
-| • Unanswered FAQ logs reveal missing restaurant profile info for Partner Success | • *Risk:* Allergy liability $\rightarrow$ **Auto-escalate to human**<br>• *Risk:* Restaurant data bleed $\rightarrow$ **Hard `Restaurant_ID` filter**<br>• *Risk:* Snooping $\rightarrow$ **2-strike lockout** |
+
+| **Intended Positive ✅**                                                          | **Intended Negative (Managed Friction) ⚖️**                                                                                                                                                              |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| • Instant 24/7 FAQ + Booking in 1 chat • Saves tables & deflects host calls      | • 1 extra turn required to cancel (Save Gate) • 3-factor match required for lookup                                                                                                                       |
+| **Unintended Positive 💡**                                                       | **Unintended Negative (Risks Mitigated) 🚨**                                                                                                                                                             |
+| • Unanswered FAQ logs reveal missing restaurant profile info for Partner Success | • *Risk:* Allergy liability $\rightarrow$ **Auto-escalate to human** • *Risk:* Restaurant data bleed $\rightarrow$ **Hard `Restaurant_ID` filter** • *Risk:* Snooping $\rightarrow$ **2-strike lockout** |
+
 
 ### 🎙️ What We'll Say (Speaker Track)
 
@@ -280,7 +276,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 11: Data and Integration
+## Slide 10: Data and Integration
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -303,7 +299,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 12: Security and Trust
+## Slide 11: Security and Trust
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -329,7 +325,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 13: Testing Approach
+## Slide 12: Testing Approach
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -357,7 +353,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 14: Live Demo
+## Slide 13: Live Demo
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
@@ -377,12 +373,12 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 15: Recommendations and Next Steps
+## Slide 14: Recommendations and Next Steps
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
 - **Left Side — 3 Strategic Recommendations:**
-  1. **Consolidate Stacks:** Retire standalone Concierge AI $\rightarrow$ Capture **`$4.18M/yr`** in unified Agentforce value.
+  1. **Consolidate Stacks:** Retire standalone Concierge AI $\rightarrow$ Capture `**$4.18M/yr`** in unified Agentforce value.
   2. **Scale Hybrid RAG:** Keep Hours/Phone in `before_reasoning` CRM + ingest 60,000 restaurant PDFs into Data 360.
   3. **Gate Risk in Code:** Enforce `available when` state gates for cancellations, lockouts, and allergy escalations.
 - **Right Side — Immediate Next Steps (The UAT Ask):**
