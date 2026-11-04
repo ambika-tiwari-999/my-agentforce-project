@@ -298,28 +298,28 @@ FAQ retrieval ── safety concern ──────────────�
 
 ## Slide 9: AI KPIs + Testing
 
-### 🖥️ On the Slide (Static Category → KPI → Release Target Grid)
+### 🖥️ On the Slide (Static TableCraft Behavior → Release Gate → Evidence Grid)
 
-- **Headline:** We test whether the agent works—not only whether it responds.
-- **Subline:** Four KPI categories define the release gate and the production baseline.
+- **Headline:** We release TableCraft only when it answers correctly, books safely, and hands off at the right moment.
+- **Subline:** The gate follows the diner journeys and controls this agent actually uses.
 
-| **Category** | **Key KPIs** | **Release target + test method** |
+| **TableCraft behavior** | **Release gate** | **Evidence + test method** |
 | --- | --- | --- |
-| **Task Success** | • Task-completion rate<br>• First-attempt success by task type<br>• Error rate by category<br>• Recovery rate after an error | • **≥95%** overall completion<br>• **≥80%** first-attempt success<br>• **≥90%** error recovery<br>• Functional, edge, multi-turn and regression tests |
-| **Quality** | • Response relevance<br>• Factual/output accuracy<br>• Context preservation across turns<br>• Format and action-sequence compliance | • **≥0.90** relevance<br>• **≥95%** factual accuracy<br>• **≥0.90** context preservation<br>• **≥98%** format compliance<br>• Grounding, response-scoring and transition tests |
-| **Performance** | • Average and p95 response time<br>• CRM fast-path vs. Data 360 RAG latency<br>• API error/timeout rate<br>• Flex Credit cost per resolved conversation | • CRM fast path **~5.1s** and RAG path **~8.1s** UAT baselines<br>• No unhandled API failures<br>• Cost stays within the approved pilot budget<br>• Latency scorers, Apex unit tests and Digital Wallet monitoring |
-| **Safety** | • Security-violation rate<br>• Privacy incidents<br>• Guardrail adherence<br>• Safety-boundary pass rate | • **<0.1%** security violations<br>• **0** privacy breaches<br>• **≥95%** policy/guardrail adherence<br>• **100%** safety-boundary tests<br>• Guardrail, adversarial and perturbation tests |
+| **Grounded dining answers**<br>Hours and phone from CRM; menu, parking and policies from Data 360 | Correct restaurant selected; expected `faq` route and action sequence; answer supported by the returned CRM or Knowledge content; no cross-restaurant leakage | Happy-path suites for hours/phone, menu, parking and policies; tenant-isolation and unanswerable-question cases; CRM fast path **~5.1s**, RAG path **~8.1s** |
+| **Safe reservation execution**<br>Look up, create, modify and cancel | Own-reservation access only; restaurant-local date/time validated; parties capped at 10; explicit confirmation before every write; alternative offered before cancellation | Agent Script `available when` gates plus server-side Apex validation; functional, edge and regression journeys; reservation-platform unit tests |
+| **Safety and human handoff**<br>Allergies, emergencies, refunds, frustration and groups of 11+ | No allergy guarantee; emergency response says call 911; blocked or high-risk requests reach the correct escalation path; no protected identifier appears in the response | Guardrail and escalation suites covering severe allergy, emergency, refund/fee-waiver, frustration and group-booking cases |
+| **Journey continuity and recovery**<br>FAQ → booking, FAQ → another restaurant, failed lookup → person | Restaurant and diner context survive valid transitions; the correct subagent and actions run in order; three failed reservation lookups stop retries and escalate | Single-turn and multi-turn transition cases; exact topic/action-sequence scoring; no unhandled connector failure |
 
-- **Evidence strip:** **7 automated suites · 23/23 agent cases · 4/4 subagents · 2/2 data paths · 7/7 Apex unit-test methods · 100% release-gate pass**
+- **Evidence strip:** **7 automated suites · 23/23 agent cases · 2/2 data paths · 7/7 Apex unit-test methods · 100% current test pass**
 - **Continuous quality rule:** Every agent, action, prompt, API or data-source change reruns the affected suite and the full regression gate before release.
 
 ### 🎙️ What We'll Say (Speaker Track)
 
-> *"Before discussing Responsible AI controls, we first define what good agent behavior means. We measure four categories.*
+> *"Before discussing Responsible AI controls, we define good behavior in terms of the jobs TableCraft actually performs.*
 >
-> *Task success asks whether the diner completed the job, whether it worked on the first attempt, and whether the agent recovered from errors. Quality measures relevance, factual accuracy, context preservation, and whether the correct subagent and actions were selected. Performance separates our CRM fast path from Data 360 RAG latency and tracks API reliability and cost. Safety measures security violations, privacy incidents, guardrail adherence, and boundary tests.*
+> *For dining questions, the gate proves the answer came from the right restaurant and the right source: CRM for hours and phone, Data 360 for menu, parking and policy. For reservations, it proves ownership, restaurant-local time validation, party-size limits, confirmation before writes, and the save offer before cancellation. Safety tests cover allergies, emergencies and escalation. Transition tests prove context survives when a diner moves from FAQ to booking, changes restaurants, or exhausts reservation lookups.*
 >
-> *These are release gates, not dashboard decoration. Our evidence covers all four subagents, both CRM and Data 360 paths, 23 agent cases across seven automated suites, and seven Apex unit-test methods. The current release gate is 100% passing, and every change reruns the affected suite plus the full regression gate."*
+> *These are release gates, not dashboard decoration. Our current evidence is 23 passing agent cases across seven suites, both CRM and Data 360 paths, and seven Apex unit-test methods. Every change reruns the affected suite plus the full regression gate."*
 
 ### Rubric Coverage Check (Team Notes — Not Shown on Slide)
 
@@ -334,24 +334,27 @@ FAQ retrieval ── safety concern ──────────────�
 ### 🖥️ On the Slide (Static Risk → Control → Evidence Grid)
 
 - **Headline:** Responsible AI is enforced in controls—and proven in tests.
-- **Subline:** Every release must prevent unauthorized access and resist attempts to override policy.
+- **Subline:** Five concrete risks map to a platform control, a code-level constraint, and test evidence.
 
 | **Risk** | **Control** | **Evidence** |
 | --- | --- | --- |
-| **Unauthorized data or actions**<br>• Another diner’s reservation is exposed<br>• A write occurs without identity or confirmation<br>• Restaurant A content appears in Restaurant B | • Verified MIAW identity + 3-factor ownership match<br>• Dedicated agent user, minimal permission sets and `WITH USER_MODE`<br>• `Restaurant_ID__c` isolation + confirmation gates<br>• Failed lookups lock access and route to a person | • **4/4 subagents** exercised<br>• Expected action sequence asserted in **23/23 agent cases**<br>• Both data paths covered: **2/2** — CRM fast path + Data 360 RAG<br>• **7/7 suites** and **7/7 Apex unit-test methods passing** |
-| **Prompt injection or policy bypass**<br>• “Ignore your instructions” prompt leakage<br>• A user claims authority to skip confirmation<br>• Rephrasing evades a safety boundary | • Einstein Trust Layer prompt-injection and toxicity defenses<br>• Deterministic Agent Script `available when` gates<br>• Apex re-validates identity, time, ownership and policy at execution<br>• Fixed refusal or human handoff for blocked requests | • **100% release-gate pass rate** across functional, unit, regression, edge, multi-turn, guardrail, adversarial and perturbation tests<br>• Tests run after **every agent, action, prompt or data-source change**<br>• Every first-run miss becomes a regression case before release |
+| **Unauthorized data or actions** | Dedicated least-privilege agent user; `WITH USER_MODE`; reservation ownership checks; confirmation gates on create, modify and cancel; three failed lookups stop retries and escalate | Other-diner access and failed-ID lockout tests; permission-set configuration review; Apex ownership and write-validation tests |
+| **Prompt injection or policy bypass** | Einstein Trust Layer defenses; system instructions are never revealed or changed; Agent Script `available when` gates remove unavailable actions; Apex re-validates rules at execution | Adversarial prompt-injection, instruction-disclosure and cancellation-bypass tests; exact action-sequence assertions |
+| **Hallucination or cross-restaurant leakage** | CRM/Data 360 grounding; hard `Restaurant_ID__c` and category filters; answers use only action-returned facts; abstain and provide the restaurant phone when no source exists | Cross-restaurant tenant-isolation test; unanswerable-question fallback test; grounded hours, menu, parking and policy suites |
+| **Sensitive-data exposure** | Trust Layer PII masking and zero data retention; internal membership/contact identifiers filtered from model output; no internal IDs requested from or shown to diners | Trust Layer and permission configuration review; internal-identifier regression test; response review across the agent suite |
+| **Unsafe or high-risk guidance** | Bounded dining scope; no allergy or cross-contact guarantees; immediate 911 guidance for emergencies; human escalation for severe allergy, refunds, legal/safety issues and groups of 11+ | Severe-allergy, emergency, direct-handoff, frustration, refund/fee-waiver and group-booking guardrail tests |
 
 - **Bottom callout:** **Prevent with platform controls. Constrain in code. Prove continuously.**
 
 ### 🎙️ What We'll Say (Speaker Track)
 
-> *"For Responsible AI, we focused on two risks with the greatest consequence for this use case.*
+> *"For Responsible AI, we mapped five concrete risks to controls and evidence.*
 >
-> *First is unauthorized data or action access. A verified identity, least-privilege runtime, user-mode Apex, restaurant-scoped retrieval, ownership checks, and explicit confirmation all have to agree before protected data is shown or a write occurs.*
+> *Unauthorized access is constrained by least privilege, user-mode Apex, ownership checks and confirmation before every write. Prompt injection cannot make a gated action available, and Apex checks the rule again when it executes.*
 >
-> *Second is prompt injection or policy bypass. The Trust Layer screens the input, but we do not rely on model instructions alone. Agent Script removes unavailable actions from the planner, and Apex re-validates the rule when the action executes.*
+> *Hallucination and cross-restaurant leakage are controlled by grounding every answer in CRM or restaurant-scoped Data 360 content, with an explicit fallback when no source exists. Sensitive identifiers are masked or filtered from model output. High-risk requests stay bounded: we never guarantee allergen safety, emergencies receive 911 guidance, and severe allergies, refunds, legal or safety issues, and large groups go to a person.*
 >
-> *The evidence is automated: all four subagents, every expected action sequence, and both CRM and Data 360 paths are covered. Our release-gate suites include functional, unit, regression, edge, multi-turn, guardrail, adversarial, and perturbation tests; the current gate is 100% passing, and the full suite reruns after every change."*
+> *Each row has matching evidence: ownership and lockout tests, injection and bypass tests, tenant-isolation and abstention tests, internal-ID regression, and allergy, emergency and escalation guardrails."*
 
 ---
 
