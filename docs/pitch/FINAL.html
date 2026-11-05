@@ -170,6 +170,14 @@
       transition: background 0.2s ease, transform 0.2s ease;
     }
     #slide-5 .live-demo-button:hover { background: #022AC0; transform: translateY(-2px); }
+    #slide-5 .demo-credentials {
+      display: flex;
+      gap: 1rem;
+      margin: -0.8rem 0 0;
+      color: #706E6B;
+      font-size: 0.78rem;
+    }
+    #slide-5 .demo-credentials code { color: #cfcfcf; }
     #slide-roadmap.dense {
       justify-content: center;
       padding: 5vh 4vw;
@@ -191,18 +199,20 @@
       transition: transform 0.7s ease, filter 0.7s ease, opacity 0.7s ease, box-shadow 0.7s ease;
     }
     #slide-roadmap .roadmap-phase:first-child {
-      border-color: #90D0FE;
-      background: #001E5B;
       transform-origin: left center;
     }
     #slide-roadmap .roadmap-phase:nth-child(2) { transform-origin: center; }
     #slide-roadmap .roadmap-phase:nth-child(3) { transform-origin: right center; }
-    #slide-roadmap.phase-one-focus .roadmap-phase:first-child {
+    #slide-roadmap.phase-one-focus .roadmap-phase:first-child,
+    #slide-roadmap.phase-two-focus .roadmap-phase:nth-child(2),
+    #slide-roadmap.phase-three-focus .roadmap-phase:nth-child(3) {
       z-index: 2;
       transform: scale(1.15, 1.2);
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
     }
-    #slide-roadmap.phase-one-focus .roadmap-phase:nth-child(n+2) {
+    #slide-roadmap.phase-one-focus .roadmap-phase:nth-child(n+2),
+    #slide-roadmap.phase-two-focus .roadmap-phase:not(:nth-child(2)),
+    #slide-roadmap.phase-three-focus .roadmap-phase:not(:nth-child(3)) {
       z-index: 0;
       transform: scale(0.92);
       filter: blur(4px);
@@ -224,6 +234,7 @@
       font-size: 1.25rem;
       font-weight: 700;
     }
+    #slide-roadmap .roadmap-phase:first-child .phase-label { color: #2E844A; }
     #slide-roadmap .phase-time {
       margin: 0 0 1rem;
       color: #cfcfcf;
@@ -239,6 +250,29 @@
       line-height: 1.45;
     }
     #slide-roadmap li { margin-bottom: 0.8rem; }
+    #slide-roadmap .roadmap-phase li strong {
+      display: block;
+      color: #fff;
+      font-size: 1.16em;
+      font-weight: 700;
+    }
+    #slide-roadmap .phase-reason {
+      display: block;
+      position: relative;
+      margin-top: 0.2rem;
+      padding-left: 2.25rem;
+      color: #cfcfcf;
+      font-size: 0.9em;
+    }
+    #slide-roadmap .phase-reason::before {
+      content: "↳";
+      position: absolute;
+      top: -0.12rem;
+      left: 0.25rem;
+      color: #90D0FE;
+      font-size: 1.25em;
+      font-weight: 700;
+    }
     #slide-6 { --ready: #2E844A; --risk: #FF538A; --decline: #DD7A01; --pc: #90D0FE; --pcs: #1a2744; }
     #slide-6.dense { padding: 2.2vh 2.5vw 1.2vh; gap: 0.45rem; }
     #slide-6 .num { font-size: 14pt; }
@@ -257,6 +291,8 @@
       width: 100%;
       height: auto;
       min-height: 0;
+      margin-top: 2.25rem;
+      margin-bottom: 0.75rem;
       padding: 0.85rem;
       border-radius: 12px;
       background: #181818;
@@ -290,6 +326,18 @@
     #slide-6 .path-btn.human { border-left-color: var(--risk); }
     #slide-6 .path-btn.decline { border-left-color: var(--decline); }
     #slide-6 .path-btn[aria-pressed="true"] { background: #001E5B; border-color: #90D0FE; }
+    #slide-6 .path-type {
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    #slide-6 .path-btn.agent .path-type { color: var(--ready); }
+    #slide-6 .path-btn.human .path-type { color: var(--risk); }
+    #slide-6 .path-btn.decline .path-type { color: var(--decline); }
+    #slide-6 .path-query { display: block; color: #fff; }
     #slide-6 .diagram-panel {
       position: relative;
       min-height: 0;
@@ -326,11 +374,12 @@
     #slide-6 .pill.decline { color: #fff; background: rgba(221,122,1,.3); }
     #slide-6 .nd { cursor: pointer; transition: opacity 0.2s ease; }
     #slide-6 .nd rect.bx { stroke-width: 1.5; }
-    #slide-6 .nd .t { font: 700 19px system-ui, sans-serif; fill: #fff; }
+    #slide-6 .nd .t { font: 700 21px system-ui, sans-serif; fill: #fff; text-anchor: middle; dominant-baseline: middle; }
     #slide-6 .nd .s { font: 19px system-ui, sans-serif; fill: #b9b9b9; }
     #slide-6 .nd.k-entry rect.bx { fill: #181818; stroke: #706E6B; }
     #slide-6 .nd.k-orch rect.bx, #slide-6 .nd.k-sub rect.bx { fill: #001E5B; stroke: #90D0FE; }
-    #slide-6 .nd.k-act rect.bx { fill: #181818; stroke: #706E6B; }
+    #slide-6 .nd.k-act rect.bx { fill: #162033; stroke: #90D0FE; }
+    #slide-6 .nd.k-act .t { fill: #90D0FE; }
     #slide-6 .nd.k-out rect.bx { fill: rgba(46,132,74,.28); stroke: #2E844A; }
     #slide-6 .nd.k-esc rect.bx { fill: rgba(255,83,138,.18); stroke: #FF538A; stroke-width: 2.5; }
     #slide-6 .shield { fill: none; stroke: #90D0FE; stroke-width: 1.6; }
@@ -814,63 +863,6 @@
       font-size: 0.85rem;
       letter-spacing: 0.08em;
     }
-    #slide-data-integrations.dense {
-      justify-content: center;
-      padding: 8vh 5vw;
-      gap: 1.4rem;
-    }
-    #slide-data-integrations h1 { max-width: none; }
-    #slide-data-integrations .data-table {
-      display: grid;
-      grid-template-rows: auto repeat(2, minmax(0, 1fr));
-      min-height: 27rem;
-      border: 1px solid #3E3E3C;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #3E3E3C;
-      gap: 2px;
-    }
-    #slide-data-integrations .data-row {
-      display: grid;
-      grid-template-columns: 1fr 1.25fr 1.35fr 1.35fr;
-      gap: 2px;
-      background: #3E3E3C;
-    }
-    #slide-data-integrations .data-cell {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 1.15rem 1.25rem;
-      background: #1c1c1c;
-      color: #cfcfcf;
-      font-size: clamp(1rem, 1.25vw, 1.16rem);
-      line-height: 1.4;
-    }
-    #slide-data-integrations .data-head .data-cell {
-      padding-top: 0.7rem;
-      padding-bottom: 0.7rem;
-      color: #90D0FE;
-      background: #162033;
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    #slide-data-integrations .data-source {
-      color: #fff;
-      font-weight: 700;
-    }
-    #slide-data-integrations .data-source span {
-      margin-bottom: 0.4rem;
-      color: #90D0FE;
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-    }
-    #slide-data-integrations .data-cell strong {
-      display: block;
-      margin-bottom: 0.35rem;
-      color: #fff;
-    }
     #slide-security-trust.dense {
       justify-content: center;
       padding: 6vh 5vw;
@@ -1092,7 +1084,6 @@
     #slide-roadmap,
     #slide-6,
     #slide-decisions-simple,
-    #slide-data-integrations,
     #slide-security-trust,
     #slide-8,
     #slide-9,
@@ -1102,7 +1093,6 @@
     #slide-roadmap > h1,
     #slide-6 > h1,
     #slide-decisions-simple > h1,
-    #slide-data-integrations > h1,
     #slide-security-trust > h1,
     #slide-8 > h1,
     #slide-9 > h1,
@@ -1118,7 +1108,6 @@
     #slide-roadmap > h1 + .roadmap,
     #slide-6 > h1 + .system-layout,
     #slide-decisions-simple > h1 + .simple-decision-table,
-    #slide-data-integrations > h1 + .data-table,
     #slide-security-trust > h1 + .security-top,
     #slide-8 > h1 + .uat-table-wrap,
     #slide-9 > h1 + .uat-table-wrap,
@@ -1222,6 +1211,7 @@
     <p class="num">Slide 5</p>
     <h1>Live Demo</h1>
     <a class="live-demo-button" href="https://tablecraft-demo-ec5d872d0418.herokuapp.com/" target="_blank" rel="noopener noreferrer">Open Live Demo</a>
+    <p class="demo-credentials"><span>Email: <code>lozanoc81@gmail.com</code></span><span>Password: <code>TableCraft2026!</code></span></p>
   </section>
   <section id="slide-4" class="dense">
     <p class="num">Slide 6</p>
@@ -1304,30 +1294,29 @@
         <h2 class="phase-label">Phase 1</h2>
         <p class="phase-time">Launch now</p>
         <ul>
-          <li>Launch on TableCraft.com — web access is most common</li>
-          <li>Support both logged-in members and guests — maximize access</li>
-          <li>Escalate to TableCraft support — keep the burden off restaurant staff</li>
-          <li>Flex Credits — match token consumption to user demand</li>
+          <li><strong>Launch on TableCraft.com</strong><span class="phase-reason">66% of Experiences bookings happen outside the mobile app</span></li>
+          <li><strong>Support both logged-in members and guests</strong><span class="phase-reason">Maximize access</span></li>
+          <li><strong>Escalate to TableCraft support</strong><span class="phase-reason">Keep the burden off restaurant staff</span></li>
+          <li><strong>Flex Credits</strong><span class="phase-reason">Match token consumption to user demand</span></li>
         </ul>
       </article>
       <article class="roadmap-phase">
         <h2 class="phase-label">Phase 2</h2>
         <p class="phase-time">Next 3–6 months</p>
         <ul>
-          <li>Extend the same agent into the TableCraft mobile app and add multilingual support.</li>
-          <li>Connect live GuestCenter APIs and scale knowledge ingestion across all restaurants.</li>
-          <li>Add personalized discovery and loyalty lookup after identity and data-readiness gates pass.</li>
-          <li>Expand only after pilot targets for resolution, accuracy, latency, safety, and cost are sustained.</li>
+          <li><strong>Expand to mobile</strong><span class="phase-reason">Bring the agent into the TableCraft app</span></li>
+          <li><strong>Add personalized discovery + loyalty</strong><span class="phase-reason">Tailor recommendations and reward members</span></li>
+          <li><strong>Scale after pilot targets are met</strong><span class="phase-reason">Protect quality, safety, latency, and cost</span></li>
         </ul>
       </article>
       <article class="roadmap-phase">
         <h2 class="phase-label">Phase 3</h2>
         <p class="phase-time">12 months+</p>
         <ul>
-          <li>One cross-channel concierge spanning web, app, messaging, and voice.</li>
-          <li>Proactive reminders, waitlist updates, rebooking, and personalized dining suggestions.</li>
-          <li>Connect discovery, reservations, loyalty, and post-visit service in one continuous journey.</li>
-          <li>Turn conversation insights into better restaurant operations and diner experiences.</li>
+          <li><strong>Create one cross-channel concierge</strong><span class="phase-reason">Serve diners across web, app, messaging, and voice</span></li>
+          <li><strong>Add proactive dining assistance</strong><span class="phase-reason">Send reminders, waitlist updates, rebooking, and personalized suggestions</span></li>
+          <li><strong>Unify the diner journey</strong><span class="phase-reason">Connect discovery, reservations, loyalty, and post-visit service</span></li>
+          <li><strong>Turn conversations into insight</strong><span class="phase-reason">Improve restaurant operations and diner experiences</span></li>
         </ul>
       </article>
     </div>
@@ -1337,7 +1326,7 @@
     <h1>Agent Architecture</h1>
     <div class="system-layout">
       <aside class="path-panel" aria-label="Example user paths">
-        <p class="panel-label">What users might say</p>
+        <p class="panel-label">User Paths</p>
         <div class="path-list" id="pathList"></div>
       </aside>
       <div class="diagram-panel" id="diagramPanel">
@@ -1345,63 +1334,13 @@
       </div>
       <aside class="context-panel" id="contextPanel" aria-live="polite">
         <p class="panel-label" id="contextLabel" hidden></p>
-        <h2 id="contextTitle">Select a path or diagram box</h2>
+        <h2 id="contextTitle"></h2>
         <div class="context-body" id="contextBody"></div>
       </aside>
     </div>
   </section>
-  <section id="slide-decisions-simple" class="dense">
-    <p class="num">Slide 9</p>
-    <h1>Design Decisions</h1>
-    <div class="simple-decision-table" role="table" aria-label="Key design decisions and rationale">
-      <div class="simple-decision-row simple-decision-head" role="row">
-        <div class="simple-decision-cell" role="columnheader">Design decision</div>
-        <div class="simple-decision-cell" role="columnheader">Why</div>
-      </div>
-      <div class="simple-decision-row" role="row">
-        <div class="simple-decision-cell simple-decision-name" role="cell"><span class="simple-decision-number">01</span><span>Web access first</span></div>
-        <div class="simple-decision-cell" role="cell">Diners already research and book there, so web gives us the fastest adoption and the safest staged rollout.</div>
-      </div>
-      <div class="simple-decision-row" role="row">
-        <div class="simple-decision-cell simple-decision-name" role="cell"><span class="simple-decision-number">02</span><span>Signed-in convenience + guest verification</span></div>
-        <div class="simple-decision-cell" role="cell">Members get immediate access while guests can still book and securely manage a reservation with minimal verification.</div>
-      </div>
-      <div class="simple-decision-row" role="row">
-        <div class="simple-decision-cell simple-decision-name" role="cell"><span class="simple-decision-number">05</span><span>TableCraft owns escalation</span></div>
-        <div class="simple-decision-cell" role="cell">Agent failures and exceptions go to trained TableCraft support instead of adding work for restaurant staff.</div>
-      </div>
-      <div class="simple-decision-row" role="row">
-        <div class="simple-decision-cell simple-decision-name" role="cell"><span class="simple-decision-number">06</span><span>Flex Credits</span></div>
-        <div class="simple-decision-cell" role="cell">Usage-based pricing fits variable diner demand and lets TableCraft monitor cost before each rollout expansion.</div>
-      </div>
-    </div>
-  </section>
-  <section id="slide-data-integrations" class="dense">
-    <p class="num">Slide 10</p>
-    <h1>Data &amp; Integrations</h1>
-    <div class="data-table" role="table" aria-label="Data sources and integrations">
-      <div class="data-row data-head" role="row">
-        <div class="data-cell" role="columnheader">Data Source</div>
-        <div class="data-cell" role="columnheader">Why</div>
-        <div class="data-cell" role="columnheader">Pros</div>
-        <div class="data-cell" role="columnheader">Maintenance</div>
-      </div>
-      <div class="data-row" role="row">
-        <div class="data-cell data-source" role="cell"><span>03</span>OpenTable API for CRUD</div>
-        <div class="data-cell" role="cell"><strong>Transactional integration</strong>Apex &rarr; MuleSoft Omni-Gateway &rarr; OpenTable API.</div>
-        <div class="data-cell" role="cell">Keeps OpenTable as the reservation system of record with real-time availability and status.</div>
-        <div class="data-cell" role="cell">API authentication, rate limits, latency, and uptime become production dependencies.</div>
-      </div>
-      <div class="data-row" role="row">
-        <div class="data-cell data-source" role="cell"><span>04</span>Knowledge Articles for RAG</div>
-        <div class="data-cell" role="cell"><strong>Knowledge grounding</strong>Salesforce Knowledge indexed in Data 360 by restaurant and category.</div>
-        <div class="data-cell" role="cell">Native governance, chunking, retrieval, citations, and permissions.</div>
-        <div class="data-cell" role="cell">More work to connect 60,000 OpenTable profiles and keep content synchronized.</div>
-      </div>
-    </div>
-  </section>
   <section id="slide-security-trust" class="dense">
-    <p class="num">Slide 11</p>
+    <p class="num">Slide 9</p>
     <h1>Security &amp; Trust</h1>
     <div class="security-top">
       <article class="security-card">
@@ -1435,7 +1374,7 @@
     </div>
   </section>
   <section id="slide-8" class="uat-table-slide">
-    <p class="num">Slide 12</p>
+    <p class="num">Slide 10</p>
     <h1>AI KPIs + Testing</h1>
     <div class="uat-table-wrap">
       <table class="uat-table" aria-label="TableCraft AI KPIs and UAT results">
@@ -1474,7 +1413,7 @@
     </div>
   </section>
   <section id="slide-9" class="uat-table-slide">
-    <p class="num">Slide 13</p>
+    <p class="num">Slide 11</p>
     <h1>Responsible AI</h1>
     <div class="uat-table-wrap">
       <table class="uat-table" aria-label="TableCraft Responsible AI controls and UAT evidence">
@@ -1508,15 +1447,15 @@
     </div>
   </section>
   <section id="slide-12">
-    <p class="num">Slide 16</p>
+    <p class="num">Slide 14</p>
     <h1>Live Demo</h1>
   </section>
   <section id="slide-13">
-    <p class="num">Slide 17</p>
+    <p class="num">Slide 15</p>
     <h1>Recommendations and Next Steps</h1>
   </section>
   <section id="slide-7" class="dense decision-slide">
-    <p class="num">Slide 18</p>
+    <p class="num">Slide 16</p>
     <h1>Appendix</h1>
     <div class="decision-table" role="table" aria-label="Design decisions and tradeoffs">
       <div class="decision-row decision-head" role="row">
@@ -1563,6 +1502,32 @@
       </div>
     </div>
   </section>
+  <section id="slide-decisions-simple" class="dense">
+    <p class="num">Slide 17</p>
+    <h1>Design Decisions</h1>
+    <div class="simple-decision-table" role="table" aria-label="Key design decisions and rationale">
+      <div class="simple-decision-row simple-decision-head" role="row">
+        <div class="simple-decision-cell" role="columnheader">Design decision</div>
+        <div class="simple-decision-cell" role="columnheader">Why</div>
+      </div>
+      <div class="simple-decision-row" role="row">
+        <div class="simple-decision-cell simple-decision-name" role="cell"><span class="simple-decision-number">01</span><span>Web access first</span></div>
+        <div class="simple-decision-cell" role="cell">Diners already research and book there, so web gives us the fastest adoption and the safest staged rollout.</div>
+      </div>
+      <div class="simple-decision-row" role="row">
+        <div class="simple-decision-cell simple-decision-name" role="cell"><span class="simple-decision-number">02</span><span>Signed-in convenience + guest verification</span></div>
+        <div class="simple-decision-cell" role="cell">Members get immediate access while guests can still book and securely manage a reservation with minimal verification.</div>
+      </div>
+      <div class="simple-decision-row" role="row">
+        <div class="simple-decision-cell simple-decision-name" role="cell"><span class="simple-decision-number">05</span><span>TableCraft owns escalation</span></div>
+        <div class="simple-decision-cell" role="cell">Agent failures and exceptions go to trained TableCraft support instead of adding work for restaurant staff.</div>
+      </div>
+      <div class="simple-decision-row" role="row">
+        <div class="simple-decision-cell simple-decision-name" role="cell"><span class="simple-decision-number">06</span><span>Flex Credits</span></div>
+        <div class="simple-decision-cell" role="cell">Usage-based pricing fits variable diner demand and lets TableCraft monitor cost before each rollout expansion.</div>
+      </div>
+    </div>
+  </section>
   <nav>
     <button id="prev" type="button" aria-label="Previous slide">&lt;</button>
     <button id="next" type="button" aria-label="Next slide">&gt;</button>
@@ -1574,6 +1539,7 @@
     const roadmapSlide = document.getElementById("slide-roadmap");
     let i = 0;
     let roadmapFocusTimer = null;
+    let roadmapFocusPhase = 0;
 
     function splitOf(index) {
       return slides[index].querySelector(".split");
@@ -1582,6 +1548,14 @@
     function paintSplit(split, on) {
       split.classList.toggle("revealed", on);
       split.closest("section").classList.toggle("revealed", on);
+    }
+
+    function setRoadmapFocus(phase) {
+      roadmapFocusPhase = phase;
+      roadmapSlide.classList.remove("phase-one-focus", "phase-two-focus", "phase-three-focus");
+      if (phase === 1) roadmapSlide.classList.add("phase-one-focus");
+      if (phase === 2) roadmapSlide.classList.add("phase-two-focus");
+      if (phase === 3) roadmapSlide.classList.add("phase-three-focus");
     }
 
     function show(n) {
@@ -1595,10 +1569,10 @@
       }
       slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
       clearTimeout(roadmapFocusTimer);
-      roadmapSlide.classList.remove("phase-one-focus");
+      setRoadmapFocus(0);
       if (slides[i] === roadmapSlide) {
         roadmapFocusTimer = setTimeout(() => {
-          if (slides[i] === roadmapSlide) roadmapSlide.classList.add("phase-one-focus");
+          if (slides[i] === roadmapSlide) setRoadmapFocus(1);
         }, 500);
       }
       prev.disabled = i === 0;
@@ -1609,6 +1583,11 @@
     }
 
     function forward() {
+      if (slides[i] === roadmapSlide && roadmapFocusPhase < 3) {
+        clearTimeout(roadmapFocusTimer);
+        setRoadmapFocus(Math.max(1, roadmapFocusPhase + 1));
+        return;
+      }
       const split = splitOf(i);
       if (split && !split.classList.contains("revealed")) {
         paintSplit(split, true);
@@ -1623,6 +1602,11 @@
     }
 
     function back() {
+      if (slides[i] === roadmapSlide && roadmapFocusPhase > 1) {
+        clearTimeout(roadmapFocusTimer);
+        setRoadmapFocus(roadmapFocusPhase - 1);
+        return;
+      }
       const split = splitOf(i);
       if (slides[i].id === "slide-4" && slides[i].classList.contains("workforce")) {
         slides[i].classList.remove("workforce");
@@ -1672,15 +1656,15 @@
       const svg = document.getElementById("flow");
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const nodes = [
-        {id:"user",x:80,y:20,w:220,h:85,k:"entry",t:"User",lines:["MIAW chat"]},
-        {id:"orch",x:400,y:20,w:220,h:85,k:"orch",t:"Orchestrator",lines:["identifies intent and routes"],g:1},
-        {id:"reservation",x:90,y:150,w:350,h:90,k:"sub",t:"Reservation subagent",lines:["create, retrieve, modify, cancel"],g:1},
-        {id:"faq",x:560,y:150,w:350,h:90,k:"sub",t:"FAQ subagent",lines:["grounded restaurant answers"],g:1},
-        {id:"res_tool",x:90,y:300,w:350,h:110,k:"act",t:"Apex + MuleSoft Omni-Gateway",lines:["CRUD with OpenTable API","Call restaurant for special requests"]},
-        {id:"faq_tool",x:560,y:300,w:350,h:110,k:"act",t:"CRM + Data 360 RAG",lines:["Read access only","Call restaurant if answer is unavailable"]},
-        {id:"res_out",x:90,y:455,w:350,h:80,k:"out",t:"Reservation result",lines:["confirmed from the API response"]},
-        {id:"faq_out",x:560,y:455,w:350,h:80,k:"out",t:"Grounded answer",lines:["source-backed or an honest fallback"]},
-        {id:"escalation",x:280,y:550,w:440,h:85,k:"esc",t:"Escalation to human",lines:["Salesforce Omni-Channel Escalation + Case"]}
+        {id:"user",x:80,y:20,w:220,h:85,k:"entry",t:"User",lines:[]},
+        {id:"orch",x:400,y:20,w:220,h:85,k:"orch",t:"Orchestrator",lines:[],g:1},
+        {id:"reservation",x:90,y:150,w:350,h:90,k:"sub",t:"Reservation subagent",lines:[],g:1},
+        {id:"faq",x:560,y:150,w:350,h:90,k:"sub",t:"FAQ subagent",lines:[],g:1},
+        {id:"res_tool",x:90,y:300,w:350,h:110,k:"act",t:"Apex + MuleSoft Omni-Gateway",lines:[]},
+        {id:"faq_tool",x:560,y:300,w:350,h:110,k:"act",t:"CRM + Data 360 RAG",lines:[]},
+        {id:"res_out",x:90,y:455,w:350,h:80,k:"out",t:"Reservation result",lines:[]},
+        {id:"faq_out",x:560,y:455,w:350,h:80,k:"out",t:"Grounded answer",lines:[]},
+        {id:"escalation",x:280,y:550,w:440,h:85,k:"esc",t:"Escalation to human",lines:[]}
       ];
       const edges = [
         {id:"e_user_orch",d:"M300,62 L400,62",ah:[400,62,"r"]},
@@ -1695,7 +1679,7 @@
         {id:"e_faq_esc",d:"M560,355 L530,355 L530,540 L570,540 L570,550",ah:[570,550,"d"],escalate:1}
       ];
       const details = {
-        user:{title:"User in MIAW chat",job:"A signed-in user starts from OpenTable web or mobile messaging.",tools:["Messaging for In-App and Web (MIAW)"],guard:"Production identity uses MIAW user verification."},
+        user:{title:"User",job:"A user starts the conversation.",tools:["Web chat"],guard:"Identity is verified before reservation data or actions unlock."},
         orch:{title:"Orchestrator",job:"Identifies the restaurant and intent, then routes to the correct specialist.",tools:["Diner context","Restaurant lookup","Intent routing"],guard:"It does not perform reservation writes or answer restaurant questions itself."},
         reservation:{title:"Reservation subagent",job:"Owns reservation creation, retrieval, modification, and cancellation.",tools:["Reservation lookup","Create reservation","Modify reservation","Cancel reservation"],guard:"Identity, confirmation, cancellation-save, and two-strike verification rules remain deterministic."},
         faq:{title:"FAQ subagent",job:"Answers restaurant questions only from approved CRM and Data 360 sources.",tools:["Restaurant context validation","Scoped knowledge retrieval"],guard:"Read access only. If the answer is unavailable, it directs the user to call the restaurant."},
@@ -1706,14 +1690,10 @@
         escalation:{title:"Escalation to human",job:"A context-rich Case is created before Salesforce Omni-Channel transfers the conversation.",tools:["Salesforce Case","Omni-Channel escalation"],guard:"Used for human requests, safety concerns, exceptions, and verification lockouts."}
       };
       const flows = [
-        {q:"Change my reservation",say:"I need to change my reservation.",o:"agent",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool","e_res_out","res_out"],steps:["User request enters MIAW.","Orchestrator identifies a reservation change.","Reservation subagent verifies and prepares the update.","Apex calls MuleSoft Omni-Gateway and the OpenTable API.","Confirmed API result returns to the user."]},
-        {q:"Book with a nut allergy",say:"Can I book and add a nut allergy note?",o:"agent",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool","e_res_out","res_out"],steps:["User request enters MIAW.","Orchestrator routes to Reservation.","Reservation subagent saves the allergy as a note.","OpenTable API creates the reservation.","User is told to call the restaurant for special handling."]},
-        {q:"Ask about parking or hours",say:"Where can I park, and when are you open?",o:"agent",seq:["user","e_user_orch","orch","e_orch_faq","faq","e_faq_tool","faq_tool","e_faq_out","faq_out"],steps:["User question enters MIAW.","Orchestrator routes to FAQ.","FAQ subagent reads CRM and restaurant-scoped RAG.","A grounded answer returns to the user."]},
-        {q:"Ask a policy question",say:"What is this restaurant's cancellation policy?",o:"agent",seq:["user","e_user_orch","orch","e_orch_faq","faq","e_faq_tool","faq_tool","e_faq_out","faq_out"],steps:["User question enters MIAW.","Orchestrator routes to FAQ.","FAQ searches approved read-only sources.","It answers with grounding or directs the user to call."]},
-        {q:"Ask for a person",say:"Can I talk to a person?",o:"human",seq:["user","e_user_orch","orch","e_orch_esc","escalation"],steps:["User asks for a person.","Orchestrator routes directly to escalation.","A Case captures the conversation context.","Omni-Channel transfers to a human."]},
-        {q:"Guarantee no cross-contact",say:"Can you guarantee there will be no cross-contact?",o:"human",seq:["user","e_user_orch","orch","e_orch_faq","faq","e_faq_tool","faq_tool","e_faq_esc","escalation"],steps:["Safety question enters MIAW.","FAQ refuses to make a guarantee.","A Case captures the safety context.","Omni-Channel transfers to a human."]},
-        {q:"Wrong details twice",say:"I entered the wrong reservation details twice.",o:"human",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool","e_res_esc","escalation"],steps:["Reservation verification fails twice.","No private details are revealed.","A Case records the verification lockout.","Omni-Channel transfers to a human."]},
-        {q:"Someone else's reservation",say:"Can you show me someone else's reservation?",o:"decline",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool"],steps:["Request enters MIAW.","Reservation subagent cannot verify ownership.","No reservation data is exposed.","The request is declined."]}
+        {label:"FAQ",q:"Ask about parking or hours",say:"Where can I park, and when are you open?",o:"agent",seq:["user","e_user_orch","orch","e_orch_faq","faq","e_faq_tool","faq_tool","e_faq_out","faq_out"],steps:["User asks a restaurant question.","Orchestrator identifies the intent and routes to FAQ.","FAQ subagent prepares a grounded restaurant answer.","CRM + Data 360 RAG reads approved sources only and falls back to the restaurant when needed.","A source-backed answer or honest fallback returns to the user."]},
+        {label:"Reservation",q:"Change my reservation",say:"I need to change my reservation.",o:"agent",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool","e_res_out","res_out"],steps:["User requests a reservation change.","Orchestrator identifies the intent and routes to Reservations.","Reservation subagent verifies the user and prepares the create, retrieve, modify, or cancel action.","Apex calls MuleSoft Omni-Gateway for CRUD through the OpenTable API.","The confirmed API result returns to the user."]},
+        {label:"Block",q:"Someone else's reservation",say:"Can you show me someone else's reservation?",o:"decline",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool"],steps:["User requests another diner's reservation.","Orchestrator routes the request to Reservations.","Reservation subagent cannot verify ownership.","The integration reveals no reservation data and the request is blocked."]},
+        {label:"Escalate",q:"Guarantee no cross-contact",say:"Can you guarantee there will be no cross-contact?",o:"human",seq:["user","e_user_orch","orch","e_orch_faq","faq","e_faq_tool","faq_tool","e_faq_esc","escalation"],steps:["User asks a high-risk safety question.","Orchestrator routes the question to FAQ.","FAQ checks approved CRM and Data 360 sources but refuses to make a guarantee.","A context-rich Case is created and Omni-Channel transfers the conversation to a human."]}
       ];
       const colors = {
         agent:["#2E844A","rgba(46,132,74,.35)","Agent handles it"],
@@ -1749,7 +1729,7 @@
       nodes.forEach((node) => {
         const group = mk("g", {class:"nd k-"+node.k,id:"n-"+node.id,tabindex:"0",role:"button","aria-label":"Show details for "+node.t});
         group.appendChild(mk("rect", {class:"bx",x:node.x,y:node.y,width:node.w,height:node.h,rx:10}));
-        group.appendChild(mk("text", {x:node.x+16,y:node.y+30,class:"t"}, node.t));
+        group.appendChild(mk("text", {x:node.x+(node.w/2),y:node.y+(node.h/2),class:"t"}, node.t));
         (node.lines || []).forEach((line,index) => {
           group.appendChild(mk("text", {x:node.x+16,y:node.y+53+(index*19),class:"s"}, line));
         });
@@ -1786,6 +1766,7 @@
         });
       });
       const pathList = document.getElementById("pathList");
+      const pathPanel = document.querySelector("#slide-6 .path-panel");
       let activeFlow = -1;
       let travelRAF = null;
       let packet = null;
@@ -1803,6 +1784,16 @@
           edge.classList.remove("lit");
           if (edge._ah) edge._ah.classList.remove("lit");
         });
+      }
+      function resetArchitecture() {
+        activeFlow = -1;
+        clearFlow();
+        Object.values(nodeEls).forEach((node) => node.classList.remove("picked"));
+        pathList.querySelectorAll(".path-btn").forEach((item) => item.setAttribute("aria-pressed","false"));
+        contextLabel.hidden = true;
+        contextLabel.textContent = "";
+        contextTitle.textContent = "";
+        contextBody.innerHTML = "";
       }
       function travel(litEdges,onProgress) {
         if (reduce || !litEdges.length || !litEdges[0].getTotalLength) {
@@ -1836,7 +1827,7 @@
       function renderTrace(flow) {
         contextLabel.hidden = false;
         contextLabel.textContent = "Live path trace";
-        contextTitle.textContent = flow.say;
+        contextTitle.textContent = flow.label;
         contextBody.innerHTML = '<span class="pill '+flow.o+'">'+colors[flow.o][2]+'</span><ol class="trace-list">'+
           flow.steps.map((step) => '<li class="trace-step">'+escapeHtml(step)+'</li>').join("")+
           "</ol>";
@@ -1874,7 +1865,7 @@
         const button = document.createElement("button");
         button.type = "button";
         button.className = "path-btn "+flow.o;
-        button.textContent = flow.say;
+        button.innerHTML = '<span class="path-type">'+escapeHtml(flow.label)+'</span><span class="path-query">'+escapeHtml(flow.say)+'</span>';
         button.setAttribute("aria-pressed","false");
         button.addEventListener("click", () => {
           activeFlow = index;
@@ -1883,6 +1874,9 @@
           runFlow(activeFlow);
         });
         pathList.appendChild(button);
+      });
+      pathPanel.addEventListener("click", (event) => {
+        if (!event.target.closest(".path-btn")) resetArchitecture();
       });
     }
 
