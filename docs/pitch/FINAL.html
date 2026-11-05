@@ -27,6 +27,64 @@
       font-size: .85rem !important;
       line-height: 1;
     }
+    .deck-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 50;
+      display: none;
+      width: 100%;
+      min-height: 44px;
+      padding: 8px 2rem 7px;
+      gap: 8px;
+      background: rgba(24,24,24,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .deck-progress.visible { display: flex; }
+    .deck-progress-track {
+      position: absolute;
+      top: 7px;
+      right: 2rem;
+      left: 2rem;
+      height: 5px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #3E3E3C;
+    }
+    .deck-progress-fill {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: #066AFE;
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform .45s ease;
+    }
+    .deck-progress-item {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      padding: 12px 0 0;
+      overflow: hidden;
+      background: transparent;
+      color: #706E6B;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: clamp(.62rem,.8vw,.82rem);
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .deck-progress-item.complete { color: #DDDBDA; }
+    .deck-progress-item.current { color: #FFFFFF; }
+    .deck-progress-item:hover,
+    .deck-progress-item:focus-visible { color: #FFFFFF; }
+    .deck-progress-item:focus-visible { outline: 1px solid #DDDBDA; outline-offset: 2px; }
     h1 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; margin: 0; line-height: 1.15; max-width: 18ch; }
     section.legal { padding: 8vh 8vw; }
     section.legal h1 { font-size: clamp(1.6rem, 2.6vw, 2.4rem); max-width: none; margin-bottom: 1.25rem; }
@@ -2039,6 +2097,7 @@
   </style>
 </head>
 <body>
+  <nav class="deck-progress" id="deckProgress" aria-label="Presentation progress"></nav>
   <section id="insert-team" class="dense imported-slide">
     <p class="num">3</p>
     <p class="kick">Team 16 · Capstone · Agentforce for TableCraft</p>
@@ -2643,6 +2702,34 @@
   </section>
   <script>
     const slides = [...document.querySelectorAll("section")];
+    const mainProgress = [
+      ["insert-problem", "Research"],
+      ["insert-discovery", "KPIs"],
+      ["insert-sofia", "Challenge"],
+      ["insert-solution", "Solution"],
+      ["insert-scale", "Impact"],
+      ["insert-assumptions", "Assumptions"],
+      ["slide-5", "Demo"],
+      ["slide-6", "Architecture"],
+      ["slide-testing", "Testing"],
+      ["slide-security-trust", "Security"],
+      ["slide-monitoring", "Monitoring"],
+      ["slide-4", "Findings"],
+      ["slide-roadmap", "Roadmap"],
+      ["slide-13", "Ask"]
+    ];
+    const deckProgress = document.getElementById("deckProgress");
+    deckProgress.innerHTML = '<span class="deck-progress-track" aria-hidden="true"><span class="deck-progress-fill"></span></span>' + mainProgress.map(([id, label]) =>
+      '<button type="button" class="deck-progress-item" data-slide-id="' + id + '">' + label + "</button>"
+    ).join("");
+    const progressFill = deckProgress.querySelector(".deck-progress-fill");
+    const progressItems = [...deckProgress.querySelectorAll(".deck-progress-item")];
+    progressItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        const targetIndex = slides.findIndex((slide) => slide.id === item.dataset.slideId);
+        if (targetIndex >= 0) show(targetIndex);
+      });
+    });
     const builds = {};
     function registerBuild(id, count, render) {
       builds[id] = { count, index: 0, render };
@@ -2704,6 +2791,18 @@
         setMonitoringPhase(enteredFromNextSlide ? 2 : 0);
       }
       slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
+      const progressIndex = mainProgress.findIndex(([id]) => id === slides[i].id);
+      deckProgress.classList.toggle("visible", progressIndex >= 0);
+      progressFill.style.transform = "scaleX(" + (progressIndex >= 0 ? (progressIndex + 1) / mainProgress.length : 0) + ")";
+      progressItems.forEach((item, index) => {
+        item.classList.toggle("complete", index < progressIndex);
+        item.classList.toggle("current", index === progressIndex);
+        if (index === progressIndex) item.setAttribute("aria-current", "step");
+        else item.removeAttribute("aria-current");
+      });
+      if (progressIndex >= 0) {
+        deckProgress.setAttribute("aria-label", "Presentation progress: " + mainProgress[progressIndex][1] + ", " + (progressIndex + 1) + " of " + mainProgress.length);
+      }
       const build = builds[slides[i].id];
       if (build) {
         build.index = enteredFromNextSlide ? build.count - 1 : 0;
