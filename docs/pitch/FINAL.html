@@ -926,66 +926,106 @@
       font-size: 0.95rem;
       line-height: 1.3;
     }
-    #slide-testing.dense {
-      justify-content: center;
-      padding: 7vh 7vw;
-    }
-    #slide-testing .testing-coverage {
+    #slide-testing { --ready: #2E844A; --risk: #FF538A; --decline: #DD7A01; }
+    #slide-testing.dense { padding: 2.2vh 2.5vw 1.2vh; gap: 0.45rem; }
+    #slide-testing .num { font-size: 14pt; }
+    #slide-testing h1 { font-size: clamp(28pt, 3vw, 38pt); margin-bottom: 0.15rem; }
+    #slide-testing .testing-layout {
+      flex: 1;
+      min-height: 0;
       display: grid;
-      grid-template-columns: minmax(0, 1.5fr) auto minmax(16rem, 0.8fr);
-      gap: 1rem;
+      grid-template-columns: minmax(210px,.72fr) minmax(520px,1.7fr) minmax(260px,.88fr);
       align-items: center;
+      gap: 0.75rem;
+    }
+    #slide-testing .path-panel {
+      align-self: stretch;
       width: 100%;
-      max-width: 76rem;
-      margin: 0 auto;
+      height: auto;
+      min-height: 0;
+      margin-top: 2.25rem;
+      margin-bottom: 0.75rem;
+      padding: 0.85rem;
+      border-radius: 12px;
+      background: #181818;
+      overflow: auto;
     }
-    #slide-testing .coverage-paths {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 0.6rem;
+    #slide-testing .panel-label {
+      margin: 0 0 0.55rem;
+      color: #90D0FE;
+      font-size: 14pt;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
     }
-    #slide-testing .coverage-path {
-      padding: 0.75rem 0.9rem;
+    #slide-testing .path-list { display: flex; flex-direction: column; gap: 0.45rem; }
+    #slide-testing .path-btn {
+      width: 100%;
+      min-height: 2.65rem;
       border: 1px solid #3E3E3C;
       border-left-width: 4px;
       border-radius: 8px;
+      padding: 0.5rem 0.65rem;
+      color: #fff;
       background: #1c1c1c;
-      color: #fff;
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-align: center;
+      font: inherit;
+      font-size: 14pt;
+      line-height: 1.3;
+      text-align: left;
     }
-    #slide-testing .coverage-path.agent { border-left-color: #2E844A; }
-    #slide-testing .coverage-path.block { border-left-color: #DD7A01; }
-    #slide-testing .coverage-path.escalate { border-left-color: #FF538A; }
-    #slide-testing .coverage-arrow {
-      color: #90D0FE;
-      font-size: 2rem;
-      font-weight: 700;
-    }
-    #slide-testing .coverage-proof {
-      padding: 0.75rem 1rem;
-      border: 1px solid #90D0FE;
-      border-radius: 10px;
-      background: #001E5B;
-      color: #cfcfcf;
-      line-height: 1.25;
-    }
-    #slide-testing .coverage-proof strong {
+    #slide-testing .path-btn.agent { border-left-color: var(--ready); }
+    #slide-testing .path-btn.human { border-left-color: var(--risk); }
+    #slide-testing .path-btn.decline { border-left-color: var(--decline); }
+    #slide-testing .path-type {
       display: block;
-      color: #fff;
-      font-size: 1.2rem;
+      margin-bottom: 0.2rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
+    #slide-testing .path-btn.agent .path-type { color: var(--ready); }
+    #slide-testing .path-btn.human .path-type { color: var(--risk); }
+    #slide-testing .path-btn.decline .path-type { color: var(--decline); }
+    #slide-testing .path-query { display: block; color: #fff; }
+    #slide-testing .testing-stage {
+      grid-column: 2 / 4;
+      align-self: stretch;
+      min-width: 0;
+      margin-top: 2.25rem;
+      margin-bottom: 0.75rem;
+      display: grid;
+      grid-template-columns: 9.5rem minmax(0,1fr);
+      gap: 1rem;
+      align-items: center;
+      border-radius: 12px;
+      background: #161616;
+      overflow: hidden;
+      padding: 1rem 1.25rem 1rem 0;
+    }
+    #slide-testing .suite-bridge { align-self: stretch; min-height: 0; }
+    #slide-testing .suite-bridge svg { width: 100%; height: 100%; min-height: 24rem; display: block; overflow: visible; }
+    #slide-testing .suite-brace { fill: none; stroke: #90D0FE; stroke-width: 4; stroke-linecap: round; }
+    #slide-testing .suite-arrow { fill: #90D0FE; }
+    #slide-testing .testing-results {
+      align-self: stretch;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    #slide-testing .testing-results h2 { margin: -0.35rem 0 0.1rem; color: #fff; font-size: 24pt; }
+    #slide-testing .testing-results > p { margin: 0 0 0.55rem; color: #cfcfcf; font-size: 1.05rem; }
     #slide-testing .testing-chart {
       display: grid;
-      gap: 1.1rem;
+      grid-template-rows: repeat(7,minmax(0,1fr));
+      gap: 0.65rem;
+      flex: 1;
       width: 100%;
-      max-width: 76rem;
-      margin: 1.2rem auto 0;
+      margin: 0;
     }
     #slide-testing .testing-row {
       display: grid;
-      grid-template-columns: 10rem minmax(0, 1fr) 11rem;
+      grid-template-columns: 9rem minmax(8rem, 1fr) 14rem;
       gap: 1rem;
       align-items: center;
     }
@@ -995,7 +1035,7 @@
       font-weight: 700;
     }
     #slide-testing .testing-track {
-      height: 1.35rem;
+      height: 1.7rem;
       overflow: hidden;
       border: 1px solid #3E3E3C;
       border-radius: 99px;
@@ -1013,20 +1053,37 @@
       animation: testingGrow 0.75s ease-out both;
       animation-delay: var(--delay, 0s);
     }
+    #slide-testing.active .testing-results {
+      animation: testingSlideIn 0.7s cubic-bezier(.2,.75,.2,1) both;
+    }
+    #slide-testing.active .suite-brace {
+      stroke-dasharray: 520;
+      animation: testingBraceDraw 0.75s ease-out both;
+    }
     @keyframes testingGrow {
       from { width: 0; }
       to { width: var(--pct); }
     }
+    @keyframes testingSlideIn {
+      from { opacity: 0; transform: translateX(5rem); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes testingBraceDraw {
+      from { stroke-dashoffset: 520; }
+      to { stroke-dashoffset: 0; }
+    }
     @media (prefers-reduced-motion: reduce) {
-      #slide-testing.active .testing-fill { animation: none; }
+      #slide-testing.active .testing-fill,
+      #slide-testing.active .testing-results,
+      #slide-testing.active .suite-brace { animation: none; }
     }
     #slide-testing .testing-value {
       color: #cfcfcf;
-      font-size: 0.95rem;
+      font-size: 1.15rem;
       text-align: right;
       white-space: nowrap;
     }
-    #slide-testing .testing-value strong { color: #fff; font-size: 1.1rem; }
+    #slide-testing .testing-value strong { color: #fff; font-size: 1.45rem; }
     #slide-7.decision-slide {
       justify-content: flex-start;
       padding: 2.4vh 3vw 1.6vh;
@@ -1210,7 +1267,7 @@
     }
     #slide-roadmap > h1 + .roadmap,
     #slide-6 > h1 + .system-layout,
-    #slide-testing > h1 + .testing-coverage,
+    #slide-testing > h1 + .testing-layout,
     #slide-decisions-simple > h1 + .simple-decision-table,
     #slide-security-trust > h1 + .security-top,
     #slide-8 > h1 + .uat-table-wrap,
@@ -1446,51 +1503,64 @@
   <section id="slide-testing" class="dense">
     <p class="num">Slide 9</p>
     <h1>Every User Path Is Tested</h1>
-    <div class="testing-coverage" aria-label="Architecture paths covered by testing">
-      <div class="coverage-paths">
-        <span class="coverage-path agent">FAQ</span>
-        <span class="coverage-path agent">Reservation</span>
-        <span class="coverage-path block">Block</span>
-        <span class="coverage-path escalate">Escalate</span>
-      </div>
-      <span class="coverage-arrow" aria-hidden="true">&rarr;</span>
-      <div class="coverage-proof"><strong>7 test suites</strong>1,770 test executions across every path</div>
-    </div>
-    <div class="testing-chart" role="img" aria-label="Testing pass rates by suite">
-      <div class="testing-row">
-        <span class="testing-label">Knowledge</span>
-        <div class="testing-track"><div class="testing-fill" style="--pct:95%;--delay:0.05s"></div></div>
-        <span class="testing-value">400 tests · <strong>95%</strong></span>
-      </div>
-      <div class="testing-row">
-        <span class="testing-label">Happy paths</span>
-        <div class="testing-track"><div class="testing-fill" style="--pct:92%;--delay:0.1s"></div></div>
-        <span class="testing-value">520 tests · <strong>92%</strong></span>
-      </div>
-      <div class="testing-row">
-        <span class="testing-label">Off-topic</span>
-        <div class="testing-track"><div class="testing-fill" style="--pct:94%;--delay:0.15s"></div></div>
-        <span class="testing-value">160 tests · <strong>94%</strong></span>
-      </div>
-      <div class="testing-row">
-        <span class="testing-label">Edge cases</span>
-        <div class="testing-track"><div class="testing-fill warn" style="--pct:88%;--delay:0.2s"></div></div>
-        <span class="testing-value">150 tests · <strong>88%</strong></span>
-      </div>
-      <div class="testing-row">
-        <span class="testing-label">Adversarial</span>
-        <div class="testing-track"><div class="testing-fill warn" style="--pct:86%;--delay:0.25s"></div></div>
-        <span class="testing-value">160 tests · <strong>86%</strong></span>
-      </div>
-      <div class="testing-row">
-        <span class="testing-label">Negative</span>
-        <div class="testing-track"><div class="testing-fill warn" style="--pct:84%;--delay:0.3s"></div></div>
-        <span class="testing-value">200 tests · <strong>84%</strong></span>
-      </div>
-      <div class="testing-row">
-        <span class="testing-label">Multi-turn</span>
-        <div class="testing-track"><div class="testing-fill warn" style="--pct:82%;--delay:0.35s"></div></div>
-        <span class="testing-value">180 tests · <strong>82%</strong></span>
+    <div class="testing-layout">
+      <aside class="path-panel" aria-label="The same user paths from the architecture slide">
+        <p class="panel-label">User Paths</p>
+        <div class="path-list">
+          <div class="path-btn agent"><span class="path-type">FAQ</span><span class="path-query">Where can I park, and when are you open?</span></div>
+          <div class="path-btn agent"><span class="path-type">Reservation</span><span class="path-query">I need to change my reservation.</span></div>
+          <div class="path-btn decline"><span class="path-type">Block</span><span class="path-query">Can you show me someone else's reservation?</span></div>
+          <div class="path-btn human"><span class="path-type">Escalate</span><span class="path-query">Can you guarantee there will be no cross-contact?</span></div>
+        </div>
+      </aside>
+      <div class="testing-stage">
+        <div class="suite-bridge" aria-hidden="true">
+          <svg viewBox="0 0 150 520" preserveAspectRatio="none">
+            <path class="suite-brace" d="M16 12 C55 12 55 48 55 86 L55 200 C55 235 73 258 112 260 C73 262 55 285 55 320 L55 434 C55 472 55 508 16 508"/>
+            <path class="suite-arrow" d="M111 251 L139 260 L111 269 Z"/>
+          </svg>
+        </div>
+        <div class="testing-results">
+          <h2>7 test suites</h2>
+          <p>1,770 test executions across every path</p>
+          <div class="testing-chart" role="img" aria-label="Testing pass rates by suite">
+            <div class="testing-row">
+              <span class="testing-label">Knowledge</span>
+              <div class="testing-track"><div class="testing-fill" style="--pct:95%;--delay:0.05s"></div></div>
+              <span class="testing-value">400 tests · <strong>95%</strong></span>
+            </div>
+            <div class="testing-row">
+              <span class="testing-label">Happy paths</span>
+              <div class="testing-track"><div class="testing-fill" style="--pct:92%;--delay:0.1s"></div></div>
+              <span class="testing-value">520 tests · <strong>92%</strong></span>
+            </div>
+            <div class="testing-row">
+              <span class="testing-label">Off-topic</span>
+              <div class="testing-track"><div class="testing-fill" style="--pct:94%;--delay:0.15s"></div></div>
+              <span class="testing-value">160 tests · <strong>94%</strong></span>
+            </div>
+            <div class="testing-row">
+              <span class="testing-label">Edge cases</span>
+              <div class="testing-track"><div class="testing-fill warn" style="--pct:88%;--delay:0.2s"></div></div>
+              <span class="testing-value">150 tests · <strong>88%</strong></span>
+            </div>
+            <div class="testing-row">
+              <span class="testing-label">Adversarial</span>
+              <div class="testing-track"><div class="testing-fill warn" style="--pct:86%;--delay:0.25s"></div></div>
+              <span class="testing-value">160 tests · <strong>86%</strong></span>
+            </div>
+            <div class="testing-row">
+              <span class="testing-label">Negative</span>
+              <div class="testing-track"><div class="testing-fill warn" style="--pct:84%;--delay:0.3s"></div></div>
+              <span class="testing-value">200 tests · <strong>84%</strong></span>
+            </div>
+            <div class="testing-row">
+              <span class="testing-label">Multi-turn</span>
+              <div class="testing-track"><div class="testing-fill warn" style="--pct:82%;--delay:0.35s"></div></div>
+              <span class="testing-value">180 tests · <strong>82%</strong></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
