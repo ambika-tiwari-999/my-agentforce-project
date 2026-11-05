@@ -16,7 +16,7 @@
       padding: 8vh 12vw;
     }
     section.active { display: flex; }
-    .num { font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin: 0 0 0.5rem; }
+    .num { visibility: hidden; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin: 0 0 0.5rem; }
     h1 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; margin: 0; line-height: 1.15; max-width: 18ch; }
     nav {
       position: fixed;
@@ -188,10 +188,25 @@
       border: 1px solid #3E3E3C;
       border-radius: 12px;
       background: #1c1c1c;
+      transition: transform 0.7s ease, filter 0.7s ease, opacity 0.7s ease, box-shadow 0.7s ease;
     }
     #slide-roadmap .roadmap-phase:first-child {
       border-color: #90D0FE;
       background: #001E5B;
+      transform-origin: left center;
+    }
+    #slide-roadmap .roadmap-phase:nth-child(2) { transform-origin: center; }
+    #slide-roadmap .roadmap-phase:nth-child(3) { transform-origin: right center; }
+    #slide-roadmap.phase-one-focus .roadmap-phase:first-child {
+      z-index: 2;
+      transform: scale(1.15, 1.2);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    }
+    #slide-roadmap.phase-one-focus .roadmap-phase:nth-child(n+2) {
+      z-index: 0;
+      transform: scale(0.92);
+      filter: blur(4px);
+      opacity: 0.28;
     }
     #slide-roadmap .roadmap-phase:not(:last-child)::after {
       content: "›";
@@ -743,6 +758,7 @@
     #slide-3.revealed code,
     #slide-4 code { font-size: 1em; }
     @media (prefers-reduced-motion: reduce) {
+      #slide-roadmap .roadmap-phase,
       #slide-3 .split,
       #slide-3 .deal-pane,
       #slide-4 .split,
@@ -1073,6 +1089,42 @@
     .uat-table .group-data td:first-child { background: rgba(0, 179, 255, 0.3); }
     .uat-table .group-guidance td { background: rgba(46, 132, 74, 0.18); }
     .uat-table .group-guidance td:first-child { background: rgba(46, 132, 74, 0.36); }
+    #slide-roadmap,
+    #slide-6,
+    #slide-decisions-simple,
+    #slide-data-integrations,
+    #slide-security-trust,
+    #slide-8,
+    #slide-9,
+    #slide-12,
+    #slide-13,
+    #slide-7 { position: relative; }
+    #slide-roadmap > h1,
+    #slide-6 > h1,
+    #slide-decisions-simple > h1,
+    #slide-data-integrations > h1,
+    #slide-security-trust > h1,
+    #slide-8 > h1,
+    #slide-9 > h1,
+    #slide-12 > h1,
+    #slide-13 > h1,
+    #slide-7 > h1 {
+      position: absolute;
+      top: calc(4.5vh + 2.7rem);
+      left: 4.5vw;
+      width: calc(91vw - 8rem);
+      margin: 0;
+    }
+    #slide-roadmap > h1 + .roadmap,
+    #slide-6 > h1 + .system-layout,
+    #slide-decisions-simple > h1 + .simple-decision-table,
+    #slide-data-integrations > h1 + .data-table,
+    #slide-security-trust > h1 + .security-top,
+    #slide-8 > h1 + .uat-table-wrap,
+    #slide-9 > h1 + .uat-table-wrap,
+    #slide-7 > h1 + .decision-table {
+      margin-top: 5.5rem;
+    }
   </style>
 </head>
 <body>
@@ -1246,16 +1298,16 @@
   </section>
   <section id="slide-roadmap" class="dense">
     <p class="num">Slide 7</p>
-    <h1>MVP &amp; Roadmap</h1>
+    <h1>Roadmap</h1>
     <div class="roadmap">
       <article class="roadmap-phase">
         <h2 class="phase-label">Phase 1</h2>
         <p class="phase-time">Launch now</p>
         <ul>
-          <li>Website chat connected to every restaurant already in TableCraft.</li>
-          <li>Answer restaurant questions directly from each restaurant's CRM and Data 360 content.</li>
-          <li>Create, modify, or cancel reservations directly through the TableCraft Reservations API.</li>
-          <li>Require explicit diner confirmation before every reservation change and hand safety or support issues to a person.</li>
+          <li>Launch on TableCraft.com — web access is most common</li>
+          <li>Support both logged-in members and guests — maximize access</li>
+          <li>Escalate to TableCraft support — keep the burden off restaurant staff</li>
+          <li>Flex Credits — match token consumption to user demand</li>
         </ul>
       </article>
       <article class="roadmap-phase">
@@ -1519,7 +1571,9 @@
     const slides = [...document.querySelectorAll("section")];
     const prev = document.getElementById("prev");
     const next = document.getElementById("next");
+    const roadmapSlide = document.getElementById("slide-roadmap");
     let i = 0;
+    let roadmapFocusTimer = null;
 
     function splitOf(index) {
       return slides[index].querySelector(".split");
@@ -1540,6 +1594,13 @@
         slides[i].classList.toggle("workforce", enteredFromNextSlide);
       }
       slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
+      clearTimeout(roadmapFocusTimer);
+      roadmapSlide.classList.remove("phase-one-focus");
+      if (slides[i] === roadmapSlide) {
+        roadmapFocusTimer = setTimeout(() => {
+          if (slides[i] === roadmapSlide) roadmapSlide.classList.add("phase-one-focus");
+        }, 500);
+      }
       prev.disabled = i === 0;
       next.disabled = i === slides.length - 1 && !(splitOf(i) && !splitOf(i).classList.contains("revealed"));
       const num = String(i + 1);
