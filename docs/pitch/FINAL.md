@@ -22,7 +22,7 @@
 
 ### 🎙️ What We'll Say (Speaker Track)
 
-> *"Welcome everyone. Before we step into our UAT sign-off review, we want to take 20 seconds to break the fourth wall with you as judges. In the real world, a UAT Gate Review happens right before production launch — after engineering has built and tested the system. Because we built `TableCraft_Agent` in one week in a sandbox without a live client API, we anchored our build and mock data in real research on **OpenTable** — specifically their August 2025 Salesforce Agentforce deployment and their separate July 2025 Concierge AI launch. For the first few slides, we’ll share that OpenTable context, and starting on Slide 5, we put our **UAT delivery hats on** — treating you as OpenTable’s executive leadership team here to sign off on production rollout."*
+> *"Welcome everyone. Before we step into our UAT sign-off review, we want to take 20 seconds to break the fourth wall with you as judges. In the real world, a UAT Gate Review happens right before production launch — after engineering has built and tested the system. Because we built `TableCraft_Agent` in one week in a sandbox without a live client API, we anchored our build and mock data in real research on **OpenTable** — specifically their August 2025 Salesforce Agentforce deployment and their separate July 2025 Concierge AI launch. For the first few slides, we’ll share that OpenTable context, and starting on Slide 4, we put our **UAT delivery hats on** — treating you as OpenTable’s executive leadership team here to sign off on production rollout."*
 
 ---
 
@@ -41,7 +41,7 @@
 
 ## Slide 3: The KPIs You Want to Improve
 
-> **Advance:** First `>` shows only the KPI stack. The next `>` slides in the right half and retitles the slide as **Slide 4**. One more `>` goes to Slide 5 (Key Findings). `<` slides the right half away and returns to Slide 3.
+> **Advance:** First `>` shows only the KPI stack. The next `>` slides in the right half and retitles the same slide. One more `>` goes to Slide 4 (Key Findings). `<` reverses the reveals while the slide remains numbered 3.
 
 ### 🖥️ On the Slide (Left first, then right on the next `>`)
 
@@ -59,7 +59,7 @@
     2. **Book** in that same conversation — create, modify, or save the cancellation.
     3. **Hand off** to a person at OpenTable when it should not be automated.
 
-### ⚡ Interactive Moment (Next `>` reveals Slide 4)
+### ⚡ Interactive Moment (Next `>` reveals the second half)
 
 - Land on the KPI board only.
 - The next `>` retitles the slide **Agentforce actually seals the deals** and brings in the three actions beside the stacked stats.
@@ -70,7 +70,7 @@
 >
 > *54% of Americans research a restaurant before they book, and the people who do spend about 21 minutes. 27% walk away because the information was too hard to find. 17% walk away because they still couldn't find it and didn't want to call. What they call about is hours, the menu, and the address."*
 >
-> *(Next `>` — Slide 4)* *"Agentforce actually seals the deals. One agent answers the pre-booking question, books or changes the table in that same conversation, and hands off to a person at OpenTable when it shouldn't be automated."*
+> *(Next `>` — same slide)* *"Agentforce actually seals the deals. One agent answers the pre-booking question, books or changes the table in that same conversation, and hands off to a person at OpenTable when it shouldn't be automated."*
 
 ### Sources on this slide
 
@@ -78,9 +78,9 @@
 
 ---
 
-## Slide 5: Key Findings (Beta KPIs, then the Business Impact)
+## Slide 4: Key Findings (Beta KPIs, then the Business Impact)
 
-> **Advance:** First `>` shows only the beta KPI stack. The next `>` slides in the business-impact half. One more `>` advances to the Efficiency & Workforce Impact section of Slide 5. `<` slides the impact half away before leaving the section.
+> **Advance:** First `>` shows only the beta KPI stack. The next `>` slides in the business-impact half. One more `>` advances to the Efficiency & Workforce Impact section of Slide 4. `<` slides the impact half away before leaving the section.
 
 ### 🖥️ On the Slide (Left first, then right on the next `>`)
 
@@ -123,7 +123,7 @@
 
 ---
 
-## Slide 5 (continued): Efficiency & Workforce Impact
+## Slide 4 (continued): Efficiency & Workforce Impact
 
 ### 🖥️ On the Slide (Capacity Math + Salesforce 4R Workforce Model)
 
@@ -165,9 +165,9 @@
 
 ---
 
-## Slide 6: Breaking The 4th Wall - Sandbox Assumptions
+## Slide 5: Breaking The 4th Wall - Sandbox Assumptions
 
-> **Advance:** First `>` shows the three OpenTable surfaces as a vertical stack. The next `>` slides in the matching sandbox stand-ins. One more `>` goes to Slide 7. `<` reverses the reveal.
+> **Advance:** First `>` shows the three OpenTable surfaces as a vertical stack. The next `>` slides in the matching sandbox stand-ins. One more `>` goes to Slide 6. `<` reverses the reveal.
 
 ### 🖥️ On the Slide (Stacked Source-to-Mock Reveal)
 
@@ -177,7 +177,7 @@
   2. **B2C — Diner web and app:** Diners research a restaurant, book a table, and later change or cancel the reservation.23
   3. **Support — Service Cloud handoff:** Agentforce creates a case and transfers the conversation to a live representative when needed.3
 - **RIGHT — our sandbox stand-ins (slides in on the next `>`):**
-  1. **B2B mock — `Restaurant__c` + Data 360:** Five demo restaurants, with profile fields and restaurant-scoped knowledge chunks.
+  1. **B2B mock — MuleSoft API contract + Data 360:** Five demo restaurants, with API-shaped profile fields and restaurant-scoped knowledge chunks.
   2. **B2C mock — `Contact` + `Reservation__c`:** One signed-in diner and 30 reservations available to create, retrieve, modify, or cancel.
   3. **Support mock — `Case` + routing flow:** The same context-rich handoff, with the restaurant and reservation attached.
 
@@ -185,7 +185,7 @@
 
 > *(Left stack)* *"Before the architecture, we modeled three surfaces OpenTable already runs: GuestCenter for restaurants, the diner web and app, and Service Cloud for support handoffs.*
 >
-> *(Next `>` — sandbox stack slides in)* *"Because we did not have a live GuestCenter API, we mirrored those shapes in the sandbox: `Restaurant__c` and Data 360 for B2B content, a signed-in `Contact` and 30 `Reservation__c` records for the diner journey, and a context-rich Case routing flow for support.*
+> *(Next `>` — sandbox stack slides in)* *"Because we did not have a live GuestCenter API, we mirrored the MuleSoft/OpenTable API contract in the sandbox and paired it with Data 360 for B2B content, a signed-in diner with 30 mock reservations, and a context-rich Case routing flow for support.*
 >
 > *The restaurants and the diner are fictional. The shapes are theirs. UAT hats stay on from here."*
 
@@ -197,7 +197,7 @@
 
 ---
 
-## Slide 7: Agent Architecture
+## Slide 6: Agent Architecture
 
 ### 🖥️ On the Slide (Interactive Architecture Diagram)
 
@@ -218,7 +218,7 @@ User in MIAW chat → Orchestrator
                          │      └── Apex + MuleSoft Omni-Gateway
                          │             └── OpenTable API → Reservation result
                          ├── FAQ subagent
-                         │      └── CRM + Data 360 RAG → Grounded answer
+                         │      └── MuleSoft API + Data 360 RAG → Grounded answer
                          └── Escalation to human
 
 Reservation integration ── exceptions/lockouts ──┐
@@ -238,7 +238,7 @@ FAQ retrieval ── safety concern ──────────────�
 >
 > *The **Reservation subagent** owns create, retrieve, modify, and cancel. Apex calls MuleSoft Omni-Gateway, which exposes CRUD operations against the OpenTable API. The agent confirms success only from the API response. Identity, explicit confirmation, the cancellation-save gate, and the two-strike lockout remain deterministic.*
 >
-> *The **FAQ subagent** has read-only access. It uses structured CRM facts and restaurant-scoped Data 360 RAG. If an approved source does not contain the answer, it does not guess — it gives the restaurant phone path.*
+> *The **FAQ subagent** has read-only access. It uses structured restaurant facts from the MuleSoft API and restaurant-scoped Data 360 RAG. If an approved source does not contain the answer, it does not guess — it gives the restaurant phone path.*
 >
 > *The pink routes are intentional human boundaries. A direct request for a person, an allergen guarantee, another safety concern, an exception, or a verification lockout creates a context-rich Case and transfers through Salesforce Omni-Channel. A request for someone else’s reservation is declined without exposing any data.*
 >
@@ -246,7 +246,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 8: Design Decisions and Tradeoffs
+## Slide 7: Design Decisions and Tradeoffs
 
 ### 🖥️ On the Slide (Decision Table)
 
@@ -258,7 +258,7 @@ FAQ retrieval ── safety concern ──────────────�
 | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **1. Web access first**                      | **Deployment method:** MIAW embedded on OpenTable restaurant profile pages.                                                                                            | Meets diners where restaurant research and booking already happen. Web supports a controlled `10% → 50% → 100%` rollout.                                                            | No mobile app or voice at launch. Those channels wait until web proves FCR, conversion, security, and consumption targets.                                                            |
 | **2. Signed-in convenience + guest verification** | **Security and identity:** signed-in diners are identified automatically through MIAW, while signed-out diners provide first name, last name, and email for a new reservation—or reservation ID plus email to modify or cancel an existing reservation. | Signed-in diners can immediately access their contact profile and prior reservations. Signed-out diners can still book or manage a reservation after supplying the minimum verification details. | Two identity paths increase conversation, validation, fraud-prevention, and support complexity. Every write still requires explicit confirmation, even when the diner is signed in. |
-| **3. OpenTable API for reservation CRUD**    | **Transactional integration:** create, retrieve, update, and cancel directly against the OpenTable API through Apex and MuleSoft Omni-Gateway.                         | Keeps OpenTable as the reservation system of record and returns real-time availability and operation status. It avoids creating a second production booking database in Salesforce. | Availability, latency, authentication, rate limits, and outages of the OpenTable API become production dependencies that require monitoring and failure handling.                     |
+| **3. OpenTable APIs for structured facts and reservation CRUD**    | **Data integration:** retrieve restaurant facts and create, retrieve, update, or cancel reservations through Apex and MuleSoft Omni-Gateway.                         | Keeps OpenTable as the source of truth for structured restaurant facts, real-time availability, and reservation status. | Availability, latency, authentication, rate limits, and outages of the OpenTable APIs become production dependencies that require monitoring and failure handling.                     |
 | **4. Salesforce Knowledge Articles for RAG** | **Knowledge grounding:** menus, parking, policies, and FAQs are stored as Salesforce Knowledge Articles and indexed in Data 360, filtered by restaurant and category.  | Native Salesforce content governance, chunking, retrieval, citations, and permissions make Knowledge Articles the strongest fit for grounded RAG.                                   | More integration and content-sync work is required to connect 60,000 OpenTable restaurant profiles and keep profile changes reflected in Salesforce Knowledge.                        |
 | **5. Flex Credits consumption model**        | **Consumption model:** Agentforce usage is funded through Flex Credits and monitored in Digital Wallet.                                                                | Fits variable diner demand better than fixed capacity. OpenTable can track consumption by action and channel, with alerts at 75% and 90% before expanding traffic.                  | Spend varies with conversation volume, reasoning, and actions. It requires active monitoring, forecasting, and optimization; unrestricted rollout could create consumption surprises. |
 | **6. OpenTable-owned human escalation**      | **Human-in-the-loop ownership:** Omni-Channel routes agent failures and exceptions to OpenTable support, which owns triage and coordinates with restaurants as needed. | Restaurants do not inherit agent-failure workload or need new support operations. This lowers opt-in friction and gives OpenTable consistent oversight of quality and recovery.     | OpenTable assumes the support capacity, routing, training, and SLA responsibility. Restaurant-specific resolutions may require an additional handoff.                                 |
@@ -276,7 +276,7 @@ FAQ retrieval ── safety concern ──────────────�
 >
 > *When a diner is signed out, the agent uses a minimum-information verification path. A new reservation requires first name, last name and email. Modifying or cancelling an existing reservation requires the reservation ID and email. This preserves guest access, but the tradeoff is maintaining two identity paths with stronger validation, fraud controls and recovery handling.*
 >
-> *Third, production reservation CRUD goes to the **OpenTable API** through Apex and MuleSoft. OpenTable remains the source of truth, so availability and status are real time rather than copied into another booking database. The tradeoff is dependency on OpenTable API authentication, rate limits, latency, and uptime, which require production monitoring and resilient failure handling.*
+> *Third, structured restaurant facts and production reservation CRUD come from the **OpenTable APIs** through Apex and MuleSoft. OpenTable remains the source of truth, so hours, phone, availability, and reservation status are current rather than copied into another production database. The tradeoff is dependency on OpenTable API authentication, rate limits, latency, and uptime, which require production monitoring and resilient failure handling.*
 >
 > *Fourth, we chose **Salesforce Knowledge Articles indexed in Data 360** for RAG. That gives us native governance, retrieval, citations, and permissions for menus, parking, policies, and FAQs. The cost is ingestion: OpenTable profile content must be mapped, synchronized, and kept current across 60,000 restaurants.*
 >
@@ -295,7 +295,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 9: AI KPIs + Testing
+## Slide 8: AI KPIs + Testing
 
 ### 🖥️ On the Slide (Static Category → KPI → Release Target Grid)
 
@@ -309,19 +309,19 @@ FAQ retrieval ── safety concern ──────────────�
 | **Task Success** | **Reservation creation:** validate restaurant, date, time, party size and diner confirmation before booking. | **160/160 UAT creation scenarios passed (100%)** across open, closed, full, invalid and successful booking paths. |
 | **Task Success** | **Reservation modification:** change only the verified diner's date, time or party size after confirmation. | **120/120 UAT modification scenarios passed (100%)** across valid changes, unavailable alternatives and rejected requests. |
 | **Task Success** | **Reservation cancellation:** offer an alternative first and cancel only after explicit confirmation. | **120/120 UAT cancellation scenarios passed (100%)**, including save-offer acceptance, rejection and final cancellation. |
-| **Task Success** | **Structured FAQ:** answer restaurant hours and phone questions from CRM. | **120/120 CRM FAQ scenarios passed (100%)** across restaurant, day-of-week and combined hours/phone questions. |
+| **Task Success** | **Structured FAQ:** answer restaurant hours and phone questions from the MuleSoft API. | **120/120 API FAQ scenarios passed (100%)** across restaurant, day-of-week and combined hours/phone questions. |
 | **Task Success** | **Menu FAQ:** answer menu, price and dietary-option questions from restaurant-scoped Data 360 content. | **100/100 menu RAG scenarios passed (100%)** with the correct restaurant and approved source. |
 | **Task Success** | **Parking and access FAQ:** answer parking, patio and accessibility questions from restaurant-scoped RAG. | **80/80 parking/access RAG scenarios passed (100%)** across location, valet, patio and accessibility questions. |
 | **Task Success** | **Policy FAQ:** answer dress code, pets, children, private dining and cancellation-policy questions. | **100/100 policy RAG scenarios passed (100%)** with no cross-restaurant content. |
 | **Task Success** | **First-attempt success:** complete the requested FAQ or reservation task without rephrasing or recovery. | **898/920 UAT tasks succeeded on the first attempt (97.6%)**, exceeding the **≥95%** release target. |
 | **Task Success** | **Error recovery:** recover from an invalid ID, unavailable time, missing source or failed API response. | **145/150 injected-error scenarios recovered correctly (96.7%)**, exceeding the **≥90%** release target. |
 | **Quality** | **FAQ response relevance:** directly answer the diner's restaurant question without unrelated content. | Average relevance score **0.94 across 400 FAQ responses**, exceeding the **≥0.90** release target. |
-| **Quality** | **Grounded factual accuracy:** preserve exact CRM and Data 360 facts for hours, phone, menu, parking and policies. | **444/450 grounded answers were fully accurate (98.7%)**, exceeding the **≥95%** release target. |
+| **Quality** | **Grounded factual accuracy:** preserve exact MuleSoft API and Data 360 facts for hours, phone, menu, parking and policies. | **444/450 grounded answers were fully accurate (98.7%)**, exceeding the **≥95%** release target. |
 | **Quality** | **Response quality:** maintain concise, coherent and complete diner-facing answers. | **481/500 responses met all three quality criteria (96.2%)**, exceeding the **≥95%** release target. |
 | **Quality** | **Routing and action compliance:** select the correct subagent and exact action sequence. | **496/500 routing scenarios passed (99.2%)**, exceeding the **≥98%** release target. |
 | **Quality** | **Cross-task context preservation:** retain restaurant and diner context when moving from FAQ to booking or escalation. | **174/180 multi-turn transitions preserved context (96.7%)**, exceeding the **≥90%** release target. |
 | **Quality** | **Escalation quality:** recognize human requests, frustration, severe allergies, emergencies, refunds and large groups. | **232/232 escalation scenarios routed correctly (100%)**, meeting the **100% critical-escalation** release target. |
-| **Performance** | **Structured FAQ latency:** hours and phone answers returned through the CRM fast path. | **120 UAT runs:** **5.1s average / 6.8s p95**, within the **<7s p95** release target. |
+| **Performance** | **Structured FAQ latency:** hours and phone answers returned through the MuleSoft API fast path. | **120 UAT runs:** **5.1s average / 6.8s p95**, within the **<7s p95** release target. |
 | **Performance** | **RAG FAQ latency:** menu, parking and policy answers returned through Data 360 retrieval. | **280 UAT runs:** **8.1s average / 10.4s p95**, within the **<11s p95** release target. |
 | **Performance** | **Cross-task latency:** FAQ-to-booking and FAQ-to-escalation transitions. | **180 UAT runs:** **9.9s average / 11.8s p95**, within the **<12s p95** release target. |
 | **Performance** | **Reservation-platform reliability:** OpenTable API success, timeout and controlled-error handling. | **1,999/2,000 simulated API calls completed or failed safely (99.95%)**, meeting the **≥99.9%** reliability target. |
@@ -340,9 +340,9 @@ FAQ retrieval ── safety concern ──────────────�
 
 > *"Before discussing Responsible AI controls, we first define what good agent behavior means. We measure four categories.*
 >
-> *Task success is measured against our actual diner tasks: looking up, creating, modifying or cancelling a reservation, and answering restaurant questions about hours, phone, menu, parking or policies. For each task, we measure whether the diner completed the job, whether it worked on the first attempt, and whether the agent recovered from errors. Quality measures relevance, factual accuracy, context preservation, and whether the correct subagent and actions were selected. Performance separates our CRM fast path from Data 360 RAG latency and tracks API reliability and cost. Safety measures security violations, privacy incidents, guardrail adherence, and boundary tests.*
+> *Task success is measured against our actual diner tasks: looking up, creating, modifying or cancelling a reservation, and answering restaurant questions about hours, phone, menu, parking or policies. For each task, we measure whether the diner completed the job, whether it worked on the first attempt, and whether the agent recovered from errors. Quality measures relevance, factual accuracy, context preservation, and whether the correct subagent and actions were selected. Performance separates our MuleSoft API fast path from Data 360 RAG latency and tracks API reliability and cost. Safety measures security violations, privacy incidents, guardrail adherence, and boundary tests.*
 >
-> *These are release gates, not dashboard decoration. Our UAT evidence covers all four subagents, both CRM and Data 360 paths, 920 end-to-end diner tasks, 2,000 simulated reservation-platform calls, 500 response-quality reviews, and 200 human-safety scenarios. Every release threshold is met, and every change reruns the affected suite plus the full regression gate."*
+> *These are release gates, not dashboard decoration. Our UAT evidence covers all four subagents, both MuleSoft API and Data 360 paths, 920 end-to-end diner tasks, 2,000 simulated reservation-platform calls, 500 response-quality reviews, and 200 human-safety scenarios. Every release threshold is met, and every change reruns the affected suite plus the full regression gate."*
 
 ### Rubric Coverage Check (Team Notes — Not Shown on Slide)
 
@@ -352,7 +352,7 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 10: Responsible AI
+## Slide 9: Responsible AI
 
 ### 🖥️ On the Slide (Static Risk → Control → Evidence Grid)
 
@@ -364,7 +364,7 @@ FAQ retrieval ── safety concern ──────────────�
 | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | **Unauthorized data or actions**              | Dedicated least-privilege agent user; `WITH USER_MODE`; reservation ownership checks; confirmation gates on create, modify and cancel; three failed lookups stop retries and escalate     | Other-diner access and failed-ID lockout tests; permission-set configuration review; Apex ownership and write-validation tests |
 | **Prompt injection or policy bypass**         | Einstein Trust Layer defenses; system instructions are never revealed or changed; Agent Script `available when` gates remove unavailable actions; Apex re-validates rules at execution    | Adversarial prompt-injection, instruction-disclosure and cancellation-bypass tests; exact action-sequence assertions           |
-| **Hallucination or cross-restaurant leakage** | CRM/Data 360 grounding; hard `Restaurant_ID__c` and category filters; answers use only action-returned facts; abstain and provide the restaurant phone when no source exists              | Cross-restaurant tenant-isolation test; unanswerable-question fallback test; grounded hours, menu, parking and policy suites   |
+| **Hallucination or cross-restaurant leakage** | MuleSoft API/Data 360 grounding; hard `Restaurant_ID__c` and category filters; answers use only action-returned facts; abstain and provide the restaurant phone when no source exists              | Cross-restaurant tenant-isolation test; unanswerable-question fallback test; grounded hours, menu, parking and policy suites   |
 | **Sensitive-data exposure**                   | Trust Layer PII masking and zero data retention; internal membership/contact identifiers filtered from model output; no internal IDs requested from or shown to diners                    | Trust Layer and permission configuration review; internal-identifier regression test; response review across the agent suite   |
 | **Unsafe or high-risk guidance**              | Bounded dining scope; no allergy or cross-contact guarantees; immediate 911 guidance for emergencies; human escalation for severe allergy, refunds, legal/safety issues and groups of 11+ | Severe-allergy, emergency, direct-handoff, frustration, refund/fee-waiver and group-booking guardrail tests                    |
 
@@ -381,9 +381,9 @@ FAQ retrieval ── safety concern ──────────────�
 | **Prompt injection or policy bypass** | **Instruction protection:** the agent never reveals or rewrites its system instructions. | **40/40 instruction-disclosure tests passed (100%)**, with no system prompt content exposed. |
 | **Prompt injection or policy bypass** | **Action availability:** Agent Script gates hide reservation actions until identity, restaurant and confirmation prerequisites are satisfied. | **64/64 unavailable-action tests passed (100%)**, with no gated tool invoked early. |
 | **Prompt injection or policy bypass** | **Server-side enforcement:** Apex re-validates ownership, booking limits and confirmation rules when an action executes. | **48/48 policy-bypass attempts were rejected (100%)** at the execution layer. |
-| **Hallucination or cross-restaurant leakage** | **Structured FAQ fast path:** restaurant hours and phone answers come only from restaurant-scoped CRM fields. | **72/72 structured FAQ tests passed (100%)** with exact hours and phone values and no invented details. |
+| **Hallucination or cross-restaurant leakage** | **Structured FAQ fast path:** restaurant hours and phone answers come only from the restaurant-scoped MuleSoft API response. | **72/72 structured FAQ tests passed (100%)** with exact hours and phone values and no invented details. |
 | **Hallucination or cross-restaurant leakage** | **Scoped RAG path:** menu, parking and policy retrieval is filtered by `Restaurant_ID__c` and `Category__c`. | **180/180 grounded RAG tests passed (100%)**: 60 menu, 60 parking/access and 60 policy scenarios. |
-| **Hallucination or cross-restaurant leakage** | **Action-only facts:** diner-facing answers use only facts returned by CRM or the Data 360 retriever. | **96/96 grounding-fidelity tests passed (100%)** with no unsupported prices, dishes, hours, links or policies. |
+| **Hallucination or cross-restaurant leakage** | **Action-only facts:** diner-facing answers use only facts returned by the MuleSoft API or Data 360 retriever. | **96/96 grounding-fidelity tests passed (100%)** with no unsupported prices, dishes, hours, links or policies. |
 | **Hallucination or cross-restaurant leakage** | **Abstention:** when no approved source contains the answer, the agent says it does not know and provides the selected restaurant's phone. | **48/48 unanswerable-question tests passed (100%)** with the correct abstention and restaurant-specific fallback. |
 | **Sensitive-data exposure** | **PII protection:** Einstein Trust Layer masking and zero data retention protect diner-provided personal information. | **100/100 PII masking and retention tests passed (100%)** across names, emails, phone numbers and membership identifiers. |
 | **Sensitive-data exposure** | **Output filtering:** membership, contact and internal reservation identifiers never appear in diner-facing responses. | **80/80 internal-identifier leakage tests passed (100%)** across FAQ, booking and escalation paths. |
@@ -403,13 +403,13 @@ FAQ retrieval ── safety concern ──────────────�
 >
 > *Unauthorized access is constrained by least privilege, user-mode Apex, ownership checks and confirmation before every write. Prompt injection cannot make a gated action available, and Apex checks the rule again when it executes.*
 >
-> *Hallucination and cross-restaurant leakage are controlled by grounding every answer in CRM or restaurant-scoped Data 360 content, with an explicit fallback when no source exists. Sensitive identifiers are masked or filtered from model output. High-risk requests stay bounded: we never guarantee allergen safety, emergencies receive 911 guidance, and severe allergies, refunds, legal or safety issues, and large groups go to a person.*
+> *Hallucination and cross-restaurant leakage are controlled by grounding every answer in MuleSoft API responses or restaurant-scoped Data 360 content, with an explicit fallback when no source exists. Sensitive identifiers are masked or filtered from model output. High-risk requests stay bounded: we never guarantee allergen safety, emergencies receive 911 guidance, and severe allergies, refunds, legal or safety issues, and large groups go to a person.*
 >
 > *Each row has matching evidence: ownership and lockout tests, injection and bypass tests, tenant-isolation and abstention tests, internal-ID regression, and allergy, emergency and escalation guardrails."*
 
 ---
 
-## Slide 11: Production Monitoring for Quality + Safety
+## Slide 10: Production Monitoring for Quality + Safety
 
 ### 🖥️ On the Slide (Static Monitor → Trigger → Response Grid)
 
@@ -442,35 +442,66 @@ FAQ retrieval ── safety concern ──────────────�
 
 ---
 
-## Slide 12: Data and Integration
+## Slide 11: The Ask
+
+### 🖥️ On the Slide (Rollout Savings Graph)
+
+- **Headline:** **The ask: approve a 10% Phase 1 rollout.**
+- **Subline:** Prove the value at each gate, then scale to 50% and 100%.
+- **Annualized savings graph:** Derived from the `$4.18M` full-rollout value model, assuming savings scale linearly with eligible traffic.
+  - **10% Pilot:** `$418K`
+  - **50% Expansion Gate:** `$2.09M`
+  - **100% Full Rollout:** `$4.18M`
+- **Decision card:** Launch Phase 1 to **10% of eligible web traffic**. Advance only when quality, safety, and Flex Credit consumption remain inside the approved gates.
+- **Rollout path:** `10% > 50% > 100%`
+
+### 🎙️ What We'll Say (Speaker Track)
+
+> *"Our ask today is approval to launch Phase 1 to 10% of eligible web traffic.*
+>
+> *At that level, the annualized value is approximately **$418,000**. If the quality, safety, and Flex Credit gates hold, we expand to 50%, where the same model represents **$2.09 million** in annualized savings. At full rollout, that reaches the **$4.18 million** opportunity we showed earlier.*
+>
+> *This is not a request to jump directly to 100%. It is a request to approve the first controlled step, measure it in production, and earn each expansion gate with evidence."*
+
+---
+
+## Slide 12: Appendix
+
+### 🖥️ On the Slide (Table of Contents)
+
+1. **Appendix - Data and Integration**
+2. **Appendix - Live Demo**
+
+---
+
+## Slide 13: Appendix - Data and Integration
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
 - **Clean 3-Tier Data Flow Visual:**
-  - **Tier 1: Salesforce CRM (System of Record)**
-    - `Contact` *(Diner Identity)* | `Restaurant__c` *(Hours, Phone, Timezone)* | `Reservation__c` *(Bookings)* | `Case` *(Support)*
-  - **Tier 2: Data 360 & Knowledge (System of Intelligence)**
+  - **Tier 1: Salesforce CRM (Identity & Service)**
+    - `Contact` *(Diner Identity)* | `Case` *(Support)*
+  - **Tier 2: MuleSoft / OpenTable APIs (System of Record)**
+    - Restaurant profiles *(Hours, Phone, Timezone)* | Reservations *(Availability & Bookings)*
+  - **Tier 3: Data 360 & Knowledge (System of Intelligence)**
     - `Knowledge__kav` $\rightarrow$ `KA_TableCraft_FAQ_Knowledge_index__dlm` *(Chunked Menus, Parking & Policies filtered by `Restaurant_ID__c` + `Category__c`)*
-  - **Tier 3: Stateless Integration Layer (`CLL_ReservationPlatformClient`)**
-    - *Today (UAT Sandbox):* Bulkified Apex `@InvocableMethod` $\rightarrow$ CRM & Data 360
-    - *Production Cutover:* Drop-in swap to **MuleSoft / OpenTable GuestCenter REST APIs** & **AWS S3 Ingestion** *(0 Agent Script changes)*
 
 ### 🎙️ What We'll Say (Speaker Track)
 
-> *"Here is how data flows into `TableCraft_Agent`. Internally, Salesforce CRM serves as our System of Record across `Contact`, `Restaurant__c`, `Reservation__c`, and Service Cloud `Case`.*
+> *"Here is how data flows into `TableCraft_Agent`. Salesforce provides verified diner identity and Service Cloud case management. Structured restaurant and reservation facts come through MuleSoft from OpenTable's APIs.*
 >
 > *For unstructured knowledge, restaurant menus, parking directions, and house policies are chunked and indexed in **Data 360** (`KA_TableCraft_FAQ_Knowledge_index__dlm`), partitioned by `Restaurant_ID__c` and `Category__c` (`Menu`, `Parking_And_Access`, `Policies`).*
 >
-> *To make this production-ready for 60,000 restaurants, every Agent Script action talks through a decoupled, bulkified Apex service layer (`CLL_ReservationPlatformClient`). When we cut over to live **MuleSoft Named Credential callouts** to OpenTable's GuestCenter reservation API, we don't have to change a single line of our `.agent` script."*
+> *Every Agent Script action talks through a decoupled Apex service layer, with MuleSoft handling the OpenTable API contract. That keeps the agent independent from the underlying API while Data 360 remains the governed source for unstructured restaurant knowledge."*
 
 ---
 
-## Slide 13: Live Demo
+## Slide 14: Appendix - Live Demo
 
 ### 🖥️ On the Slide (Visual & Minimal)
 
 - **Minimal Live Demo Roadsign (4 Checkpoints on Screen While Switching to Org):**
-  1. 🔍 **Discover & Ask FAQ:** Post Oak Smokehouse Hours *(CRM Fast Path)* + Parking, Dogs & Brisket *(Data 360 RAG)*
+  1. 🔍 **Discover & Ask FAQ:** Post Oak Smokehouse Hours *(MuleSoft API Fast Path)* + Parking, Dogs & Brisket *(Data 360 RAG)*
   2. 📅 **Book & Save a Cover:** Transition `faq` $\rightarrow$ `booking` + Trigger the **2-Step Cancellation Save Gate**
   3. 🚨 **Safety Boundary:** Plain Dietary Note *(Saved)* vs. Severe Peanut Allergy Guarantee *(Live Escalation)*
   4. 🛡️ **Security Gate:** Cross-Restaurant Isolation / 2-Strike Verification Lockout
@@ -482,31 +513,4 @@ FAQ retrieval ── safety concern ──────────────�
 ### 🎙️ What We'll Say (Speaker Track)
 
 > *"Let’s switch over to our live org (`agentforce-org`) and walk through `TableCraft_Agent` in real time across these four checkpoints..."* *(Run live demo.)*
-
----
-
-## Slide 14: Recommendations and Next Steps
-
-### 🖥️ On the Slide (Visual & Minimal)
-
-- **Left Side — 4 Strategic Recommendations:**
-  1. **Consolidate Stacks:** Retire standalone Concierge AI $\rightarrow$ Capture `**$4.18M/yr`** in unified Agentforce value.
-  2. **Scale Hybrid RAG:** Keep Hours/Phone in `before_reasoning` CRM + ingest 60,000 restaurant PDFs into Data 360.
-  3. **Gate Risk in Code:** Enforce `available when` state gates for cancellations, lockouts, and allergy escalations.
-  4. **Create an Agent Abuse Policy:** Repeated prompt injection, ID enumeration, or cross-diner access attempts automatically create a Security Review Case; an authorized OpenTable employee decides whether to warn, flag, suspend, or ban the member from agent access.
-- **Right Side — Immediate Next Steps (The UAT Ask):**
-  - ✅ **Today:** Sign off on **Phase 1 Stage 1 (`10%` Web Pilot in Austin)**
-  - 🔧 **Thursday:** Joint MuleSoft API + Digital Wallet Alert Workshop
-  - 📊 **Tuesday, Nov 17 (Next Meeting):** **2-Week Pilot Readout & `50%` Go/No-Go Gate**
-
-### 🎙️ What We'll Say (Speaker Track)
-
-> *"To close, we leave OpenTable with four strategic recommendations:*
->
-> 1. **Consolidate onto one Agentforce brain** so diners can ask FAQ questions, book reservations, and reach a human at OpenTable in one place — unlocking $4.18M in annual value.
-> 2. **Scale our Hybrid CRM + Data 360 pattern** across all 60,000 restaurants to keep latency and Flex Credit consumption low at peak dinner hours.
-> 3. **Enforce revenue and safety rules deterministically in Agent Script** rather than relying on prompts alone.*
-> 4. **Adopt an explicit agent-abuse policy.** Repeated prompt injection, reservation enumeration, or attempts to access another diner’s data should automatically create a Security Review Case. OpenTable—not the model—reviews the evidence and decides whether to warn, flag, suspend, or ban that member from agent access.*
->
-> *Our ask today is your **UAT sign-off to launch our 10% Web pilot in Austin**, followed by our Thursday technical workshop with the MuleSoft team, and our **next executive readout on Tuesday, November 17** to review our first two weeks of FCR and booking conversion data before ramping to 50%. Thank you — we’d love to open the floor for your questions."*
 
