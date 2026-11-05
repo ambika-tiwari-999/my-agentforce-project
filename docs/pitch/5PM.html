@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TableCraft — Final Pitch</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; overflow: hidden; }
+    body { font-family: system-ui, sans-serif; background: #111; color: #fff; }
+    section {
+      display: none;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8vh 12vw;
+    }
+    section.active { display: flex; }
+    .num { font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin: 0 0 0.5rem; }
+    h1 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; margin: 0; line-height: 1.15; max-width: 18ch; }
+    section.legal { padding: 8vh 8vw; }
+    section.legal h1 { font-size: clamp(1.6rem, 2.6vw, 2.4rem); max-width: none; margin-bottom: 1.25rem; }
+    section.legal .statement {
+      margin: 0;
+      max-width: 70rem;
+      font-size: clamp(1rem, 1.45vw, 1.25rem);
+      line-height: 1.5;
+      color: #d6e4ff;
+    }
+    nav {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      display: flex;
+      gap: 8px;
+    }
+    nav button {
+      width: 48px;
+      height: 48px;
+      font-size: 1.4rem;
+      color: #fff;
+      background: #333;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    nav button:hover { background: #444; }
+    nav button:disabled { opacity: 0.3; cursor: default; }
+  </style>
+</head>
+<body>
+  <section id="slide-1" class="active">
+    <p class="num">Slide 1</p>
+    <h1>Title Slide</h1>
+  </section>
+  <section id="slide-2" class="legal">
+    <p class="num">Slide 2</p>
+    <h1>Forward-Looking Statements</h1>
+    <p class="statement">This presentation contains forward-looking statements about, among other things, trend analyses and statements regarding future events, anticipated growth and industry prospects, and our strategies, expectations, or plans regarding product releases and enhancements. The achievement or success of the matters covered by such forward-looking statements involves risks, uncertainties, and assumptions. If any such risks or uncertainties materialize or if any of the assumptions prove incorrect, results or outcomes could differ materially from those expressed or implied by these forward-looking statements. The risks and uncertainties referred to above include those factors discussed in Salesforce&rsquo;s reports filed from time to time with the Securities and Exchange Commission, including, but not limited to: our ability to meet the expectations of our customers; uncertainties regarding AI technologies and their integration into our product offerings; the effect of evolving domestic and foreign government regulations; regulatory developments and regulatory investigations involving us or affecting our industry; our ability to successfully introduce new services and product features, including related to AI and Agentforce; our ability to execute our business plans; our ability to meet our long-term revenue targets and profitable growth framework; the pace of change and innovation and our ability to compete in the markets in which we participate; our ability to maintain and enhance our brands; and expectations regarding contributions from acquired companies.</p>
+  </section>
+  <nav>
+    <button id="prev" type="button" aria-label="Previous slide">&lt;</button>
+    <button id="next" type="button" aria-label="Next slide">&gt;</button>
+  </nav>
+  <script>
+    const slides = [...document.querySelectorAll("section")];
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+    let current = 0;
+
+    function show(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((slide, i) => slide.classList.toggle("active", i === current));
+      prev.disabled = current === 0;
+      next.disabled = current === slides.length - 1;
+    }
+
+    prev.addEventListener("click", () => show(current - 1));
+    next.addEventListener("click", () => show(current + 1));
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === ">") show(current + 1);
+      if (event.key === "ArrowLeft" || event.key === "<") show(current - 1);
+    });
+
+    show(0);
+  </script>
+</body>
+</html>
