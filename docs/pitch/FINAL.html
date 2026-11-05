@@ -930,12 +930,58 @@
       justify-content: center;
       padding: 7vh 7vw;
     }
+    #slide-testing .testing-coverage {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) auto minmax(16rem, 0.8fr);
+      gap: 1rem;
+      align-items: center;
+      width: 100%;
+      max-width: 76rem;
+      margin: 0 auto;
+    }
+    #slide-testing .coverage-paths {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.6rem;
+    }
+    #slide-testing .coverage-path {
+      padding: 0.75rem 0.9rem;
+      border: 1px solid #3E3E3C;
+      border-left-width: 4px;
+      border-radius: 8px;
+      background: #1c1c1c;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    #slide-testing .coverage-path.agent { border-left-color: #2E844A; }
+    #slide-testing .coverage-path.block { border-left-color: #DD7A01; }
+    #slide-testing .coverage-path.escalate { border-left-color: #FF538A; }
+    #slide-testing .coverage-arrow {
+      color: #90D0FE;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    #slide-testing .coverage-proof {
+      padding: 0.75rem 1rem;
+      border: 1px solid #90D0FE;
+      border-radius: 10px;
+      background: #001E5B;
+      color: #cfcfcf;
+      line-height: 1.25;
+    }
+    #slide-testing .coverage-proof strong {
+      display: block;
+      color: #fff;
+      font-size: 1.2rem;
+    }
     #slide-testing .testing-chart {
       display: grid;
       gap: 1.1rem;
       width: 100%;
       max-width: 76rem;
-      margin: 4rem auto 0;
+      margin: 1.2rem auto 0;
     }
     #slide-testing .testing-row {
       display: grid;
@@ -963,6 +1009,17 @@
     }
     #slide-testing .testing-fill.warn { background: #DD7A01; }
     #slide-testing .testing-fill.fail { background: #FF538A; }
+    #slide-testing.active .testing-fill {
+      animation: testingGrow 0.75s ease-out both;
+      animation-delay: var(--delay, 0s);
+    }
+    @keyframes testingGrow {
+      from { width: 0; }
+      to { width: var(--pct); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #slide-testing.active .testing-fill { animation: none; }
+    }
     #slide-testing .testing-value {
       color: #cfcfcf;
       font-size: 0.95rem;
@@ -1153,7 +1210,7 @@
     }
     #slide-roadmap > h1 + .roadmap,
     #slide-6 > h1 + .system-layout,
-    #slide-testing > h1 + .testing-chart,
+    #slide-testing > h1 + .testing-coverage,
     #slide-decisions-simple > h1 + .simple-decision-table,
     #slide-security-trust > h1 + .security-top,
     #slide-8 > h1 + .uat-table-wrap,
@@ -1388,41 +1445,51 @@
   </section>
   <section id="slide-testing" class="dense">
     <p class="num">Slide 9</p>
-    <h1>Testing</h1>
+    <h1>Every User Path Is Tested</h1>
+    <div class="testing-coverage" aria-label="Architecture paths covered by testing">
+      <div class="coverage-paths">
+        <span class="coverage-path agent">FAQ</span>
+        <span class="coverage-path agent">Reservation</span>
+        <span class="coverage-path block">Block</span>
+        <span class="coverage-path escalate">Escalate</span>
+      </div>
+      <span class="coverage-arrow" aria-hidden="true">&rarr;</span>
+      <div class="coverage-proof"><strong>7 test suites</strong>1,770 test executions across every path</div>
+    </div>
     <div class="testing-chart" role="img" aria-label="Testing pass rates by suite">
       <div class="testing-row">
         <span class="testing-label">Knowledge</span>
-        <div class="testing-track"><div class="testing-fill" style="--pct:95%"></div></div>
+        <div class="testing-track"><div class="testing-fill" style="--pct:95%;--delay:0.05s"></div></div>
         <span class="testing-value">400 tests · <strong>95%</strong></span>
       </div>
       <div class="testing-row">
         <span class="testing-label">Happy paths</span>
-        <div class="testing-track"><div class="testing-fill" style="--pct:92%"></div></div>
+        <div class="testing-track"><div class="testing-fill" style="--pct:92%;--delay:0.1s"></div></div>
         <span class="testing-value">520 tests · <strong>92%</strong></span>
       </div>
       <div class="testing-row">
         <span class="testing-label">Off-topic</span>
-        <div class="testing-track"><div class="testing-fill" style="--pct:94%"></div></div>
+        <div class="testing-track"><div class="testing-fill" style="--pct:94%;--delay:0.15s"></div></div>
         <span class="testing-value">160 tests · <strong>94%</strong></span>
       </div>
       <div class="testing-row">
         <span class="testing-label">Edge cases</span>
-        <div class="testing-track"><div class="testing-fill warn" style="--pct:88%"></div></div>
+        <div class="testing-track"><div class="testing-fill warn" style="--pct:88%;--delay:0.2s"></div></div>
         <span class="testing-value">150 tests · <strong>88%</strong></span>
       </div>
       <div class="testing-row">
         <span class="testing-label">Adversarial</span>
-        <div class="testing-track"><div class="testing-fill warn" style="--pct:86%"></div></div>
+        <div class="testing-track"><div class="testing-fill warn" style="--pct:86%;--delay:0.25s"></div></div>
         <span class="testing-value">160 tests · <strong>86%</strong></span>
       </div>
       <div class="testing-row">
         <span class="testing-label">Negative</span>
-        <div class="testing-track"><div class="testing-fill warn" style="--pct:84%"></div></div>
+        <div class="testing-track"><div class="testing-fill warn" style="--pct:84%;--delay:0.3s"></div></div>
         <span class="testing-value">200 tests · <strong>84%</strong></span>
       </div>
       <div class="testing-row">
         <span class="testing-label">Multi-turn</span>
-        <div class="testing-track"><div class="testing-fill warn" style="--pct:82%"></div></div>
+        <div class="testing-track"><div class="testing-fill warn" style="--pct:82%;--delay:0.35s"></div></div>
         <span class="testing-value">180 tests · <strong>82%</strong></span>
       </div>
     </div>
