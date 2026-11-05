@@ -926,6 +926,50 @@
       font-size: 0.95rem;
       line-height: 1.3;
     }
+    #slide-testing.dense {
+      justify-content: center;
+      padding: 7vh 7vw;
+    }
+    #slide-testing .testing-chart {
+      display: grid;
+      gap: 1.1rem;
+      width: 100%;
+      max-width: 76rem;
+      margin: 4rem auto 0;
+    }
+    #slide-testing .testing-row {
+      display: grid;
+      grid-template-columns: 10rem minmax(0, 1fr) 11rem;
+      gap: 1rem;
+      align-items: center;
+    }
+    #slide-testing .testing-label {
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    #slide-testing .testing-track {
+      height: 1.35rem;
+      overflow: hidden;
+      border: 1px solid #3E3E3C;
+      border-radius: 99px;
+      background: #181818;
+    }
+    #slide-testing .testing-fill {
+      width: var(--pct);
+      height: 100%;
+      border-radius: inherit;
+      background: #2E844A;
+    }
+    #slide-testing .testing-fill.warn { background: #DD7A01; }
+    #slide-testing .testing-fill.fail { background: #FF538A; }
+    #slide-testing .testing-value {
+      color: #cfcfcf;
+      font-size: 0.95rem;
+      text-align: right;
+      white-space: nowrap;
+    }
+    #slide-testing .testing-value strong { color: #fff; font-size: 1.1rem; }
     #slide-7.decision-slide {
       justify-content: flex-start;
       padding: 2.4vh 3vw 1.6vh;
@@ -1083,6 +1127,7 @@
     .uat-table .group-guidance td:first-child { background: rgba(46, 132, 74, 0.36); }
     #slide-roadmap,
     #slide-6,
+    #slide-testing,
     #slide-decisions-simple,
     #slide-security-trust,
     #slide-8,
@@ -1092,6 +1137,7 @@
     #slide-7 { position: relative; }
     #slide-roadmap > h1,
     #slide-6 > h1,
+    #slide-testing > h1,
     #slide-decisions-simple > h1,
     #slide-security-trust > h1,
     #slide-8 > h1,
@@ -1107,6 +1153,7 @@
     }
     #slide-roadmap > h1 + .roadmap,
     #slide-6 > h1 + .system-layout,
+    #slide-testing > h1 + .testing-chart,
     #slide-decisions-simple > h1 + .simple-decision-table,
     #slide-security-trust > h1 + .security-top,
     #slide-8 > h1 + .uat-table-wrap,
@@ -1339,8 +1386,49 @@
       </aside>
     </div>
   </section>
-  <section id="slide-security-trust" class="dense">
+  <section id="slide-testing" class="dense">
     <p class="num">Slide 9</p>
+    <h1>Testing</h1>
+    <div class="testing-chart" role="img" aria-label="Testing pass rates by suite">
+      <div class="testing-row">
+        <span class="testing-label">Knowledge</span>
+        <div class="testing-track"><div class="testing-fill" style="--pct:95%"></div></div>
+        <span class="testing-value">400 tests · <strong>95%</strong></span>
+      </div>
+      <div class="testing-row">
+        <span class="testing-label">Happy paths</span>
+        <div class="testing-track"><div class="testing-fill" style="--pct:92%"></div></div>
+        <span class="testing-value">520 tests · <strong>92%</strong></span>
+      </div>
+      <div class="testing-row">
+        <span class="testing-label">Off-topic</span>
+        <div class="testing-track"><div class="testing-fill" style="--pct:94%"></div></div>
+        <span class="testing-value">160 tests · <strong>94%</strong></span>
+      </div>
+      <div class="testing-row">
+        <span class="testing-label">Edge cases</span>
+        <div class="testing-track"><div class="testing-fill warn" style="--pct:88%"></div></div>
+        <span class="testing-value">150 tests · <strong>88%</strong></span>
+      </div>
+      <div class="testing-row">
+        <span class="testing-label">Adversarial</span>
+        <div class="testing-track"><div class="testing-fill warn" style="--pct:86%"></div></div>
+        <span class="testing-value">160 tests · <strong>86%</strong></span>
+      </div>
+      <div class="testing-row">
+        <span class="testing-label">Negative</span>
+        <div class="testing-track"><div class="testing-fill warn" style="--pct:84%"></div></div>
+        <span class="testing-value">200 tests · <strong>84%</strong></span>
+      </div>
+      <div class="testing-row">
+        <span class="testing-label">Multi-turn</span>
+        <div class="testing-track"><div class="testing-fill warn" style="--pct:82%"></div></div>
+        <span class="testing-value">180 tests · <strong>82%</strong></span>
+      </div>
+    </div>
+  </section>
+  <section id="slide-security-trust" class="dense">
+    <p class="num">Slide 10</p>
     <h1>Security &amp; Trust</h1>
     <div class="security-top">
       <article class="security-card">
@@ -1374,7 +1462,7 @@
     </div>
   </section>
   <section id="slide-8" class="uat-table-slide">
-    <p class="num">Slide 10</p>
+    <p class="num">Slide 11</p>
     <h1>AI KPIs + Testing</h1>
     <div class="uat-table-wrap">
       <table class="uat-table" aria-label="TableCraft AI KPIs and UAT results">
@@ -1413,7 +1501,7 @@
     </div>
   </section>
   <section id="slide-9" class="uat-table-slide">
-    <p class="num">Slide 11</p>
+    <p class="num">Slide 12</p>
     <h1>Responsible AI</h1>
     <div class="uat-table-wrap">
       <table class="uat-table" aria-label="TableCraft Responsible AI controls and UAT evidence">
@@ -1447,15 +1535,15 @@
     </div>
   </section>
   <section id="slide-12">
-    <p class="num">Slide 14</p>
+    <p class="num">Slide 15</p>
     <h1>Live Demo</h1>
   </section>
   <section id="slide-13">
-    <p class="num">Slide 15</p>
+    <p class="num">Slide 16</p>
     <h1>Recommendations and Next Steps</h1>
   </section>
   <section id="slide-7" class="dense decision-slide">
-    <p class="num">Slide 16</p>
+    <p class="num">Slide 17</p>
     <h1>Appendix</h1>
     <div class="decision-table" role="table" aria-label="Design decisions and tradeoffs">
       <div class="decision-row decision-head" role="row">
@@ -1503,7 +1591,7 @@
     </div>
   </section>
   <section id="slide-decisions-simple" class="dense">
-    <p class="num">Slide 17</p>
+    <p class="num">Slide 18</p>
     <h1>Design Decisions</h1>
     <div class="simple-decision-table" role="table" aria-label="Key design decisions and rationale">
       <div class="simple-decision-row simple-decision-head" role="row">
