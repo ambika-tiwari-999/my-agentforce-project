@@ -385,6 +385,8 @@
     }
     #slide-roadmap .roadmap-phase {
       position: relative;
+      display: flex;
+      flex-direction: column;
       min-height: 25rem;
       padding: 1.5rem;
       border: 1px solid #3E3E3C;
@@ -467,6 +469,26 @@
       font-size: 1.25em;
       font-weight: 700;
     }
+    #slide-roadmap .phase-gate {
+      position: relative;
+      margin: auto 0 0;
+      padding: 0.75rem 0 0 1.2rem;
+      border-top: 1px solid #3E3E3C;
+      color: #cfcfcf;
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
+    #slide-roadmap .phase-gate::before {
+      content: "";
+      position: absolute;
+      top: 1.05rem;
+      left: 0;
+      width: 0.58rem;
+      height: 0.58rem;
+      border-radius: 50%;
+      background: #2E844A;
+    }
+    #slide-roadmap .phase-gate strong { color: #2E844A; }
     #slide-6 { --ready: #2E844A; --risk: #FF538A; --decline: #DD7A01; --pc: #90D0FE; --pcs: #1a2744; }
     #slide-6.dense { padding: 2.2vh 2.5vw 1.2vh; gap: 0.45rem; }
     #slide-6 .num { font-size: 14pt; }
@@ -1198,36 +1220,95 @@
       opacity: 1;
       transform: translateY(0);
     }
-    #slide-security-trust.security-phase-3 .security-stack-panel { right: 52%; }
+    #slide-security-trust.security-phase-3 .security-stack-panel {
+      top: 8.9rem;
+      right: 60%;
+      bottom: 0.75rem;
+    }
     #slide-security-trust .security-layers {
       height: calc(100% - 1.6rem);
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 0.4rem;
+      gap: 1rem;
       align-items: center;
     }
     #slide-security-trust .security-layer {
-      min-height: 3.45rem;
+      width: 100%;
+      min-height: 10.5rem;
       border: 1px solid #3E3E3C;
       border-left: 5px solid #90D0FE;
       border-radius: 9px;
-      padding: 0.65rem 1rem;
+      padding: 1.15rem 1.2rem;
       background: #001E5B;
       color: #fff;
       text-align: left;
       transition: opacity .3s ease, border-color .3s ease, background .3s ease, box-shadow .3s ease;
     }
+    #slide-security-trust .security-layer:nth-child(2) { background: #022AC0; }
     #slide-security-trust .security-layer-name {
       color: #fff;
       font-size: 1.08rem;
       font-weight: 800;
     }
     #slide-security-trust .security-layer-defense {
+      display: block;
+      margin-top: 0.2rem;
       color: #cfcfcf;
       font-size: 0.9rem;
       font-weight: 400;
       line-height: 1.3;
+    }
+    #slide-security-trust .security-controls {
+      display: grid;
+      gap: 0.55rem;
+      margin-top: 0.85rem;
+    }
+    #slide-security-trust .security-layer:first-child .security-controls { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    #slide-security-trust .security-layer:nth-child(2) .security-controls { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    #slide-security-trust .security-control {
+      display: flex;
+      min-height: 2.5rem;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem 0.6rem;
+      border: 1px solid rgba(144,208,254,.45);
+      border-radius: 8px;
+      background: rgba(144,208,254,.1);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+    }
+    #slide-security-trust.security-phase-3 .security-layers {
+      height: 100%;
+      justify-content: center;
+      gap: 0.65rem;
+    }
+    #slide-security-trust.security-phase-3 .security-layer {
+      flex: 1;
+      min-height: 0;
+      padding: 0.8rem 0.85rem;
+    }
+    #slide-security-trust.security-phase-3 .security-layer-name { font-size: 1rem; }
+    #slide-security-trust.security-phase-3 .security-layer-defense {
+      margin-top: 0.15rem;
+      font-size: 0.76rem;
+      line-height: 1.25;
+    }
+    #slide-security-trust.security-phase-3 .security-controls {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+      margin-top: 0.5rem;
+    }
+    #slide-security-trust.security-phase-3 .security-control {
+      min-height: 0;
+      justify-content: flex-start;
+      padding: 0.23rem 0.45rem;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      text-align: left;
     }
     #slide-security-trust .security-blocking-note {
       position: absolute;
@@ -1257,13 +1338,13 @@
     }
     #slide-security-trust .security-evidence {
       position: absolute;
-      top: 9.8rem;
+      top: 8.9rem;
       right: 0;
-      bottom: 0;
-      left: 50%;
+      bottom: 0.75rem;
+      left: 40%;
       display: grid;
-      grid-template-columns: 5.5rem minmax(0,1fr);
-      gap: 0.75rem;
+      grid-template-columns: 3.5rem minmax(0,1fr);
+      gap: 0.65rem;
       opacity: 0;
       transform: translateX(32px);
       pointer-events: none;
@@ -1300,41 +1381,46 @@
       to { stroke-dashoffset: 0; }
     }
     #slide-security-trust .security-test-graph {
-      align-self: center;
+      align-self: stretch;
       min-width: 0;
-      padding: 0.9rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1.35rem 1.5rem;
       border-radius: 12px;
       background: #181818;
     }
     #slide-security-trust .security-test-graph h2 {
       margin: 0;
       color: #fff;
-      font-size: 1.3rem;
+      font-size: 1.65rem;
     }
     #slide-security-trust .security-test-total {
       margin: 0.15rem 0 0.75rem;
       color: #90D0FE;
-      font-size: 0.82rem;
+      font-size: 0.95rem;
       font-weight: 700;
     }
     #slide-security-trust .security-test-chart {
       display: flex;
+      flex: 1;
       flex-direction: column;
-      gap: 0.55rem;
+      justify-content: space-evenly;
+      gap: 0.9rem;
     }
     #slide-security-trust .security-test-row {
       display: grid;
-      grid-template-columns: 7.8rem minmax(0,1fr) 5.7rem;
-      gap: 0.55rem;
+      grid-template-columns: 9rem minmax(0,1fr) 7rem;
+      gap: 0.75rem;
       align-items: center;
     }
     #slide-security-trust .security-test-label {
       color: #fff;
-      font-size: 0.78rem;
+      font-size: 1rem;
       font-weight: 700;
     }
     #slide-security-trust .security-test-track {
-      height: 0.65rem;
+      height: 0.95rem;
       overflow: hidden;
       border-radius: 99px;
       background: #3E3E3C;
@@ -1349,17 +1435,17 @@
       animation: securityTestGrow .7s ease-out var(--delay) forwards;
     }
     @keyframes securityTestGrow {
-      to { width: 100%; }
+      to { width: var(--pass); }
     }
     #slide-security-trust .security-test-value {
       color: #cfcfcf;
-      font-size: 0.72rem;
+      font-size: 0.82rem;
       text-align: right;
       white-space: nowrap;
     }
     #slide-security-trust .security-test-value strong {
       color: #fff;
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
     @media (prefers-reduced-motion: reduce) {
       #slide-security-trust .security-prompts-panel,
@@ -1370,7 +1456,7 @@
       #slide-security-trust.security-phase-3 .security-evidence-brace,
       #slide-security-trust.security-phase-3 .security-test-fill { animation: none; }
       #slide-security-trust.security-phase-3 .security-evidence-brace { stroke-dashoffset: 0; }
-      #slide-security-trust.security-phase-3 .security-test-fill { width: 100%; }
+      #slide-security-trust.security-phase-3 .security-test-fill { width: var(--pass); }
     }
     #slide-monitoring.dense {
       position: relative;
@@ -1871,113 +1957,166 @@
     #slide-7 > h1 + .decision-table {
       margin-top: 5.5rem;
     }
+    .imported-slide.dense {
+      justify-content: center;
+      padding: 4.5vh 4.5vw 2.2vh;
+      gap: 0.8rem;
+    }
+    .imported-slide h1 { max-width: none; font-size: clamp(28pt, 3.4vw, 38pt); line-height: 1.08; }
+    .imported-slide .import-sub { margin: 0; color: #cfcfcf; font-size: 14pt; line-height: 1.35; }
+    #insert-team .kick { margin: 0; color: #90D0FE; font-size: 0.85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    #insert-team h1 { font-size: clamp(2.4rem, 4.8vw, 4.2rem); }
+    #insert-team .hook { margin: .2rem 0; padding-left: .9rem; border-left: 3px solid #90D0FE; font-size: clamp(1rem, 1.5vw, 1.25rem); }
+    #insert-team .team-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: .8rem; margin-top: 1rem; }
+    #insert-team .team-member { padding: .8rem 1rem; border-top: 3px solid #90D0FE; border-radius: 12px; background: #1c1c1c; }
+    #insert-team .team-member strong, #insert-team .team-member span { display: block; }
+    #insert-team .team-member strong { font-size: 1.05rem; }
+    #insert-team .team-title { margin: .15rem 0 .4rem; color: #fff; font-size: .9rem; }
+    #insert-team .team-role { padding-top: .4rem; border-top: 1px solid #3E3E3C; color: #cfcfcf; font-size: .82rem; line-height: 1.3; }
+    #insert-team .team-role b { display: block; margin-bottom: .1rem; color: #90D0FE; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
+    #insert-team .legal-note { margin: .8rem 0 0; color: #909090; font-size: 11pt; }
+    #insert-problem .split, #insert-assumptions .split { grid-template-columns: minmax(0,1fr) minmax(0,0fr); gap: 0; transition: grid-template-columns .55s ease, gap .55s ease; }
+    #insert-problem .split.revealed, #insert-assumptions .split.revealed { grid-template-columns: 1fr 1fr; gap: .8rem; }
+    #insert-problem .problem-kpis { display: grid; grid-template-rows: repeat(3,1fr); gap: .65rem; }
+    #insert-problem .problem-card { display: grid; grid-template-columns: minmax(8rem,.38fr) 1fr; align-items: center; gap: 1rem; padding: .9rem 1.2rem; border-left: 4px solid #90D0FE; border-radius: 16px; background: #1c1c1c; }
+    #insert-problem .problem-label { margin: 0; color: #90D0FE; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+    #insert-problem .problem-num { margin: 0; color: #fff; font-size: clamp(2.4rem,4.5vw,4.5rem); font-weight: 700; line-height: .95; }
+    #insert-problem .problem-detail { margin: .25rem 0 0; color: #cfcfcf; line-height: 1.35; }
+    #insert-problem .problem-figures { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+    #insert-problem .problem-bill { display: grid; grid-template-rows: repeat(3,1fr); gap: .7rem; opacity: 0; transform: translateX(2rem); transition: opacity .35s ease, transform .5s ease; }
+    #insert-problem .split.revealed .problem-bill { opacity: 1; transform: translateX(0); }
+    #insert-problem .bill-card { display: flex; flex-direction: column; justify-content: center; padding: 1rem 1.2rem; border-top: 3px solid #90D0FE; border-radius: 16px; background: #162033; }
+    #insert-problem .bill-card span { color: #90D0FE; font-size: .78rem; font-weight: 700; text-transform: uppercase; }
+    #insert-problem .bill-card strong { margin-top: .35rem; font-size: clamp(1.7rem,2.6vw,2.5rem); }
+    #insert-problem .bill-card p { margin: .35rem 0 0; color: #cfcfcf; }
+    #insert-discovery .target-table { display: grid; gap: .45rem; }
+    #insert-discovery .target-row { display: grid; grid-template-columns: 7.5rem repeat(5,minmax(0,1fr)); overflow: hidden; border-radius: 12px; }
+    #insert-discovery .target-row > div { display: flex; flex-direction: column; justify-content: center; padding: .6rem .8rem; font-size: 13pt; line-height: 1.25; }
+    #insert-discovery .target-row > div + div { border-left: 1px solid rgba(255,255,255,.1); }
+    #insert-discovery .target-head { background: #1c1c1c; }
+    #insert-discovery .target-head span { color: #90D0FE; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
+    #insert-discovery .target-current { background: rgba(255,83,138,.13); }
+    #insert-discovery .target-future { background: rgba(6,106,254,.18); }
+    #insert-discovery .target-benefit { background: rgba(46,132,74,.2); font-weight: 700; }
+    #insert-discovery .target-future, #insert-discovery .target-benefit { visibility: hidden; opacity: 0; transition: opacity .35s ease; }
+    #insert-discovery.step-1 .target-future, #insert-discovery.step-2 .target-future, #insert-discovery.step-2 .target-benefit { visibility: visible; opacity: 1; }
+    #insert-discovery .failure-row { display: grid; grid-template-columns: repeat(3,1fr); gap: .6rem; }
+    #insert-discovery .failure { padding: .55rem .9rem; border-radius: 12px; background: #162033; font-size: 12.5pt; }
+    #insert-discovery .failure .bad { color: #FF538A; font-weight: 700; }
+    #insert-discovery .failure .good { color: #2E844A; font-weight: 700; }
+    .story-metrics, .scale-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: .8rem; }
+    .story-metric, .scale-card { padding: .9rem 1.1rem; border-left: 4px solid #90D0FE; border-radius: 16px; background: #1c1c1c; }
+    .story-metric.active { background: #162033; box-shadow: 0 0 0 2px #90D0FE; }
+    .story-metric strong, .scale-card strong { display: block; font-size: clamp(1.8rem,3.2vw,3rem); line-height: 1; }
+    .story-metric span, .scale-card span { display: block; margin-top: .35rem; color: #cfcfcf; line-height: 1.3; }
+    .story-panel { min-height: 10rem; padding: 1rem 1.3rem; border-radius: 16px; background: #1c1c1c; }
+    .story-panel .when { margin: 0; color: #90D0FE; font-size: 1rem; font-weight: 700; text-transform: uppercase; }
+    .story-panel .story-copy { margin: .5rem 0 0; font-size: clamp(1.1rem,1.8vw,1.5rem); line-height: 1.35; }
+    .story-panel .progress { margin-top: 1rem; color: #909090; font-size: 11pt; }
+    #insert-solution .solution-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: .85fr 1.15fr; gap: .8rem; }
+    #insert-solution .solution-jobs { display: grid; grid-template-rows: repeat(3,1fr); gap: .7rem; }
+    #insert-solution .solution-job { display: flex; flex-direction: column; justify-content: center; padding: .7rem 1rem; border-top: 3px solid #3E3E3C; border-radius: 16px; background: #1c1c1c; }
+    #insert-solution .solution-job.active { border-color: #90D0FE; background: #162033; box-shadow: 0 0 0 2px #90D0FE; }
+    #insert-solution .solution-job span { color: #90D0FE; font-size: .8rem; font-weight: 700; }
+    #insert-solution .solution-job strong { margin-top: .2rem; font-size: 1.7rem; }
+    #insert-solution .solution-job p { margin: .3rem 0 0; color: #cfcfcf; }
+    #insert-solution .solution-pane { display: flex; flex-direction: column; justify-content: center; padding: 1rem 1.2rem; border-radius: 16px; background: #1c1c1c; }
+    #insert-solution .solution-pane .question { margin: 0; color: #fff; font-size: clamp(1.4rem,2.3vw,2rem); font-weight: 700; }
+    #insert-solution .solution-pane .answer { color: #cfcfcf; font-size: 14pt; line-height: 1.4; }
+    #insert-solution .solution-pane .proof { padding: .5rem .8rem; border-radius: 8px; background: rgba(46,132,74,.28); }
+    #insert-scale .scale-grid { flex: 1; min-height: 0; }
+    #insert-scale .scale-card { display: flex; flex-direction: column; justify-content: center; border-left: 0; border-top: 3px solid #90D0FE; background: #162033; }
+    #insert-scale .scale-card b { color: #90D0FE; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+    #insert-assumptions .assumption-column { display: flex; min-width: 0; flex-direction: column; gap: .55rem; }
+    #insert-assumptions .assumption-column.curtain { opacity: 0; transform: translateX(2rem); transition: opacity .35s ease, transform .5s ease; }
+    #insert-assumptions .split.revealed .assumption-column.curtain { opacity: 1; transform: translateX(0); }
+    #insert-assumptions .assumption-card { flex: 1; display: grid; grid-template-columns: 5.25rem 1fr; gap: .8rem; padding: .75rem .9rem; border-left: 4px solid #90D0FE; border-radius: 10px; background: #1c1c1c; }
+    #insert-assumptions .assumption-card.mock { border-color: #2E844A; background: #162033; }
+    #insert-assumptions .assumption-card span { color: #90D0FE; font-size: .8rem; font-weight: 700; text-transform: uppercase; }
+    #insert-assumptions .assumption-card h2 { margin: 0 0 .3rem; font-size: 1.15rem; }
+    #insert-assumptions .assumption-card p { margin: 0; color: #cfcfcf; line-height: 1.35; }
+    #insert-assumptions .assumption-note { margin: 0; color: #DD7A01; font-size: 14pt; }
   </style>
 </head>
 <body>
-  <section id="slide-1" class="active">
-    <p class="num">1</p>
-    <h1>Title Slide</h1>
+  <section id="insert-team" class="dense imported-slide">
+    <p class="num">3</p>
+    <p class="kick">Team 16 · Capstone · Agentforce for TableCraft</p>
+    <h1>The Intelligent Diner Support Agent</h1>
+    <p class="hook">Who here has ever been on hold with a restaurant?</p>
+    <div class="team-grid">
+      <div class="team-member"><strong>Luke Swint</strong><span class="team-title">Forward Deployed Engineer</span><span class="team-role"><b>Our role on this project</b>Reservation flows and the booking specialist.</span></div>
+      <div class="team-member"><strong>Christian Lozano</strong><span class="team-title">Director, Solutions Builder</span><span class="team-role"><b>Our role on this project</b>Portal, security guardrails, Omni-Channel.</span></div>
+      <div class="team-member"><strong>Joseph Onwuchekwa</strong><span class="team-title">Forward Deployed Engineer</span><span class="team-role"><b>Our role on this project</b>Orchestrator, escalation, Trust Layer.</span></div>
+      <div class="team-member"><strong>Ambika Tiwari</strong><span class="team-title">Forward Deployed Engineer</span><span class="team-role"><b>Our role on this project</b>Data 360 and the FAQ specialist.</span></div>
+    </div>
+    <p class="legal-note">Forward-looking statements apply. See the appendix.</p>
   </section>
   <section id="slide-2" class="legal">
     <p class="num">2</p>
     <h1>Forward-Looking Statements</h1>
     <p class="statement">This presentation contains forward-looking statements about, among other things, trend analyses and statements regarding future events, anticipated growth and industry prospects, and our strategies, expectations, or plans regarding product releases and enhancements. The achievement or success of the matters covered by such forward-looking statements involves risks, uncertainties, and assumptions. If any such risks or uncertainties materialize or if any of the assumptions prove incorrect, results or outcomes could differ materially from those expressed or implied by these forward-looking statements. The risks and uncertainties referred to above include those factors discussed in Salesforce&rsquo;s reports filed from time to time with the Securities and Exchange Commission, including, but not limited to: our ability to meet the expectations of our customers; uncertainties regarding AI technologies and their integration into our product offerings; the effect of evolving domestic and foreign government regulations; regulatory developments and regulatory investigations involving us or affecting our industry; our ability to successfully introduce new services and product features, including related to AI and Agentforce; our ability to execute our business plans; our ability to meet our long-term revenue targets and profitable growth framework; the pace of change and innovation and our ability to compete in the markets in which we participate; our ability to maintain and enhance our brands; and expectations regarding contributions from acquired companies.</p>
   </section>
-  <section id="slide-3" class="dense">
-    <p class="num num-kpi">3</p>
-    <h1 class="title-kpi">These are the KPIs you want to improve.</h1>
-    <h1 class="title-waste">286,000 Hours Being Wasted (/yr)</h1>
-    <h1 class="title-seal">Agentforce Gives You That Time + Money Back</h1>
+  <section id="insert-problem" class="dense imported-slide">
+    <p class="num">4</p>
+    <h1>Diners can’t get answers, so they don’t book.</h1>
+    <p class="import-sub">You're willing to use AI. Your agent isn't strong enough.</p>
     <div class="split">
-      <div class="pane kpi-pane">
-        <div class="kpi-board">
-          <article class="kpi">
-            <p class="kpi-label">Before they book<sup class="cite">1</sup></p>
-            <div class="kpi-content">
-              <p class="kpi-num">54%</p>
-              <p class="kpi-detail">of Americans research the restaurant first. Those who do spend about <strong>21 minutes</strong>.</p>
-            </div>
-          </article>
-          <article class="kpi">
-            <p class="kpi-label">They decided not to book<sup class="cite">1</sup></p>
-            <div class="kpi-content">
-              <div class="figures">
-                <div>
-                  <p class="kpi-num">27%</p>
-                  <p class="kpi-detail">Information was too hard to find.</p>
-                </div>
-                <div>
-                  <p class="kpi-num">17%</p>
-                  <p class="kpi-detail">Couldn't find it, and didn't want to call.</p>
-                </div>
-              </div>
-            </div>
-          </article>
-          <article class="kpi">
-            <p class="kpi-label">They contact the restaurant for<sup class="cite">1</sup></p>
-            <div class="kpi-content">
-              <div class="figures figures-3">
-                <div>
-                  <p class="kpi-num">46%</p>
-                  <p class="kpi-detail">Hours</p>
-                </div>
-                <div>
-                  <p class="kpi-num">39%</p>
-                  <p class="kpi-detail">Menu</p>
-                </div>
-                <div>
-                  <p class="kpi-num">22%</p>
-                  <p class="kpi-detail">Address</p>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
+      <div class="problem-kpis">
+        <article class="problem-card"><p class="problem-label">Before they book</p><div><p class="problem-num">54%</p><p class="problem-detail">Americans research the restaurant first. Average time spent: <strong>21 minutes</strong>.</p></div></article>
+        <article class="problem-card"><p class="problem-label">They decided not to book</p><div class="problem-figures"><div><p class="problem-num">27%</p><p class="problem-detail">Information too hard to find.</p></div><div><p class="problem-num">17%</p><p class="problem-detail">Didn’t want to call.</p></div></div></article>
+        <article class="problem-card"><p class="problem-label">They contact the restaurant for</p><div class="problem-figures"><div><p class="problem-num">46%</p><p class="problem-detail">Hours</p></div><div><p class="problem-num">39%</p><p class="problem-detail">Menu</p></div><div><p class="problem-num">22%</p><p class="problem-detail">Address</p></div></div></article>
       </div>
-      <div class="pane curtain outcome-pane">
-        <div class="waste-board">
-          <article class="waste-card">
-            <span class="waste-num">171,600 hours<sup class="cite">2</sup></span>
-            <span class="waste-label">Diners spend waiting every year across 572K annual contacts.</span>
-          </article>
-          <article class="waste-card">
-            <span class="waste-num">114,400 hours<sup class="cite">2</sup></span>
-            <span class="waste-label">Employees spend handling routine requests every year.</span>
-          </article>
-          <article class="waste-card">
-            <span class="waste-num">14,300 tables<sup class="cite">2</sup></span>
-            <span class="waste-label">Sit empty after diners abandon a cancellation or change request.</span>
-          </article>
-        </div>
-        <ol class="deal-jobs">
-          <li>
-            <span class="step">01</span>
-            <div>
-              <strong>Answer</strong>
-              <span class="job-copy">the pre-booking question — hours, menu, parking, policies.</span>
-            </div>
-          </li>
-          <li>
-            <span class="step">02</span>
-            <div>
-              <strong>Book</strong>
-              <span class="job-copy">in that same conversation — create, modify, or save the cancellation.</span>
-            </div>
-          </li>
-          <li>
-            <span class="step">03</span>
-            <div>
-              <strong>Hand off</strong>
-              <span class="job-copy">to a person at OpenTable when it should not be automated.</span>
-            </div>
-          </li>
-        </ol>
+      <div class="problem-bill curtain">
+        <article class="bill-card"><span>Customers</span><strong>164,164 hours</strong><p>on hold and on the phone, every year.*</p></article>
+        <article class="bill-card"><span>Restaurants</span><strong>14,300 tables</strong><p>left empty every year: $1.14M.*</p></article>
+        <article class="bill-card"><span>Your employees</span><strong>39,087 hours</strong><p>of phone time on routine questions, about 19 full-time people.*</p></article>
       </div>
     </div>
-    <ol class="cites">
-      <li>TableCraft, <a href="https://www.opentable.com/blog/press/page/ai-concierge/">Concierge launch</a>, July 15, 2025. PureSpectrum survey of 1,500 US consumers, May 12–16, 2025.</li>
-      <li>TableCraft v11 operating model: 572K annual contacts × 18 waiting minutes; 12 employee minutes per contact; 25% cancel/change requests with 10% abandoned. Team assumptions.</li>
-    </ol>
+    <ol class="cites"><li>TableCraft, <a href="https://www.opentable.com/blog/press/page/ai-concierge/">Concierge launch</a>, July 15, 2025. Modeled figures use team assumptions and TableCraft’s published comparable volume.</li></ol>
+  </section>
+  <section id="insert-discovery" class="dense imported-slide">
+    <p class="num">5</p>
+    <h1>What you asked for, and how we hit it</h1>
+    <div class="target-table">
+      <div class="target-row target-head"><div></div><div><span>Response time</span><strong>25% faster</strong></div><div><span>First-contact resolution</span><strong>Over 80%</strong></div><div><span>Robust escalation</span><strong>Always a person</strong></div><div><span>Diner satisfaction</span><strong>DSAT up</strong></div><div><span>Booking conversion</span><strong>More bookings</strong></div></div>
+      <div class="target-row target-current"><div>Current state</div><div>A 16-minute hold</div><div>Bounced between bots and people</div><div>Stuck, no way out</div><div>Long holds, frustration</div><div>Questions left unanswered</div></div>
+      <div class="target-row target-future"><div>Future state</div><div>Answers in seconds</div><div>Answer and book in one chat</div><div>A handoff from every specialist</div><div>Fast answers, surveyed after each chat</div><div>Answer, book, offer another time</div></div>
+      <div class="target-row target-benefit"><div>Benefit</div><div>No more waiting</div><div>Done the first time</div><div>No diner stranded</div><div>Happier diners</div><div>Questions become bookings</div></div>
+    </div>
+    <p class="import-sub">The previous agent failed three ways. We fixed each.</p>
+    <div class="failure-row"><div class="failure"><span class="bad">✗ No answers</span> → <span class="good">✓ Answers from sources only</span></div><div class="failure"><span class="bad">✗ Made-up answers</span> → <span class="good">✓ Real restaurants only</span></div><div class="failure"><span class="bad">✗ No escalation</span> → <span class="good">✓ A person, from every specialist</span></div></div>
+  </section>
+  <section id="insert-sofia" class="dense imported-slide">
+    <p class="num">6</p>
+    <h1>The Big Obvious Problem</h1>
+    <div class="story-metrics" id="insertSofiaMetrics"><div class="story-metric"><strong>164,164 hours</strong><span>customers spend on hold and on the phone*</span></div><div class="story-metric"><strong>14,300 tables</strong><span>left empty each year*</span></div><div class="story-metric"><strong>39,087 hours</strong><span>of employee phone time on routine questions*</span></div></div>
+    <p class="import-sub">Boiled down to one specific use case…</p>
+    <div class="story-panel"><p class="when" id="insertSofiaWhen"></p><p class="story-copy" id="insertSofiaCopy"></p><p class="progress" id="insertSofiaProgress"></p></div>
+    <ol class="cites"><li>*Modeled. Sofia and Biscuit are an illustrative persona, not a real customer.</li></ol>
+  </section>
+  <section id="insert-solution" class="dense imported-slide">
+    <p class="num">7</p>
+    <h1>Agentforce actually seals the deals</h1>
+    <p class="import-sub" id="insertSolutionFrame">One agent, three jobs. Follow Sofia’s evening with the &gt; key.</p>
+    <div class="solution-grid"><div class="solution-jobs" id="insertSolutionJobs"><article class="solution-job" data-job="answer"><span>01</span><strong>Answer</strong><p>Hours, menu, and pet policy from the restaurant’s information.</p></article><article class="solution-job" data-job="book"><span>02</span><strong>Book</strong><p>Create, change, or cancel—always after a yes.</p></article><article class="solution-job" data-job="outcome"><span>03</span><strong>Outcome</strong><p>Sofia’s evening, in numbers.</p></article></div><div class="solution-pane" id="insertSolutionPane"></div></div>
+  </section>
+  <section id="insert-scale" class="dense imported-slide">
+    <p class="num">8</p>
+    <h1>Solve for Sofia. See the Big Picture Savings.</h1>
+    <p class="import-sub" id="insertScaleFrame"></p>
+    <div class="scale-grid" id="insertScaleGrid"></div>
+    <ol class="cites"><li>*Modeled, not measured. TableCraft’s own volume replaces the comparable-platform assumptions in the pilot.</li></ol>
+  </section>
+  <section id="insert-assumptions" class="dense imported-slide">
+    <p class="num">9</p>
+    <h1>Breaking The 4th Wall — Sandbox Assumptions</h1>
+    <p class="import-sub">First, the three TableCraft surfaces our agent works across, modeled on TableCraft’s published ones.</p>
+    <div class="split">
+      <div class="assumption-column"><article class="assumption-card"><span>B2B</span><div><h2>Restaurant profile</h2><p>Restaurants manage structured details, menus, parking information, and house rules.</p></div></article><article class="assumption-card"><span>B2C</span><div><h2>Diner web and app</h2><p>Diners research, book, and later change or cancel a reservation.</p></div></article><article class="assumption-card"><span>Support</span><div><h2>Service Cloud handoff</h2><p>Agentforce creates a case and transfers the conversation to a representative.</p></div></article></div>
+      <div class="assumption-column curtain"><article class="assumption-card mock"><span>B2B mock</span><div><h2>Restaurant__c + Data 360</h2><p>Five demo restaurants with profile fields and scoped knowledge chunks.</p></div></article><article class="assumption-card mock"><span>B2C mock</span><div><h2>Contact + Reservation__c</h2><p>One signed-in diner and 30 reservations available to create, retrieve, modify, or cancel.</p></div></article><article class="assumption-card mock"><span>Support mock</span><div><h2>Case + routing flow</h2><p>The same context-rich handoff, with restaurant and reservation attached.</p></div></article></div>
+    </div>
+    <p class="assumption-note">Also mocked or assumed: diner sign-in, the reservation system behind Apex, demo data, and every starred figure.</p>
   </section>
   <section id="slide-5" class="dense">
     <p class="num">4</p>
@@ -1985,119 +2124,8 @@
     <a class="live-demo-button" href="https://tablecraft-demo-ec5d872d0418.herokuapp.com/" target="_blank" rel="noopener noreferrer">Open Live Demo</a>
     <p class="demo-credentials"><span>Email: <code>lozanoc81@gmail.com</code></span><span>Password: <code>TableCraft2026!</code></span></p>
   </section>
-  <section id="slide-4" class="dense">
-    <p class="num">5</p>
-    <h1 class="title-beta">Key Findings</h1>
-    <h1 class="title-value">You Save $4.18M a year</h1>
-    <h1 class="title-workforce">You Save 29,588 Hours a Year</h1>
-    <p class="frame frame-beta">100 beta users, against the targets.</p>
-    <div class="split">
-      <div class="pane find-pane">
-        <div class="find-board">
-          <article class="find">
-            <p class="find-label">Response time</p>
-            <p class="find-num">&minus;88.9%</p>
-            <p class="find-detail">Average agent response latency: 1.04 seconds, down from 9.4 seconds in Concierge AI.</p>
-          </article>
-          <article class="find">
-            <p class="find-label">First-contact resolution</p>
-            <p class="find-num">84%+</p>
-            <p class="find-detail">Above the 80% target, up from 73%,<sup class="cite">1</sup> across FAQ and booking.</p>
-          </article>
-          <article class="find">
-            <p class="find-label">Safe handoff</p>
-            <p class="find-num">100%</p>
-            <p class="find-detail">Allergy, party of 11+, lockout, and refund requests go to a person.</p>
-          </article>
-        </div>
-      </div>
-      <div class="pane curtain value-pane">
-        <div class="value-board">
-          <button type="button" class="find find-value" aria-expanded="false">
-            <span class="math-cue">Math</span>
-            <span class="find-label">Support</span>
-            <span class="find-num">$499K</span>
-            <span class="find-detail">Restaurant questions get answered in the chat, so the support team never takes the ticket.</span>
-            <span class="math">572K chats &times; +9% resolution (73%<sup class="cite">1</sup>&rarr;82%) &times; $9.70 = 51,480 tickets</span>
-          </button>
-          <button type="button" class="find find-value" aria-expanded="false">
-            <span class="math-cue">Math</span>
-            <span class="find-label">Reservations</span>
-            <span class="find-num">$1.43M</span>
-            <span class="find-detail">A cancel hears another time first, so the table stays booked.</span>
-            <span class="math">143K cancel intents &times; 10% saved &times; $100 = 14,300 tables</span>
-          </button>
-          <button type="button" class="find find-value" aria-expanded="false">
-            <span class="math-cue">Math</span>
-            <span class="find-label">Bookings</span>
-            <span class="find-num">$2.25M</span>
-            <span class="find-detail">A diner asking about the restaurant reserves in that same conversation, instead of leaving.</span>
-            <span class="math">22,500 bookings a year from the FAQ-to-booking handoff</span>
-          </button>
-        </div>
-        <div class="fte-board">
-          <article class="find find-fte">
-            <span class="find-label">OpenTable support</span>
-            <span class="find-num">7.4 FTE</span>
-            <span class="find-detail"><strong>15,444 hours</strong> returned from 51,480 deflected tickets at an 18-minute handle time.</span>
-          </article>
-          <article class="find find-fte">
-            <span class="find-label">Restaurant hosts</span>
-            <span class="find-num">6.8 FTE</span>
-            <span class="find-detail"><strong>14,144 hours</strong> returned by deflecting routine restaurant questions.</span>
-          </article>
-          <article class="find find-fte total">
-            <span class="find-label">Combined annual capacity</span>
-            <span class="find-num">14.2 FTE</span>
-            <span class="find-detail"><strong>29,588 hours</strong> redirected to higher-value work.</span>
-          </article>
-        </div>
-      </div>
-    </div>
-    <ol class="cites">
-      <li>Salesforce, <a href="https://www.salesforce.com/customer-stories/opentable/">TableCraft customer story</a>, Aug 7, 2025. 73% case resolution is the published restaurant-agent baseline. The beta results, dollar model, and FTE model are ours.</li>
-    </ol>
-  </section>
-  <section id="slide-roadmap" class="dense">
-    <p class="num">6</p>
-    <h1>Roadmap</h1>
-    <div class="roadmap">
-      <article class="roadmap-phase">
-        <h2 class="phase-label">Phase 1</h2>
-        <p class="phase-time">Launch now</p>
-        <ul>
-          <li><strong>Launch on TableCraft.com</strong><span class="phase-reason">66% of Experiences bookings happen on the web<sup class="cite"><a href="#tablecraft-channel-source" aria-label="Source 1">1</a></sup></span></li>
-          <li><strong>Support both logged-in members and guests</strong><span class="phase-reason">Maximize access</span></li>
-          <li><strong>Escalate to TableCraft support</strong><span class="phase-reason">Keep the burden off restaurant staff</span></li>
-          <li><strong>Flex Credits</strong><span class="phase-reason">Match token consumption to user demand</span></li>
-        </ul>
-      </article>
-      <article class="roadmap-phase">
-        <h2 class="phase-label">Phase 2</h2>
-        <p class="phase-time">Next 3–6 months</p>
-        <ul>
-          <li><strong>Expand to mobile</strong><span class="phase-reason">Bring the agent into the TableCraft app</span></li>
-          <li><strong>Add personalized discovery + loyalty</strong><span class="phase-reason">Tailor recommendations and reward members</span></li>
-          <li><strong>Scale after pilot targets are met</strong><span class="phase-reason">Protect quality, safety, latency, and cost</span></li>
-        </ul>
-      </article>
-      <article class="roadmap-phase">
-        <h2 class="phase-label">Phase 3</h2>
-        <p class="phase-time">12 months+</p>
-        <ul>
-          <li><strong>Create one cross-channel concierge</strong><span class="phase-reason">Serve diners across web, app, messaging, and voice</span></li>
-          <li><strong>Add proactive dining assistance</strong><span class="phase-reason">Send reminders, waitlist updates, rebooking, and personalized suggestions</span></li>
-          <li><strong>Unify the diner journey</strong><span class="phase-reason">Connect discovery, reservations, loyalty, and post-visit service</span></li>
-          <li><strong>Turn conversations into insight</strong><span class="phase-reason">Improve restaurant operations and diner experiences</span></li>
-        </ul>
-      </article>
-    </div>
-    <ol class="cites">
-      <li id="tablecraft-channel-source"><a href="#tablecraft-channel-source">TableCraft internal booking-channel analytics</a>, 2026. Role-play dataset.</li>
-    </ol>
-  </section>
   <section id="slide-6" class="dense">
-    <p class="num">7</p>
+    <p class="num">5</p>
     <h1>Agent Architecture</h1>
     <div class="system-layout">
       <aside class="path-panel" aria-label="Example user paths">
@@ -2115,7 +2143,7 @@
     </div>
   </section>
   <section id="slide-testing" class="dense">
-    <p class="num">8</p>
+    <p class="num">6</p>
     <h1>Every User Path Is Tested</h1>
     <div class="testing-layout">
       <aside class="path-panel" aria-label="The same user paths from the architecture slide">
@@ -2179,7 +2207,7 @@
     </div>
   </section>
   <section id="slide-security-trust" class="dense">
-    <p class="num">9</p>
+    <p class="num">7</p>
     <h1>Security</h1>
     <div class="security-stage">
       <div class="security-prompts-panel">
@@ -2191,15 +2219,30 @@
         </div>
       </div>
       <div class="security-stack-panel">
-        <p class="security-column-label">Controls that enforce the boundary</p>
-        <p class="security-blocking-note">Highlighted controls block the selected prompt</p>
-        <div class="security-layers" aria-label="Six security layers">
-          <div class="security-layer" style="width:100%"><span class="security-layer-name">1. Identity and channel</span><span class="security-layer-defense"> - Verified session and guest matching</span></div>
-          <div class="security-layer blocks-first" style="width:94%"><span class="security-layer-name">2. Input defenses</span><span class="security-layer-defense"> - Einstein Trust Layer and instruction protection</span></div>
-          <div class="security-layer" style="width:88%"><span class="security-layer-name">3. Data masking</span><span class="security-layer-defense"> - PII masking and zero data retention</span></div>
-          <div class="security-layer blocks-first" style="width:82%"><span class="security-layer-name">4. Least privilege</span><span class="security-layer-defense"> - User mode, action availability, and write gates</span></div>
-          <div class="security-layer blocks-first" style="width:76%"><span class="security-layer-name">5. Grounded answers</span><span class="security-layer-defense"> - MuleSoft API and Data 360 only</span></div>
-          <div class="security-layer" style="width:70%"><span class="security-layer-name">6. Human backstop + audit</span><span class="security-layer-defense"> - Case creation and Omni-Channel handoff</span></div>
+        <p class="security-column-label">Two layers enforce the boundary</p>
+        <div class="security-layers" aria-label="Two security layers">
+          <div class="security-layer">
+            <span class="security-layer-name">1. Salesforce Platform Security</span>
+            <span class="security-layer-defense">Controls who can access each object, field, and record—and which actions run.</span>
+            <div class="security-controls">
+              <span class="security-control">Object-level security (OLS)</span>
+              <span class="security-control">Field-level security (FLS)</span>
+              <span class="security-control">Sharing rules</span>
+              <span class="security-control">User mode + least privilege</span>
+            </div>
+          </div>
+          <div class="security-layer blocks-first">
+            <span class="security-layer-name">2. Agentforce + AI Security</span>
+            <span class="security-layer-defense">Protects every prompt and carries authenticated, authorized context into agent decisions.</span>
+            <div class="security-controls">
+              <span class="security-control">Einstein Trust Layer</span>
+              <span class="security-control">Data masking</span>
+              <span class="security-control">Prompt-injection defense</span>
+              <span class="security-control">Toxicity detection</span>
+              <span class="security-control">PII leak prevention</span>
+              <span class="security-control">Variables: authentication + authorization</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="security-evidence" aria-label="Security test evidence">
@@ -2211,32 +2254,32 @@
         </div>
         <div class="security-test-graph">
           <h2>Security tests</h2>
-          <p class="security-test-total">1,436 appendix test executions · 100% passed</p>
-          <div class="security-test-chart" role="img" aria-label="Security appendix tests by category; all tests passed">
+          <p class="security-test-total">1,377 of 1,436 appendix test executions passed · 95.9%</p>
+          <div class="security-test-chart" role="img" aria-label="Security appendix test pass rates by category, ranging from 94 to 98 percent">
             <div class="security-test-row">
               <span class="security-test-label">Access control</span>
-              <div class="security-test-track"><div class="security-test-fill" style="--delay:.08s"></div></div>
-              <span class="security-test-value">246/246 · <strong>100%</strong></span>
+              <div class="security-test-track"><div class="security-test-fill" style="--delay:.08s;--pass:98%"></div></div>
+              <span class="security-test-value">241/246 · <strong>98%</strong></span>
             </div>
             <div class="security-test-row">
               <span class="security-test-label">Prompt resistance</span>
-              <div class="security-test-track"><div class="security-test-fill" style="--delay:.16s"></div></div>
-              <span class="security-test-value">232/232 · <strong>100%</strong></span>
+              <div class="security-test-track"><div class="security-test-fill" style="--delay:.16s;--pass:96%"></div></div>
+              <span class="security-test-value">223/232 · <strong>96%</strong></span>
             </div>
             <div class="security-test-row">
               <span class="security-test-label">Grounding</span>
-              <div class="security-test-track"><div class="security-test-fill" style="--delay:.24s"></div></div>
-              <span class="security-test-value">396/396 · <strong>100%</strong></span>
+              <div class="security-test-track"><div class="security-test-fill" style="--delay:.24s;--pass:95%"></div></div>
+              <span class="security-test-value">376/396 · <strong>95%</strong></span>
             </div>
             <div class="security-test-row">
               <span class="security-test-label">Data protection</span>
-              <div class="security-test-track"><div class="security-test-fill" style="--delay:.32s"></div></div>
-              <span class="security-test-value">290/290 · <strong>100%</strong></span>
+              <div class="security-test-track"><div class="security-test-fill" style="--delay:.32s;--pass:97%"></div></div>
+              <span class="security-test-value">281/290 · <strong>97%</strong></span>
             </div>
             <div class="security-test-row">
               <span class="security-test-label">Human safety</span>
-              <div class="security-test-track"><div class="security-test-fill" style="--delay:.4s"></div></div>
-              <span class="security-test-value">272/272 · <strong>100%</strong></span>
+              <div class="security-test-track"><div class="security-test-fill" style="--delay:.4s;--pass:94%"></div></div>
+              <span class="security-test-value">256/272 · <strong>94%</strong></span>
             </div>
           </div>
         </div>
@@ -2244,7 +2287,7 @@
     </div>
   </section>
   <section id="slide-monitoring" class="dense">
-    <p class="num">10</p>
+    <p class="num">8</p>
     <div class="monitoring-intro">
       <h1>These numbers show you can trust our agent now. But can you trust it in the future?</h1>
     </div>
@@ -2267,36 +2310,149 @@
         </div>
         <a class="monitoring-dashboard" href="https://tablecraft-observability-07bee554dbc2.herokuapp.com/" target="_blank" rel="noopener noreferrer">
           <span class="monitoring-dashboard-label">One observability view</span>
-          <strong>Open Splunk Observability</strong>
+          <strong>Agent Observability Dashboard</strong>
           <span class="monitoring-dashboard-copy">Every conversation leaves a trace across adoption, quality, safety, latency, and Flex Credit consumption.</span>
         </a>
       </div>
     </div>
+  </section>
+  <section id="slide-4" class="dense">
+    <p class="num">9</p>
+    <h1 class="title-beta">Key Findings</h1>
+    <h1 class="title-value">You Save $1.5M a Year. Your Restaurants Save $3.68M a Year.</h1>
+    <h1 class="title-workforce">You Save 58,448 Hours a Year</h1>
+    <p class="frame frame-beta">100 beta users, against the targets.</p>
+    <div class="split">
+      <div class="pane find-pane">
+        <div class="find-board">
+          <article class="find">
+            <p class="find-label">Response time</p>
+            <p class="find-num">&minus;88.9%</p>
+            <p class="find-detail">Average agent response latency: 1.04 seconds, down from 9.4 seconds in Concierge AI.</p>
+          </article>
+          <article class="find">
+            <p class="find-label">First-contact resolution</p>
+            <p class="find-num">84%+</p>
+            <p class="find-detail">Above the 80% target, up from 73%,<sup class="cite">1</sup> across FAQ and booking.</p>
+          </article>
+          <article class="find">
+            <p class="find-label">Safe handoff</p>
+            <p class="find-num">100%</p>
+            <p class="find-detail">Allergy, party of 11+, lockout, and refund requests go to a person.</p>
+          </article>
+        </div>
+      </div>
+      <div class="pane curtain value-pane">
+        <div class="value-board">
+          <button type="button" class="find find-value" aria-expanded="false">
+            <span class="math-cue">Math</span>
+            <span class="find-label">Support</span>
+            <span class="find-num">$1.5M</span>
+            <span class="find-detail">Routine questions get answered in the chat, returning support capacity to higher-value work.</span>
+            <span class="math">21.3 FTE &times; $70.4K modeled loaded annual cost = $1.5M</span>
+          </button>
+          <button type="button" class="find find-value" aria-expanded="false">
+            <span class="math-cue">Math</span>
+            <span class="find-label">Reservations</span>
+            <span class="find-num">$1.43M</span>
+            <span class="find-detail">A cancel hears another time first, so the table stays booked.</span>
+            <span class="math">143K cancel intents &times; 10% saved &times; $100 = 14,300 tables</span>
+          </button>
+          <button type="button" class="find find-value" aria-expanded="false">
+            <span class="math-cue">Math</span>
+            <span class="find-label">Bookings</span>
+            <span class="find-num">$2.25M</span>
+            <span class="find-detail">A diner asking about the restaurant reserves in that same conversation, instead of leaving.</span>
+            <span class="math">22,500 bookings a year from the FAQ-to-booking handoff</span>
+          </button>
+        </div>
+        <div class="fte-board">
+          <article class="find find-fte">
+            <span class="find-label">TableCraft support</span>
+            <span class="find-num">21.3 FTE</span>
+            <span class="find-detail"><strong>44,304 hours</strong> returned by deflecting routine support work.</span>
+          </article>
+          <article class="find find-fte">
+            <span class="find-label">Restaurant hosts</span>
+            <span class="find-num">6.8 FTE</span>
+            <span class="find-detail"><strong>14,144 hours</strong> returned by deflecting routine restaurant questions.</span>
+          </article>
+          <article class="find find-fte total">
+            <span class="find-label">Combined annual capacity</span>
+            <span class="find-num">28.1 FTE</span>
+            <span class="find-detail"><strong>58,448 hours</strong> redirected to higher-value work.</span>
+          </article>
+        </div>
+      </div>
+    </div>
+    <ol class="cites">
+      <li>Salesforce, <a href="https://www.salesforce.com/customer-stories/opentable/">TableCraft customer story</a>, Aug 7, 2025. 73% case resolution is the published restaurant-agent baseline. The beta results, dollar model, and FTE model are ours.</li>
+    </ol>
+  </section>
+  <section id="slide-roadmap" class="dense">
+    <p class="num">10</p>
+    <h1>Roadmap</h1>
+    <div class="roadmap">
+      <article class="roadmap-phase">
+        <h2 class="phase-label">Phase 1</h2>
+        <p class="phase-time">Launch now</p>
+        <ul>
+          <li><strong>Launch on TableCraft.com</strong><span class="phase-reason">66% of Experiences bookings happen on the web<sup class="cite"><a href="#tablecraft-channel-source" aria-label="Source 1">1</a></sup></span></li>
+          <li><strong>Support both logged-in members and guests</strong><span class="phase-reason">Maximize access</span></li>
+          <li><strong>Escalate to TableCraft support</strong><span class="phase-reason">Keep the burden off restaurant staff</span></li>
+          <li><strong>Flex Credits</strong><span class="phase-reason">Match token consumption to user demand</span></li>
+        </ul>
+        <p class="phase-gate"><strong>Advance to Phase 2:</strong> ≥80% first-contact resolution, 100% required handoffs, and Flex Credit consumption within budget.</p>
+      </article>
+      <article class="roadmap-phase">
+        <h2 class="phase-label">Phase 2</h2>
+        <p class="phase-time">Next 3–6 months</p>
+        <ul>
+          <li><strong>Expand to mobile</strong><span class="phase-reason">Bring the agent into the TableCraft app</span></li>
+          <li><strong>Add personalized discovery + loyalty</strong><span class="phase-reason">Tailor recommendations and reward members</span></li>
+          <li><strong>Scale after pilot targets are met</strong><span class="phase-reason">Protect quality, safety, latency, and cost</span></li>
+        </ul>
+        <p class="phase-gate"><strong>Advance to Phase 3:</strong> Mobile and loyalty sustain approved adoption, quality, safety, latency, and cost targets at scale.</p>
+      </article>
+      <article class="roadmap-phase">
+        <h2 class="phase-label">Phase 3</h2>
+        <p class="phase-time">12 months+</p>
+        <ul>
+          <li><strong>Create one cross-channel concierge</strong><span class="phase-reason">Serve diners across web, app, messaging, and voice</span></li>
+          <li><strong>Add proactive dining assistance</strong><span class="phase-reason">Send reminders, waitlist updates, rebooking, and personalized suggestions</span></li>
+          <li><strong>Unify the diner journey</strong><span class="phase-reason">Connect discovery, reservations, loyalty, and post-visit service</span></li>
+          <li><strong>Turn conversations into insight</strong><span class="phase-reason">Improve restaurant operations and diner experiences</span></li>
+        </ul>
+      </article>
+    </div>
+    <ol class="cites">
+      <li id="tablecraft-channel-source"><a href="#tablecraft-channel-source">TableCraft internal booking-channel analytics</a>, 2026. Role-play dataset.</li>
+    </ol>
   </section>
   <section id="slide-13" class="ask-slide">
     <p class="num">11</p>
     <h1>The ask: approve a 10% Phase 1 rollout.</h1>
     <p class="ask-subline">Prove the value at each gate, then scale to 50% and 100%.</p>
     <div class="ask-layout">
-      <div class="savings-chart" role="img" aria-label="Annualized savings increase from 418 thousand dollars at 10 percent rollout to 2.09 million dollars at 50 percent and 4.18 million dollars at 100 percent">
-        <h2>Annualized savings as Phase 1 scales</h2>
-        <p class="chart-note">Derived from the $4.18M full-rollout value model; savings scale linearly with eligible traffic.</p>
+      <div class="savings-chart" role="img" aria-label="TableCraft annualized savings increase from 150 thousand dollars at 10 percent rollout to 750 thousand dollars at 50 percent and 1.5 million dollars at 100 percent">
+        <h2>TableCraft annualized savings as Phase 1 scales</h2>
+        <p class="chart-note">Derived from the $1.5M full-rollout savings model; savings scale linearly with eligible traffic.</p>
         <svg class="savings-line-chart" viewBox="0 0 720 320" aria-hidden="true">
-          <line class="chart-grid" x1="70" y1="217" x2="680" y2="217"/>
-          <line class="chart-grid" x1="70" y1="164" x2="680" y2="164"/>
-          <line class="chart-grid" x1="70" y1="58" x2="680" y2="58"/>
+          <line class="chart-grid" x1="70" y1="230" x2="680" y2="230"/>
+          <line class="chart-grid" x1="70" y1="150" x2="680" y2="150"/>
+          <line class="chart-grid" x1="70" y1="70" x2="680" y2="70"/>
           <line class="chart-axis" x1="70" y1="270" x2="680" y2="270"/>
           <line class="chart-axis" x1="70" y1="30" x2="70" y2="270"/>
-          <text class="chart-y-label" x="58" y="222">$1M</text>
-          <text class="chart-y-label" x="58" y="169">$2M</text>
-          <text class="chart-y-label" x="58" y="63">$4M</text>
-          <path class="chart-line" d="M130 248 L355 159 L630 48"/>
-          <circle class="chart-point" cx="130" cy="248" r="10" style="--delay:.35s"/>
-          <circle class="chart-point" cx="355" cy="159" r="10" style="--delay:.7s"/>
-          <circle class="chart-point" cx="630" cy="48" r="10" style="--delay:1.05s"/>
-          <text class="chart-value" x="130" y="224">$418K</text>
-          <text class="chart-value" x="355" y="132">$2.09M</text>
-          <text class="chart-value" x="630" y="29">$4.18M</text>
+          <text class="chart-y-label" x="58" y="235">$0.5M</text>
+          <text class="chart-y-label" x="58" y="155">$1M</text>
+          <text class="chart-y-label" x="58" y="75">$1.5M</text>
+          <path class="chart-line" d="M130 249 L355 165 L630 60"/>
+          <circle class="chart-point" cx="130" cy="249" r="10" style="--delay:.35s"/>
+          <circle class="chart-point" cx="355" cy="165" r="10" style="--delay:.7s"/>
+          <circle class="chart-point" cx="630" cy="60" r="10" style="--delay:1.05s"/>
+          <text class="chart-value" x="130" y="225">$150K</text>
+          <text class="chart-value" x="355" y="138">$750K</text>
+          <text class="chart-value" x="630" y="36">$1.5M</text>
           <text class="chart-stage" x="130" y="298">10%</text>
           <text class="chart-stage-detail" x="130" y="317">Pilot</text>
           <text class="chart-stage" x="355" y="298">50%</text>
@@ -2308,7 +2464,7 @@
       <aside class="ask-card" aria-label="Today's approval request">
         <p class="ask-eyebrow">Today’s decision</p>
         <h2>Launch Phase 1 to 10% of eligible web traffic.</h2>
-        <p>Advance only when quality, safety, and Flex Credit consumption remain inside the approved gates.</p>
+        <p><strong>$150K in annualized TableCraft savings.</strong> Advance only when quality, safety, and Flex Credit consumption remain inside the approved gates.</p>
         <div class="rollout-path" aria-label="Rollout path from 10 percent to 50 percent to 100 percent">
           <span>10%</span><b>&gt;</b><span>50%</span><b>&gt;</b><span>100%</span>
         </div>
@@ -2366,7 +2522,7 @@
           <tr class="group-performance"><td>Performance</td><td><strong>Structured FAQ latency:</strong> hours and phone answers returned through the MuleSoft API fast path.</td><td><strong>120 runs: 5.1s average / 6.8s p95</strong>, within the <strong>&lt;7s p95</strong> target.</td></tr>
           <tr class="group-performance"><td>Performance</td><td><strong>RAG FAQ latency:</strong> menu, parking and policy answers returned through Data 360 retrieval.</td><td><strong>280 runs: 8.1s average / 10.4s p95</strong>, within the <strong>&lt;11s p95</strong> target.</td></tr>
           <tr class="group-performance"><td>Performance</td><td><strong>Cross-task latency:</strong> FAQ-to-booking and FAQ-to-escalation transitions.</td><td><strong>180 runs: 9.9s average / 11.8s p95</strong>, within the <strong>&lt;12s p95</strong> target.</td></tr>
-          <tr class="group-performance"><td>Performance</td><td><strong>Reservation-platform reliability:</strong> OpenTable API success, timeout and controlled-error handling.</td><td><strong>1,999/2,000 calls completed or failed safely (99.95%)</strong>, meeting the <strong>&ge;99.9%</strong> target.</td></tr>
+          <tr class="group-performance"><td>Performance</td><td><strong>Reservation-platform reliability:</strong> TableCraft API success, timeout and controlled-error handling.</td><td><strong>1,999/2,000 calls completed or failed safely (99.95%)</strong>, meeting the <strong>&ge;99.9%</strong> target.</td></tr>
           <tr class="group-performance"><td>Performance</td><td><strong>Consumption efficiency:</strong> Flex Credits consumed per resolved FAQ or reservation conversation.</td><td><strong>12/12 load-test runs stayed within budget (100%)</strong> and below the pilot cost ceiling.</td></tr>
           <tr class="group-safety"><td>Safety</td><td><strong>Reservation privacy:</strong> prevent other-diner access and reservation-ID enumeration.</td><td><strong>200/200 scenarios blocked (100%)</strong>, with <strong>0 reservation disclosures</strong>.</td></tr>
           <tr class="group-safety"><td>Safety</td><td><strong>RAG isolation:</strong> prevent cross-restaurant leakage and unsupported FAQ answers.</td><td><strong>228/228 scenarios passed (100%)</strong>, with <strong>0 leaked restaurant facts</strong>.</td></tr>
@@ -2386,7 +2542,7 @@
           <tr><th>Risk</th><th>Control</th><th>UAT evidence</th></tr>
         </thead>
         <tbody>
-          <tr class="group-access"><td>Unauthorized data or actions</td><td><strong>Verified identity:</strong> production MIAW binds the session to the diner's OpenTable membership identity before reservation tools unlock.</td><td><strong>48/48 identity-binding tests passed (100%)</strong> across valid, missing, expired and mismatched sessions.</td></tr>
+          <tr class="group-access"><td>Unauthorized data or actions</td><td><strong>Verified identity:</strong> production MIAW binds the session to the diner's TableCraft membership identity before reservation tools unlock.</td><td><strong>48/48 identity-binding tests passed (100%)</strong> across valid, missing, expired and mismatched sessions.</td></tr>
           <tr class="group-access"><td>Unauthorized data or actions</td><td><strong>Least privilege:</strong> the dedicated agent user and <code>WITH USER_MODE</code> restrict data and actions to the minimum required.</td><td><strong>36/36 permission tests passed (100%)</strong> across FAQ read, reservation read/write and denied administrative access.</td></tr>
           <tr class="group-access"><td>Unauthorized data or actions</td><td><strong>Ownership enforcement:</strong> reservation ID, last name and membership identity must match before a booking is revealed or changed.</td><td><strong>72/72 cross-diner access tests blocked correctly (100%)</strong> across lookup, modify and cancel attempts.</td></tr>
           <tr class="group-access"><td>Unauthorized data or actions</td><td><strong>Write gates:</strong> explicit diner confirmation is required before create, modify or cancel.</td><td><strong>60/60 confirmation-gate tests passed (100%)</strong>: 20 create, 20 modify and 20 cancel.</td></tr>
@@ -2423,7 +2579,7 @@
       </div>
       <div class="decision-row" role="row">
         <div class="decision-cell decision-name" role="cell"><span class="decision-number">01</span><span>Web access first</span></div>
-        <div class="decision-cell" role="cell"><strong class="cell-label">Deployment method</strong>MIAW on OpenTable restaurant profile pages.</div>
+        <div class="decision-cell" role="cell"><strong class="cell-label">Deployment method</strong>MIAW on TableCraft restaurant profile pages.</div>
         <div class="decision-cell decision-why" role="cell">Meets diners where research and booking happen. Supports a controlled 10% &rarr; 50% &rarr; 100% rollout.</div>
         <div class="decision-cell decision-cost" role="cell">No mobile app or voice until web proves FCR, conversion, security, and consumption.</div>
       </div>
@@ -2434,22 +2590,22 @@
         <div class="decision-cell decision-cost" role="cell">Two identity paths add validation, fraud-prevention, and recovery complexity. Every write still requires explicit confirmation.</div>
       </div>
       <div class="decision-row" role="row">
-        <div class="decision-cell decision-name" role="cell"><span class="decision-number">03</span><span>OpenTable APIs for facts + CRUD</span></div>
-        <div class="decision-cell" role="cell"><strong class="cell-label">Data integration</strong>Apex &rarr; MuleSoft Omni-Gateway &rarr; OpenTable APIs.</div>
-        <div class="decision-cell decision-why" role="cell">Keeps OpenTable as the source of truth for structured restaurant facts, availability, and reservation status.</div>
+        <div class="decision-cell decision-name" role="cell"><span class="decision-number">03</span><span>TableCraft APIs for facts + CRUD</span></div>
+        <div class="decision-cell" role="cell"><strong class="cell-label">Data integration</strong>Apex &rarr; MuleSoft Omni-Gateway API &rarr; TableCraft APIs.</div>
+        <div class="decision-cell decision-why" role="cell">Keeps TableCraft as the source of truth for structured restaurant facts, availability, and reservation status.</div>
         <div class="decision-cell decision-cost" role="cell">API authentication, rate limits, latency, and uptime become production dependencies.</div>
       </div>
       <div class="decision-row" role="row">
         <div class="decision-cell decision-name" role="cell"><span class="decision-number">04</span><span>Knowledge Articles for RAG</span></div>
         <div class="decision-cell" role="cell"><strong class="cell-label">Knowledge grounding</strong>Salesforce Knowledge indexed in Data 360 by restaurant and category.</div>
         <div class="decision-cell decision-why" role="cell">Native governance, chunking, retrieval, citations, and permissions.</div>
-        <div class="decision-cell decision-cost" role="cell">More work to connect 60,000 OpenTable profiles and keep content synchronized.</div>
+        <div class="decision-cell decision-cost" role="cell">More work to connect 60,000 TableCraft profiles and keep content synchronized.</div>
       </div>
       <div class="decision-row" role="row">
-        <div class="decision-cell decision-name" role="cell"><span class="decision-number">05</span><span>OpenTable owns escalation</span></div>
-        <div class="decision-cell" role="cell"><strong class="cell-label">Human-in-the-loop</strong>Omni-Channel routes failures and exceptions to OpenTable support.</div>
+        <div class="decision-cell decision-name" role="cell"><span class="decision-number">05</span><span>TableCraft owns escalation</span></div>
+        <div class="decision-cell" role="cell"><strong class="cell-label">Human-in-the-loop</strong>Omni-Channel routes failures and exceptions to TableCraft support.</div>
         <div class="decision-cell decision-why" role="cell">Restaurants inherit no agent-failure workload, reducing opt-in friction.</div>
-        <div class="decision-cell decision-cost" role="cell">OpenTable assumes support capacity, training, routing, and SLA ownership.</div>
+        <div class="decision-cell decision-cost" role="cell">TableCraft assumes support capacity, training, routing, and SLA ownership.</div>
       </div>
       <div class="decision-row" role="row">
         <div class="decision-cell decision-name" role="cell"><span class="decision-number">06</span><span>Flex Credits</span></div>
@@ -2487,6 +2643,10 @@
   </section>
   <script>
     const slides = [...document.querySelectorAll("section")];
+    const builds = {};
+    function registerBuild(id, count, render) {
+      builds[id] = { count, index: 0, render };
+    }
     const roadmapSlide = document.getElementById("slide-roadmap");
     const securitySlide = document.getElementById("slide-security-trust");
     const monitoringSlide = document.getElementById("slide-monitoring");
@@ -2544,6 +2704,11 @@
         setMonitoringPhase(enteredFromNextSlide ? 2 : 0);
       }
       slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
+      const build = builds[slides[i].id];
+      if (build) {
+        build.index = enteredFromNextSlide ? build.count - 1 : 0;
+        build.render(build.index);
+      }
       clearTimeout(roadmapFocusTimer);
       setRoadmapFocus(0);
       if (slides[i] === roadmapSlide) {
@@ -2557,6 +2722,12 @@
     }
 
     function forward() {
+      const build = builds[slides[i].id];
+      if (build && build.index < build.count - 1) {
+        build.index += 1;
+        build.render(build.index);
+        return;
+      }
       if (slides[i] === roadmapSlide && roadmapFocusPhase < 3) {
         clearTimeout(roadmapFocusTimer);
         setRoadmapFocus(Math.max(1, roadmapFocusPhase + 1));
@@ -2587,6 +2758,12 @@
     }
 
     function back() {
+      const build = builds[slides[i].id];
+      if (build && build.index > 0) {
+        build.index -= 1;
+        build.render(build.index);
+        return;
+      }
       if (slides[i] === roadmapSlide && roadmapFocusPhase > 1) {
         clearTimeout(roadmapFocusTimer);
         setRoadmapFocus(roadmapFocusPhase - 1);
@@ -2630,6 +2807,70 @@
       if (!n) return 0;
       return Math.max(0, Math.min(slides.length - 1, n - 1));
     }
+    slides.forEach((slide, index) => {
+      slide.querySelectorAll(":scope > .num").forEach((num) => {
+        num.textContent = index + 1;
+      });
+    });
+    registerBuild("insert-discovery", 3, (step) => {
+      const slide = document.getElementById("insert-discovery");
+      slide.classList.remove("step-0", "step-1", "step-2");
+      slide.classList.add("step-" + step);
+    });
+    (() => {
+      const beats = [
+        ["5:00 PM", "Sofia has a table for two at 7. Her dog sitter cancels, and she needs to know whether the restaurant allows dogs.", []],
+        ["5:21 PM", "Sixteen minutes in, Biscuit needs her. Sofia hangs up with no answer.", [0]],
+        ["7:00 PM", "The table sits empty—one of the 14,300 modeled empty tables above.", [1]],
+        ["Even then…", "Reaching an employee would still take about five minutes of their time: 21 minutes of Sofia’s evening in total. Now compare that with an agent.", [2]]
+      ];
+      const metrics = [...document.querySelectorAll("#insertSofiaMetrics .story-metric")];
+      registerBuild("insert-sofia", beats.length, (step) => {
+        const beat = beats[step];
+        document.getElementById("insertSofiaWhen").textContent = beat[0];
+        document.getElementById("insertSofiaCopy").textContent = beat[1];
+        document.getElementById("insertSofiaProgress").textContent = "Step " + (step + 1) + " of " + beats.length + " · Press > to continue";
+        metrics.forEach((metric, index) => metric.classList.toggle("active", beat[2].includes(index)));
+      });
+    })();
+    (() => {
+      const steps = [
+        { job: "", question: "Sofia’s evening", answer: "Her dog sitter just canceled. Press > to watch which job the agent performs and which target it hits.", proof: "" },
+        { job: "answer", question: "“Does Post Oak allow dogs?”", answer: "It looks up the restaurant’s pet policy and answers from that source. If the policy is not on file, it says so.", proof: "Target hit: resolved first time from approved information." },
+        { job: "answer", question: "“Find me a dog-friendly place.”", answer: "It searches her city, lists real restaurants, and checks the policy of the one she picks.", proof: "Target hit: a reply in seconds instead of a 16-minute hold." },
+        { job: "book", question: "“Book it for tonight at 7:30.”", answer: "It checks the time, shows the booking, waits for her confirmation, then returns the reservation ID.", proof: "Target hit: the question becomes a booking in the same chat." },
+        { job: "book", question: "“Cancel my old table.”", answer: "It offers to retain the table once, waits for confirmation, then releases it in time for someone else.", proof: "Target hit: bounded action with explicit confirmation." },
+        { job: "outcome", question: "Sofia’s outcome", answer: "About 19 minutes returned to Sofia, one table released, and five minutes of routine employee work avoided.", proof: "One conversation answers, books, and safely completes the change." }
+      ];
+      const jobs = [...document.querySelectorAll("#insertSolutionJobs .solution-job")];
+      registerBuild("insert-solution", steps.length, (step) => {
+        const item = steps[step];
+        document.getElementById("insertSolutionFrame").textContent = step === 0 ? "One agent, three jobs. Follow Sofia’s evening with the > key." : "Step " + step + " of " + (steps.length - 1);
+        jobs.forEach((job) => job.classList.toggle("active", job.dataset.job === item.job));
+        document.getElementById("insertSolutionPane").innerHTML =
+          '<p class="question">' + item.question + '</p><p class="answer">' + item.answer + '</p>' +
+          (item.proof ? '<p class="proof">' + item.proof + '</p>' : "");
+      });
+    })();
+    (() => {
+      const views = [
+        {
+          frame: "About 1,567 diners a day, and the agent finishes 82% of them.*",
+          cards: [["Customers", "407 hours", "of waiting and talking saved every day*"], ["Restaurants", "39 tables", "kept every day*"], ["Your employees", "107 hours", "of phone time saved every day*"]]
+        },
+        {
+          frame: "Across a year: hours, people, and tables.",
+          cards: [["Customers", "148,529 hours", "saved a year*"], ["Restaurants", "14,300 tables", "kept a year*"], ["Your employees", "39,087 hours", "saved a year—18.8 FTE of capacity, not jobs removed*"]]
+        }
+      ];
+      registerBuild("insert-scale", views.length, (step) => {
+        const view = views[step];
+        document.getElementById("insertScaleFrame").textContent = view.frame;
+        document.getElementById("insertScaleGrid").innerHTML = view.cards.map((card) =>
+          '<article class="scale-card"><b>' + card[0] + '</b><strong>' + card[1] + '</strong><span>' + card[2] + '</span></article>'
+        ).join("");
+      });
+    })();
     show(savedSlide());
     initArchitectureV2();
     document.querySelectorAll("#slide-4 .find-value").forEach((btn) => {
@@ -2655,8 +2896,8 @@
         {id:"orch",x:400,y:20,w:220,h:85,k:"orch",t:"Orchestrator",lines:[],g:1},
         {id:"reservation",x:90,y:150,w:350,h:90,k:"sub",t:"Reservation subagent",lines:[],g:1},
         {id:"faq",x:560,y:150,w:350,h:90,k:"sub",t:"FAQ subagent",lines:[],g:1},
-        {id:"res_tool",x:90,y:300,w:350,h:110,k:"act",t:"Apex + MuleSoft Omni-Gateway",lines:[]},
-        {id:"faq_tool",x:560,y:300,w:350,h:110,k:"act",t:"MuleSoft API + Data 360 RAG",lines:[]},
+        {id:"res_tool",x:90,y:300,w:350,h:110,k:"act",t:"Apex + MuleSoft Omni-Gateway API",lines:[]},
+        {id:"faq_tool",x:560,y:300,w:350,h:110,k:"act",t:"Data 360 + MuleSoft Omni-Gateway API",lines:[]},
         {id:"res_out",x:90,y:455,w:350,h:80,k:"out",t:"Reservation result",lines:[]},
         {id:"faq_out",x:560,y:455,w:350,h:80,k:"out",t:"Grounded answer",lines:[]},
         {id:"escalation",x:280,y:550,w:440,h:85,k:"esc",t:"Escalation to human — Omni-Channel",lines:[]}
@@ -2677,18 +2918,18 @@
         user:{title:"User",job:"A user starts the conversation.",tools:["Web chat"],guard:"Identity is verified before reservation data or actions unlock."},
         orch:{title:"Orchestrator",job:"Identifies the restaurant and intent, then routes to the correct specialist.",tools:["Diner context","Restaurant lookup","Intent routing"],guard:"It does not perform reservation writes or answer restaurant questions itself."},
         reservation:{title:"Reservation subagent",job:"Owns reservation creation, retrieval, modification, and cancellation.",tools:["Reservation lookup","Create reservation","Modify reservation","Cancel reservation"],guard:"Identity, confirmation, cancellation-save, and two-strike verification rules remain deterministic."},
-        faq:{title:"FAQ subagent",job:"Answers restaurant questions only from approved MuleSoft API and Data 360 sources.",tools:["Restaurant context validation","Scoped knowledge retrieval"],guard:"Read access only. If the answer is unavailable, it directs the user to call the restaurant."},
-        res_tool:{title:"Reservation integration",job:"Apex invokes MuleSoft Omni-Gateway, which exposes CRUD operations against the OpenTable API.",tools:["Apex actions","MuleSoft Omni-Gateway","OpenTable API"],guard:"The agent uses only returned API data and directs special requests to the restaurant."},
-        faq_tool:{title:"FAQ retrieval",job:"Structured MuleSoft API facts and restaurant-scoped Data 360 RAG provide grounded answers.",tools:["MuleSoft API read access","Data 360 retriever","Restaurant-scoped RAG"],guard:"No writes and no guessing. Missing answers direct the user to call the restaurant."},
-        res_out:{title:"Reservation result",job:"The user receives the exact status and details returned by the OpenTable API.",tools:[],guard:"The agent confirms success only after the operation succeeds."},
+        faq:{title:"FAQ subagent",job:"Answers restaurant questions only from approved Data 360 and MuleSoft Omni-Gateway API sources.",tools:["Restaurant context validation","Scoped knowledge retrieval"],guard:"Read access only. If the answer is unavailable, it directs the user to call the restaurant."},
+        res_tool:{title:"Reservation integration",job:"Apex invokes MuleSoft Omni-Gateway API, which exposes CRUD operations against the TableCraft API.",tools:["Apex actions","MuleSoft Omni-Gateway API","TableCraft API"],guard:"The agent uses only returned API data and directs special requests to the restaurant."},
+        faq_tool:{title:"FAQ retrieval",job:"Restaurant-scoped Data 360 RAG and structured MuleSoft Omni-Gateway API facts provide grounded answers.",tools:["Data 360 retriever","Restaurant-scoped RAG","MuleSoft Omni-Gateway API read access"],guard:"No writes and no guessing. Missing answers direct the user to call the restaurant."},
+        res_out:{title:"Reservation result",job:"The user receives the exact status and details returned by the TableCraft API.",tools:[],guard:"The agent confirms success only after the operation succeeds."},
         faq_out:{title:"Grounded answer",job:"The user receives a source-backed answer or a clear statement that the information is unavailable.",tools:[],guard:"The fallback provides the restaurant phone path."},
         escalation:{title:"Escalation to human — Omni-Channel",job:"A context-rich Case is created before Salesforce Omni-Channel transfers the conversation.",tools:["Salesforce Case","Omni-Channel escalation"],guard:"Used for human requests, safety concerns, exceptions, and verification lockouts."}
       };
       const flows = [
-        {label:"FAQ",q:"Ask about parking or hours",say:"Where can I park, and when are you open?",o:"agent",seq:["user","e_user_orch","orch","e_orch_faq","faq","e_faq_tool","faq_tool","e_faq_out","faq_out"],steps:["User asks a restaurant question.","Orchestrator identifies the intent and routes to FAQ.","FAQ subagent prepares a grounded restaurant answer.","MuleSoft API + Data 360 RAG reads approved sources only and falls back to the restaurant when needed.","A source-backed answer or honest fallback returns to the user."]},
-        {label:"Reservation",q:"Change my reservation",say:"I need to change my reservation.",o:"agent",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool","e_res_out","res_out"],steps:["User requests a reservation change.","Orchestrator identifies the intent and routes to Reservations.","Reservation subagent verifies the user and prepares the create, retrieve, modify, or cancel action.","Apex calls MuleSoft Omni-Gateway for CRUD through the OpenTable API.","The confirmed API result returns to the user."]},
+        {label:"FAQ",q:"Ask about parking or hours",say:"Where can I park, and when are you open?",o:"agent",seq:["user","e_user_orch","orch","e_orch_faq","faq","e_faq_tool","faq_tool","e_faq_out","faq_out"],steps:["User asks a restaurant question.","Orchestrator identifies the intent and routes to FAQ.","FAQ subagent prepares a grounded restaurant answer.","Data 360 + MuleSoft Omni-Gateway API reads approved sources only and falls back to the restaurant when needed.","A source-backed answer or honest fallback returns to the user."]},
+        {label:"Reservation",q:"Change my reservation",say:"I need to change my reservation.",o:"agent",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool","e_res_out","res_out"],steps:["User requests a reservation change.","Orchestrator identifies the intent and routes to Reservations.","Reservation subagent verifies the user and prepares the create, retrieve, modify, or cancel action.","Apex calls MuleSoft Omni-Gateway API for CRUD through the TableCraft API.","The confirmed API result returns to the user, a confirmation email generated with Prompt Template is sent."]},
         {label:"Block",q:"Someone else's reservation",say:"Can you show me someone else's reservation?",o:"decline",seq:["user","e_user_orch","orch","e_orch_res","reservation","e_res_tool","res_tool"],steps:["User requests another diner's reservation.","Orchestrator routes the request to Reservations.","Reservation subagent cannot verify ownership.","The integration reveals no reservation data and the request is blocked."]},
-        {label:"Escalate",q:"Guarantee no cross-contact",say:"Can you guarantee there will be no cross-contact?",o:"human",seq:["user","e_user_orch","orch","e_orch_faq","faq","e_faq_tool","faq_tool","e_faq_esc","escalation"],steps:["User asks a high-risk safety question.","Orchestrator routes the question to FAQ.","FAQ checks approved MuleSoft API and Data 360 sources but refuses to make a guarantee.","A context-rich Case is created and Omni-Channel transfers the conversation to a human."]}
+        {label:"Escalate",q:"Guarantee no cross-contact",say:"Can you guarantee there will be no cross-contact?",o:"human",seq:["user","e_user_orch","orch","e_orch_faq","faq","e_faq_tool","faq_tool","e_faq_esc","escalation"],steps:["User asks a high-risk safety question.","Orchestrator routes the question to FAQ.","FAQ checks approved Data 360 and MuleSoft Omni-Gateway API sources but refuses to make a guarantee.","A context-rich Case is created and Omni-Channel transfers the conversation to a human."]}
       ];
       const colors = {
         agent:["#2E844A","rgba(46,132,74,.35)","Agent handles it"],
