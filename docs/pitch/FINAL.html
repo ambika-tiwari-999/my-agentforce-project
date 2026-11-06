@@ -670,7 +670,7 @@
       flex: 1;
       min-height: 0;
       display: grid;
-      grid-template-columns: minmax(210px,.72fr) minmax(520px,1.7fr) minmax(260px,.88fr);
+      grid-template-columns: minmax(210px,.72fr) minmax(54rem,2.58fr);
       align-items: center;
       gap: 0.75rem;
     }
@@ -1697,8 +1697,8 @@
       width: min(100%,84rem);
       min-height: 0;
       margin: 0 auto;
-      grid-template-columns: minmax(210px,.72fr) minmax(520px,2.58fr);
-      gap: .75rem;
+      grid-template-columns: 21.5% minmax(0,77.5%);
+      gap: 1%;
       overflow: visible;
     }
     #slide-security-trust .security-path-panel {
@@ -1757,10 +1757,11 @@
     }
     #slide-security-trust .security-results-stage {
       display: grid;
+      grid-column: 2;
       min-width: 0;
       min-height: 0;
-      grid-template-columns: 9.5rem minmax(0,1fr);
-      gap: 1rem;
+      grid-template-columns: 10vw minmax(0,1fr);
+      gap: 1vw;
       align-items: center;
       padding: 1rem 1.25rem 1rem 0;
       overflow: hidden;
@@ -1789,6 +1790,7 @@
     #slide-security-trust .security-evidence-arrow { fill: #066AFE; }
     #slide-security-trust.active .security-evidence-brace { animation: securityEvidenceBrace .75s ease-out forwards; }
     #slide-security-trust .security-test-graph {
+      justify-self: stretch;
       padding: 1rem 0;
       border-radius: 0;
       background: transparent;
@@ -1806,15 +1808,18 @@
     }
     #slide-security-trust .security-test-chart {
       display: grid;
+      grid-template-columns: minmax(0,1fr);
       grid-template-rows: repeat(5,minmax(0,1fr));
+      justify-content: stretch;
       gap: .65rem;
       flex: 1;
       width: 100%;
       margin: 0;
     }
     #slide-security-trust .security-test-row {
-      grid-template-columns: 9rem minmax(8rem,1fr) 14rem;
-      gap: 1rem;
+      width: 100%;
+      grid-template-columns: 16% 53% 25%;
+      gap: 3%;
     }
     #slide-security-trust .security-test-label { color: #001E5B; font-size: 1.05rem; }
     #slide-security-trust .security-test-track {
@@ -3345,22 +3350,22 @@
       align-items: center;
       justify-content: center;
       margin: 0;
-      padding: .65rem .55rem;
+      padding: .7rem .65rem;
       border-right: 4px solid #90D0FE;
       border-radius: 12px 0 0 12px;
       background: rgba(0,30,91,.6);
       color: #FFFFFF;
-      font-size: clamp(.76rem,.96vw,.9rem);
+      font-size: clamp(.82rem,1.05vw,.98rem);
       font-weight: 800;
-      letter-spacing: .06em;
+      letter-spacing: .045em;
       line-height: 1.2;
       text-align: center;
       text-transform: uppercase;
     }
-    .architecture-label.channel { grid-column: 1; grid-row: 1; }
-    .architecture-label.agents { grid-column: 1; grid-row: 2; border-color: #00B3FF; }
-    .architecture-label.work { grid-column: 1; grid-row: 3; border-color: #9050E9; }
-    .architecture-label.record { grid-column: 1; grid-row: 4; border-color: #2E844A; }
+    .architecture-label.channel { grid-column: 1; grid-row: 1; background: #022AC0; }
+    .architecture-label.agents { grid-column: 1; grid-row: 2; border-color: #00B3FF; background: #066AFE; }
+    .architecture-label.work { grid-column: 1; grid-row: 3; border-color: #9050E9; background: #9050E9; }
+    .architecture-label.record { grid-column: 1; grid-row: 4; border-color: #2E844A; background: #2E844A; }
     .architecture-layer,
     .architecture-detail {
       position: relative;
@@ -3371,11 +3376,13 @@
     .architecture-layer {
       display: flex;
       flex-direction: column;
+      align-items: center;
       justify-content: center;
       padding: .7rem .9rem;
       border: 2px solid #90D0FE;
       background: linear-gradient(180deg, #FFFFFF 0%, #EAF5FE 100%);
       color: #001E5B;
+      text-align: center;
     }
     .architecture-layer::after {
       position: absolute;
@@ -3392,7 +3399,7 @@
     .architecture-detail h2 {
       margin: 0;
       color: #001E5B;
-      font-size: clamp(1.02rem,1.4vw,1.22rem);
+      font-size: clamp(1.1rem,1.5vw,1.34rem);
       font-weight: 800;
       line-height: 1.1;
     }
@@ -3400,7 +3407,7 @@
     .architecture-detail p {
       margin: .2rem 0 0;
       color: #3E3E3C;
-      font-size: clamp(.72rem,.92vw,.84rem);
+      font-size: clamp(.78rem,1vw,.9rem);
       line-height: 1.32;
     }
     .architecture-portal { grid-column: 2; grid-row: 1; align-items: center; text-align: center; }
@@ -3422,19 +3429,23 @@
       background: linear-gradient(145deg, #001E5B 0%, #022AC0 100%);
       color: #FFFFFF;
     }
-    .architecture-agentforce > .architecture-layer-copy > h2 { color: #FFFFFF; font-size: clamp(1.12rem,1.6vw,1.42rem); }
+    .architecture-agentforce > .architecture-layer-copy > h2 { color: #FFFFFF; font-size: clamp(1.2rem,1.7vw,1.52rem); }
     .architecture-agentforce > .architecture-layer-copy > p { color: #DDDBDA; }
     .architecture-agentforce > .architecture-layer-copy {
       display: grid;
       grid-template-columns: auto minmax(12rem,1fr) auto auto;
       gap: .55rem;
       align-items: center;
+      justify-items: center;
+      text-align: center;
     }
     .architecture-layer-copy {
       display: flex;
       min-width: 0;
       flex-direction: column;
+      align-items: center;
       justify-content: center;
+      text-align: center;
     }
     .architecture-trust {
       display: flex;
@@ -3447,7 +3458,7 @@
       border-radius: 999px;
       background: rgba(144,208,254,.2);
       color: #FFFFFF;
-      font-size: clamp(.7rem,.86vw,.8rem);
+      font-size: clamp(.76rem,.94vw,.86rem);
       font-weight: 800;
       line-height: 1.2;
       text-align: center;
@@ -3460,10 +3471,17 @@
       border-radius: 999px;
       background: #066AFE;
       color: #FFFFFF;
-      font-size: .72rem;
+      font-size: .78rem;
       font-weight: 800;
     }
-    .architecture-service { grid-column: 2; grid-row: 3; border-color: #9050E9; background: #FFFFFF; }
+    .architecture-service {
+      grid-column: 2;
+      grid-row: 3;
+      border-color: #00B3FF;
+      background: linear-gradient(145deg, #001E5B 0%, #022AC0 100%);
+      color: #FFFFFF;
+    }
+    .architecture-service h2 { color: #FFFFFF; }
     .architecture-data { grid-column: 2; grid-row: 4; border-color: #2E844A; background: #EAF5FE; }
     .architecture-data {
       display: grid;
@@ -3475,6 +3493,8 @@
       grid-template-columns: auto minmax(12rem,1fr) auto auto;
       gap: .55rem;
       align-items: center;
+      justify-items: center;
+      text-align: center;
     }
     .architecture-data > .architecture-layer-copy .architecture-chips,
     .architecture-data > .architecture-layer-copy .architecture-integrations { margin-top: 0; }
@@ -3482,6 +3502,7 @@
     .architecture-chips {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: .32rem;
       margin-top: .42rem;
     }
@@ -3491,19 +3512,21 @@
       border-radius: 999px;
       background: #EAF5FE;
       color: #001E5B;
-      font-size: clamp(.68rem,.84vw,.78rem);
+      font-size: clamp(.74rem,.92vw,.84rem);
       font-weight: 750;
     }
-    .architecture-service .architecture-chip { border-color: rgba(144,80,233,.35); background: rgba(144,80,233,.12); }
+    .architecture-service .architecture-chip { border-color: #90D0FE; background: #FFFFFF; }
     .architecture-data .architecture-chip { border-color: rgba(46,132,74,.35); background: #FFFFFF; }
     .architecture-detail {
       display: flex;
       flex-direction: column;
+      align-items: stretch;
       justify-content: center;
       padding: .5rem .65rem;
       border: 1.5px solid #90D0FE;
       border-radius: 11px;
       background: #FFFFFF;
+      text-align: center;
     }
     .architecture-execution,
     .architecture-retrieval {
@@ -3542,7 +3565,7 @@
       border-radius: 8px;
       background: #EAF5FE;
       color: #001E5B;
-      font-size: clamp(.74rem,.9vw,.84rem);
+      font-size: clamp(.78rem,.96vw,.88rem);
       font-weight: 750;
       line-height: 1.2;
       text-align: center;
@@ -3578,7 +3601,7 @@
       padding: .32rem .22rem;
       border-color: rgba(46,132,74,.35);
       background: #EAF5FE;
-      font-size: clamp(.68rem,.84vw,.78rem);
+      font-size: clamp(.73rem,.9vw,.83rem);
     }
     .architecture-retrieval .architecture-step + .architecture-step::before {
       top: 50%;
@@ -3589,6 +3612,7 @@
     .architecture-integrations {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: .35rem;
       margin-top: .4rem;
     }
@@ -3597,7 +3621,7 @@
       border-radius: 999px;
       background: #001E5B;
       color: #FFFFFF;
-      font-size: .7rem;
+      font-size: .76rem;
       font-weight: 800;
     }
     .architecture-observability {
@@ -3631,7 +3655,7 @@
     .architecture-observability h2 {
       margin: 0 0 .15rem;
       color: #FFFFFF;
-      font-size: clamp(.9rem,1.1vw,1.05rem);
+      font-size: clamp(1rem,1.2vw,1.14rem);
       line-height: 1.15;
       text-align: center;
     }
@@ -3641,7 +3665,7 @@
       border-radius: 10px;
       background: #FFFFFF;
       color: #001E5B;
-      font-size: clamp(.68rem,.82vw,.76rem);
+      font-size: clamp(.74rem,.9vw,.84rem);
       font-weight: 800;
       line-height: 1.2;
       text-align: center;
@@ -4657,33 +4681,34 @@
     <div class="roadmap">
       <article class="roadmap-phase">
         <h2 class="phase-label">Phase 1</h2>
-        <p class="phase-time">Launch now</p>
+        <p class="phase-time">Core capabilities</p>
         <ul>
-          <li><strong>Launch on TableCraft.com</strong><span class="phase-reason">66% of Experiences bookings happen on the web<sup class="cite"><a href="#tablecraft-channel-source" aria-label="Source 1">1</a></sup></span></li>
-          <li><strong>Support both logged-in members and guests</strong><span class="phase-reason">Maximize access</span></li>
-          <li><strong>Escalate to TableCraft support</strong><span class="phase-reason">Keep the burden off restaurant staff</span></li>
-          <li><strong>Flex Credits</strong><span class="phase-reason">Match token consumption to user demand</span></li>
+          <li><strong>Answer grounded dining questions</strong><span class="phase-reason">Give diners trusted restaurant information</span></li>
+          <li><strong>Create and manage reservations</strong><span class="phase-reason">Book, modify, and cancel in one conversation</span></li>
+          <li><strong>Escalate to TableCraft support</strong><span class="phase-reason">Hand off safely when human help is needed</span></li>
+          <li><strong>Launch on TableCraft.com</strong><span class="phase-reason">Start where most digital bookings happen<sup class="cite"><a href="#tablecraft-channel-source" aria-label="Source 1">1</a></sup></span></li>
         </ul>
-        <p class="phase-gate"><strong>Advance to Phase 2:</strong> ≥80% first-contact resolution, 100% required handoffs, and Flex Credit consumption within budget.</p>
+        <p class="phase-gate"><strong>Advance to Phase 2:</strong> Core answers, reservation actions, and required handoffs meet approved quality and safety targets.</p>
       </article>
       <article class="roadmap-phase">
         <h2 class="phase-label">Phase 2</h2>
-        <p class="phase-time">Next 3–6 months</p>
+        <p class="phase-time">Expanded capabilities</p>
         <ul>
-          <li><strong>Expand to mobile</strong><span class="phase-reason">Bring the agent into the TableCraft app</span></li>
-          <li><strong>Add personalized discovery + loyalty</strong><span class="phase-reason">Tailor recommendations and reward members</span></li>
-          <li><strong>Scale after pilot targets are met</strong><span class="phase-reason">Protect quality, safety, latency, and cost</span></li>
+          <li><strong>Add personalized discovery</strong><span class="phase-reason">Recommend restaurants for each diner and occasion</span></li>
+          <li><strong>Support waitlists and rebooking</strong><span class="phase-reason">Offer useful alternatives when plans change</span></li>
+          <li><strong>Add proactive dining assistance</strong><span class="phase-reason">Send reminders and timely reservation updates</span></li>
+          <li><strong>Learn from conversation insights</strong><span class="phase-reason">Continuously improve diner and restaurant experiences</span></li>
         </ul>
-        <p class="phase-gate"><strong>Advance to Phase 3:</strong> Mobile and loyalty sustain approved adoption, quality, safety, latency, and cost targets at scale.</p>
+        <p class="phase-gate"><strong>Advance to Phase 3:</strong> Expanded capabilities sustain approved adoption, quality, safety, latency, and cost targets at scale.</p>
       </article>
       <article class="roadmap-phase">
         <h2 class="phase-label">Phase 3</h2>
-        <p class="phase-time">12 months+</p>
+        <p class="phase-time">New channels</p>
         <ul>
-          <li><strong>Create one cross-channel concierge</strong><span class="phase-reason">Serve diners across web, app, messaging, and voice</span></li>
-          <li><strong>Add proactive dining assistance</strong><span class="phase-reason">Send reminders, waitlist updates, rebooking, and personalized suggestions</span></li>
-          <li><strong>Unify the diner journey</strong><span class="phase-reason">Connect discovery, reservations, loyalty, and post-visit service</span></li>
-          <li><strong>Turn conversations into insight</strong><span class="phase-reason">Improve restaurant operations and diner experiences</span></li>
+          <li><strong>Expand to the TableCraft app</strong><span class="phase-reason">Bring the full agent experience to mobile</span></li>
+          <li><strong>Add messaging channels</strong><span class="phase-reason">Meet diners in the channels they already use</span></li>
+          <li><strong>Introduce voice</strong><span class="phase-reason">Make hands-free dining support possible</span></li>
+          <li><strong>Preserve cross-channel context</strong><span class="phase-reason">Continue every conversation without starting over</span></li>
         </ul>
       </article>
     </div>
@@ -5471,7 +5496,7 @@
         {id:"diner",x:60,y:20,w:230,h:70,k:"entry",t:"Diner in MIAW chat",s:"signed in"},
         {id:"orch",x:385,y:20,w:230,h:70,k:"orch",t:"Orchestrator",s:"finds restaurant, routes",g:1},
         {id:"scope",x:700,y:8,w:240,h:38,k:"road",t:"Out of scope: one fixed reply",g:1,one:1},
-        {id:"loyalty",x:700,y:58,w:240,h:38,k:"road",t:"Loyalty (roadmap)",one:1},
+        {id:"proactive",x:700,y:58,w:240,h:38,k:"road",t:"Proactive support (roadmap)",one:1},
         {id:"booking",x:60,y:170,w:230,h:80,k:"sub",t:"Booking & Modification",s:"look up, create, change, cancel",g:1},
         {id:"esc",x:385,y:170,w:230,h:80,k:"sub",t:"Escalation",s:"Case, then a person",g:1},
         {id:"dining",x:710,y:170,w:230,h:80,k:"sub",t:"Dining Info",s:"grounded answers",g:1},
@@ -5487,7 +5512,7 @@
       ];
       const E = [
         {id:"e_diner_orch",d:"M290,55 L385,55",ah:[385,55,"r"]},
-        {id:"e_orch_scope",d:"M615,38 L700,27",dash:1},{id:"e_orch_loyalty",d:"M615,72 L700,77",dash:1},
+        {id:"e_orch_scope",d:"M615,38 L700,27",dash:1},{id:"e_orch_proactive",d:"M615,72 L700,77",dash:1},
         {id:"e_orch_booking",d:"M500,90 L500,125 L175,125 L175,170",ah:[175,170,"d"]},
         {id:"e_orch_esc",d:"M500,90 L500,170",ah:[500,170,"d"]},
         {id:"e_orch_dining",d:"M500,125 L825,125 L825,170",ah:[825,170,"d"]},
@@ -5502,7 +5527,7 @@
         diner:{title:"Diner in MIAW chat",job:"The signed-in diner opens the chat on the booking site or app.",tools:["Messaging for In-App and Web (MIAW)"],guard:"Sign-in is simulated in the MVP. Production uses MIAW user verification and a one-time code.",state:["membership_id"]},
         orch:{title:"Orchestrator",job:"Greets the diner by first name, finds the restaurant, records what they want, and routes. It runs at the start of every turn.",tools:["Find restaurant (name, cuisine, city, zip)","Diner's first name"],guard:"Never asks for a restaurant code or phone number. Routes restaurant and reservation requests instead of answering them. Off-topic requests get one fixed reply.",state:["restaurant_id","intent","active_area"]},
         scope:{title:"Out of scope",job:"Anything that is not about TableCraft reservations or restaurant information.",tools:["None. One fixed reply."],guard:"\"I can only help with TableCraft reservations and restaurant information.\" Then it offers help or a person.",state:[]},
-        loyalty:{title:"Loyalty (roadmap)",job:"Tier and points lookup, then redemption. The data exists; the agent feature is not in the MVP.",tools:["Loyalty lookup (planned)"],guard:"Same identity checks and escalation rules as booking.",state:[]},
+        proactive:{title:"Proactive support (roadmap)",job:"Reservation reminders, waitlist updates, and rebooking suggestions. These agent capabilities are not in the MVP.",tools:["Proactive notifications (planned)"],guard:"Uses verified reservation context and the same escalation rules as booking.",state:[]},
         booking:{title:"Booking & Modification",job:"Looks up, creates, changes and cancels reservations. Asks once about occasion, allergies or dietary needs before booking.",tools:["Look up (last name + reservation ID)","Create (confirm first)","Modify (verified, confirm first)","Cancel (verified, offer first, confirm)"],guard:"Needs a verified match and an explicit confirmation. Two failed lookups go to a person. Cancel is blocked until the agent has offered to move the booking.",state:["reservation_verified","failed_attempts","cancel_offer_made"]},
         esc:{title:"Escalation",job:"Creates a Case with a short summary, then hands the diner to a person through Omni-Channel. Reachable from every subagent.",tools:["Create Case with summary and reason","Hand off through Omni-Channel"],guard:"Triggers: asks for a person, frustration, severe allergy or medical emergency, allergen guarantees, legal or safety issues, refunds, fee waivers or exceptions, groups of 11 or more, two failed lookups.",state:["escalation_case_id","escalation_case_number"]},
         dining:{title:"Dining Info",job:"Answers restaurant questions from sources only: structured facts from the MuleSoft API, then a Data 360 library of policy documents.",tools:["MuleSoft API facts","Data 360 FAQ prompt template with citations"],guard:"Abstains when there is no source and offers the restaurant phone number or a person. No general-knowledge answers, no invented links.",state:["restaurant_validated","escalation_phone_number"]},
