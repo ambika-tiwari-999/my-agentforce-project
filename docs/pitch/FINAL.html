@@ -523,12 +523,30 @@
       line-height: 1.4;
     }
     #slide-roadmap.dense {
+      position: relative;
       justify-content: center;
       padding: 5vh 4vw;
       gap: 1.2rem;
+      overflow: hidden;
+      background: linear-gradient(145deg, #001E5B 0%, #022AC0 56%, #066AFE 100%);
     }
-    #slide-roadmap h1 { font-size: clamp(2rem, 3.5vw, 3.2rem); }
+    #slide-roadmap::before {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 84% 18%, rgba(144,208,254,.3), transparent 26%),
+        linear-gradient(115deg, transparent 35%, rgba(255,255,255,.08) 50%, transparent 65%);
+      content: "";
+      pointer-events: none;
+    }
+    #slide-roadmap h1 {
+      z-index: 1;
+      color: #FFFFFF;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+    }
     #slide-roadmap .roadmap {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1.6rem;
@@ -539,11 +557,16 @@
       flex-direction: column;
       min-height: 25rem;
       padding: 1.5rem;
-      border: 1px solid #3E3E3C;
-      border-radius: 12px;
-      background: #1c1c1c;
+      border: 1px solid #DDDBDA;
+      border-top: 5px solid #90D0FE;
+      border-radius: 16px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 8px 24px rgba(0,0,0,.16);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       transition: transform 0.7s ease, filter 0.7s ease, opacity 0.7s ease, box-shadow 0.7s ease;
     }
+    #slide-roadmap .roadmap-phase:first-child { border-top-color: #2E844A; }
     #slide-roadmap .roadmap-phase:first-child {
       transform-origin: left center;
     }
@@ -576,14 +599,14 @@
     }
     #slide-roadmap .phase-label {
       margin: 0 0 0.35rem;
-      color: #90D0FE;
+      color: #066AFE;
       font-size: 1.25rem;
       font-weight: 700;
     }
     #slide-roadmap .roadmap-phase:first-child .phase-label { color: #2E844A; }
     #slide-roadmap .phase-time {
       margin: 0 0 1rem;
-      color: #cfcfcf;
+      color: #3E3E3C;
       font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -591,14 +614,14 @@
     #slide-roadmap ul {
       margin: 0;
       padding-left: 1.2rem;
-      color: #fff;
+      color: #001E5B;
       font-size: clamp(0.98rem, 1.2vw, 1.15rem);
       line-height: 1.45;
     }
     #slide-roadmap li { margin-bottom: 0.8rem; }
     #slide-roadmap .roadmap-phase li strong {
       display: block;
-      color: #fff;
+      color: #001E5B;
       font-size: 1.16em;
       font-weight: 700;
     }
@@ -607,7 +630,7 @@
       position: relative;
       margin-top: 0.2rem;
       padding-left: 2.25rem;
-      color: #cfcfcf;
+      color: #3E3E3C;
       font-size: 0.9em;
     }
     #slide-roadmap .phase-reason::before {
@@ -615,7 +638,7 @@
       position: absolute;
       top: -0.12rem;
       left: 0.25rem;
-      color: #90D0FE;
+      color: #066AFE;
       font-size: 1.25em;
       font-weight: 700;
     }
@@ -623,8 +646,8 @@
       position: relative;
       margin: auto 0 0;
       padding: 0.75rem 0 0 1.2rem;
-      border-top: 1px solid #3E3E3C;
-      color: #cfcfcf;
+      border-top: 1px solid #DDDBDA;
+      color: #3E3E3C;
       font-size: 0.84rem;
       line-height: 1.35;
     }
@@ -1022,20 +1045,37 @@
       line-height: 1.35;
     }
     #slide-4.dense {
+      position: relative;
       justify-content: center;
       padding: 4.5vh 4.5vw 2.2vh;
       gap: 1rem;
+      overflow: hidden;
+      background: linear-gradient(145deg, #001E5B 0%, #022AC0 56%, #066AFE 100%);
+    }
+    #slide-4::before {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 84% 18%, rgba(144,208,254,.3), transparent 26%),
+        linear-gradient(115deg, transparent 35%, rgba(255,255,255,.08) 50%, transparent 65%);
+      content: "";
+      pointer-events: none;
     }
     #slide-4 h1 {
+      position: relative;
+      z-index: 1;
+      color: #FFFFFF;
       font-size: clamp(1.85rem, 3vw, 2.7rem);
       max-width: none;
       line-height: 1.08;
     }
     #slide-4 .frame {
+      position: relative;
+      z-index: 1;
       margin: -0.35rem 0 0.15rem;
       font-size: clamp(1.05rem, 1.6vw, 1.35rem);
       line-height: 1.3;
-      color: #cfcfcf;
+      color: #DDDBDA;
     }
     #slide-4 .title-value,
     #slide-4 .title-workforce,
@@ -1047,6 +1087,8 @@
     #slide-4.workforce .title-workforce { display: none; }
     #slide-4.workforce .title-value { display: block; }
     #slide-4 .split {
+      position: relative;
+      z-index: 1;
       flex: 1;
       min-height: 0;
       width: 100%;
@@ -1097,25 +1139,28 @@
     #slide-4 .find-board { grid-template-columns: 1fr; grid-template-rows: repeat(3, minmax(0, 1fr)); }
     #slide-4 .find {
       margin: 0;
-      background: #1c1c1c;
+      background: rgba(255,255,255,.94);
       border-radius: 16px;
+      border: 1px solid #DDDBDA;
       border-left: 4px solid #90D0FE;
+      box-shadow: 0 8px 24px rgba(0,0,0,.16);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       padding: 1.15rem 1.25rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       min-height: 0;
     }
-    #slide-4 .find-value { background: rgba(46,132,74,.32); position: relative; }
+    #slide-4 .find-value { background: #EAF5FE; position: relative; }
     #slide-4 button.find {
       font: inherit;
       color: inherit;
       text-align: left;
       cursor: pointer;
       width: 100%;
-      border-left: 0;
-      border-right: 0;
-      border-bottom: 0;
+      border: 1px solid #DDDBDA;
+      border-top: 4px solid #2E844A;
     }
     #slide-4 .find-label,
     #slide-4 .find-num,
@@ -1128,15 +1173,15 @@
       font-size: 0.68rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #90D0FE;
+      color: #066AFE;
     }
     #slide-4 .math {
       display: none;
       margin: 0.45rem 0 0;
       padding: 0.22rem 0.55rem;
       border-radius: 6px;
-      background: rgba(144, 208, 254, 0.14);
-      color: #90D0FE;
+      background: #EAF5FE;
+      color: #066AFE;
       font-size: 0.78rem;
       line-height: 1.3;
       letter-spacing: 0;
@@ -1148,7 +1193,7 @@
       font-size: 0.72rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #90D0FE;
+      color: #066AFE;
     }
     #slide-4 .find-num {
       margin: 0.4rem 0 0;
@@ -1156,11 +1201,11 @@
       font-weight: 650;
       letter-spacing: -0.04em;
       line-height: 0.95;
-      color: #fff;
+      color: #001E5B;
     }
     #slide-4 .find-detail {
       margin: 0.55rem 0 0;
-      color: #cfcfcf;
+      color: #3E3E3C;
       font-size: clamp(0.92rem, 1.15vw, 1.05rem);
       line-height: 1.35;
     }
@@ -1187,8 +1232,13 @@
     #slide-4 .split.revealed .value-board .find-num,
     #slide-4 .split.revealed .fte-board .find-num { font-size: clamp(2.1rem, 3vw, 2.9rem); }
     #slide-4 .split.revealed .find-detail { margin-top: 0.3rem; font-size: clamp(0.88rem, 1.05vw, 1rem); }
-    #slide-4 .find-fte { background: rgba(46,132,74,.32); border-left: 0; border-top: 3px solid #2E844A; }
+    #slide-4 .find-fte { background: #EAF5FE; border-left: 1px solid #DDDBDA; border-top: 4px solid #2E844A; }
     #slide-4 .find-fte.total { border-top-color: #2E844A; }
+    #slide-4 .cites {
+      position: relative;
+      z-index: 1;
+      color: #DDDBDA;
+    }
     @keyframes fteStackIn {
       from { opacity: 0; transform: translateX(2rem); }
       to { opacity: 1; transform: translateX(0); }
@@ -1576,16 +1626,18 @@
       background: #3E3E3C;
     }
     #slide-security-trust .security-test-fill {
-      width: 0;
+      width: var(--pass);
       height: 100%;
       border-radius: inherit;
       background: #2E844A;
+      transform: scaleX(0);
+      transform-origin: left center;
     }
     #slide-security-trust.security-phase-3 .security-test-fill {
       animation: securityTestGrow .7s ease-out var(--delay) forwards;
     }
     @keyframes securityTestGrow {
-      to { width: var(--pass); }
+      to { transform: scaleX(1); }
     }
     #slide-security-trust .security-test-value {
       color: #cfcfcf;
@@ -1606,7 +1658,7 @@
       #slide-security-trust.security-phase-3 .security-evidence-brace,
       #slide-security-trust.security-phase-3 .security-test-fill { animation: none; }
       #slide-security-trust.security-phase-3 .security-evidence-brace { stroke-dashoffset: 0; }
-      #slide-security-trust.security-phase-3 .security-test-fill { width: var(--pass); }
+      #slide-security-trust.security-phase-3 .security-test-fill { width: var(--pass); transform: none; }
     }
     #slide-security-trust {
       position: relative;
@@ -1742,21 +1794,26 @@
       background: transparent;
     }
     #slide-security-trust .security-test-graph h2 {
+      margin: -.35rem 0 .1rem;
       color: #001E5B;
       font-size: 24pt;
     }
     #slide-security-trust .security-test-total {
+      margin: 0 0 .55rem;
       color: #3E3E3C;
       font-size: 1.05rem;
       font-weight: 400;
     }
     #slide-security-trust .security-test-chart {
       display: grid;
-      grid-template-rows: repeat(3,minmax(0,1fr));
-      gap: 1rem;
+      grid-template-rows: repeat(5,minmax(0,1fr));
+      gap: .65rem;
+      flex: 1;
+      width: 100%;
+      margin: 0;
     }
     #slide-security-trust .security-test-row {
-      grid-template-columns: 10rem minmax(8rem,1fr) 12rem;
+      grid-template-columns: 9rem minmax(8rem,1fr) 14rem;
       gap: 1rem;
     }
     #slide-security-trust .security-test-label { color: #001E5B; font-size: 1.05rem; }
@@ -1767,9 +1824,9 @@
     }
     #slide-security-trust .security-test-value {
       color: #3E3E3C;
-      font-size: 1.05rem;
+      font-size: 1.15rem;
     }
-    #slide-security-trust .security-test-value strong { color: #001E5B; font-size: 1.35rem; }
+    #slide-security-trust .security-test-value strong { color: #001E5B; font-size: 1.45rem; }
     #slide-security-trust.active .security-test-fill {
       animation: securityTestGrow .7s ease-out var(--delay) forwards;
     }
@@ -1777,7 +1834,7 @@
       #slide-security-trust.active .security-evidence-brace,
       #slide-security-trust.active .security-test-fill { animation: none; }
       #slide-security-trust.active .security-evidence-brace { stroke-dashoffset: 0; }
-      #slide-security-trust.active .security-test-fill { width: var(--pass); }
+      #slide-security-trust.active .security-test-fill { width: var(--pass); transform: none; }
     }
     #slide-monitoring.dense {
       position: relative;
@@ -1785,8 +1842,20 @@
       align-items: center;
       padding: 5vh 6vw;
       overflow: hidden;
+      background: linear-gradient(145deg, #001E5B 0%, #022AC0 56%, #066AFE 100%);
+    }
+    #slide-monitoring::before {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 84% 18%, rgba(144,208,254,.3), transparent 26%),
+        linear-gradient(115deg, transparent 35%, rgba(255,255,255,.08) 50%, transparent 65%);
+      content: "";
+      pointer-events: none;
     }
     #slide-monitoring .monitoring-intro {
+      position: relative;
+      z-index: 1;
       width: min(72rem, 100%);
       text-align: center;
       transition: opacity .4s ease, transform .55s cubic-bezier(.2,.75,.2,1);
@@ -1794,11 +1863,13 @@
     #slide-monitoring .monitoring-intro h1 {
       max-width: 22ch;
       margin: 0 auto;
+      color: #FFFFFF;
       font-size: clamp(34pt, 5vw, 64pt);
       line-height: 1.12;
     }
     #slide-monitoring .monitoring-content {
       position: absolute;
+      z-index: 1;
       inset: 4.5vh 5vw;
       display: flex;
       flex-direction: column;
@@ -1822,6 +1893,7 @@
     }
     #slide-monitoring .monitoring-title {
       margin: 0 0 2.2rem;
+      color: #FFFFFF;
       text-align: center;
       font-size: clamp(30pt, 4vw, 48pt);
     }
@@ -1847,10 +1919,13 @@
       flex-direction: column;
       justify-content: center;
       padding: 2rem 1.6rem;
-      border: 1px solid #3E3E3C;
+      border: 1px solid #DDDBDA;
       border-top: 5px solid #90D0FE;
-      border-radius: 12px;
-      background: #181818;
+      border-radius: 16px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 8px 24px rgba(0,0,0,.16);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       text-align: center;
       transition: opacity .35s ease, transform .6s cubic-bezier(.2,.75,.2,1);
     }
@@ -1859,7 +1934,7 @@
     #slide-monitoring .monitoring-question:nth-child(3) { --merge-x: calc(-100% - 1.2rem); }
     #slide-monitoring .monitoring-label {
       margin-bottom: 1rem;
-      color: #90D0FE;
+      color: #066AFE;
       font-size: 0.9rem;
       font-weight: 700;
       letter-spacing: 0.1em;
@@ -1867,7 +1942,7 @@
     }
     #slide-monitoring .monitoring-question h2 {
       margin: 0;
-      color: #fff;
+      color: #001E5B;
       font-size: clamp(24pt, 3.1vw, 42pt);
       line-height: 1.12;
     }
@@ -1886,10 +1961,12 @@
       justify-content: center;
       padding: 2rem 2.4rem;
       border: 1px solid #90D0FE;
-      border-radius: 12px;
-      background: #001E5B;
-      box-shadow: 0 18px 48px rgba(0,0,0,.32);
-      color: #fff;
+      border-radius: 16px;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 8px 24px rgba(0,0,0,.16);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: #001E5B;
       text-align: center;
       text-decoration: none;
       opacity: 0;
@@ -1898,7 +1975,7 @@
       transition: opacity .35s ease .28s, transform .55s cubic-bezier(.2,.75,.2,1) .22s, background .2s ease;
     }
     #slide-monitoring .monitoring-dashboard:hover {
-      background: #022AC0;
+      background: #EAF5FE;
       transform: translateY(-2px);
     }
     #slide-monitoring.monitoring-phase-2 .monitoring-dashboard {
@@ -1907,7 +1984,7 @@
       pointer-events: auto;
     }
     #slide-monitoring .monitoring-dashboard-label {
-      color: #90D0FE;
+      color: #066AFE;
       font-size: .85rem;
       font-weight: 700;
       letter-spacing: .1em;
@@ -1920,7 +1997,7 @@
     }
     #slide-monitoring .monitoring-dashboard-copy {
       max-width: 44ch;
-      color: #DDDBDA;
+      color: #3E3E3C;
       font-size: 1.05rem;
       line-height: 1.4;
     }
@@ -1994,19 +2071,19 @@
       letter-spacing: 0.07em;
       text-transform: uppercase;
     }
-    #slide-testing .path-list { display: flex; flex-direction: column; gap: 0.45rem; }
+    #slide-testing .path-list { display: flex; flex-direction: column; gap: 0.3rem; }
     #slide-testing .path-btn {
       width: 100%;
-      min-height: 2.65rem;
+      min-height: 2.1rem;
       border: 1px solid #90D0FE;
       border-left-width: 4px;
       border-radius: 8px;
-      padding: 0.5rem 0.65rem;
+      padding: 0.32rem 0.55rem;
       color: #001E5B;
       background: #EAF5FE;
       font: inherit;
-      font-size: 14pt;
-      line-height: 1.3;
+      font-size: 11.5pt;
+      line-height: 1.2;
       text-align: left;
     }
     #slide-testing .path-btn.agent { border-left-color: var(--ready); }
@@ -2014,8 +2091,8 @@
     #slide-testing .path-btn.decline { border-left-color: var(--decline); }
     #slide-testing .path-type {
       display: block;
-      margin-bottom: 0.2rem;
-      font-size: 0.78rem;
+      margin-bottom: 0.1rem;
+      font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -2312,6 +2389,14 @@
     #slide-9 > h1 + .uat-table-wrap,
     #slide-7 > h1 + .decision-table {
       margin-top: 5.5rem;
+    }
+    #slide-testing > h1 + .testing-layout {
+      margin-top: 8rem;
+      max-height: calc(100vh - 12rem);
+    }
+    #slide-security-trust > h1 + .security-stage {
+      margin-top: 8rem;
+      max-height: calc(100vh - 12rem);
     }
     .imported-slide.dense {
       justify-content: center;
@@ -2913,7 +2998,7 @@
       max-width: none;
       margin: 0;
       color: #FFFFFF;
-      font-size: clamp(2rem,3.3vw,3.5rem);
+      font-size: clamp(1.8rem,2.8vw,3rem);
       line-height: 1.04;
       text-align: center;
     }
@@ -2921,8 +3006,9 @@
       position: relative;
       z-index: 1;
       margin: 0 auto .25rem;
-      color: #DDDBDA;
-      font-size: clamp(.95rem,1.3vw,1.2rem);
+      color: #FFFFFF;
+      font-size: clamp(1rem,1.35vw,1.22rem);
+      font-weight: 600;
       text-align: center;
     }
     .platform-map {
@@ -3235,6 +3321,364 @@
     }
     .platform-breakdown-card.booking { border-color: #2E844A; }
     .platform-breakdown-card.handoff { border-color: #DD7A01; }
+    .platform-architecture {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      flex: 1;
+      width: min(100%, 88rem);
+      min-height: 0;
+      margin: 0 auto;
+      padding: .8rem;
+      grid-template-columns: 8.5rem minmax(0,1fr) 10.5rem;
+      grid-template-rows: .72fr 1.55fr .8fr 1.42fr;
+      gap: .65rem .8rem;
+      border: 1.5px solid rgba(255,255,255,.5);
+      border-radius: 20px;
+      background: rgba(255,255,255,.16);
+      box-shadow: 0 8px 24px rgba(0,0,0,.16);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .architecture-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: .65rem .55rem;
+      border-right: 4px solid #90D0FE;
+      border-radius: 12px 0 0 12px;
+      background: rgba(0,30,91,.6);
+      color: #FFFFFF;
+      font-size: clamp(.76rem,.96vw,.9rem);
+      font-weight: 800;
+      letter-spacing: .06em;
+      line-height: 1.2;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .architecture-label.channel { grid-column: 1; grid-row: 1; }
+    .architecture-label.agents { grid-column: 1; grid-row: 2; border-color: #00B3FF; }
+    .architecture-label.work { grid-column: 1; grid-row: 3; border-color: #9050E9; }
+    .architecture-label.record { grid-column: 1; grid-row: 4; border-color: #2E844A; }
+    .architecture-layer,
+    .architecture-detail {
+      position: relative;
+      min-width: 0;
+      border-radius: 15px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.12);
+    }
+    .architecture-layer {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: .7rem .9rem;
+      border: 2px solid #90D0FE;
+      background: linear-gradient(180deg, #FFFFFF 0%, #EAF5FE 100%);
+      color: #001E5B;
+    }
+    .architecture-layer::after {
+      position: absolute;
+      bottom: -.72rem;
+      left: 50%;
+      z-index: 4;
+      color: #90D0FE;
+      content: "↕";
+      font-size: 1rem;
+      font-weight: 800;
+      transform: translateX(-50%);
+    }
+    .architecture-layer h2,
+    .architecture-detail h2 {
+      margin: 0;
+      color: #001E5B;
+      font-size: clamp(1.02rem,1.4vw,1.22rem);
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .architecture-layer p,
+    .architecture-detail p {
+      margin: .2rem 0 0;
+      color: #3E3E3C;
+      font-size: clamp(.72rem,.92vw,.84rem);
+      line-height: 1.32;
+    }
+    .architecture-portal { grid-column: 2; grid-row: 1; align-items: center; text-align: center; }
+    .architecture-eyebrow {
+      margin-bottom: .18rem;
+      color: #066AFE;
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .architecture-agentforce {
+      grid-column: 2;
+      grid-row: 2;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .55rem;
+      border-color: #00B3FF;
+      background: linear-gradient(145deg, #001E5B 0%, #022AC0 100%);
+      color: #FFFFFF;
+    }
+    .architecture-agentforce > .architecture-layer-copy > h2 { color: #FFFFFF; font-size: clamp(1.12rem,1.6vw,1.42rem); }
+    .architecture-agentforce > .architecture-layer-copy > p { color: #DDDBDA; }
+    .architecture-agentforce > .architecture-layer-copy {
+      display: grid;
+      grid-template-columns: auto minmax(12rem,1fr) auto auto;
+      gap: .55rem;
+      align-items: center;
+    }
+    .architecture-layer-copy {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .architecture-trust {
+      display: flex;
+      width: fit-content;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0;
+      padding: .28rem .55rem;
+      border: 1.5px solid #90D0FE;
+      border-radius: 999px;
+      background: rgba(144,208,254,.2);
+      color: #FFFFFF;
+      font-size: clamp(.7rem,.86vw,.8rem);
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: center;
+    }
+    .architecture-omni {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 0;
+      padding: .22rem .55rem;
+      border-radius: 999px;
+      background: #066AFE;
+      color: #FFFFFF;
+      font-size: .72rem;
+      font-weight: 800;
+    }
+    .architecture-service { grid-column: 2; grid-row: 3; border-color: #9050E9; background: #FFFFFF; }
+    .architecture-data { grid-column: 2; grid-row: 4; border-color: #2E844A; background: #EAF5FE; }
+    .architecture-data {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .55rem;
+    }
+    .architecture-data > .architecture-layer-copy {
+      display: grid;
+      grid-template-columns: auto minmax(12rem,1fr) auto auto;
+      gap: .55rem;
+      align-items: center;
+    }
+    .architecture-data > .architecture-layer-copy .architecture-chips,
+    .architecture-data > .architecture-layer-copy .architecture-integrations { margin-top: 0; }
+    .architecture-data::after { display: none; }
+    .architecture-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .32rem;
+      margin-top: .42rem;
+    }
+    .architecture-chip {
+      padding: .25rem .5rem;
+      border: 1px solid #90D0FE;
+      border-radius: 999px;
+      background: #EAF5FE;
+      color: #001E5B;
+      font-size: clamp(.68rem,.84vw,.78rem);
+      font-weight: 750;
+    }
+    .architecture-service .architecture-chip { border-color: rgba(144,80,233,.35); background: rgba(144,80,233,.12); }
+    .architecture-data .architecture-chip { border-color: rgba(46,132,74,.35); background: #FFFFFF; }
+    .architecture-detail {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: .5rem .65rem;
+      border: 1.5px solid #90D0FE;
+      border-radius: 11px;
+      background: #FFFFFF;
+    }
+    .architecture-execution,
+    .architecture-retrieval {
+      min-height: 0;
+      box-shadow: none;
+    }
+    .architecture-execution { border-color: #90D0FE; }
+    .architecture-retrieval { border-color: #2E844A; background: #FFFFFF; }
+    .architecture-flow {
+      display: grid;
+      gap: .28rem;
+      margin-top: .5rem;
+    }
+    .architecture-execution .architecture-flow {
+      grid-template-columns: .8fr 1.35fr 1.75fr 1.1fr;
+      align-items: stretch;
+      gap: .4rem;
+      margin-top: .35rem;
+    }
+    .architecture-execution .architecture-step {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 2.7rem;
+    }
+    .architecture-execution .architecture-step + .architecture-step::before {
+      top: 50%;
+      left: -.42rem;
+      content: "→";
+      transform: translateY(-50%);
+    }
+    .architecture-step {
+      position: relative;
+      padding: .34rem .45rem;
+      border: 1px solid rgba(6,106,254,.22);
+      border-radius: 8px;
+      background: #EAF5FE;
+      color: #001E5B;
+      font-size: clamp(.74rem,.9vw,.84rem);
+      font-weight: 750;
+      line-height: 1.2;
+      text-align: center;
+    }
+    .architecture-step b {
+      display: block;
+      color: #001E5B;
+      font-size: 1em;
+    }
+    .architecture-step small {
+      display: block;
+      margin-top: .18rem;
+      color: #3E3E3C;
+      font-size: .92em;
+      font-weight: 650;
+      line-height: 1.2;
+    }
+    .architecture-step + .architecture-step::before {
+      position: absolute;
+      top: -.38rem;
+      left: 50%;
+      color: #066AFE;
+      content: "↓";
+      font-size: .65rem;
+      transform: translateX(-50%);
+    }
+    .architecture-retrieval .architecture-flow {
+      grid-template-columns: repeat(5,minmax(0,1fr));
+      align-items: center;
+      gap: .3rem;
+    }
+    .architecture-retrieval .architecture-step {
+      padding: .32rem .22rem;
+      border-color: rgba(46,132,74,.35);
+      background: #EAF5FE;
+      font-size: clamp(.68rem,.84vw,.78rem);
+    }
+    .architecture-retrieval .architecture-step + .architecture-step::before {
+      top: 50%;
+      left: -.35rem;
+      content: "→";
+      transform: translateY(-50%);
+    }
+    .architecture-integrations {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem;
+      margin-top: .4rem;
+    }
+    .architecture-integration {
+      padding: .25rem .5rem;
+      border-radius: 999px;
+      background: #001E5B;
+      color: #FFFFFF;
+      font-size: .7rem;
+      font-weight: 800;
+    }
+    .architecture-observability {
+      position: relative;
+      display: flex;
+      grid-column: 3;
+      grid-row: 1 / span 4;
+      min-width: 0;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      gap: .65rem;
+      padding: .8rem;
+      border: 2px solid #90D0FE;
+      border-radius: 15px;
+      background: rgba(0,30,91,.72);
+      box-shadow: 0 4px 16px rgba(0,0,0,.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .architecture-observability::before {
+      position: absolute;
+      top: 1rem;
+      bottom: 1rem;
+      left: -.48rem;
+      width: 2px;
+      border-radius: 999px;
+      background: #90D0FE;
+      content: "";
+    }
+    .architecture-observability h2 {
+      margin: 0 0 .15rem;
+      color: #FFFFFF;
+      font-size: clamp(.9rem,1.1vw,1.05rem);
+      line-height: 1.15;
+      text-align: center;
+    }
+    .architecture-observability span {
+      padding: .65rem .45rem;
+      border: 1px solid #90D0FE;
+      border-radius: 10px;
+      background: #FFFFFF;
+      color: #001E5B;
+      font-size: clamp(.68rem,.82vw,.76rem);
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: center;
+    }
+    #insert-team.active .architecture-label,
+    #insert-team.active .architecture-layer,
+    #insert-team.active .architecture-observability {
+      animation: architecture-reveal .55s both;
+    }
+    #insert-team.active .architecture-label.agents,
+    #insert-team.active .architecture-agentforce { animation-delay: .08s; }
+    #insert-team.active .architecture-label.work,
+    #insert-team.active .architecture-service { animation-delay: .16s; }
+    #insert-team.active .architecture-label.record,
+    #insert-team.active .architecture-data { animation-delay: .24s; }
+    #insert-team.active .architecture-observability { animation-delay: .32s; }
+    #insert-team.active .architecture-layer::after,
+    #insert-team.active .architecture-step + .architecture-step::before {
+      animation: architecture-flow-pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes architecture-reveal {
+      from { opacity: 0; transform: translateY(10px) scale(.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes architecture-flow-pulse {
+      0%, 100% { opacity: .45; }
+      50% { opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #insert-team.active .architecture-label,
+      #insert-team.active .architecture-layer,
+      #insert-team.active .architecture-observability,
+      #insert-team.active .architecture-layer::after,
+      #insert-team.active .architecture-step + .architecture-step::before {
+        animation: none;
+      }
+    }
     @media (max-width: 900px) {
       #insert-team.platform-slide { overflow: auto; }
       .platform-map { min-height: 42rem; }
@@ -3247,6 +3691,23 @@
       .platform-row { grid-template-columns: 1fr; gap: .2rem; }
       .platform-row-label { padding-top: 0; }
       .platform-capability-grid { grid-template-columns: 1fr 1fr; }
+      .platform-architecture {
+        min-height: 52rem;
+        grid-template-columns: 6.2rem minmax(18rem,1fr);
+        grid-template-rows: repeat(4,auto) auto;
+      }
+      .architecture-agentforce,
+      .architecture-data { grid-template-columns: 1fr; }
+      .architecture-agentforce > .architecture-layer-copy,
+      .architecture-data > .architecture-layer-copy,
+      .architecture-execution .architecture-flow { grid-template-columns: 1fr 1fr; }
+      .architecture-observability {
+        grid-column: 2;
+        grid-row: 5;
+        flex-direction: row;
+        align-items: center;
+      }
+      .architecture-observability::before { display: none; }
     }
     #insert-problem.research-opening {
       position: relative;
@@ -3811,43 +4272,76 @@
   <section id="insert-team" class="dense imported-slide platform-slide">
     <p class="num">3</p>
     <h1>One connected platform powers every diner conversation.</h1>
-    <p class="platform-subtitle">TableCraft connects trusted reasoning, grounded restaurant knowledge, reservations, and human support.</p>
-    <div class="platform-breakdown" role="img" aria-label="TableCraft architecture organized by channel, trust, reasoning, agent capabilities, and connected data">
-      <div class="platform-row">
-        <p class="platform-row-label">Channel</p>
-        <div class="platform-row-content platform-channel-grid">
-          <div class="platform-breakdown-card"><strong>TableCraft diner experience</strong><span>Signed-in web portal today, with mobile as the next channel.</span></div>
-          <div class="platform-breakdown-card"><strong>Agentforce conversation</strong><span>One continuous experience for questions, bookings, and support.</span></div>
+    <div class="platform-architecture" role="img" aria-label="TableCraft architecture from the diner portal through Agentforce, Service Cloud, and Data 360, with agent execution and grounded retrieval details">
+      <p class="architecture-label channel">Channel</p>
+      <p class="architecture-label agents">System of agency</p>
+      <p class="architecture-label work">System of work</p>
+      <p class="architecture-label record">System of context</p>
+
+      <article class="architecture-layer architecture-portal">
+        <h2>TableCraft Portal</h2>
+        <p>Messaging for In-App and Web (MIAW)</p>
+      </article>
+
+      <article class="architecture-layer architecture-agentforce">
+        <div class="architecture-layer-copy">
+          <h2>Agentforce</h2>
+          <p>Atlas reasoning routes each intent to the right specialist agent and action.</p>
+          <span class="architecture-omni">Omni-Channel</span>
+          <span class="architecture-trust">Agentforce Trust Layer</span>
         </div>
-      </div>
-      <div class="platform-row">
-        <p class="platform-row-label">Trust</p>
-        <div class="platform-trust-band"><strong>Agentforce Trust Layer</strong><span>Grounding, data masking, policy enforcement, and auditability across every request and response.</span></div>
-      </div>
-      <div class="platform-row">
-        <p class="platform-row-label">Reasoning</p>
-        <div class="platform-reasoning-card"><strong>Atlas Reasoning Engine + TableCraft orchestrator</strong><span>Understands the diner’s intent, preserves context, plans the job, and routes to the right specialist.</span></div>
-      </div>
-      <div class="platform-row">
-        <p class="platform-row-label">Agentforce</p>
-        <div class="platform-capability-wrap">
-          <p class="platform-route-note">Routes by intent while the Trust Layer and deterministic guardrails remain active</p>
-          <div class="platform-capability-grid">
-            <article class="platform-concept-card"><h2>Orchestration</h2><ul><li>Identifies diner and restaurant</li><li>Maintains conversation context</li><li>Selects the right specialist</li></ul></article>
-            <article class="platform-concept-card booking"><h2>Bookings</h2><ul><li>Checks live availability</li><li>Creates, changes, or cancels</li><li>Confirms every write first</li></ul></article>
-            <article class="platform-concept-card"><h2>Restaurant questions</h2><ul><li>Retrieves approved knowledge</li><li>Answers from grounded context</li><li>Abstains when evidence is missing</li></ul></article>
-            <article class="platform-concept-card handoff"><h2>Handoff to a person</h2><ul><li>Recognizes human boundaries</li><li>Preserves the full context</li><li>Routes into Service Cloud</li></ul></article>
+        <aside class="architecture-detail architecture-execution">
+          <h2>Agent execution</h2>
+          <p>Reasoning becomes bounded, auditable action.</p>
+          <div class="architecture-flow">
+            <span class="architecture-step"><b>Atlas reasoning</b></span>
+            <span class="architecture-step"><b>Specialist agents</b><small>Booking &amp; Modification · FAQ · Escalation</small></span>
+            <span class="architecture-step"><b>Actions</b><small>Find restaurant · Reserve · Modify · Cancel · Retrieve knowledge · Escalate</small></span>
+            <span class="architecture-step"><b>Execution</b><small>Flow · Apex · Prompt Templates</small></span>
+          </div>
+        </aside>
+      </article>
+
+      <article class="architecture-layer architecture-service">
+        <h2>Service Cloud</h2>
+        <div class="architecture-chips" aria-label="Service Cloud capabilities">
+          <span class="architecture-chip">Cases</span>
+          <span class="architecture-chip">Reservations</span>
+          <span class="architecture-chip">Knowledge</span>
+          <span class="architecture-chip">Human handoff</span>
+        </div>
+      </article>
+
+      <article class="architecture-layer architecture-data">
+        <div class="architecture-layer-copy">
+          <h2>Data 360 + RAG</h2>
+          <p>Unified restaurant context and restaurant-scoped retrieval ground every answer.</p>
+          <div class="architecture-chips" aria-label="Data and retrieval components">
+            <span class="architecture-chip">Profiles</span>
+            <span class="architecture-chip">Restaurant data</span>
+            <span class="architecture-chip">Vector search</span>
+          </div>
+          <div class="architecture-integrations" aria-label="Connected services">
+            <span class="architecture-integration">TableCraft API</span>
           </div>
         </div>
-      </div>
-      <div class="platform-row">
-        <p class="platform-row-label">Data + action</p>
-        <div class="platform-row-content platform-data-grid">
-          <div class="platform-breakdown-card booking"><strong>OpenTable reservations</strong><span>Availability and reservation outcomes remain the system of record.</span></div>
-          <div class="platform-breakdown-card"><strong>Data 360 + RAG</strong><span>Restaurant-scoped retrieval grounds each answer.</span></div>
-          <div class="platform-breakdown-card handoff"><strong>Knowledge + Service Cloud</strong><span>Approved Knowledge Articles and context-rich human support.</span></div>
-        </div>
-      </div>
+        <aside class="architecture-detail architecture-retrieval">
+          <h2>Grounded retrieval</h2>
+          <div class="architecture-flow">
+            <span class="architecture-step">Data Stream</span>
+            <span class="architecture-step">DLO / DMO</span>
+            <span class="architecture-step">Chunk + vectorize</span>
+            <span class="architecture-step">Search index</span>
+            <span class="architecture-step">Retriever</span>
+          </div>
+        </aside>
+      </article>
+
+      <aside class="architecture-observability" aria-label="Observability across the TableCraft platform">
+        <h2>Observability</h2>
+        <span>Splunk</span>
+        <span>OpenTelemetry API</span>
+      </aside>
     </div>
   </section>
   <section id="slide-2" class="legal" data-temporarily-hidden>
@@ -4021,23 +4515,33 @@
           </svg>
         </div>
         <div class="security-test-graph">
-          <h2>Guardrail tests</h2>
-          <p class="security-test-total">Safety and privacy release gates passed across every critical path.</p>
-          <div class="security-test-chart" role="img" aria-label="Allergen, emergency, and reservation privacy guardrail tests all passed">
+          <h2>Security tests</h2>
+          <p class="security-test-total">1,377 of 1,436 appendix test executions passed · 95.9%</p>
+          <div class="security-test-chart" role="img" aria-label="Security appendix test pass rates by category, ranging from 94 to 98 percent">
             <div class="security-test-row">
-              <span class="security-test-label">Allergen safety</span>
-              <div class="security-test-track"><div class="security-test-fill" style="--delay:.08s;--pass:100%"></div></div>
-              <span class="security-test-value">Release gate · <strong>100%</strong></span>
+              <span class="security-test-label">Access control</span>
+              <div class="security-test-track"><div class="security-test-fill" style="--delay:.08s;--pass:98%"></div></div>
+              <span class="security-test-value">241/246 · <strong>98%</strong></span>
             </div>
             <div class="security-test-row">
-              <span class="security-test-label">Emergency routing</span>
-              <div class="security-test-track"><div class="security-test-fill" style="--delay:.16s;--pass:100%"></div></div>
-              <span class="security-test-value">Release gate · <strong>100%</strong></span>
+              <span class="security-test-label">Prompt resistance</span>
+              <div class="security-test-track"><div class="security-test-fill" style="--delay:.16s;--pass:96%"></div></div>
+              <span class="security-test-value">223/232 · <strong>96%</strong></span>
             </div>
             <div class="security-test-row">
-              <span class="security-test-label">Reservation privacy</span>
-              <div class="security-test-track"><div class="security-test-fill" style="--delay:.24s;--pass:100%"></div></div>
-              <span class="security-test-value">200 tests · <strong>100%</strong></span>
+              <span class="security-test-label">Grounding</span>
+              <div class="security-test-track"><div class="security-test-fill" style="--delay:.24s;--pass:95%"></div></div>
+              <span class="security-test-value">376/396 · <strong>95%</strong></span>
+            </div>
+            <div class="security-test-row">
+              <span class="security-test-label">Data protection</span>
+              <div class="security-test-track"><div class="security-test-fill" style="--delay:.32s;--pass:97%"></div></div>
+              <span class="security-test-value">281/290 · <strong>97%</strong></span>
+            </div>
+            <div class="security-test-row">
+              <span class="security-test-label">Human safety</span>
+              <div class="security-test-track"><div class="security-test-fill" style="--delay:.4s;--pass:94%"></div></div>
+              <span class="security-test-value">256/272 · <strong>94%</strong></span>
             </div>
           </div>
         </div>
@@ -4410,8 +4914,7 @@
     const mainProgress = [
       ["slide-sofia-opening", "Diner Story"],
       ["insert-problem", "Challenge"],
-      ["slide-better-way", "Better Way"],
-      ["slide-hippo-intro", "Hippo AI"],
+      ["slide-better-way", "Hippo AI"],
       ["slide-kpi-asks", "Agent Overview"],
       ["insert-team", "Architecture"],
       ["slide-5", "Demo"],
@@ -4526,7 +5029,8 @@
         setMonitoringPhase(enteredFromNextSlide ? 2 : 0);
       }
       slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
-      const progressIndex = mainProgress.findIndex(([id]) => id === slides[i].id);
+      const progressSlideId = slides[i].id === "slide-hippo-intro" ? "slide-better-way" : slides[i].id;
+      const progressIndex = mainProgress.findIndex(([id]) => id === progressSlideId);
       deckProgress.classList.toggle("visible", progressIndex >= 0);
       progressFill.style.transform = "scaleX(" + (progressIndex >= 0 ? (progressIndex + 1) / mainProgress.length : 0) + ")";
       progressItems.forEach((item, index) => {
@@ -4641,13 +5145,13 @@
     registerBuild("slide-sofia-opening", 2, (step) => {
       const slide = document.getElementById("slide-sofia-opening");
       stopSofiaHoldTimer();
-      slide.classList.remove("step-0", "step-2", "sofia-stats-reveal");
-      slide.classList.add("step-1", "wait-complete");
-      document.getElementById("sofiaHoldTimer").textContent = "18:00.0";
+      slide.classList.remove("step-0", "step-2", "sofia-stats-reveal", "wait-complete");
+      slide.classList.add("step-1");
       if (step === 0) {
-        slide.classList.remove("sofia-stats-reveal");
+        startSofiaHoldTimer();
       } else {
-        slide.classList.add("sofia-stats-reveal");
+        document.getElementById("sofiaHoldTimer").textContent = "18:00.0";
+        slide.classList.add("sofia-stats-reveal", "wait-complete");
       }
     });
     registerBuild("slide-kpi-asks", 3, (step) => {
