@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 330" role="img" aria-labelledby="hippo-title">
+  <title id="hippo-title">Hippo AI mascot</title>
+  <ellipse cx="261" cy="304" rx="168" ry="17" fill="#001E5B" opacity=".12"/>
+  <g stroke="#001E5B" stroke-width="8" stroke-linejoin="round">
+    <path d="M133 157C130 86 184 48 265 48s135 38 132 109c49 25 66 72 45 108-23 40-88 47-177 47S111 305 88 265c-21-36-4-83 45-108Z" fill="#9050E9"/>
+    <path d="M146 92c-25-27-55-15-52 17 2 23 22 37 47 34" fill="#9050E9"/>
+    <path d="M384 92c25-27 55-15 52 17-2 23-22 37-47 34" fill="#9050E9"/>
+    <path d="M112 233c25-38 79-56 153-56s128 18 153 56c22 34-4 72-50 78-56 7-150 7-206 0-46-6-72-44-50-78Z" fill="#90D0FE"/>
+    <path d="M142 270v36c0 14 12 21 27 21h10c15 0 24-8 24-21v-20m184-16v36c0 14-12 21-27 21h-10c-15 0-24-8-24-21v-20" fill="#9050E9"/>
+    <circle cx="205" cy="148" r="18" fill="#FFFFFF"/>
+    <circle cx="325" cy="148" r="18" fill="#FFFFFF"/>
+    <circle cx="210" cy="152" r="8" fill="#000B2E" stroke="none"/>
+    <circle cx="320" cy="152" r="8" fill="#000B2E" stroke="none"/>
+    <ellipse cx="218" cy="244" rx="8" ry="11" fill="#001E5B" stroke="none"/>
+    <ellipse cx="312" cy="244" rx="8" ry="11" fill="#001E5B" stroke="none"/>
+    <path d="M222 279c24 17 62 17 86 0" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

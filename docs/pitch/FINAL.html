@@ -85,6 +85,26 @@
     .deck-progress-item:hover,
     .deck-progress-item:focus-visible { color: #FFFFFF; }
     .deck-progress-item:focus-visible { outline: 1px solid #DDDBDA; outline-offset: 2px; }
+    .brand-corners {
+      position: fixed;
+      inset: 3.7rem 1.5rem auto;
+      z-index: 45;
+      display: none;
+      align-items: flex-start;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+    .brand-corners.visible { display: flex; }
+    .brand-corners-logo {
+      width: clamp(3.6rem,5vw,4.8rem);
+      height: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,.16));
+    }
+    .brand-corners-hippo {
+      width: clamp(4.5rem,6vw,6rem);
+      height: auto;
+      filter: drop-shadow(0 5px 6px rgba(0,30,91,.18));
+    }
     h1 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600; margin: 0; line-height: 1.15; max-width: 18ch; }
     section.legal { padding: 8vh 8vw; }
     section.legal h1 { font-size: clamp(1.6rem, 2.6vw, 2.4rem); max-width: none; margin-bottom: 1.25rem; }
@@ -3995,44 +4015,54 @@
       #insert-problem.step-1 .research-findings { animation: none; opacity: 1; transform: none; }
       #insert-problem.step-2 .research-challenge { animation: none; opacity: 1; transform: none; }
     }
-    #slide-sofia-opening .sofia-not-alone {
+    #slide-sofia-research {
+      position: relative;
+      justify-content: center;
+      padding: 7vh 6vw 5vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #000B2E 0%, #001E5B 100%);
+    }
+    #slide-sofia-research::before {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 82% 28%, rgba(0,179,255,.2), transparent 32%);
+      content: "";
+      pointer-events: none;
+    }
+    #slide-sofia-research .sofia-not-alone {
       position: relative;
       z-index: 1;
-      display: none;
+      display: flex;
       width: min(100%,82rem);
       margin: 0 auto;
-      text-align: center;
-    }
-    #slide-sofia-opening.sofia-stats-reveal .sofia-opening-layout { display: none; }
-    #slide-sofia-opening.sofia-stats-reveal .sofia-not-alone {
-      display: flex;
       flex: 1;
       min-height: 0;
       flex-direction: column;
       justify-content: center;
+      text-align: center;
       animation: researchFindingsIn .6s ease-out both;
     }
-    #slide-sofia-opening .sofia-not-alone h1 {
+    #slide-sofia-research .sofia-not-alone h1 {
       max-width: none;
       margin: 0;
       color: #FFFFFF;
       font-size: clamp(3rem,5vw,5.6rem);
       line-height: 1;
     }
-    #slide-sofia-opening .sofia-not-alone h1 span { color: #90D0FE; }
-    #slide-sofia-opening .sofia-not-alone > p {
+    #slide-sofia-research .sofia-not-alone h1 span { color: #90D0FE; }
+    #slide-sofia-research .sofia-not-alone > p {
       max-width: 58rem;
       margin: .8rem auto 1.3rem;
       color: #DDDBDA;
       font-size: clamp(1rem,1.3vw,1.2rem);
       line-height: 1.4;
     }
-    #slide-sofia-opening .sofia-research-grid {
+    #slide-sofia-research .sofia-research-grid {
       display: grid;
       grid-template-columns: repeat(3,1fr);
       gap: .8rem;
     }
-    #slide-sofia-opening .sofia-research-card {
+    #slide-sofia-research .sofia-research-card {
       display: flex;
       min-height: 15rem;
       flex-direction: column;
@@ -4046,7 +4076,7 @@
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
     }
-    #slide-sofia-opening .sofia-research-card > span {
+    #slide-sofia-research .sofia-research-card > span {
       margin-bottom: .5rem;
       color: #90D0FE;
       font-size: .75rem;
@@ -4054,30 +4084,30 @@
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-    #slide-sofia-opening .sofia-research-card > strong {
+    #slide-sofia-research .sofia-research-card > strong {
       color: #FFFFFF;
       font-size: clamp(2.4rem,4vw,4.3rem);
       line-height: .95;
     }
-    #slide-sofia-opening .sofia-research-card > p {
+    #slide-sofia-research .sofia-research-card > p {
       margin: .65rem 0 0;
       color: #DDDBDA;
       font-size: clamp(.82rem,1vw,.98rem);
       line-height: 1.35;
     }
-    #slide-sofia-opening .sofia-research-pairs {
+    #slide-sofia-research .sofia-research-pairs {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: .75rem;
     }
-    #slide-sofia-opening .sofia-research-card:last-child .sofia-research-pairs { grid-template-columns: repeat(3,1fr); }
-    #slide-sofia-opening .sofia-research-pairs strong {
+    #slide-sofia-research .sofia-research-card:last-child .sofia-research-pairs { grid-template-columns: repeat(3,1fr); }
+    #slide-sofia-research .sofia-research-pairs strong {
       display: block;
       color: #FFFFFF;
       font-size: clamp(2rem,3vw,3.2rem);
       line-height: 1;
     }
-    #slide-sofia-opening .sofia-research-pairs small {
+    #slide-sofia-research .sofia-research-pairs small {
       display: block;
       margin-top: .35rem;
       color: #DDDBDA;
@@ -4230,8 +4260,8 @@
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
     @media (max-width: 900px) {
-      #slide-sofia-opening .sofia-research-grid { grid-template-columns: 1fr; }
-      #slide-sofia-opening .sofia-research-card { min-height: 10rem; }
+      #slide-sofia-research .sofia-research-grid { grid-template-columns: 1fr; }
+      #slide-sofia-research .sofia-research-card { min-height: 10rem; }
       #slide-hippo-finale .hippo-stage {
         grid-template-columns: minmax(0,1fr);
         gap: 1.5rem;
@@ -4250,8 +4280,26 @@
   </style>
 </head>
 <body>
+  <div class="brand-corners" id="brandCorners" aria-hidden="true">
+    <img class="brand-corners-logo" src="salesforce-logo.svg" alt="" />
+    <svg class="brand-corners-hippo" viewBox="0 0 520 330">
+      <g stroke="#001E5B" stroke-width="8" stroke-linejoin="round">
+        <path d="M133 157C130 86 184 48 265 48s135 38 132 109c49 25 66 72 45 108-23 40-88 47-177 47S111 305 88 265c-21-36-4-83 45-108Z" fill="#9050E9"/>
+        <path d="M146 92c-25-27-55-15-52 17 2 23 22 37 47 34" fill="#9050E9"/>
+        <path d="M384 92c25-27 55-15 52 17-2 23-22 37-47 34" fill="#9050E9"/>
+        <path d="M112 233c25-38 79-56 153-56s128 18 153 56c22 34-4 72-50 78-56 7-150 7-206 0-46-6-72-44-50-78Z" fill="#90D0FE"/>
+        <circle cx="205" cy="148" r="18" fill="#FFFFFF"/>
+        <circle cx="325" cy="148" r="18" fill="#FFFFFF"/>
+        <circle cx="210" cy="152" r="8" fill="#000B2E" stroke="none"/>
+        <circle cx="320" cy="152" r="8" fill="#000B2E" stroke="none"/>
+        <ellipse cx="218" cy="244" rx="8" ry="11" fill="#001E5B" stroke="none"/>
+        <ellipse cx="312" cy="244" rx="8" ry="11" fill="#001E5B" stroke="none"/>
+        <path d="M222 279c24 17 62 17 86 0" fill="none" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </div>
   <nav class="deck-progress" id="deckProgress" aria-label="Presentation progress"></nav>
-  <section id="slide-sofia-opening" class="sofia-opening">
+  <section id="slide-sofia-opening" class="sofia-opening step-1">
     <p class="num">1</p>
     <div class="sofia-opening-layout">
       <div class="sofia-story">
@@ -4290,6 +4338,9 @@
         </div>
       </aside>
     </div>
+  </section>
+  <section id="slide-sofia-research" aria-label="Sofia is not alone">
+    <p class="num">2</p>
     <div class="sofia-not-alone">
       <h1>Sofia Is <span>Not Alone.</span></h1>
       <p>Our research shows diners investigate first—and friction finding basic information can stop a booking before it starts.</p>
@@ -4994,10 +5045,11 @@
   <script>
     const visibleSlides = [...document.querySelectorAll("section:not([data-temporarily-hidden])")];
     const sofiaSlide = document.getElementById("slide-sofia-opening");
+    const sofiaResearchSlide = document.getElementById("slide-sofia-research");
     const researchSlide = document.getElementById("insert-problem");
     const betterWaySlide = document.getElementById("slide-better-way");
     const hippoIntroSlide = document.getElementById("slide-hippo-intro");
-    const openingSlides = [sofiaSlide, researchSlide, betterWaySlide, hippoIntroSlide];
+    const openingSlides = [sofiaSlide, sofiaResearchSlide, researchSlide, betterWaySlide, hippoIntroSlide];
     const slides = [...openingSlides, ...visibleSlides.filter((slide) => !openingSlides.includes(slide))];
     const mainProgress = [
       ["slide-sofia-opening", "Diner Story"],
@@ -5013,6 +5065,7 @@
       ["slide-roadmap", "Roadmap"],
       ["slide-hippo-finale", "QnA"]
     ];
+    const brandCorners = document.getElementById("brandCorners");
     const deckProgress = document.getElementById("deckProgress");
     deckProgress.innerHTML = '<span class="deck-progress-track" aria-hidden="true"><span class="deck-progress-fill"></span></span>' + mainProgress.map(([id, label]) =>
       '<button type="button" class="deck-progress-item" data-slide-id="' + id + '">' + label + "</button>"
@@ -5117,9 +5170,15 @@
         setMonitoringPhase(enteredFromNextSlide ? 2 : 0);
       }
       slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
-      const progressSlideId = slides[i].id === "slide-hippo-intro" ? "slide-better-way" : slides[i].id;
+      if (slides[i] === sofiaSlide) startSofiaHoldTimer();
+      const progressSlideAliases = {
+        "slide-sofia-research": "slide-sofia-opening",
+        "slide-hippo-intro": "slide-better-way"
+      };
+      const progressSlideId = progressSlideAliases[slides[i].id] || slides[i].id;
       const progressIndex = mainProgress.findIndex(([id]) => id === progressSlideId);
       deckProgress.classList.toggle("visible", progressIndex >= 0);
+      brandCorners.classList.toggle("visible", progressIndex >= 0);
       progressFill.style.transform = "scaleX(" + (progressIndex >= 0 ? (progressIndex + 1) / mainProgress.length : 0) + ")";
       progressItems.forEach((item, index) => {
         item.classList.toggle("complete", index < progressIndex);
@@ -5229,18 +5288,6 @@
       slide.querySelectorAll(":scope > .num").forEach((num) => {
         num.textContent = index + 1;
       });
-    });
-    registerBuild("slide-sofia-opening", 2, (step) => {
-      const slide = document.getElementById("slide-sofia-opening");
-      stopSofiaHoldTimer();
-      slide.classList.remove("step-0", "step-2", "sofia-stats-reveal", "wait-complete");
-      slide.classList.add("step-1");
-      if (step === 0) {
-        startSofiaHoldTimer();
-      } else {
-        document.getElementById("sofiaHoldTimer").textContent = "18:00.0";
-        slide.classList.add("sofia-stats-reveal", "wait-complete");
-      }
     });
     registerBuild("slide-kpi-asks", 3, (step) => {
       const slide = document.getElementById("slide-kpi-asks");
