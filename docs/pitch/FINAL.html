@@ -3364,6 +3364,133 @@
       #insert-problem.step-1 .research-findings { animation: none; opacity: 1; transform: none; }
       #insert-problem.step-2 .research-challenge { animation: none; opacity: 1; transform: none; }
     }
+    #slide-sofia-opening .sofia-not-alone {
+      position: relative;
+      z-index: 1;
+      display: none;
+      width: min(100%,82rem);
+      margin: 0 auto;
+      text-align: center;
+    }
+    #slide-sofia-opening.sofia-stats-reveal .sofia-opening-layout { display: none; }
+    #slide-sofia-opening.sofia-stats-reveal .sofia-not-alone {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      flex-direction: column;
+      justify-content: center;
+      animation: researchFindingsIn .6s ease-out both;
+    }
+    #slide-sofia-opening .sofia-not-alone h1 {
+      max-width: none;
+      margin: 0;
+      color: #FFFFFF;
+      font-size: clamp(3rem,5vw,5.6rem);
+      line-height: 1;
+    }
+    #slide-sofia-opening .sofia-not-alone h1 span { color: #90D0FE; }
+    #slide-sofia-opening .sofia-not-alone > p {
+      max-width: 58rem;
+      margin: .8rem auto 1.3rem;
+      color: #DDDBDA;
+      font-size: clamp(1rem,1.3vw,1.2rem);
+      line-height: 1.4;
+    }
+    #slide-sofia-opening .sofia-research-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: .8rem;
+    }
+    #slide-sofia-opening .sofia-research-card {
+      display: flex;
+      min-height: 15rem;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1.3rem 1.4rem;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 18px;
+      background: rgba(255,255,255,.12);
+      box-shadow: 0 8px 24px rgba(0,0,0,.16);
+      text-align: left;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    #slide-sofia-opening .sofia-research-card > span {
+      margin-bottom: .5rem;
+      color: #90D0FE;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    #slide-sofia-opening .sofia-research-card > strong {
+      color: #FFFFFF;
+      font-size: clamp(2.4rem,4vw,4.3rem);
+      line-height: .95;
+    }
+    #slide-sofia-opening .sofia-research-card > p {
+      margin: .65rem 0 0;
+      color: #DDDBDA;
+      font-size: clamp(.82rem,1vw,.98rem);
+      line-height: 1.35;
+    }
+    #slide-sofia-opening .sofia-research-pairs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+    }
+    #slide-sofia-opening .sofia-research-card:last-child .sofia-research-pairs { grid-template-columns: repeat(3,1fr); }
+    #slide-sofia-opening .sofia-research-pairs strong {
+      display: block;
+      color: #FFFFFF;
+      font-size: clamp(2rem,3vw,3.2rem);
+      line-height: 1;
+    }
+    #slide-sofia-opening .sofia-research-pairs small {
+      display: block;
+      margin-top: .35rem;
+      color: #DDDBDA;
+      font-size: .78rem;
+      line-height: 1.25;
+    }
+    #insert-problem.challenge-slide .research-question,
+    #insert-problem.challenge-slide .research-findings { display: none; }
+    #insert-problem.challenge-slide .research-challenge {
+      display: flex;
+      opacity: 1;
+      transform: none;
+    }
+    #slide-better-way {
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: linear-gradient(145deg, #001E5B 0%, #022AC0 56%, #066AFE 100%);
+      text-align: center;
+    }
+    #slide-better-way::before {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 82% 18%, rgba(144,208,254,.3), transparent 28%),
+        linear-gradient(115deg, transparent 35%, rgba(255,255,255,.08) 50%, transparent 65%);
+      content: "";
+      pointer-events: none;
+    }
+    #slide-better-way h1 {
+      position: relative;
+      z-index: 1;
+      max-width: 14ch;
+      margin: 0;
+      color: #FFFFFF;
+      font-size: clamp(3.8rem,7vw,7.5rem);
+      line-height: .98;
+    }
+    #slide-better-way h1 span { color: #90D0FE; }
+    @media (max-width: 900px) {
+      #slide-sofia-opening .sofia-research-grid { grid-template-columns: 1fr; }
+      #slide-sofia-opening .sofia-research-card { min-height: 10rem; }
+    }
   </style>
 </head>
 <body>
@@ -3381,7 +3508,7 @@
           </figure>
           <div class="sofia-hold-panel">
             <p class="sofia-reveal-line">She picks up the phone.</p>
-            <p class="sofia-timer-label">Accelerated live hold timer</p>
+            <p class="sofia-timer-label">Time spent waiting</p>
             <p class="sofia-timer" id="sofiaHoldTimer" aria-live="polite">00:00.0</p>
             <p class="sofia-waiting-copy">She is still waiting—with only a few simple questions.</p>
             <div class="sofia-question-chips" aria-label="Sofia's questions">
@@ -3407,6 +3534,19 @@
         </div>
       </aside>
     </div>
+    <div class="sofia-not-alone">
+      <h1>Sofia Is <span>Not Alone.</span></h1>
+      <p>Our research shows diners investigate first—and friction finding basic information can stop a booking before it starts.</p>
+      <div class="sofia-research-grid">
+        <article class="sofia-research-card"><span>Before booking</span><strong>54%</strong><p>research the restaurant first, spending an average of <b>21 minutes</b>.</p></article>
+        <article class="sofia-research-card"><span>Why diners abandon</span><div class="sofia-research-pairs"><div><strong>27%</strong><small>Information was too hard to find.</small></div><div><strong>17%</strong><small>They did not want to call.</small></div></div></article>
+        <article class="sofia-research-card"><span>What diners need</span><div class="sofia-research-pairs"><div><strong>46%</strong><small>Hours</small></div><div><strong>39%</strong><small>Menu</small></div><div><strong>22%</strong><small>Address</small></div></div></article>
+      </div>
+    </div>
+  </section>
+  <section id="slide-better-way">
+    <p class="num">3</p>
+    <h1>There Has to Be a <span>Better Way.</span></h1>
   </section>
   <section id="slide-kpi-asks" class="kpi-asks-slide">
     <p class="num">2</p>
@@ -3488,33 +3628,8 @@
     <h1>Forward-Looking Statements</h1>
     <p class="statement">This presentation contains forward-looking statements about, among other things, trend analyses and statements regarding future events, anticipated growth and industry prospects, and our strategies, expectations, or plans regarding product releases and enhancements. The achievement or success of the matters covered by such forward-looking statements involves risks, uncertainties, and assumptions. If any such risks or uncertainties materialize or if any of the assumptions prove incorrect, results or outcomes could differ materially from those expressed or implied by these forward-looking statements. The risks and uncertainties referred to above include those factors discussed in Salesforce&rsquo;s reports filed from time to time with the Securities and Exchange Commission, including, but not limited to: our ability to meet the expectations of our customers; uncertainties regarding AI technologies and their integration into our product offerings; the effect of evolving domestic and foreign government regulations; regulatory developments and regulatory investigations involving us or affecting our industry; our ability to successfully introduce new services and product features, including related to AI and Agentforce; our ability to execute our business plans; our ability to meet our long-term revenue targets and profitable growth framework; the pace of change and innovation and our ability to compete in the markets in which we participate; our ability to maintain and enhance our brands; and expectations regarding contributions from acquired companies.</p>
   </section>
-  <section id="insert-problem" class="dense imported-slide research-opening step-0">
-    <p class="num">1</p>
-    <div class="research-question">
-      <p class="research-eyebrow">Think about your last reservation</p>
-      <h1>What are your first steps when you make a reservation?</h1>
-      <p class="research-reveal-cue">Press → to reveal what diners told us</p>
-    </div>
-    <div class="research-findings">
-      <h1>You’re <span>Not the Only One.</span></h1>
-      <p class="research-summary">Our research shows diners investigate first—and friction finding basic information can stop a booking before it starts.</p>
-      <div class="research-stat-grid">
-        <article class="research-stat-card">
-          <p class="research-stat-label">Before booking</p>
-          <p class="research-stat-value">54%</p>
-          <p class="research-stat-detail">research the restaurant first, spending an average of <strong>21 minutes</strong>.</p>
-        </article>
-        <article class="research-stat-card">
-          <p class="research-stat-label">Why diners abandon</p>
-          <div class="research-mini-stats"><div><strong>27%</strong><span>Information was too hard to find.</span></div><div><strong>17%</strong><span>They did not want to call.</span></div></div>
-        </article>
-        <article class="research-stat-card">
-          <p class="research-stat-label">What diners need</p>
-          <div class="research-mini-stats"><div><strong>46%</strong><span>Hours</span></div><div><strong>39%</strong><span>Menu</span></div><div><strong>22%</strong><span>Address</span></div></div>
-        </article>
-      </div>
-      <p class="research-source">Source: TableCraft research and <a href="https://www.opentable.com/blog/press/page/ai-concierge/" target="_blank" rel="noopener noreferrer">OpenTable Concierge launch</a>, July 15, 2025.</p>
-    </div>
+  <section id="insert-problem" class="dense imported-slide research-opening challenge-slide">
+    <p class="num">2</p>
     <div class="research-challenge">
       <p class="research-challenge-label">The Challenge</p>
       <ul>
@@ -4059,11 +4174,15 @@
   </section>
   <script>
     const visibleSlides = [...document.querySelectorAll("section:not([data-temporarily-hidden])")];
+    const sofiaSlide = document.getElementById("slide-sofia-opening");
     const researchSlide = document.getElementById("insert-problem");
-    const slides = [researchSlide, ...visibleSlides.filter((slide) => slide !== researchSlide)];
+    const betterWaySlide = document.getElementById("slide-better-way");
+    const openingSlides = [sofiaSlide, researchSlide, betterWaySlide];
+    const slides = [...openingSlides, ...visibleSlides.filter((slide) => !openingSlides.includes(slide))];
     const mainProgress = [
-      ["insert-problem", "Research"],
       ["slide-sofia-opening", "Diner Story"],
+      ["insert-problem", "Challenge"],
+      ["slide-better-way", "Better Way"],
       ["slide-kpi-asks", "Agent Overview"],
       ["insert-team", "Architecture"],
       ["slide-5", "Demo"],
@@ -4290,26 +4409,17 @@
         num.textContent = index + 1;
       });
     });
-    registerBuild("slide-sofia-opening", 3, (step) => {
+    registerBuild("slide-sofia-opening", 2, (step) => {
       const slide = document.getElementById("slide-sofia-opening");
-      slide.classList.remove("step-0", "step-1", "step-2");
-      slide.classList.add("step-" + step);
+      stopSofiaHoldTimer();
+      slide.classList.remove("step-0", "step-2", "sofia-stats-reveal");
+      slide.classList.add("step-1", "wait-complete");
+      document.getElementById("sofiaHoldTimer").textContent = "18:00.0";
       if (step === 0) {
-        stopSofiaHoldTimer();
-        slide.classList.remove("wait-complete");
-        document.getElementById("sofiaHoldTimer").textContent = "00:00.0";
-      } else if (step === 1) {
-        startSofiaHoldTimer();
+        slide.classList.remove("sofia-stats-reveal");
       } else {
-        stopSofiaHoldTimer();
-        slide.classList.add("wait-complete");
-        document.getElementById("sofiaHoldTimer").textContent = "18:00.0";
+        slide.classList.add("sofia-stats-reveal");
       }
-    });
-    registerBuild("insert-problem", 3, (step) => {
-      const slide = document.getElementById("insert-problem");
-      slide.classList.remove("step-0", "step-1", "step-2");
-      slide.classList.add("step-" + step);
     });
     registerBuild("insert-discovery", 3, (step) => {
       const slide = document.getElementById("insert-discovery");
