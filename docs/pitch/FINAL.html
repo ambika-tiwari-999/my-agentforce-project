@@ -2646,11 +2646,112 @@
       z-index: 1;
       display: grid;
       width: 100%;
-      grid-template-columns: minmax(36rem,1.45fr) minmax(22rem,.55fr);
-      gap: clamp(2rem,3vw,3.5rem);
+      grid-template-columns: minmax(22rem,.72fr) minmax(32rem,1.28fr) minmax(0,0fr);
+      gap: clamp(1.5rem,2.5vw,2.75rem);
       align-items: center;
+      transition: grid-template-columns .7s cubic-bezier(.2,.75,.2,1), gap .7s cubic-bezier(.2,.75,.2,1);
     }
     .kpi-asks-copy { max-width: none; }
+    .kpi-impact-panel,
+    .kpi-solution-core,
+    .kpi-bars { min-width: 0; }
+    .kpi-impact-panel {
+      display: flex;
+      flex-direction: column;
+      gap: .7rem;
+      padding: 1.1rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 20px;
+      background: rgba(255,255,255,.12);
+      box-shadow: 0 8px 24px rgba(0,0,0,.16);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: opacity .35s ease, transform .65s cubic-bezier(.2,.75,.2,1);
+    }
+    .kpi-impact-heading {
+      margin: 0 0 .15rem;
+      color: #90D0FE;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .kpi-impact-heading .outcome { display: none; }
+    .kpi-impact-row {
+      position: relative;
+      min-height: 7.2rem;
+      padding: .8rem .9rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 12px;
+      background: rgba(0,30,91,.45);
+    }
+    .kpi-loss,
+    .kpi-gain {
+      margin: 0;
+      color: #FFFFFF;
+      font-size: clamp(1rem,1.3vw,1.2rem);
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    .kpi-loss {
+      position: relative;
+      display: inline;
+      transition: opacity .3s ease .25s;
+    }
+    .kpi-loss strong { color: #90D0FE; }
+    .kpi-loss::after {
+      position: absolute;
+      top: 52%;
+      left: -2%;
+      width: 0;
+      height: 4px;
+      border-radius: 99px;
+      background: #FF538A;
+      content: "";
+      transform: rotate(-2deg);
+    }
+    .kpi-gain {
+      position: absolute;
+      right: .9rem;
+      bottom: .8rem;
+      left: .9rem;
+      color: #FFFFFF;
+      opacity: 0;
+      transform: translateY(.7rem);
+    }
+    .kpi-gain strong { color: #90D0FE; font-size: 1.25em; }
+    #slide-kpi-asks.step-1 .kpi-impact-heading .challenge { display: none; }
+    #slide-kpi-asks.step-1 .kpi-impact-heading .outcome { display: inline; }
+    #slide-kpi-asks.step-1 .kpi-loss { opacity: .35; }
+    #slide-kpi-asks.step-1 .kpi-loss::after { animation: kpiStrikeThrough .45s ease-out forwards; }
+    #slide-kpi-asks.step-1 .kpi-gain {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .35s ease .35s, transform .45s ease .3s;
+    }
+    #slide-kpi-asks.step-0 .kpi-solution-core { animation: kpiSolutionSlideIn .65s cubic-bezier(.2,.75,.2,1) both; }
+    #slide-kpi-asks.step-2 .kpi-asks-layout {
+      grid-template-columns: minmax(0,0fr) minmax(36rem,1.45fr) minmax(22rem,.55fr);
+      gap: clamp(2rem,3vw,3.5rem);
+    }
+    #slide-kpi-asks.step-2 .kpi-impact-panel {
+      opacity: 0;
+      transform: translateX(-5rem);
+      pointer-events: none;
+    }
+    #slide-kpi-asks:not(.step-2) .kpi-bars {
+      overflow: hidden;
+      opacity: 0;
+      transform: translateX(3rem);
+      pointer-events: none;
+    }
+    #slide-kpi-asks.step-2 .kpi-bars {
+      opacity: 1;
+      transform: translateX(0);
+      transition: opacity .45s ease .25s, transform .65s cubic-bezier(.2,.75,.2,1) .15s;
+    }
     .kpi-asks-eyebrow {
       margin: 0 0 .9rem;
       color: #90D0FE;
@@ -2765,14 +2866,28 @@
       0%, 38% { left: -35%; }
       68%, 100% { left: 125%; }
     }
+    @keyframes kpiStrikeThrough {
+      to { width: 104%; }
+    }
+    @keyframes kpiSolutionSlideIn {
+      from { opacity: 0; transform: translateX(4rem); }
+      to { opacity: 1; transform: translateX(0); }
+    }
     @media (max-width: 900px) {
-      .kpi-asks-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+      #slide-kpi-asks .kpi-asks-layout,
+      #slide-kpi-asks.step-2 .kpi-asks-layout { grid-template-columns: 1fr; gap: 1.5rem; }
       #slide-kpi-asks h1 { max-width: none; font-size: clamp(2.4rem,8vw,4rem); }
       .kpi-bar { min-height: 5.5rem; }
+      #slide-kpi-asks.step-2 .kpi-impact-panel { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
       .kpi-bar { opacity: 1; transform: none; animation: none; }
       .kpi-bar::after { display: none; }
+      #slide-kpi-asks .kpi-asks-layout,
+      #slide-kpi-asks .kpi-impact-panel { transition: none; }
+      #slide-kpi-asks.step-0 .kpi-solution-core,
+      #slide-kpi-asks.step-1 .kpi-loss::after { animation: none; }
+      #slide-kpi-asks.step-1 .kpi-loss::after { width: 104%; }
     }
     #insert-team.platform-slide {
       position: relative;
@@ -3487,9 +3602,83 @@
       line-height: .98;
     }
     #slide-better-way h1 span { color: #90D0FE; }
+    #slide-hippo-intro {
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: linear-gradient(180deg, #EAF5FE 0%, #FFFFFF 100%);
+      text-align: center;
+    }
+    #slide-hippo-intro::before,
+    #slide-hippo-intro::after {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(144,208,254,.3);
+      content: "";
+      filter: blur(2px);
+    }
+    #slide-hippo-intro::before {
+      top: -12vw;
+      right: -8vw;
+      width: 34vw;
+      height: 34vw;
+    }
+    #slide-hippo-intro::after {
+      bottom: -16vw;
+      left: -10vw;
+      width: 38vw;
+      height: 38vw;
+    }
+    #slide-hippo-intro .hippo-stage {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      width: min(78rem, 90vw);
+      place-items: center;
+    }
+    #slide-hippo-intro .hippo-character {
+      width: clamp(16rem, 30vw, 30rem);
+      height: auto;
+      overflow: visible;
+      filter: drop-shadow(0 24px 18px rgba(0,30,91,.18));
+      opacity: 0;
+      transform: translateX(-75vw) rotate(-7deg);
+      transform-origin: center bottom;
+    }
+    #slide-hippo-intro.active .hippo-character {
+      animation: hippoEntrance 1.65s cubic-bezier(.2,.86,.28,1.12) forwards;
+    }
+    #slide-hippo-intro .hippo-title {
+      margin: clamp(1rem,2vh,1.8rem) 0 0;
+      color: #001E5B;
+      font-size: clamp(3rem,6.5vw,7rem);
+      font-weight: 700;
+      letter-spacing: -.045em;
+      line-height: .95;
+      opacity: 0;
+      transform: translateY(1.25rem) scale(.97);
+    }
+    #slide-hippo-intro .hippo-title span { color: #066AFE; }
+    #slide-hippo-intro.active .hippo-title {
+      animation: hippoTitleReveal .7s cubic-bezier(.2,.8,.2,1) 1.65s forwards;
+    }
+    @keyframes hippoEntrance {
+      0% { opacity: 0; transform: translateX(-75vw) rotate(-7deg) scale(.88); }
+      58% { opacity: 1; transform: translateX(3vw) rotate(2deg) scale(1.02,.98); }
+      78% { transform: translateX(-1vw) rotate(-1deg) scale(.98,1.02); }
+      100% { opacity: 1; transform: translateX(0) rotate(0) scale(1); }
+    }
+    @keyframes hippoTitleReveal {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
     @media (max-width: 900px) {
       #slide-sofia-opening .sofia-research-grid { grid-template-columns: 1fr; }
       #slide-sofia-opening .sofia-research-card { min-height: 10rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #slide-hippo-intro.active .hippo-character,
+      #slide-hippo-intro.active .hippo-title { animation: none; opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -3548,10 +3737,48 @@
     <p class="num">3</p>
     <h1>There Has to Be a <span>Better Way.</span></h1>
   </section>
+  <section id="slide-hippo-intro" aria-label="Introducing Hippo AI">
+    <p class="num">4</p>
+    <div class="hippo-stage">
+      <svg class="hippo-character" viewBox="0 0 520 330" role="img" aria-label="A friendly hippo mascot">
+        <ellipse cx="261" cy="304" rx="168" ry="17" fill="#001E5B" opacity=".12"/>
+        <g stroke="#001E5B" stroke-width="8" stroke-linejoin="round">
+          <path d="M133 157C130 86 184 48 265 48s135 38 132 109c49 25 66 72 45 108-23 40-88 47-177 47S111 305 88 265c-21-36-4-83 45-108Z" fill="#9050E9"/>
+          <path d="M146 92c-25-27-55-15-52 17 2 23 22 37 47 34" fill="#9050E9"/>
+          <path d="M384 92c25-27 55-15 52 17-2 23-22 37-47 34" fill="#9050E9"/>
+          <path d="M112 233c25-38 79-56 153-56s128 18 153 56c22 34-4 72-50 78-56 7-150 7-206 0-46-6-72-44-50-78Z" fill="#90D0FE"/>
+          <path d="M142 270v36c0 14 12 21 27 21h10c15 0 24-8 24-21v-20m184-16v36c0 14-12 21-27 21h-10c-15 0-24-8-24-21v-20" fill="#9050E9"/>
+          <circle cx="205" cy="148" r="18" fill="#FFFFFF"/>
+          <circle cx="325" cy="148" r="18" fill="#FFFFFF"/>
+          <circle cx="210" cy="152" r="8" fill="#000B2E" stroke="none"/>
+          <circle cx="320" cy="152" r="8" fill="#000B2E" stroke="none"/>
+          <ellipse cx="218" cy="244" rx="8" ry="11" fill="#001E5B" stroke="none"/>
+          <ellipse cx="312" cy="244" rx="8" ry="11" fill="#001E5B" stroke="none"/>
+          <path d="M222 279c24 17 62 17 86 0" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <h1 class="hippo-title">Introducing <span>Hippo AI</span></h1>
+    </div>
+  </section>
   <section id="slide-kpi-asks" class="kpi-asks-slide">
     <p class="num">2</p>
     <div class="kpi-asks-layout">
-      <div class="kpi-asks-copy">
+      <aside class="kpi-impact-panel" aria-label="Challenge metrics transformed into expected gains">
+        <p class="kpi-impact-heading"><span class="challenge">Today’s challenge</span><span class="outcome">Expected gains</span></p>
+        <div class="kpi-impact-row">
+          <p class="kpi-loss"><strong>39,087 hours</strong> lost to routine phone questions.</p>
+          <p class="kpi-gain"><strong>20,000 hours</strong> regained annually.</p>
+        </div>
+        <div class="kpi-impact-row">
+          <p class="kpi-loss"><strong>$977K</strong> in staff time lost every year.</p>
+          <p class="kpi-gain"><strong>$500K</strong> in annual capacity returned.</p>
+        </div>
+        <div class="kpi-impact-row">
+          <p class="kpi-loss"><strong>40%</strong> unattended requests · <strong>20%</strong> lower CSAT.</p>
+          <p class="kpi-gain"><strong>+22,500 bookings</strong> annually · CSAT ↑</p>
+        </div>
+      </aside>
+      <div class="kpi-asks-copy kpi-solution-core">
         <p class="kpi-asks-eyebrow">How the agent works</p>
         <h1>One front desk, three specialists, and clear rules for when a person takes over.</h1>
         <p class="kpi-asks-lede">Every message reaches the front desk first. It understands what the diner needs and routes the conversation to the right specialist. <strong>Automatic steps run as fixed logic before the AI writes anything.</strong></p>
@@ -3634,8 +3861,8 @@
       <p class="research-challenge-label">The Challenge</p>
       <ul>
         <li>TableCraft staff loses <strong>39,087 hours</strong> to routine phone questions.</li>
-        <li>Restaurants leave <strong>14,300 tables empty</strong> each year.</li>
-        <li><strong>40% of reservations</strong> are going unattended, decreasing customer satisfaction.</li>
+        <li>That lost staff time costs approximately <strong>$977K every year</strong>.</li>
+        <li>With <strong>40% of reservation requests</strong> going unattended, CSAT has decreased by <strong>20%</strong>.</li>
       </ul>
       <p class="research-challenge-note">Annual modeled impact based on TableCraft assumptions and published comparable volume.</p>
     </div>
@@ -4177,12 +4404,14 @@
     const sofiaSlide = document.getElementById("slide-sofia-opening");
     const researchSlide = document.getElementById("insert-problem");
     const betterWaySlide = document.getElementById("slide-better-way");
-    const openingSlides = [sofiaSlide, researchSlide, betterWaySlide];
+    const hippoIntroSlide = document.getElementById("slide-hippo-intro");
+    const openingSlides = [sofiaSlide, researchSlide, betterWaySlide, hippoIntroSlide];
     const slides = [...openingSlides, ...visibleSlides.filter((slide) => !openingSlides.includes(slide))];
     const mainProgress = [
       ["slide-sofia-opening", "Diner Story"],
       ["insert-problem", "Challenge"],
       ["slide-better-way", "Better Way"],
+      ["slide-hippo-intro", "Hippo AI"],
       ["slide-kpi-asks", "Agent Overview"],
       ["insert-team", "Architecture"],
       ["slide-5", "Demo"],
@@ -4420,6 +4649,11 @@
       } else {
         slide.classList.add("sofia-stats-reveal");
       }
+    });
+    registerBuild("slide-kpi-asks", 3, (step) => {
+      const slide = document.getElementById("slide-kpi-asks");
+      slide.classList.remove("step-0", "step-1", "step-2");
+      slide.classList.add("step-" + step);
     });
     registerBuild("insert-discovery", 3, (step) => {
       const slide = document.getElementById("insert-discovery");
