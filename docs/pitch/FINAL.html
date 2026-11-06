@@ -3335,7 +3335,7 @@
       min-height: 0;
       margin: 0 auto;
       padding: .8rem;
-      grid-template-columns: 8.5rem minmax(0,1fr) 10.5rem;
+      grid-template-columns: 2.8rem 8.5rem minmax(0,1fr) 10.5rem;
       grid-template-rows: .72fr 1.55fr .8fr 1.42fr;
       gap: .65rem .8rem;
       border: 1.5px solid rgba(255,255,255,.5);
@@ -3362,10 +3362,39 @@
       text-align: center;
       text-transform: uppercase;
     }
-    .architecture-label.channel { grid-column: 1; grid-row: 1; background: #022AC0; }
-    .architecture-label.agents { grid-column: 1; grid-row: 2; border-color: #00B3FF; background: #066AFE; }
-    .architecture-label.work { grid-column: 1; grid-row: 3; border-color: #9050E9; background: #9050E9; }
-    .architecture-label.record { grid-column: 1; grid-row: 4; border-color: #2E844A; background: #2E844A; }
+    .architecture-label.channel { grid-column: 2; grid-row: 1; background: #022AC0; }
+    .architecture-label.agents { grid-column: 2; grid-row: 2; border-color: #00B3FF; background: #066AFE; }
+    .architecture-label.work { grid-column: 2; grid-row: 3; border-color: #9050E9; background: #9050E9; }
+    .architecture-label.record { grid-column: 2; grid-row: 4; border-color: #2E844A; background: #2E844A; }
+    .architecture-salesforce {
+      position: relative;
+      display: flex;
+      grid-column: 1;
+      grid-row: 2 / 5;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-size: clamp(.68rem,.82vw,.78rem);
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .architecture-salesforce span {
+      position: absolute;
+      left: 0;
+      z-index: 1;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    .architecture-salesforce::after {
+      position: absolute;
+      inset: 0 0 0 1.65rem;
+      border-top: 3px solid #90D0FE;
+      border-bottom: 3px solid #90D0FE;
+      border-left: 3px solid #90D0FE;
+      border-radius: 9px 0 0 9px;
+      content: "";
+    }
     .architecture-layer,
     .architecture-detail {
       position: relative;
@@ -3410,7 +3439,7 @@
       font-size: clamp(.78rem,1vw,.9rem);
       line-height: 1.32;
     }
-    .architecture-portal { grid-column: 2; grid-row: 1; align-items: center; text-align: center; }
+    .architecture-portal { grid-column: 3; grid-row: 1; align-items: center; text-align: center; }
     .architecture-eyebrow {
       margin-bottom: .18rem;
       color: #066AFE;
@@ -3420,7 +3449,7 @@
       text-transform: uppercase;
     }
     .architecture-agentforce {
-      grid-column: 2;
+      grid-column: 3;
       grid-row: 2;
       display: grid;
       grid-template-columns: 1fr;
@@ -3475,14 +3504,14 @@
       font-weight: 800;
     }
     .architecture-service {
-      grid-column: 2;
+      grid-column: 3;
       grid-row: 3;
       border-color: #00B3FF;
       background: linear-gradient(145deg, #001E5B 0%, #022AC0 100%);
       color: #FFFFFF;
     }
     .architecture-service h2 { color: #FFFFFF; }
-    .architecture-data { grid-column: 2; grid-row: 4; border-color: #2E844A; background: #EAF5FE; }
+    .architecture-data { grid-column: 3; grid-row: 4; border-color: #2E844A; background: #EAF5FE; }
     .architecture-data {
       display: grid;
       grid-template-columns: 1fr;
@@ -3627,7 +3656,7 @@
     .architecture-observability {
       position: relative;
       display: flex;
-      grid-column: 3;
+      grid-column: 4;
       grid-row: 1 / span 4;
       min-width: 0;
       flex-direction: column;
@@ -3671,6 +3700,7 @@
       text-align: center;
     }
     #insert-team.active .architecture-label,
+    #insert-team.active .architecture-salesforce,
     #insert-team.active .architecture-layer,
     #insert-team.active .architecture-observability {
       animation: architecture-reveal .55s both;
@@ -3696,6 +3726,7 @@
     }
     @media (prefers-reduced-motion: reduce) {
       #insert-team.active .architecture-label,
+      #insert-team.active .architecture-salesforce,
       #insert-team.active .architecture-layer,
       #insert-team.active .architecture-observability,
       #insert-team.active .architecture-layer::after,
@@ -3717,7 +3748,7 @@
       .platform-capability-grid { grid-template-columns: 1fr 1fr; }
       .platform-architecture {
         min-height: 52rem;
-        grid-template-columns: 6.2rem minmax(18rem,1fr);
+        grid-template-columns: 2.4rem 6.2rem minmax(18rem,1fr);
         grid-template-rows: repeat(4,auto) auto;
       }
       .architecture-agentforce,
@@ -3726,7 +3757,7 @@
       .architecture-data > .architecture-layer-copy,
       .architecture-execution .architecture-flow { grid-template-columns: 1fr 1fr; }
       .architecture-observability {
-        grid-column: 2;
+        grid-column: 3;
         grid-row: 5;
         flex-direction: row;
         align-items: center;
@@ -4087,7 +4118,7 @@
       line-height: .98;
     }
     #slide-better-way h1 span { color: #90D0FE; }
-    #slide-hippo-intro {
+    .hippo-slide {
       position: relative;
       align-items: center;
       justify-content: center;
@@ -4095,34 +4126,34 @@
       background: linear-gradient(180deg, #EAF5FE 0%, #FFFFFF 100%);
       text-align: center;
     }
-    #slide-hippo-intro::before,
-    #slide-hippo-intro::after {
+    .hippo-slide::before,
+    .hippo-slide::after {
       position: absolute;
       border-radius: 50%;
       background: rgba(144,208,254,.3);
       content: "";
       filter: blur(2px);
     }
-    #slide-hippo-intro::before {
+    .hippo-slide::before {
       top: -12vw;
       right: -8vw;
       width: 34vw;
       height: 34vw;
     }
-    #slide-hippo-intro::after {
+    .hippo-slide::after {
       bottom: -16vw;
       left: -10vw;
       width: 38vw;
       height: 38vw;
     }
-    #slide-hippo-intro .hippo-stage {
+    .hippo-slide .hippo-stage {
       position: relative;
       z-index: 1;
       display: grid;
       width: min(78rem, 90vw);
       place-items: center;
     }
-    #slide-hippo-intro .hippo-character {
+    .hippo-slide .hippo-character {
       width: clamp(16rem, 30vw, 30rem);
       height: auto;
       overflow: visible;
@@ -4131,10 +4162,10 @@
       transform: translateX(-75vw) rotate(-7deg);
       transform-origin: center bottom;
     }
-    #slide-hippo-intro.active .hippo-character {
+    .hippo-slide.active .hippo-character {
       animation: hippoEntrance 1.65s cubic-bezier(.2,.86,.28,1.12) forwards;
     }
-    #slide-hippo-intro .hippo-title {
+    .hippo-slide .hippo-title {
       margin: clamp(1rem,2vh,1.8rem) 0 0;
       color: #001E5B;
       font-size: clamp(3rem,6.5vw,7rem);
@@ -4144,9 +4175,50 @@
       opacity: 0;
       transform: translateY(1.25rem) scale(.97);
     }
-    #slide-hippo-intro .hippo-title span { color: #066AFE; }
-    #slide-hippo-intro.active .hippo-title {
+    .hippo-slide .hippo-title span { color: #066AFE; }
+    .hippo-slide.active .hippo-title {
       animation: hippoTitleReveal .7s cubic-bezier(.2,.8,.2,1) 1.65s forwards;
+    }
+    #slide-hippo-finale .hippo-stage {
+      grid-template-columns: auto minmax(18rem, 38rem);
+      gap: clamp(2rem,5vw,5rem);
+      align-items: center;
+      justify-content: center;
+    }
+    #slide-hippo-finale .hippo-character {
+      width: clamp(16rem,28vw,28rem);
+    }
+    #slide-hippo-finale .hippo-title {
+      position: relative;
+      margin: 0;
+      padding: clamp(1.4rem,3vw,2.5rem);
+      border: 4px solid #001E5B;
+      border-radius: 32px;
+      background: #FFFFFF;
+      box-shadow: 0 8px 24px rgba(0,0,0,.16);
+      font-size: clamp(2.5rem,5vw,5.4rem);
+      line-height: 1;
+      text-align: left;
+    }
+    #slide-hippo-finale .hippo-title::before,
+    #slide-hippo-finale .hippo-title::after {
+      position: absolute;
+      top: 58%;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      content: "";
+      transform: translateY(-50%);
+    }
+    #slide-hippo-finale .hippo-title::before {
+      left: -2rem;
+      border-width: 1.15rem 2rem 1.15rem 0;
+      border-color: transparent #001E5B transparent transparent;
+    }
+    #slide-hippo-finale .hippo-title::after {
+      left: -1.55rem;
+      border-width: .9rem 1.6rem .9rem 0;
+      border-color: transparent #FFFFFF transparent transparent;
     }
     @keyframes hippoEntrance {
       0% { opacity: 0; transform: translateX(-75vw) rotate(-7deg) scale(.88); }
@@ -4160,10 +4232,20 @@
     @media (max-width: 900px) {
       #slide-sofia-opening .sofia-research-grid { grid-template-columns: 1fr; }
       #slide-sofia-opening .sofia-research-card { min-height: 10rem; }
+      #slide-hippo-finale .hippo-stage {
+        grid-template-columns: minmax(0,1fr);
+        gap: 1.5rem;
+      }
+      #slide-hippo-finale .hippo-title {
+        max-width: 12ch;
+        text-align: center;
+      }
+      #slide-hippo-finale .hippo-title::before,
+      #slide-hippo-finale .hippo-title::after { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
-      #slide-hippo-intro.active .hippo-character,
-      #slide-hippo-intro.active .hippo-title { animation: none; opacity: 1; transform: none; }
+      .hippo-slide.active .hippo-character,
+      .hippo-slide.active .hippo-title { animation: none; opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -4222,7 +4304,7 @@
     <p class="num">3</p>
     <h1>There Has to Be a <span>Better Way.</span></h1>
   </section>
-  <section id="slide-hippo-intro" aria-label="Introducing Hippo AI">
+  <section id="slide-hippo-intro" class="hippo-slide" aria-label="Introducing Hippo AI">
     <p class="num">4</p>
     <div class="hippo-stage">
       <svg class="hippo-character" viewBox="0 0 520 330" role="img" aria-label="A friendly hippo mascot">
@@ -4296,7 +4378,8 @@
   <section id="insert-team" class="dense imported-slide platform-slide">
     <p class="num">3</p>
     <h1>One connected platform powers every diner conversation.</h1>
-    <div class="platform-architecture" role="img" aria-label="TableCraft architecture from the diner portal through Agentforce, Service Cloud, and Data 360, with agent execution and grounded retrieval details">
+    <div class="platform-architecture" role="img" aria-label="TableCraft architecture from the diner portal through Salesforce Agentforce, Service Cloud, and Data 360, with agent execution and grounded retrieval details">
+      <p class="architecture-salesforce"><span>Salesforce</span></p>
       <p class="architecture-label channel">Channel</p>
       <p class="architecture-label agents">System of agency</p>
       <p class="architecture-label work">System of work</p>
@@ -4716,46 +4799,26 @@
       <li id="tablecraft-channel-source"><a href="#tablecraft-channel-source">TableCraft internal booking-channel analytics</a>, 2026. Role-play dataset.</li>
     </ol>
   </section>
-  <section id="slide-13" class="ask-slide">
-    <p class="num">11</p>
-    <h1>The ask: approve a 10% Phase 1 rollout.</h1>
-    <p class="ask-subline">Prove the value at each gate, then scale to 50% and 100%.</p>
-    <div class="ask-layout">
-      <div class="savings-chart" role="img" aria-label="TableCraft annualized savings increase from 150 thousand dollars at 10 percent rollout to 750 thousand dollars at 50 percent and 1.5 million dollars at 100 percent">
-        <h2>TableCraft annualized savings as Phase 1 scales</h2>
-        <p class="chart-note">Derived from the $1.5M full-rollout savings model; savings scale linearly with eligible traffic.</p>
-        <svg class="savings-line-chart" viewBox="0 0 720 320" aria-hidden="true">
-          <line class="chart-grid" x1="70" y1="230" x2="680" y2="230"/>
-          <line class="chart-grid" x1="70" y1="150" x2="680" y2="150"/>
-          <line class="chart-grid" x1="70" y1="70" x2="680" y2="70"/>
-          <line class="chart-axis" x1="70" y1="270" x2="680" y2="270"/>
-          <line class="chart-axis" x1="70" y1="30" x2="70" y2="270"/>
-          <text class="chart-y-label" x="58" y="235">$0.5M</text>
-          <text class="chart-y-label" x="58" y="155">$1M</text>
-          <text class="chart-y-label" x="58" y="75">$1.5M</text>
-          <path class="chart-line" d="M130 249 L355 165 L630 60"/>
-          <circle class="chart-point" cx="130" cy="249" r="10" style="--delay:.35s"/>
-          <circle class="chart-point" cx="355" cy="165" r="10" style="--delay:.7s"/>
-          <circle class="chart-point" cx="630" cy="60" r="10" style="--delay:1.05s"/>
-          <text class="chart-value" x="130" y="225">$150K</text>
-          <text class="chart-value" x="355" y="138">$750K</text>
-          <text class="chart-value" x="630" y="36">$1.5M</text>
-          <text class="chart-stage" x="130" y="298">10%</text>
-          <text class="chart-stage-detail" x="130" y="317">Pilot</text>
-          <text class="chart-stage" x="355" y="298">50%</text>
-          <text class="chart-stage-detail" x="355" y="317">Expansion gate</text>
-          <text class="chart-stage" x="630" y="298">100%</text>
-          <text class="chart-stage-detail" x="630" y="317">Full rollout</text>
-        </svg>
-      </div>
-      <aside class="ask-card" aria-label="Today's approval request">
-        <p class="ask-eyebrow">Today’s decision</p>
-        <h2>Launch Phase 1 to 10% of eligible web traffic.</h2>
-        <p><strong>$150K in annualized TableCraft savings.</strong> Advance only when quality, safety, and Flex Credit consumption remain inside the approved gates.</p>
-        <div class="rollout-path" aria-label="Rollout path from 10 percent to 50 percent to 100 percent">
-          <span>10%</span><b>&gt;</b><span>50%</span><b>&gt;</b><span>100%</span>
-        </div>
-      </aside>
+  <section id="slide-hippo-finale" class="hippo-slide" aria-label="Hippo AI questions and answers">
+    <div class="hippo-stage">
+      <svg class="hippo-character" viewBox="0 0 520 330" role="img" aria-label="A friendly hippo mascot">
+        <ellipse cx="261" cy="304" rx="168" ry="17" fill="#001E5B" opacity=".12"/>
+        <g stroke="#001E5B" stroke-width="8" stroke-linejoin="round">
+          <path d="M133 157C130 86 184 48 265 48s135 38 132 109c49 25 66 72 45 108-23 40-88 47-177 47S111 305 88 265c-21-36-4-83 45-108Z" fill="#9050E9"/>
+          <path d="M146 92c-25-27-55-15-52 17 2 23 22 37 47 34" fill="#9050E9"/>
+          <path d="M384 92c25-27 55-15 52 17-2 23-22 37-47 34" fill="#9050E9"/>
+          <path d="M112 233c25-38 79-56 153-56s128 18 153 56c22 34-4 72-50 78-56 7-150 7-206 0-46-6-72-44-50-78Z" fill="#90D0FE"/>
+          <path d="M142 270v36c0 14 12 21 27 21h10c15 0 24-8 24-21v-20m184-16v36c0 14-12 21-27 21h-10c-15 0-24-8-24-21v-20" fill="#9050E9"/>
+          <circle cx="205" cy="148" r="18" fill="#FFFFFF"/>
+          <circle cx="325" cy="148" r="18" fill="#FFFFFF"/>
+          <circle cx="210" cy="152" r="8" fill="#000B2E" stroke="none"/>
+          <circle cx="320" cy="152" r="8" fill="#000B2E" stroke="none"/>
+          <ellipse cx="218" cy="244" rx="8" ry="11" fill="#001E5B" stroke="none"/>
+          <ellipse cx="312" cy="244" rx="8" ry="11" fill="#001E5B" stroke="none"/>
+          <path d="M222 279c24 17 62 17 86 0" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <h1 class="hippo-title">Let&rsquo;s launch! <span>Any questions?</span></h1>
     </div>
   </section>
   <section id="slide-appendix-toc" class="dense">
@@ -4948,7 +5011,7 @@
       ["slide-monitoring", "Monitoring"],
       ["slide-4", "Findings"],
       ["slide-roadmap", "Roadmap"],
-      ["slide-13", "Ask"]
+      ["slide-hippo-finale", "QnA"]
     ];
     const deckProgress = document.getElementById("deckProgress");
     deckProgress.innerHTML = '<span class="deck-progress-track" aria-hidden="true"><span class="deck-progress-fill"></span></span>' + mainProgress.map(([id, label]) =>
