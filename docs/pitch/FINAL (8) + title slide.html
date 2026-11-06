@@ -2648,6 +2648,23 @@
       letter-spacing: -.06em;
       line-height: .95;
     }
+    .sofia-timer-part {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .sofia-timer-part strong { font: inherit; }
+    .sofia-timer-part small {
+      margin-top: .35rem;
+      color: #90D0FE;
+      font-family: "Salesforce Sans", Arial, sans-serif;
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    .sofia-timer-separator { display: inline-block; vertical-align: top; }
     #slide-sofia-opening.step-2 .sofia-timer { font-size: clamp(2.2rem,4vw,3.8rem); }
     .sofia-waiting-copy,
     .sofia-question-chips {
@@ -4423,7 +4440,11 @@
           <div class="sofia-hold-panel">
             <p class="sofia-reveal-line">She picks up the phone.</p>
             <p class="sofia-timer-label">Time spent waiting</p>
-            <p class="sofia-timer" id="sofiaHoldTimer" aria-live="polite">00:00.0</p>
+            <div class="sofia-timer" id="sofiaHoldTimer" aria-live="polite">
+              <span class="sofia-timer-part"><strong id="sofiaHoldMinutes">00</strong><small>Minutes</small></span>
+              <span class="sofia-timer-separator" aria-hidden="true">:</span>
+              <span class="sofia-timer-part"><strong id="sofiaHoldSeconds">00</strong><small>Seconds</small></span>
+            </div>
             <p class="sofia-waiting-copy">She is still waiting—with only a few simple questions.</p>
             <div class="sofia-question-chips" aria-label="Sofia's questions">
               <span>Is there space for six?</span>
@@ -5206,23 +5227,22 @@
       sofiaHoldTimerRAF = null;
     }
 
-    function formatSofiaHold(milliseconds) {
-      const totalTenths = Math.floor(milliseconds / 100);
-      const minutes = Math.floor(totalTenths / 600);
-      const seconds = Math.floor((totalTenths % 600) / 10);
-      const tenths = totalTenths % 10;
-      return String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0") + "." + tenths;
+    function renderSofiaHold(milliseconds) {
+      const totalSeconds = Math.floor(milliseconds / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      document.getElementById("sofiaHoldMinutes").textContent = String(minutes).padStart(2, "0");
+      document.getElementById("sofiaHoldSeconds").textContent = String(seconds).padStart(2, "0");
     }
 
     function startSofiaHoldTimer() {
       stopSofiaHoldTimer();
       const slide = document.getElementById("slide-sofia-opening");
-      const timer = document.getElementById("sofiaHoldTimer");
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       slide.classList.remove("wait-complete");
-      timer.textContent = "00:00.0";
+      renderSofiaHold(0);
       if (reduceMotion) {
-        timer.textContent = "18:00.0";
+        renderSofiaHold(18 * 60 * 1000);
         slide.classList.add("wait-complete");
         return;
       }
@@ -5230,7 +5250,7 @@
       const realDuration = 10000;
       function tick(now) {
         const elapsed = Math.min(realDuration, now - started);
-        timer.textContent = formatSofiaHold(elapsed * 108);
+        renderSofiaHold(elapsed * 108);
         if (elapsed < realDuration && slide.classList.contains("active")) {
           sofiaHoldTimerRAF = requestAnimationFrame(tick);
         } else {
